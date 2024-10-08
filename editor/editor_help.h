@@ -345,7 +345,6 @@ public:
 	EditorHelpBitTooltip(Control *p_target);
 };
 
-#if defined(MODULE_GDSCRIPT_ENABLED) || defined(MODULE_MONO_ENABLED)
 class EditorSyntaxHighlighter;
 
 class EditorHelpHighlighter {
@@ -380,6 +379,5 @@ public:
 	EditorHelpHighlighter();
 	virtual ~EditorHelpHighlighter();
 };
-#endif // defined(MODULE_GDSCRIPT_ENABLED) || defined(MODULE_MONO_ENABLED)
 
 #endif // EDITOR_HELP_H

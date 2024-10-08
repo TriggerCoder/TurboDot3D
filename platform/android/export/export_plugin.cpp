@@ -2367,7 +2367,6 @@ bool EditorExportPlatformAndroid::has_valid_export_configuration(const Ref<Edito
 	bool valid = false;
 	const bool gradle_build_enabled = p_preset->get("gradle_build/use_gradle_build");
 
-#ifdef MODULE_MONO_ENABLED
 	// Android export is still a work in progress, keep a message as a warning.
 	err += TTR("Exporting to Android when using C#/.NET is experimental.") + "\n";
 
@@ -2383,7 +2382,6 @@ bool EditorExportPlatformAndroid::has_valid_export_configuration(const Ref<Edito
 		r_error = err;
 		return false;
 	}
-#endif
 
 	// Look for export templates (first official, and if defined custom templates).
 
