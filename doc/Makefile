@@ -19,10 +19,10 @@ doxygen:
 rst:
 	rm -rf "$(OUTPUTDIR)/rst"
 	mkdir -p "$(OUTPUTDIR)/rst"
-	python3 "$(TOOLSDIR)/make_rst.py" -o "$(OUTPUTDIR)/rst" -l "$(LANGARG)" $(TOOLSOPT) $(CLASSES)
+	python "$(TOOLSDIR)/make_rst.py" -o "$(OUTPUTDIR)/rst" -l "$(LANGARG)" $(TOOLSOPT) $(CLASSES)
 
 xml-check:
-	python3 "$(TOOLSDIR)/make_rst.py" --dry-run -l "$(LANGARG)" $(TOOLSOPT) $(CLASSES)
+	python "$(TOOLSDIR)/make_rst.py" --dry-run -l "$(LANGARG)" $(TOOLSOPT) $(CLASSES)
 
 rstjs:
 	rm -rf "$(OUTPUTDIR)/rstjs"

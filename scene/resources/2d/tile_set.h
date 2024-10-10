@@ -43,10 +43,6 @@
 #include "scene/resources/packed_scene.h"
 #include "scene/resources/physics_material.h"
 
-#ifndef DISABLE_DEPRECATED
-#include "scene/resources/shader.h"
-#endif
-
 class TileMap;
 class TileSetSource;
 class TileSetAtlasSource;
@@ -147,63 +143,6 @@ public:
 
 class TileSet : public Resource {
 	GDCLASS(TileSet, Resource);
-
-#ifndef DISABLE_DEPRECATED
-private:
-	struct CompatibilityShapeData {
-		Vector2i autotile_coords;
-		bool one_way;
-		float one_way_margin;
-		Ref<Shape2D> shape;
-		Transform2D transform;
-	};
-
-	struct CompatibilityTileData {
-		String name;
-		Ref<Texture2D> texture;
-		Vector2 tex_offset;
-		Ref<Material> material;
-		Rect2 region;
-		int tile_mode = 0;
-		Color modulate = Color(1, 1, 1);
-
-		// Atlas or autotiles data
-		int autotile_bitmask_mode = 0;
-		Vector2 autotile_icon_coordinate;
-		Size2i autotile_tile_size = Size2i(16, 16);
-
-		int autotile_spacing = 0;
-		HashMap<Vector2i, int> autotile_bitmask_flags;
-		HashMap<Vector2i, Ref<OccluderPolygon2D>> autotile_occluder_map;
-		HashMap<Vector2i, Ref<NavigationPolygon>> autotile_navpoly_map;
-		HashMap<Vector2i, int> autotile_priority_map;
-		HashMap<Vector2i, int> autotile_z_index_map;
-
-		Vector<CompatibilityShapeData> shapes;
-		Ref<OccluderPolygon2D> occluder;
-		Vector2 occluder_offset;
-		Ref<NavigationPolygon> navigation;
-		Vector2 navigation_offset;
-		int z_index = 0;
-	};
-
-	enum CompatibilityTileMode {
-		COMPATIBILITY_TILE_MODE_SINGLE_TILE = 0,
-		COMPATIBILITY_TILE_MODE_AUTO_TILE,
-		COMPATIBILITY_TILE_MODE_ATLAS_TILE,
-	};
-
-	HashMap<int, CompatibilityTileData *> compatibility_data;
-	HashMap<int, int> compatibility_tilemap_mapping_tile_modes;
-	HashMap<int, RBMap<Array, Array>> compatibility_tilemap_mapping;
-	HashMap<Vector2i, int> compatibility_size_count;
-
-	void _compatibility_conversion();
-
-public:
-	// Format of output array [source_id, atlas_coords, alternative]
-	Array compatibility_tilemap_map(int p_tile_id, Vector2i p_coords, bool p_flip_h, bool p_flip_v, bool p_transpose);
-#endif // DISABLE_DEPRECATED
 
 public:
 	static const int INVALID_SOURCE; // -1;
@@ -885,13 +824,6 @@ protected:
 	bool _get(const StringName &p_name, Variant &r_ret) const;
 	void _get_property_list(List<PropertyInfo> *p_list) const;
 	static void _bind_methods();
-
-#ifndef DISABLE_DEPRECATED
-	Ref<NavigationPolygon> _get_navigation_polygon_bind_compat_84660(int p_layer_id) const;
-	Ref<OccluderPolygon2D> _get_occluder_bind_compat_84660(int p_layer_id) const;
-
-	static void _bind_compatibility_methods();
-#endif
 
 public:
 	// Not exposed.

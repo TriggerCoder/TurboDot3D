@@ -348,10 +348,6 @@ protected:
 	void _notification(int p_notification);
 	static void _bind_methods();
 
-#ifndef DISABLE_DEPRECATED
-	static void _bind_compatibility_methods();
-#endif
-
 	// Exposed virtual methods.
 
 	GDVIRTUAL1RC(bool, _has_point, Vector2)
@@ -632,11 +628,6 @@ public:
 
 	void set_localize_numeral_system(bool p_enable);
 	bool is_localizing_numeral_system() const;
-
-#ifndef DISABLE_DEPRECATED
-	void set_auto_translate(bool p_enable);
-	bool is_auto_translating() const;
-#endif
 
 	// Extra properties.
 

@@ -247,10 +247,6 @@ protected:
 	void _notification(int p_what);
 	static void _bind_methods();
 
-#ifndef DISABLE_DEPRECATED
-	static void _bind_compatibility_methods();
-#endif
-
 	bool _set(const StringName &p_name, const Variant &p_value);
 	bool _get(const StringName &p_name, Variant &r_ret) const;
 	void _get_property_list(List<PropertyInfo> *p_list) const;
@@ -308,10 +304,6 @@ public:
 	bool is_maximize_allowed() const;
 
 	void request_attention();
-#ifndef DISABLE_DEPRECATED
-	void move_to_foreground();
-#endif // DISABLE_DEPRECATED
-
 	virtual void set_visible(bool p_visible);
 	bool is_visible() const;
 
@@ -402,11 +394,6 @@ public:
 	void set_layout_direction(LayoutDirection p_direction);
 	LayoutDirection get_layout_direction() const;
 	bool is_layout_rtl() const;
-
-#ifndef DISABLE_DEPRECATED
-	void set_auto_translate(bool p_enable);
-	bool is_auto_translating() const;
-#endif
 
 	// Theming.
 

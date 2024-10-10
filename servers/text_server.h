@@ -226,11 +226,6 @@ protected:
 
 	static void _bind_methods();
 
-#ifndef DISABLE_DEPRECATED
-	PackedInt32Array _shaped_text_get_word_breaks_bind_compat_90732(const RID &p_shaped, BitField<TextServer::GraphemeFlag> p_grapheme_flags = GRAPHEME_IS_SPACE | GRAPHEME_IS_PUNCTUATION) const;
-	static void _bind_compatibility_methods();
-#endif
-
 public:
 	virtual bool has_feature(Feature p_feature) const = 0;
 	virtual String get_name() const = 0;

@@ -29,7 +29,6 @@
 /**************************************************************************/
 
 #include "rich_text_label.h"
-#include "rich_text_label.compat.inc"
 
 #include "core/input/input_map.h"
 #include "core/math/math_defs.h"
@@ -5874,18 +5873,6 @@ int RichTextLabel::get_content_width() const {
 	return total_width;
 }
 
-#ifndef DISABLE_DEPRECATED
-// People will be very angry, if their texts get erased, because of #39148. (3.x -> 4.0)
-// Although some people may not used bbcode_text, so we only overwrite, if bbcode_text is not empty.
-bool RichTextLabel::_set(const StringName &p_name, const Variant &p_value) {
-	if (p_name == "bbcode_text" && !((String)p_value).is_empty()) {
-		set_text(p_value);
-		return true;
-	}
-	return false;
-}
-#endif
-
 void RichTextLabel::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_parsed_text"), &RichTextLabel::get_parsed_text);
 	ClassDB::bind_method(D_METHOD("add_text", "text"), &RichTextLabel::add_text);
@@ -6039,11 +6026,6 @@ void RichTextLabel::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_menu"), &RichTextLabel::get_menu);
 	ClassDB::bind_method(D_METHOD("is_menu_visible"), &RichTextLabel::is_menu_visible);
 	ClassDB::bind_method(D_METHOD("menu_option", "option"), &RichTextLabel::menu_option);
-
-#ifndef DISABLE_DEPRECATED
-	ClassDB::bind_compatibility_method(D_METHOD("push_font", "font", "font_size"), &RichTextLabel::push_font);
-	ClassDB::bind_compatibility_method(D_METHOD("set_table_column_expand", "column", "expand", "ratio"), &RichTextLabel::set_table_column_expand);
-#endif // DISABLE_DEPRECATED
 
 	// Note: set "bbcode_enabled" first, to avoid unnecessary "text" resets.
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "bbcode_enabled"), "set_use_bbcode", "is_using_bbcode");

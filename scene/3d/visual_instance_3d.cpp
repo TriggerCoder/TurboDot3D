@@ -252,11 +252,6 @@ const StringName *GeometryInstance3D::_instance_uniform_get_remap(const StringNa
 	StringName *r = instance_shader_parameter_property_remap.getptr(p_name);
 	if (!r) {
 		String s = p_name;
-#ifndef DISABLE_DEPRECATED
-		if (s.begins_with("shader_uniforms/")) {
-			s = s.replace("shader_uniforms/", "instance_shader_parameters/");
-		}
-#endif // DISABLE_DEPRECATED
 		if (s.begins_with("instance_shader_parameters/")) {
 			StringName pname = StringName(s);
 			StringName name = s.replace("instance_shader_parameters/", "");
@@ -275,17 +270,6 @@ bool GeometryInstance3D::_set(const StringName &p_name, const Variant &p_value) 
 		set_instance_shader_parameter(*r, p_value);
 		return true;
 	}
-#ifndef DISABLE_DEPRECATED
-	if (p_name == SNAME("use_in_baked_light") && bool(p_value)) {
-		set_gi_mode(GI_MODE_STATIC);
-		return true;
-	}
-
-	if (p_name == SNAME("use_dynamic_gi") && bool(p_value)) {
-		set_gi_mode(GI_MODE_DYNAMIC);
-		return true;
-	}
-#endif // DISABLE_DEPRECATED
 	return false;
 }
 

@@ -6,7 +6,6 @@
 	<description>
 		A list of global scope enumerated constants and built-in functions. This is all that resides in the globals, constants regarding error codes, keycodes, property hints, etc.
 		Singletons are also documented here, since they can be accessed from anywhere.
-		For the entries related to GDScript which can be accessed in any script see [@GDScript].
 	</description>
 	<tutorials>
 		<link title="Random number generation">$DOCS_URL/tutorials/math/random_number_generation.html</link>
@@ -65,7 +64,7 @@
 			<return type="float" />
 			<param index="0" name="x" type="float" />
 			<description>
-				Returns the arc cosine of [param x] in radians. Use to get the angle of cosine [param x]. [param x] will be clamped between [code]-1.0[/code] and [code]1.0[/code] (inclusive), in order to prevent [method acos] from returning [constant @GDScript.NAN].
+				Returns the arc cosine of [param x] in radians. Use to get the angle of cosine [param x]. [param x] will be clamped between [code]-1.0[/code] and [code]1.0[/code] (inclusive), in order to prevent [method acos] from returning NAN.
 				[codeblock]
 				# c is 0.523599 or 30 degrees if converted with rad_to_deg(c)
 				var c = acos(0.866025)
@@ -76,7 +75,7 @@
 			<return type="float" />
 			<param index="0" name="x" type="float" />
 			<description>
-				Returns the hyperbolic arc (also called inverse) cosine of [param x], returning a value in radians. Use it to get the angle from an angle's cosine in hyperbolic space if [param x] is larger or equal to 1. For values of [param x] lower than 1, it will return 0, in order to prevent [method acosh] from returning [constant @GDScript.NAN].
+				Returns the hyperbolic arc (also called inverse) cosine of [param x], returning a value in radians. Use it to get the angle from an angle's cosine in hyperbolic space if [param x] is larger or equal to 1. For values of [param x] lower than 1, it will return 0, in order to prevent [method acosh] from returning NAN.
 				[codeblock]
 				var a = acosh(2) # Returns 1.31695789692482
 				cosh(a) # Returns 2
@@ -97,7 +96,7 @@
 			<return type="float" />
 			<param index="0" name="x" type="float" />
 			<description>
-				Returns the arc sine of [param x] in radians. Use to get the angle of sine [param x]. [param x] will be clamped between [code]-1.0[/code] and [code]1.0[/code] (inclusive), in order to prevent [method asin] from returning [constant @GDScript.NAN].
+				Returns the arc sine of [param x] in radians. Use to get the angle of sine [param x]. [param x] will be clamped between [code]-1.0[/code] and [code]1.0[/code] (inclusive), in order to prevent [method asin] from returning NAN.
 				[codeblock]
 				# s is 0.523599 or 30 degrees if converted with rad_to_deg(s)
 				var s = asin(0.5)
@@ -144,7 +143,7 @@
 			<param index="0" name="x" type="float" />
 			<description>
 				Returns the hyperbolic arc (also called inverse) tangent of [param x], returning a value in radians. Use it to get the angle from an angle's tangent in hyperbolic space if [param x] is between -1 and 1 (non-inclusive).
-				In mathematics, the inverse hyperbolic tangent is only defined for -1 &lt; [param x] &lt; 1 in the real set, so values equal or lower to -1 for [param x] return negative [constant @GDScript.INF] and values equal or higher than 1 return positive [constant @GDScript.INF] in order to prevent [method atanh] from returning [constant @GDScript.NAN].
+				In mathematics, the inverse hyperbolic tangent is only defined for -1 &lt; [param x] &lt; 1 in the real set, so values equal or lower to -1 for [param x] return negative INF and values equal or higher than 1 return positive INF in order to prevent [method atanh] from returning NAN.
 				[codeblock]
 				var a = atanh(0.9) # Returns 1.47221948958322
 				tanh(a) # Returns 0.9
@@ -551,7 +550,7 @@
 			<return type="bool" />
 			<param index="0" name="x" type="float" />
 			<description>
-				Returns whether [param x] is a finite value, i.e. it is not [constant @GDScript.NAN], positive infinity, or negative infinity.
+				Returns whether [param x] is a finite value, i.e. it is not NAN, positive infinity, or negative infinity.
 			</description>
 		</method>
 		<method name="is_inf">
@@ -637,7 +636,7 @@
 			<param index="2" name="weight" type="float" />
 			<description>
 				Linearly interpolates between two angles (in radians) by a [param weight] value between 0.0 and 1.0.
-				Similar to [method lerp], but interpolates correctly when the angles wrap around [constant @GDScript.TAU]. To perform eased interpolation with [method lerp_angle], combine it with [method ease] or [method smoothstep].
+				Similar to [method lerp], but interpolates correctly when the angles wrap around TAU. To perform eased interpolation with [method lerp_angle], combine it with [method ease] or [method smoothstep].
 				[codeblock]
 				extends Sprite
 				var elapsed = 0.0
@@ -1120,7 +1119,7 @@
 			<param index="2" name="delta" type="float" />
 			<description>
 				Rotates [param from] toward [param to] by the [param delta] amount. Will not go past [param to].
-				Similar to [method move_toward], but interpolates correctly when the angles wrap around [constant @GDScript.TAU].
+				Similar to [method move_toward], but interpolates correctly when the angles wrap around TAU.
 				If [param delta] is negative, this function will rotate away from [param to], toward the opposite angle, and will not go past the opposite angle.
 			</description>
 		</method>
@@ -3216,10 +3215,10 @@
 			Power operator ([code]**[/code]).
 		</constant>
 		<constant name="OP_SHIFT_LEFT" value="14" enum="Variant.Operator">
-			Left shift operator ([code]&lt;&lt;[/code]).
+			Left shift operator ([code]&lt;[/code]).
 		</constant>
 		<constant name="OP_SHIFT_RIGHT" value="15" enum="Variant.Operator">
-			Right shift operator ([code]&gt;&gt;[/code]).
+			Right shift operator ([code]&gt;[/code]).
 		</constant>
 		<constant name="OP_BIT_AND" value="16" enum="Variant.Operator">
 			Bitwise AND operator ([code]&amp;[/code]).
@@ -3234,7 +3233,7 @@
 			Bitwise NOT operator ([code]~[/code]).
 		</constant>
 		<constant name="OP_AND" value="20" enum="Variant.Operator">
-			Logical AND operator ([code]and[/code] or [code]&amp;&amp;[/code]).
+			Logical AND operator ([code]and[/code] or [code]&amp;[/code]).
 		</constant>
 		<constant name="OP_OR" value="21" enum="Variant.Operator">
 			Logical OR operator ([code]or[/code] or [code]||[/code]).

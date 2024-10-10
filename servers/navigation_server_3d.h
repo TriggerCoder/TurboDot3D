@@ -158,11 +158,6 @@ public:
 	/// Set the navigation mesh of this region.
 	virtual void region_set_navigation_mesh(RID p_region, Ref<NavigationMesh> p_navigation_mesh) = 0;
 
-#ifndef DISABLE_DEPRECATED
-	/// Bake the navigation mesh.
-	virtual void region_bake_navigation_mesh(Ref<NavigationMesh> p_navigation_mesh, Node *p_root_node) = 0;
-#endif // DISABLE_DEPRECATED
-
 	/// Get a list of a region's connection to other regions.
 	virtual int region_get_connections_count(RID p_region) const = 0;
 	virtual Vector3 region_get_connection_pathway_start(RID p_region, int p_connection_id) const = 0;

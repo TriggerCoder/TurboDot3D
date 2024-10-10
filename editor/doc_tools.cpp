@@ -1116,14 +1116,6 @@ static Error _parse_methods(Ref<XMLParser> &parser, Vector<DocData::MethodDoc> &
 				if (parser->has_attribute("qualifiers")) {
 					method.qualifiers = parser->get_named_attribute_value("qualifiers");
 				}
-#ifndef DISABLE_DEPRECATED
-				if (parser->has_attribute("is_deprecated")) {
-					method.is_deprecated = parser->get_named_attribute_value("is_deprecated").to_lower() == "true";
-				}
-				if (parser->has_attribute("is_experimental")) {
-					method.is_experimental = parser->get_named_attribute_value("is_experimental").to_lower() == "true";
-				}
-#endif
 				if (parser->has_attribute("deprecated")) {
 					method.is_deprecated = true;
 					method.deprecated_message = parser->get_named_attribute_value("deprecated");
@@ -1274,14 +1266,6 @@ Error DocTools::_load(Ref<XMLParser> parser) {
 
 		inheriting[c.inherits].insert(name);
 
-#ifndef DISABLE_DEPRECATED
-		if (parser->has_attribute("is_deprecated")) {
-			c.is_deprecated = parser->get_named_attribute_value("is_deprecated").to_lower() == "true";
-		}
-		if (parser->has_attribute("is_experimental")) {
-			c.is_experimental = parser->get_named_attribute_value("is_experimental").to_lower() == "true";
-		}
-#endif
 		if (parser->has_attribute("deprecated")) {
 			c.is_deprecated = true;
 			c.deprecated_message = parser->get_named_attribute_value("deprecated");
@@ -1371,14 +1355,6 @@ Error DocTools::_load(Ref<XMLParser> parser) {
 										prop2.is_bitfield = parser->get_named_attribute_value("is_bitfield").to_lower() == "true";
 									}
 								}
-#ifndef DISABLE_DEPRECATED
-								if (parser->has_attribute("is_deprecated")) {
-									prop2.is_deprecated = parser->get_named_attribute_value("is_deprecated").to_lower() == "true";
-								}
-								if (parser->has_attribute("is_experimental")) {
-									prop2.is_experimental = parser->get_named_attribute_value("is_experimental").to_lower() == "true";
-								}
-#endif
 								if (parser->has_attribute("deprecated")) {
 									prop2.is_deprecated = true;
 									prop2.deprecated_message = parser->get_named_attribute_value("deprecated");
@@ -1457,14 +1433,6 @@ Error DocTools::_load(Ref<XMLParser> parser) {
 										constant2.is_bitfield = parser->get_named_attribute_value("is_bitfield").to_lower() == "true";
 									}
 								}
-#ifndef DISABLE_DEPRECATED
-								if (parser->has_attribute("is_deprecated")) {
-									constant2.is_deprecated = parser->get_named_attribute_value("is_deprecated").to_lower() == "true";
-								}
-								if (parser->has_attribute("is_experimental")) {
-									constant2.is_experimental = parser->get_named_attribute_value("is_experimental").to_lower() == "true";
-								}
-#endif
 								if (parser->has_attribute("deprecated")) {
 									constant2.is_deprecated = true;
 									constant2.deprecated_message = parser->get_named_attribute_value("deprecated");

@@ -174,16 +174,6 @@ public:
 				doc.description = p_dict["description"];
 			}
 
-#ifndef DISABLE_DEPRECATED
-			if (p_dict.has("is_deprecated")) {
-				doc.is_deprecated = p_dict["is_deprecated"];
-			}
-
-			if (p_dict.has("is_experimental")) {
-				doc.is_experimental = p_dict["is_experimental"];
-			}
-#endif
-
 			if (p_dict.has("deprecated")) {
 				doc.is_deprecated = true;
 				doc.deprecated_message = p_dict["deprecated"];
@@ -313,16 +303,6 @@ public:
 				doc.description = p_dict["description"];
 			}
 
-#ifndef DISABLE_DEPRECATED
-			if (p_dict.has("is_deprecated")) {
-				doc.is_deprecated = p_dict["is_deprecated"];
-			}
-
-			if (p_dict.has("is_experimental")) {
-				doc.is_experimental = p_dict["is_experimental"];
-			}
-#endif
-
 			if (p_dict.has("deprecated")) {
 				doc.is_deprecated = true;
 				doc.deprecated_message = p_dict["deprecated"];
@@ -436,16 +416,6 @@ public:
 			if (p_dict.has("overrides")) {
 				doc.overrides = p_dict["overrides"];
 			}
-
-#ifndef DISABLE_DEPRECATED
-			if (p_dict.has("is_deprecated")) {
-				doc.is_deprecated = p_dict["is_deprecated"];
-			}
-
-			if (p_dict.has("is_experimental")) {
-				doc.is_experimental = p_dict["is_experimental"];
-			}
-#endif
 
 			if (p_dict.has("deprecated")) {
 				doc.is_deprecated = true;
@@ -635,16 +605,6 @@ public:
 				doc.description = p_dict["description"];
 			}
 
-#ifndef DISABLE_DEPRECATED
-			if (p_dict.has("is_deprecated")) {
-				doc.is_deprecated = p_dict["is_deprecated"];
-			}
-
-			if (p_dict.has("is_experimental")) {
-				doc.is_experimental = p_dict["is_experimental"];
-			}
-#endif
-
 			if (p_dict.has("deprecated")) {
 				doc.is_deprecated = true;
 				doc.deprecated_message = p_dict["deprecated"];
@@ -803,16 +763,6 @@ public:
 			for (int i = 0; i < theme_properties.size(); i++) {
 				doc.theme_properties.push_back(ThemeItemDoc::from_dict(theme_properties[i]));
 			}
-
-#ifndef DISABLE_DEPRECATED
-			if (p_dict.has("is_deprecated")) {
-				doc.is_deprecated = p_dict["is_deprecated"];
-			}
-
-			if (p_dict.has("is_experimental")) {
-				doc.is_experimental = p_dict["is_experimental"];
-			}
-#endif
 
 			if (p_dict.has("deprecated")) {
 				doc.is_deprecated = true;

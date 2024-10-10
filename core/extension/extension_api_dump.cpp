@@ -32,7 +32,6 @@
 
 #include "core/config/engine.h"
 #include "core/core_constants.h"
-#include "core/extension/gdextension_compat_hashes.h"
 #include "core/io/file_access.h"
 #include "core/io/json.h"
 #include "core/templates/pair.h"
@@ -1088,10 +1087,6 @@ Dictionary GDExtensionAPIDump::generate_extension_api(bool p_include_docs) {
 								compatibility.push_back(compat_hashes[i]);
 							}
 						}
-
-#ifndef DISABLE_DEPRECATED
-						GDExtensionCompatHashes::get_legacy_hashes(class_name, method_name, compatibility);
-#endif
 
 						if (compatibility.size() > 0) {
 							d2["hash_compatibility"] = compatibility;

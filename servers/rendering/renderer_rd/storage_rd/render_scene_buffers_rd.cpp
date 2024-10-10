@@ -29,7 +29,6 @@
 /**************************************************************************/
 
 #include "render_scene_buffers_rd.h"
-#include "render_scene_buffers_rd.compat.inc"
 
 #include "core/config/project_settings.h"
 #include "servers/rendering/renderer_rd/renderer_scene_render_rd.h"

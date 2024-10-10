@@ -194,11 +194,6 @@ void DisplayServerWayland::_show_window() {
 
 bool DisplayServerWayland::has_feature(Feature p_feature) const {
 	switch (p_feature) {
-#ifndef DISABLE_DEPRECATED
-		case FEATURE_GLOBAL_MENU: {
-			return (native_menu && native_menu->has_feature(NativeMenu::FEATURE_GLOBAL_MENU));
-		} break;
-#endif
 		case FEATURE_MOUSE:
 		case FEATURE_MOUSE_WARP:
 		case FEATURE_CLIPBOARD:

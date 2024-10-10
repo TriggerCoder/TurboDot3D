@@ -35,7 +35,6 @@
 #include "xr/xr_hand_tracker.h"
 #include "xr/xr_interface.h"
 #include "xr/xr_positional_tracker.h"
-#include "xr_server.compat.inc"
 
 XRServer::XRMode XRServer::xr_mode = XRMODE_DEFAULT;
 

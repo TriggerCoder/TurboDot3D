@@ -5,19 +5,11 @@
 	</brief_description>
 	<description>
 		An advanced [Variant] type. All classes in the engine inherit from Object. Each class may define new properties, methods or signals, which are available to all inheriting classes. For example, a [Sprite2D] instance is able to call [method Node.add_child] because it inherits from [Node].
-		You can create new instances, using [code]Object.new()[/code] in GDScript, or [code]new GodotObject[/code] in C#.
+		You can create new instances, using [code]new GodotObject[/code] in C#.
 		To delete an Object instance, call [method free]. This is necessary for most classes inheriting Object, because they do not manage memory on their own, and will otherwise cause memory leaks when no longer in use. There are a few classes that perform memory management. For example, [RefCounted] (and by extension [Resource]) deletes itself when no longer referenced, and [Node] deletes its children when freed.
 		Objects can have a [Script] attached to them. Once the [Script] is instantiated, it effectively acts as an extension to the base class, allowing it to define and inherit new properties, methods and signals.
-		Inside a [Script], [method _get_property_list] may be overridden to customize properties in several ways. This allows them to be available to the editor, display as lists of options, sub-divide into groups, save on disk, etc. Scripting languages offer easier ways to customize properties, such as with the [annotation @GDScript.@export] annotation.
+		Inside a [Script], [method _get_property_list] may be overridden to customize properties in several ways. This allows them to be available to the editor, display as lists of options, sub-divide into groups, save on disk, etc. Scripting languages offer easier ways to customize properties, such as with the export annotation.
 		Godot is very dynamic. An object's script, and therefore its properties, methods and signals, can be changed at run-time. Because of this, there can be occasions where, for example, a property required by a method may not exist. To prevent run-time errors, see methods such as [method set], [method get], [method call], [method has_method], [method has_signal], etc. Note that these methods are [b]much[/b] slower than direct references.
-		In GDScript, you can also check if a given property, method, or signal name exists in an object with the [code]in[/code] operator:
-		[codeblock]
-		var node = Node.new()
-		print("name" in node)         # Prints true
-		print("get_parent" in node)   # Prints true
-		print("tree_entered" in node) # Prints true
-		print("unknown" in node)      # Prints false
-		[/codeblock]
 		Notifications are [int] constants commonly sent and received by objects. For example, on every rendered frame, the [SceneTree] notifies nodes inside the tree with a [constant Node.NOTIFICATION_PROCESS]. The nodes receive it and may call [method Node._process] to update. To make use of notifications, see [method notification] and [method _notification].
 		Lastly, every object can also contain metadata (data about data). [method set_meta] can be useful to store information that the object itself does not depend on. To keep your code clean, making excessive use of metadata is discouraged.
 		[b]Note:[/b] Unlike references to a [RefCounted], references to an object stored in a variable can become invalid without being set to [code]null[/code]. To check if an object has been deleted, do [i]not[/i] compare it against [code]null[/code]. Instead, use [method @GlobalScope.is_instance_valid]. It's also recommended to inherit from [RefCounted] for classes storing data instead of [Object].
@@ -36,17 +28,6 @@
 				Override this method to customize the behavior of [method get]. Should return the given [param property]'s value, or [code]null[/code] if the [param property] should be handled normally.
 				Combined with [method _set] and [method _get_property_list], this method allows defining custom properties, which is particularly useful for editor plugins. Note that a property must be present in [method get_property_list], otherwise this method will not be called.
 				[codeblocks]
-				[gdscript]
-				func _get(property):
-				    if property == "fake_property":
-				        print("Getting my property!")
-				        return 4
-
-				func _get_property_list():
-				    return [
-				        { "name": "fake_property", "type": TYPE_INT }
-				    ]
-				[/gdscript]
 				[csharp]
 				public override Variant _Get(StringName property)
 				{
@@ -81,43 +62,6 @@
 				You can use [method _property_can_revert] and [method _property_get_revert] to customize the default values of the properties added by this method.
 				The example below displays a list of numbers shown as words going from [code]ZERO[/code] to [code]FIVE[/code], with [code]number_count[/code] controlling the size of the list:
 				[codeblocks]
-				[gdscript]
-				@tool
-				extends Node
-
-				@export var number_count = 3:
-				    set(nc):
-				        number_count = nc
-				        numbers.resize(number_count)
-				        notify_property_list_changed()
-
-				var numbers = PackedInt32Array([0, 0, 0])
-
-				func _get_property_list():
-				    var properties = []
-
-				    for i in range(number_count):
-				        properties.append({
-				            "name": "number_%d" % i,
-				            "type": TYPE_INT,
-				            "hint": PROPERTY_HINT_ENUM,
-				            "hint_string": "ZERO,ONE,TWO,THREE,FOUR,FIVE",
-				        })
-
-				    return properties
-
-				func _get(property):
-				    if property.begins_with("number_"):
-				        var index = property.get_slice("_", 1).to_int()
-				        return numbers[index]
-
-				func _set(property, value):
-				    if property.begins_with("number_"):
-				        var index = property.get_slice("_", 1).to_int()
-				        numbers[index] = value
-				        return true
-				    return false
-				[/gdscript]
 				[csharp]
 				[Tool]
 				public partial class MyNode : Node
@@ -181,14 +125,12 @@
 				}
 				[/csharp]
 				[/codeblocks]
-				[b]Note:[/b] This method is intended for advanced purposes. For most common use cases, the scripting languages offer easier ways to handle properties. See [annotation @GDScript.@export], [annotation @GDScript.@export_enum], [annotation @GDScript.@export_group], etc. If you want to customize exported properties, use [method _validate_property].
-				[b]Note:[/b] If the object's script is not [annotation @GDScript.@tool], this method will not be called in the editor.
 			</description>
 		</method>
 		<method name="_init" qualifiers="virtual">
 			<return type="void" />
 			<description>
-				Called when the object's script is instantiated, oftentimes after the object is initialized in memory (through [code]Object.new()[/code] in GDScript, or [code]new GodotObject[/code] in C#). It can be also defined to take in parameters. This method is similar to a constructor in most programming languages.
+				Called when the object's script is instantiated, oftentimes after the object is initialized in memory (through [code]new GodotObject[/code] in C#). It can be also defined to take in parameters. This method is similar to a constructor in most programming languages.
 				[b]Note:[/b] If [method _init] is defined with [i]required[/i] parameters, the Object with script may only be created directly. If any other means (such as [method PackedScene.instantiate] or [method Node.duplicate]) are used, the script's initialization will fail.
 			</description>
 		</method>
@@ -198,11 +140,6 @@
 			<description>
 				Called when the object receives a notification, which can be identified in [param what] by comparing it with a constant. See also [method notification].
 				[codeblocks]
-				[gdscript]
-				func _notification(what):
-				    if what == NOTIFICATION_PREDELETE:
-				        print("Goodbye!")
-				[/gdscript]
 				[csharp]
 				public override void _Notification(int what)
 				{
@@ -240,21 +177,6 @@
 				Override this method to customize the behavior of [method set]. Should set the [param property] to [param value] and return [code]true[/code], or [code]false[/code] if the [param property] should be handled normally. The [i]exact[/i] way to set the [param property] is up to this method's implementation.
 				Combined with [method _get] and [method _get_property_list], this method allows defining custom properties, which is particularly useful for editor plugins. Note that a property [i]must[/i] be present in [method get_property_list], otherwise this method will not be called.
 				[codeblocks]
-				[gdscript]
-				var internal_data = {}
-
-				func _set(property, value):
-				    if property == "fake_property":
-				        # Storing the value in the fake property.
-				        internal_data["fake_property"] = value
-				        return true
-				    return false
-
-				func _get_property_list():
-				    return [
-				        { "name": "fake_property", "type": TYPE_INT }
-				    ]
-				[/gdscript]
 				[csharp]
 				private Godot.Collections.Dictionary _internalData = new Godot.Collections.Dictionary();
 
@@ -305,20 +227,6 @@
 			<description>
 				Override this method to customize existing properties. Every property info goes through this method, except properties added with [method _get_property_list]. The dictionary contents is the same as in [method _get_property_list].
 				[codeblocks]
-				[gdscript]
-				@tool
-				extends Node
-
-				@export var is_number_editable: bool:
-				    set(value):
-				        is_number_editable = value
-				        notify_property_list_changed()
-				@export var number: int
-
-				func _validate_property(property: Dictionary):
-				    if property.name == "number" and not is_number_editable:
-				        property.usage |= PROPERTY_USAGE_READ_ONLY
-				[/gdscript]
 				[csharp]
 				[Tool]
 				public partial class MyNode : Node
@@ -341,7 +249,7 @@
 
 				    public override void _ValidateProperty(Godot.Collections.Dictionary property)
 				    {
-				        if (property["name"].AsStringName() == PropertyName.Number &amp;&amp; !IsNumberEditable)
+				        if (property["name"].AsStringName() == PropertyName.Number &amp; !IsNumberEditable)
 				        {
 				            var usage = property["usage"].As&lt;PropertyUsageFlags&gt;() | PropertyUsageFlags.ReadOnly;
 				            property["usage"] = (int)usage;
@@ -359,12 +267,6 @@
 			<description>
 				Adds a user-defined [param signal]. Optional arguments for the signal can be added as an [Array] of dictionaries, each defining a [code]name[/code] [String] and a [code]type[/code] [int] (see [enum Variant.Type]). See also [method has_user_signal] and [method remove_user_signal].
 				[codeblocks]
-				[gdscript]
-				add_user_signal("hurt", [
-				    { "name": "damage", "type": TYPE_INT },
-				    { "name": "source", "type": TYPE_OBJECT }
-				])
-				[/gdscript]
 				[csharp]
 				AddUserSignal("Hurt", new Godot.Collections.Array()
 				{
@@ -389,10 +291,6 @@
 			<description>
 				Calls the [param method] on the object and returns the result. This method supports a variable number of arguments, so parameters can be passed as a comma separated list.
 				[codeblocks]
-				[gdscript]
-				var node = Node3D.new()
-				node.call("rotate", Vector3(1.0, 0.0, 0.0), 1.571)
-				[/gdscript]
 				[csharp]
 				var node = new Node3D();
 				node.Call(Node3D.MethodName.Rotate, new Vector3(1f, 0f, 0f), 1.571f);
@@ -409,10 +307,6 @@
 				Idle time happens mainly at the end of process and physics frames. In it, deferred calls will be run until there are none left, which means you can defer calls from other deferred calls and they'll still be run in the current idle time cycle. This means you should not call a method deferred from itself (or from a method called by it), as this causes infinite recursion the same way as if you had called the method directly.
 				This method supports a variable number of arguments, so parameters can be passed as a comma separated list.
 				[codeblocks]
-				[gdscript]
-				var node = Node3D.new()
-				node.call_deferred("rotate", Vector3(1.0, 0.0, 0.0), 1.571)
-				[/gdscript]
 				[csharp]
 				var node = new Node3D();
 				node.CallDeferred(Node3D.MethodName.Rotate, new Vector3(1f, 0f, 0f), 1.571f);
@@ -438,10 +332,6 @@
 			<description>
 				Calls the [param method] on the object and returns the result. Unlike [method call], this method expects all parameters to be contained inside [param arg_array].
 				[codeblocks]
-				[gdscript]
-				var node = Node3D.new()
-				node.callv("rotate", [Vector3(1.0, 0.0, 0.0), 1.571])
-				[/gdscript]
 				[csharp]
 				var node = new Node3D();
 				node.Callv(Node3D.MethodName.Rotate, new Godot.Collections.Array { new Vector3(1f, 0f, 0f), 1.571f });
@@ -474,25 +364,6 @@
 				[b]Examples with recommended syntax:[/b]
 				Connecting signals is one of the most common operations in Godot and the API gives many options to do so, which are described further down. The code block below shows the recommended approach.
 				[codeblocks]
-				[gdscript]
-				func _ready():
-				    var button = Button.new()
-				    # `button_down` here is a Signal variant type, and we thus call the Signal.connect() method, not Object.connect().
-				    # See discussion below for a more in-depth overview of the API.
-				    button.button_down.connect(_on_button_down)
-
-				    # This assumes that a `Player` class exists, which defines a `hit` signal.
-				    var player = Player.new()
-				    # We use Signal.connect() again, and we also use the Callable.bind() method,
-				    # which returns a new Callable with the parameter binds.
-				    player.hit.connect(_on_player_hit.bind("sword", 100))
-
-				func _on_button_down():
-				    print("Button down!")
-
-				func _on_player_hit(weapon_type, damage):
-				    print("Hit with weapon %s for %d damage." % [weapon_type, damage])
-				[/gdscript]
 				[csharp]
 				public override void _Ready()
 				{
@@ -520,21 +391,6 @@
 				[b][code skip-lint]Object.connect()[/code] or [code skip-lint]Signal.connect()[/code]?[/b]
 				As seen above, the recommended method to connect signals is not [method Object.connect]. The code block below shows the four options for connecting signals, using either this legacy method or the recommended [method Signal.connect], and using either an implicit [Callable] or a manually defined one.
 				[codeblocks]
-				[gdscript]
-				func _ready():
-				    var button = Button.new()
-				    # Option 1: Object.connect() with an implicit Callable for the defined function.
-				    button.connect("button_down", _on_button_down)
-				    # Option 2: Object.connect() with a constructed Callable using a target object and method name.
-				    button.connect("button_down", Callable(self, "_on_button_down"))
-				    # Option 3: Signal.connect() with an implicit Callable for the defined function.
-				    button.button_down.connect(_on_button_down)
-				    # Option 4: Signal.connect() with a constructed Callable using a target object and method name.
-				    button.button_down.connect(Callable(self, "_on_button_down"))
-
-				func _on_button_down():
-				    print("Button down!")
-				[/gdscript]
 				[csharp]
 				public override void _Ready()
 				{
@@ -558,21 +414,6 @@
 				The syntax to bind parameters is through [method Callable.bind], which returns a copy of the [Callable] with its parameters bound.
 				When calling [method emit_signal] or [method Signal.emit], the signal parameters can be also passed. The examples below show the relationship between these signal parameters and bound parameters.
 				[codeblocks]
-				[gdscript]
-				func _ready():
-				    # This assumes that a `Player` class exists, which defines a `hit` signal.
-				    var player = Player.new()
-				    # Using Callable.bind().
-				    player.hit.connect(_on_player_hit.bind("sword", 100))
-
-				    # Parameters added when emitting the signal are passed first.
-				    player.hit.emit("Dark lord", 5)
-
-				# We pass two arguments when emitting (`hit_by`, `level`),
-				# and bind two more arguments when connecting (`weapon_type`, `damage`).
-				func _on_player_hit(hit_by, level, weapon_type, damage):
-				    print("Hit by %s (level %d) with weapon %s for %d damage." % [hit_by, level, weapon_type, damage])
-				[/gdscript]
 				[csharp]
 				public override void _Ready()
 				{
@@ -611,10 +452,6 @@
 				Emits the given [param signal] by name. The signal must exist, so it should be a built-in signal of this class or one of its inherited classes, or a user-defined signal (see [method add_user_signal]). This method supports a variable number of arguments, so parameters can be passed as a comma separated list.
 				Returns [constant ERR_UNAVAILABLE] if [param signal] does not exist or the parameters are invalid.
 				[codeblocks]
-				[gdscript]
-				emit_signal("hit", "sword", 100)
-				emit_signal("game_over")
-				[/gdscript]
 				[csharp]
 				EmitSignal(SignalName.Hit, "sword", 100);
 				EmitSignal(SignalName.GameOver);
@@ -635,11 +472,6 @@
 			<description>
 				Returns the [Variant] value of the given [param property]. If the [param property] does not exist, this method returns [code]null[/code].
 				[codeblocks]
-				[gdscript]
-				var node = Node2D.new()
-				node.rotation = 1.5
-				var a = node.get("rotation") # a is 1.5
-				[/gdscript]
 				[csharp]
 				var node = new Node2D();
 				node.Rotation = 1.5f;
@@ -672,12 +504,6 @@
 				Gets the object's property indexed by the given [param property_path]. The path should be a [NodePath] relative to the current object and can use the colon character ([code]:[/code]) to access nested properties.
 				[b]Examples:[/b] [code]"position:x"[/code] or [code]"material:next_pass:blend_mode"[/code].
 				[codeblocks]
-				[gdscript]
-				var node = Node2D.new()
-				node.position = Vector2(5, -10)
-				var a = node.get_indexed("position")   # a is Vector2(5, -10)
-				var b = node.get_indexed("position:y") # b is -10
-				[/gdscript]
 				[csharp]
 				var node = new Node2D();
 				node.Position = new Vector2(5, -10);
@@ -743,7 +569,7 @@
 				- [code]hint[/code] is [i]how[/i] the property is meant to be edited (see [enum PropertyHint]);
 				- [code]hint_string[/code] depends on the hint (see [enum PropertyHint]);
 				- [code]usage[/code] is a combination of [enum PropertyUsageFlags].
-				[b]Note:[/b] In GDScript, all class members are treated as properties. In C# and GDExtension, it may be necessary to explicitly mark class members as Godot properties using decorators or attributes.
+				[b]Note:[/b] In C# and GDExtension, it may be necessary to explicitly mark class members as Godot properties using decorators or attributes.
 			</description>
 		</method>
 		<method name="get_script" qualifiers="const">
@@ -813,12 +639,6 @@
 			<description>
 				Returns [code]true[/code] if the object inherits from the given [param class]. See also [method get_class].
 				[codeblocks]
-				[gdscript]
-				var sprite2d = Sprite2D.new()
-				sprite2d.is_class("Sprite2D") # Returns true
-				sprite2d.is_class("Node")     # Returns true
-				sprite2d.is_class("Node3D")   # Returns false
-				[/gdscript]
 				[csharp]
 				var sprite2D = new Sprite2D();
 				sprite2D.IsClass("Sprite2D"); // Returns true
@@ -852,16 +672,6 @@
 				Sends the given [param what] notification to all classes inherited by the object, triggering calls to [method _notification], starting from the highest ancestor (the [Object] class) and going down to the object's script.
 				If [param reversed] is [code]true[/code], the call order is reversed.
 				[codeblocks]
-				[gdscript]
-				var player = Node2D.new()
-				player.set_script(load("res://player.gd"))
-
-				player.notification(NOTIFICATION_ENTER_TREE)
-				# The call order is Object -&gt; Node -&gt; Node2D -&gt; player.gd.
-
-				player.notification(NOTIFICATION_ENTER_TREE, true)
-				# The call order is player.gd -&gt; Node2D -&gt; Node -&gt; Object.
-				[/gdscript]
 				[csharp]
 				var player = new Node2D();
 				player.SetScript(GD.Load("res://player.gd"));
@@ -920,11 +730,6 @@
 			<description>
 				Assigns [param value] to the given [param property]. If the property does not exist or the given [param value]'s type doesn't match, nothing happens.
 				[codeblocks]
-				[gdscript]
-				var node = Node2D.new()
-				node.set("global_scale", Vector2(8, 2.5))
-				print(node.global_scale) # Prints (8, 2.5)
-				[/gdscript]
 				[csharp]
 				var node = new Node2D();
 				node.Set(Node2D.PropertyName.GlobalScale, new Vector2(8, 2.5));
@@ -948,17 +753,6 @@
 			<description>
 				Assigns [param value] to the given [param property], at the end of the current frame. This is equivalent to calling [method set] through [method call_deferred].
 				[codeblocks]
-				[gdscript]
-				var node = Node2D.new()
-				add_child(node)
-
-				node.rotation = 1.5
-				node.set_deferred("rotation", 3.0)
-				print(node.rotation) # Prints 1.5
-
-				await get_tree().process_frame
-				print(node.rotation) # Prints 3.0
-				[/gdscript]
 				[csharp]
 				var node = new Node2D();
 				node.Rotation = 1.5f;
@@ -979,12 +773,6 @@
 			<description>
 				Assigns a new [param value] to the property identified by the [param property_path]. The path should be a [NodePath] relative to this object, and can use the colon character ([code]:[/code]) to access nested properties.
 				[codeblocks]
-				[gdscript]
-				var node = Node2D.new()
-				node.set_indexed("position", Vector2(42, 0))
-				node.set_indexed("position:y", -10)
-				print(node.position) # Prints (42, -10)
-				[/gdscript]
 				[csharp]
 				var node = new Node2D();
 				node.SetIndexed("position", new Vector2(42, 0));

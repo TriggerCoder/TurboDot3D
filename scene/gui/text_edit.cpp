@@ -29,7 +29,6 @@
 /**************************************************************************/
 
 #include "text_edit.h"
-#include "text_edit.compat.inc"
 
 #include "core/config/project_settings.h"
 #include "core/input/input.h"
@@ -6841,14 +6840,6 @@ void TextEdit::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("is_menu_visible"), &TextEdit::is_menu_visible);
 	ClassDB::bind_method(D_METHOD("menu_option", "option"), &TextEdit::menu_option);
 
-	/* Deprecated */
-#ifndef DISABLE_DEPRECATED
-	ClassDB::bind_method(D_METHOD("adjust_carets_after_edit", "caret", "from_line", "from_col", "to_line", "to_col"), &TextEdit::adjust_carets_after_edit);
-	ClassDB::bind_method(D_METHOD("get_caret_index_edit_order"), &TextEdit::get_caret_index_edit_order);
-	ClassDB::bind_method(D_METHOD("get_selection_line", "caret_index"), &TextEdit::get_selection_line, DEFVAL(0));
-	ClassDB::bind_method(D_METHOD("get_selection_column", "caret_index"), &TextEdit::get_selection_column, DEFVAL(0));
-#endif
-
 	/* Inspector */
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "text", PROPERTY_HINT_MULTILINE_TEXT), "set_text", "get_text");
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "placeholder_text", PROPERTY_HINT_MULTILINE_TEXT), "set_placeholder", "get_placeholder");
@@ -8154,26 +8145,6 @@ void TextEdit::_update_gutter_width() {
 Dictionary TextEdit::_get_line_syntax_highlighting(int p_line) {
 	return (syntax_highlighter.is_null() || setting_text) ? Dictionary() : syntax_highlighter->get_line_syntax_highlighting(p_line);
 }
-
-/* Deprecated. */
-#ifndef DISABLE_DEPRECATED
-Vector<int> TextEdit::get_caret_index_edit_order() {
-	Vector<int> carets_order = get_sorted_carets();
-	carets_order.reverse();
-	return carets_order;
-}
-
-void TextEdit::adjust_carets_after_edit(int p_caret, int p_from_line, int p_from_col, int p_to_line, int p_to_col) {
-}
-
-int TextEdit::get_selection_line(int p_caret) const {
-	return get_selection_origin_line(p_caret);
-}
-
-int TextEdit::get_selection_column(int p_caret) const {
-	return get_selection_origin_column(p_caret);
-}
-#endif
 
 /*** Super internal Core API. Everything builds on it. ***/
 

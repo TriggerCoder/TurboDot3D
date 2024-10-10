@@ -124,7 +124,7 @@
 				Returns the absolute, native OS path corresponding to the localized [param path] (starting with [code]res://[/code] or [code]user://[/code]). The returned path will vary depending on the operating system and user preferences. See [url=$DOCS_URL/tutorials/io/data_paths.html]File paths in Godot projects[/url] to see what those paths convert to. See also [method localize_path].
 				[b]Note:[/b] [method globalize_path] with [code]res://[/code] will not work in an exported project. Instead, prepend the executable's base directory to the path when running from an exported project:
 				[codeblock]
-				var path = ""
+				var path = "
 				if OS.has_feature("editor"):
 				    # Running from an editor binary.
 				    # `path` will contain the absolute path to `hello.txt` located in the project root.
@@ -937,7 +937,7 @@
 		</member>
 		<member name="editor/export/convert_text_resources_to_binary" type="bool" setter="" getter="" default="true">
 			If [code]true[/code], text resource ([code]tres[/code]) and text scene ([code]tscn[/code]) files are converted to their corresponding binary format on export. This decreases file sizes and speeds up loading slightly.
-			[b]Note:[/b] Because a resource's file extension may change in an exported project, it is heavily recommended to use [method @GDScript.load] or [ResourceLoader] instead of [FileAccess] to load resources dynamically.
+			[b]Note:[/b] Because a resource's file extension may change in an exported project, it is heavily recommended to use [ResourceLoader] instead of [FileAccess] to load resources dynamically.
 			[b]Note:[/b] The project settings file ([code]project.godot[/code]) will always be converted to binary on export, regardless of this setting.
 		</member>
 		<member name="editor/import/atlas_max_width" type="int" setter="" getter="" default="2048">

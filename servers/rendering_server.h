@@ -87,15 +87,6 @@ protected:
 	static RenderingServer *(*create_func)();
 	static void _bind_methods();
 
-#ifndef DISABLE_DEPRECATED
-	void _environment_set_fog_bind_compat_84792(RID p_env, bool p_enable, const Color &p_light_color, float p_light_energy, float p_sun_scatter, float p_density, float p_height, float p_height_density, float p_aerial_perspective, float p_sky_affect);
-	void _canvas_item_add_multiline_bind_compat_84523(RID p_item, const Vector<Point2> &p_points, const Vector<Color> &p_colors, float p_width = -1.0);
-	void _canvas_item_add_rect_bind_compat_84523(RID p_item, const Rect2 &p_rect, const Color &p_color);
-	void _canvas_item_add_circle_bind_compat_84523(RID p_item, const Point2 &p_pos, float p_radius, const Color &p_color);
-
-	static void _bind_compatibility_methods();
-#endif
-
 public:
 	static RenderingServer *get_singleton();
 	static RenderingServer *create();
@@ -1710,14 +1701,6 @@ public:
 	virtual Color get_default_clear_color() = 0;
 	virtual void set_default_clear_color(const Color &p_color) = 0;
 
-#ifndef DISABLE_DEPRECATED
-	// Never actually used, should be removed when we can break compatibility.
-	enum Features{
-		FEATURE_SHADERS,
-		FEATURE_MULTITHREADED,
-	};
-	virtual bool has_feature(Features p_feature) const = 0;
-#endif
 	virtual bool has_os_feature(const String &p_feature) const = 0;
 
 	virtual void set_debug_generate_wireframes(bool p_generate) = 0;
@@ -1750,10 +1733,6 @@ public:
 	typedef void (*SurfaceUpgradeCallback)();
 	void set_surface_upgrade_callback(SurfaceUpgradeCallback p_callback);
 	void set_warn_on_surface_upgrade(bool p_warn);
-#endif
-
-#ifndef DISABLE_DEPRECATED
-	void fix_surface_compatibility(SurfaceData &p_surface, const String &p_path = "");
 #endif
 
 private:
@@ -1854,10 +1833,6 @@ VARIANT_ENUM_CAST(RenderingServer::GlobalShaderParameterType);
 VARIANT_ENUM_CAST(RenderingServer::RenderingInfo);
 VARIANT_ENUM_CAST(RenderingServer::CanvasTextureChannel);
 VARIANT_ENUM_CAST(RenderingServer::BakeChannels);
-
-#ifndef DISABLE_DEPRECATED
-VARIANT_ENUM_CAST(RenderingServer::Features);
-#endif
 
 // Alias to make it easier to use.
 #define RS RenderingServer

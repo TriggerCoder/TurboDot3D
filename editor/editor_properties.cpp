@@ -3493,11 +3493,7 @@ static EditorPropertyRangeHint _parse_range_hint(PropertyHint p_hint, const Stri
 	bool degrees = false;
 	for (int i = 0; i < slices.size(); i++) {
 		String slice = slices[i].strip_edges();
-		if (slice == "radians_as_degrees"
-#ifndef DISABLE_DEPRECATED
-				|| slice == "radians"
-#endif // DISABLE_DEPRECATED
-		) {
+		if (slice == "radians_as_degrees") {
 			hint.radians_as_degrees = true;
 		} else if (slice == "degrees") {
 			degrees = true;

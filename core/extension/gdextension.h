@@ -69,16 +69,9 @@ class GDExtension : public Resource {
 	HashMap<StringName, Extension> extension_classes;
 
 	struct ClassCreationDeprecatedInfo {
-#ifndef DISABLE_DEPRECATED
-		GDExtensionClassNotification notification_func = nullptr;
-		GDExtensionClassFreePropertyList free_property_list_func = nullptr;
-#endif // DISABLE_DEPRECATED
+
 	};
 
-#ifndef DISABLE_DEPRECATED
-	static void _register_extension_class(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringNamePtr p_parent_class_name, const GDExtensionClassCreationInfo *p_extension_funcs);
-	static void _register_extension_class2(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringNamePtr p_parent_class_name, const GDExtensionClassCreationInfo2 *p_extension_funcs);
-#endif // DISABLE_DEPRECATED
 	static void _register_extension_class3(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringNamePtr p_parent_class_name, const GDExtensionClassCreationInfo3 *p_extension_funcs);
 	static void _register_extension_class_internal(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringNamePtr p_parent_class_name, const GDExtensionClassCreationInfo3 *p_extension_funcs, const ClassCreationDeprecatedInfo *p_deprecated_funcs = nullptr);
 	static void _register_extension_class_method(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, const GDExtensionClassMethodInfo *p_method_info);
@@ -138,12 +131,6 @@ public:
 	};
 
 protected:
-#ifndef DISABLE_DEPRECATED
-	Error _open_library_bind_compat_88418(const String &p_path, const String &p_entry_symbol);
-	void _close_library_bind_compat_88418();
-	void _initialize_library_bind_compat_88418(InitializationLevel p_level);
-	static void _bind_compatibility_methods();
-#endif
 
 public:
 	bool is_library_open() const;

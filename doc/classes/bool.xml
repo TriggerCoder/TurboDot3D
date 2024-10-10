@@ -31,7 +31,7 @@
 		    play_clack_sound()
 		[/gdscript]
 		[csharp]
-		if (bullets &gt; 0 &amp;&amp; !IsReloading())
+		if (bullets &gt; 0 &amp; !IsReloading())
 		{
 		    LaunchBullet();
 		}
@@ -65,7 +65,7 @@
 			<return type="bool" />
 			<param index="0" name="from" type="float" />
 			<description>
-				Cast a [float] value to a boolean value. Returns [code]false[/code] if [param from] is equal to [code]0.0[/code] (including [code]-0.0[/code]), and [code]true[/code] for all other values (including [constant @GDScript.INF] and [constant @GDScript.NAN]).
+				Cast a [float] value to a boolean value. Returns [code]false[/code] if [param from] is equal to [code]0.0[/code] (including [code]-0.0[/code]), and [code]true[/code] for all other values (including INF and NAN).
 			</description>
 		</constructor>
 		<constructor name="bool">

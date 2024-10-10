@@ -66,12 +66,6 @@ public:
 class Skeleton3D : public Node3D {
 	GDCLASS(Skeleton3D, Node3D);
 
-#ifndef DISABLE_DEPRECATED
-	bool animate_physical_bones = true;
-	Node *simulator = nullptr;
-	void setup_simulator();
-#endif // _DISABLE_DEPRECATED
-
 public:
 	enum ModifierCallbackModeProcess {
 		MODIFIER_CALLBACK_MODE_PROCESS_PHYSICS,
@@ -115,13 +109,6 @@ private:
 				pose_cache_dirty = false;
 			}
 		}
-
-#ifndef DISABLE_DEPRECATED
-		Transform3D pose_global_no_override;
-		real_t global_pose_override_amount = 0.0;
-		bool global_pose_override_reset = false;
-		Transform3D global_pose_override;
-#endif // _DISABLE_DEPRECATED
 	};
 
 	struct BonePoseBackup {
@@ -180,12 +167,6 @@ private:
 	void _process_changed();
 	void _make_modifiers_dirty();
 	LocalVector<BonePoseBackup> bones_backup;
-
-#ifndef DISABLE_DEPRECATED
-	void _add_bone_bind_compat_88791(const String &p_name);
-
-	static void _bind_compatibility_methods();
-#endif // DISABLE_DEPRECATED
 
 protected:
 	bool _get(const StringName &p_path, Variant &r_ret) const;
@@ -266,21 +247,6 @@ public:
 
 	void set_modifier_callback_mode_process(ModifierCallbackModeProcess p_mode);
 	ModifierCallbackModeProcess get_modifier_callback_mode_process() const;
-
-#ifndef DISABLE_DEPRECATED
-	Transform3D get_bone_global_pose_no_override(int p_bone) const;
-	void clear_bones_global_pose_override();
-	Transform3D get_bone_global_pose_override(int p_bone) const;
-	void set_bone_global_pose_override(int p_bone, const Transform3D &p_pose, real_t p_amount, bool p_persistent = false);
-
-	Node *get_simulator();
-	void set_animate_physical_bones(bool p_enabled);
-	bool get_animate_physical_bones() const;
-	void physical_bones_stop_simulation();
-	void physical_bones_start_simulation_on(const TypedArray<StringName> &p_bones);
-	void physical_bones_add_collision_exception(RID p_exception);
-	void physical_bones_remove_collision_exception(RID p_exception);
-#endif // _DISABLE_DEPRECATED
 
 public:
 	Skeleton3D();

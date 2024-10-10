@@ -131,13 +131,6 @@ protected:
 	void _notification(int p_what);
 	static void _bind_methods();
 
-#ifndef DISABLE_DEPRECATED
-	void _push_meta_bind_compat_89024(const Variant &p_meta);
-	void _add_image_bind_compat_80410(const Ref<Texture2D> &p_image, const int p_width, const int p_height, const Color &p_color, InlineAlignment p_alignment, const Rect2 &p_region);
-	bool _remove_paragraph_bind_compat_91098(int p_paragraph);
-	static void _bind_compatibility_methods();
-#endif
-
 private:
 	struct Item;
 
@@ -613,10 +606,6 @@ private:
 
 	String _get_prefix(Item *p_item, const Vector<int> &p_list_index, const Vector<ItemList *> &p_list_items);
 
-#ifndef DISABLE_DEPRECATED
-	// Kept for compatibility from 3.x to 4.0.
-	bool _set(const StringName &p_name, const Variant &p_value);
-#endif
 	bool use_bbcode = false;
 	String text;
 	void _apply_translation();

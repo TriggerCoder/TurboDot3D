@@ -99,23 +99,9 @@ protected:
 	void _notification(int p_what);
 	static void _bind_methods();
 
-#ifndef DISABLE_DEPRECATED
-	Rect2i _get_used_rect_bind_compat_78328();
-	void _set_quadrant_size_compat_81070(int p_quadrant_size);
-	int _get_quadrant_size_compat_81070() const;
-	VisibilityMode _get_collision_visibility_mode_bind_compat_87115();
-	VisibilityMode _get_navigation_visibility_mode_bind_compat_87115();
-
-	static void _bind_compatibility_methods();
-#endif
-
 public:
 #ifdef TOOLS_ENABLED
 	virtual Rect2 _edit_get_rect() const override;
-#endif
-
-#ifndef DISABLE_DEPRECATED
-	void force_update(int p_layer);
 #endif
 
 	void set_rendering_quadrant_size(int p_size);

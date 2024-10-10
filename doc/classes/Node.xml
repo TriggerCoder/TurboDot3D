@@ -141,12 +141,6 @@
 				If [param internal] is different than [constant INTERNAL_MODE_DISABLED], the child will be added as internal node. These nodes are ignored by methods like [method get_children], unless their parameter [code]include_internal[/code] is [code]true[/code]. The intended usage is to hide the internal nodes from the user, so the user won't accidentally delete or modify them. Used by some GUI nodes, e.g. [ColorPicker]. See [enum InternalMode] for available modes.
 				[b]Note:[/b] If [param node] already has a parent, this method will fail. Use [method remove_child] first to remove [param node] from its current parent. For example:
 				[codeblocks]
-				[gdscript]
-				var child_node = get_child(0)
-				if child_node.get_parent():
-				    child_node.get_parent().remove_child(child_node)
-				add_child(child_node)
-				[/gdscript]
 				[csharp]
 				Node childNode = GetChild(0);
 				if (childNode.GetParent() != null)
@@ -240,9 +234,6 @@
 				Creates a new [Tween] and binds it to this node.
 				This is the equivalent of doing:
 				[codeblocks]
-				[gdscript]
-				get_tree().create_tween().bind_node(self)
-				[/gdscript]
 				[csharp]
 				GetTree().CreateTween().BindNode(this);
 				[/csharp]
@@ -337,13 +328,6 @@
 				[b]Note:[/b] To improve performance, the order of group names is [i]not[/i] guaranteed and may vary between project runs. Therefore, do not rely on the group order.
 				[b]Note:[/b] This method may also return some group names starting with an underscore ([code]_[/code]). These are internally used by the engine. To avoid conflicts, do not use custom groups starting with underscores. To exclude internal groups, see the following code snippet:
 				[codeblocks]
-				[gdscript]
-				# Stores the node's non-internal groups only (as an array of StringNames).
-				var non_internal_groups = []
-				for group in get_groups():
-				    if not str(group).begins_with("_"):
-				        non_internal_groups.push_back(group)
-				[/gdscript]
 				[csharp]
 				// Stores the node's non-internal groups only (as a List of StringNames).
 				List&lt;string&gt; nonInternalGroups = new List&lt;string&gt;();
@@ -397,12 +381,6 @@
 				[/codeblock]
 				The following calls will return a valid node:
 				[codeblocks]
-				[gdscript]
-				get_node("Sword")
-				get_node("Backpack/Dagger")
-				get_node("../Swamp/Alligator")
-				get_node("/root/MyGame")
-				[/gdscript]
 				[csharp]
 				GetNode("Sword");
 				GetNode("Backpack/Dagger");
@@ -422,22 +400,6 @@
 				- Element [code]2[/code] is the remaining [NodePath], referring to an existing, non-[Resource] property (see [method Object.get_indexed]).
 				[b]Example:[/b] Assume that the child's [member Sprite2D.texture] has been assigned a [AtlasTexture]:
 				[codeblocks]
-				[gdscript]
-				var a = get_node_and_resource("Area2D/Sprite2D")
-				print(a[0].name) # Prints Sprite2D
-				print(a[1])      # Prints &lt;null&gt;
-				print(a[2])      # Prints ^""
-
-				var b = get_node_and_resource("Area2D/Sprite2D:texture:atlas")
-				print(b[0].name)        # Prints Sprite2D
-				print(b[1].get_class()) # Prints AtlasTexture
-				print(b[2])             # Prints ^""
-
-				var c = get_node_and_resource("Area2D/Sprite2D:texture:atlas:region")
-				print(c[0].name)        # Prints Sprite2D
-				print(c[1].get_class()) # Prints AtlasTexture
-				print(c[2])             # Prints ^":region"
-				[/gdscript]
 				[csharp]
 				var a = GetNodeAndResource(NodePath("Area2D/Sprite2D"));
 				GD.Print(a[0].Name); // Prints Sprite2D
@@ -447,7 +409,7 @@
 				var b = GetNodeAndResource(NodePath("Area2D/Sprite2D:texture:atlas"));
 				GD.Print(b[0].name);        // Prints Sprite2D
 				GD.Print(b[1].get_class()); // Prints AtlasTexture
-				GD.Print(b[2]);             // Prints ^""
+				GD.Print(b[2]);             // Prints ^"
 
 				var c = GetNodeAndResource(NodePath("Area2D/Sprite2D:texture:atlas:region"));
 				GD.Print(c[0].name);        // Prints Sprite2D
@@ -827,7 +789,7 @@
 			<return type="int" enum="Error" />
 			<param index="0" name="method" type="StringName" />
 			<description>
-				Sends a remote procedure call request for the given [param method] to peers on the network (and locally), sending additional arguments to the method called by the RPC. The call request will only be received by nodes with the same [NodePath], including the exact same [member name]. Behavior depends on the RPC configuration for the given [param method] (see [method rpc_config] and [annotation @GDScript.@rpc]). By default, methods are not exposed to RPCs.
+				Sends a remote procedure call request for the given [param method] to peers on the network (and locally), sending additional arguments to the method called by the RPC. The call request will only be received by nodes with the same [NodePath], including the exact same [member name]. Behavior depends on the RPC configuration for the given [param method] (see [method rpc_config]). By default, methods are not exposed to RPCs.
 				May return [constant OK] if the call is successful, [constant ERR_INVALID_PARAMETER] if the arguments passed in the [param method] do not match, [constant ERR_UNCONFIGURED] if the node's [member multiplayer] cannot be fetched (such as when the node is not inside the tree), [constant ERR_CONNECTION_ERROR] if [member multiplayer]'s connection is not available.
 				[b]Note:[/b] You can only safely use RPCs on clients after you received the [signal MultiplayerAPI.connected_to_server] signal from the [MultiplayerAPI]. You also need to keep track of the connection state, either by the [MultiplayerAPI] signals like [signal MultiplayerAPI.server_disconnected] or by checking ([code]get_multiplayer().peer.get_connection_status() == CONNECTION_CONNECTED[/code]).
 			</description>
@@ -842,7 +804,6 @@
 				- [code]transfer_mode[/code]: see [enum MultiplayerPeer.TransferMode];
 				- [code]call_local[/code]: if [code]true[/code], the method will also be called locally;
 				- [code]channel[/code]: an [int] representing the channel to send the RPC on.
-				[b]Note:[/b] In GDScript, this method corresponds to the [annotation @GDScript.@rpc] annotation, with various parameters passed ([code]@rpc(any)[/code], [code]@rpc(authority)[/code]...). See also the [url=$DOCS_URL/tutorials/networking/high_level_multiplayer.html]high-level multiplayer[/url] tutorial.
 			</description>
 		</method>
 		<method name="rpc_id" qualifiers="vararg">

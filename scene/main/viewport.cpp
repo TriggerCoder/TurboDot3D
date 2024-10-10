@@ -3268,34 +3268,6 @@ void Viewport::push_input(const Ref<InputEvent> &p_event, bool p_local_coords) {
 	event_count++;
 }
 
-#ifndef DISABLE_DEPRECATED
-void Viewport::push_unhandled_input(const Ref<InputEvent> &p_event, bool p_local_coords) {
-	ERR_MAIN_THREAD_GUARD;
-	WARN_DEPRECATED_MSG(R"*(The "push_unhandled_input()" method is deprecated, use "push_input()" instead.)*");
-	ERR_FAIL_COND(!is_inside_tree());
-	ERR_FAIL_COND(p_event.is_null());
-
-	local_input_handled = false;
-
-	if (disable_input || !_can_consume_input_events()) {
-		return;
-	}
-
-	if (Engine::get_singleton()->is_editor_hint() && get_tree()->get_edited_scene_root() && get_tree()->get_edited_scene_root()->is_ancestor_of(this)) {
-		return;
-	}
-
-	Ref<InputEvent> ev;
-	if (!p_local_coords) {
-		ev = _make_input_local(p_event);
-	} else {
-		ev = p_event;
-	}
-
-	_push_unhandled_input_internal(ev);
-}
-#endif // DISABLE_DEPRECATED
-
 void Viewport::_push_unhandled_input_internal(const Ref<InputEvent> &p_event) {
 	// Shortcut Input.
 	if (Object::cast_to<InputEventKey>(*p_event) != nullptr || Object::cast_to<InputEventShortcut>(*p_event) != nullptr || Object::cast_to<InputEventJoypadButton>(*p_event) != nullptr) {
@@ -4696,9 +4668,6 @@ void Viewport::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_viewport_rid"), &Viewport::get_viewport_rid);
 	ClassDB::bind_method(D_METHOD("push_text_input", "text"), &Viewport::push_text_input);
 	ClassDB::bind_method(D_METHOD("push_input", "event", "in_local_coords"), &Viewport::push_input, DEFVAL(false));
-#ifndef DISABLE_DEPRECATED
-	ClassDB::bind_method(D_METHOD("push_unhandled_input", "event", "in_local_coords"), &Viewport::push_unhandled_input, DEFVAL(false));
-#endif // DISABLE_DEPRECATED
 
 	ClassDB::bind_method(D_METHOD("get_mouse_position"), &Viewport::get_mouse_position);
 	ClassDB::bind_method(D_METHOD("warp_mouse", "position"), &Viewport::warp_mouse);

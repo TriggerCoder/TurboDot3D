@@ -57,12 +57,6 @@ struct AudioFrame {
 			float left;
 			float right;
 		};
-#ifndef DISABLE_DEPRECATED
-		struct {
-			float l;
-			float r;
-		};
-#endif
 		float levels[2] = { 0.0 };
 	};
 

@@ -261,33 +261,6 @@ void EditorExportPlatformAndroid::_check_for_changes_poll_thread(void *ud) {
 	EditorExportPlatformAndroid *ea = static_cast<EditorExportPlatformAndroid *>(ud);
 
 	while (!ea->quit_request.is_set()) {
-#ifndef DISABLE_DEPRECATED
-		// Check for android plugins updates
-		{
-			// Nothing to do if we already know the plugins have changed.
-			if (!ea->android_plugins_changed.is_set()) {
-				Vector<PluginConfigAndroid> loaded_plugins = get_plugins();
-
-				MutexLock lock(ea->android_plugins_lock);
-
-				if (ea->android_plugins.size() != loaded_plugins.size()) {
-					ea->android_plugins_changed.set();
-				} else {
-					for (int i = 0; i < ea->android_plugins.size(); i++) {
-						if (ea->android_plugins[i].name != loaded_plugins[i].name) {
-							ea->android_plugins_changed.set();
-							break;
-						}
-					}
-				}
-
-				if (ea->android_plugins_changed.is_set()) {
-					ea->android_plugins = loaded_plugins;
-				}
-			}
-		}
-#endif // DISABLE_DEPRECATED
-
 		// Check for devices updates
 		String adb = get_adb_path();
 		if (ea->has_runnable_preset.is_set() && FileAccess::exists(adb)) {
@@ -644,75 +617,6 @@ Vector<EditorExportPlatformAndroid::ABI> EditorExportPlatformAndroid::get_abis()
 	abis.push_back(ABI("x86_64", "x86_64"));
 	return abis;
 }
-
-#ifndef DISABLE_DEPRECATED
-/// List the gdap files in the directory specified by the p_path parameter.
-Vector<String> EditorExportPlatformAndroid::list_gdap_files(const String &p_path) {
-	Vector<String> dir_files;
-	Ref<DirAccess> da = DirAccess::open(p_path);
-	if (da.is_valid()) {
-		da->list_dir_begin();
-		while (true) {
-			String file = da->get_next();
-			if (file.is_empty()) {
-				break;
-			}
-
-			if (da->current_is_dir() || da->current_is_hidden()) {
-				continue;
-			}
-
-			if (file.ends_with(PluginConfigAndroid::PLUGIN_CONFIG_EXT)) {
-				dir_files.push_back(file);
-			}
-		}
-		da->list_dir_end();
-	}
-
-	return dir_files;
-}
-
-Vector<PluginConfigAndroid> EditorExportPlatformAndroid::get_plugins() {
-	Vector<PluginConfigAndroid> loaded_plugins;
-
-	String plugins_dir = ProjectSettings::get_singleton()->get_resource_path().path_join("android/plugins");
-
-	// Add the prebuilt plugins
-	loaded_plugins.append_array(PluginConfigAndroid::get_prebuilt_plugins(plugins_dir));
-
-	if (DirAccess::exists(plugins_dir)) {
-		Vector<String> plugins_filenames = list_gdap_files(plugins_dir);
-
-		if (!plugins_filenames.is_empty()) {
-			Ref<ConfigFile> config_file = memnew(ConfigFile);
-			for (int i = 0; i < plugins_filenames.size(); i++) {
-				PluginConfigAndroid config = PluginConfigAndroid::load_plugin_config(config_file, plugins_dir.path_join(plugins_filenames[i]));
-				if (config.valid_config) {
-					loaded_plugins.push_back(config);
-				} else {
-					print_error("Invalid plugin config file " + plugins_filenames[i]);
-				}
-			}
-		}
-	}
-
-	return loaded_plugins;
-}
-
-Vector<PluginConfigAndroid> EditorExportPlatformAndroid::get_enabled_plugins(const Ref<EditorExportPreset> &p_presets) {
-	Vector<PluginConfigAndroid> enabled_plugins;
-	Vector<PluginConfigAndroid> all_plugins = get_plugins();
-	for (int i = 0; i < all_plugins.size(); i++) {
-		PluginConfigAndroid plugin = all_plugins[i];
-		bool enabled = p_presets->get("plugins/" + plugin.name);
-		if (enabled) {
-			enabled_plugins.push_back(plugin);
-		}
-	}
-
-	return enabled_plugins;
-}
-#endif // DISABLE_DEPRECATED
 
 Error EditorExportPlatformAndroid::store_in_apk(APKExportData *ed, const String &p_path, const Vector<uint8_t> &p_data, int compression_method) {
 	zip_fileinfo zipfi = get_zip_fileinfo();
@@ -1826,15 +1730,6 @@ void EditorExportPlatformAndroid::get_export_options(List<ExportOption> *r_optio
 	r_options->push_back(ExportOption(PropertyInfo(Variant::STRING, "gradle_build/min_sdk", PROPERTY_HINT_PLACEHOLDER_TEXT, vformat("%d (default)", VULKAN_MIN_SDK_VERSION)), "", false, true));
 	r_options->push_back(ExportOption(PropertyInfo(Variant::STRING, "gradle_build/target_sdk", PROPERTY_HINT_PLACEHOLDER_TEXT, vformat("%d (default)", DEFAULT_TARGET_SDK_VERSION)), "", false, true));
 
-#ifndef DISABLE_DEPRECATED
-	Vector<PluginConfigAndroid> plugins_configs = get_plugins();
-	for (int i = 0; i < plugins_configs.size(); i++) {
-		print_verbose("Found Android plugin " + plugins_configs[i].name);
-		r_options->push_back(ExportOption(PropertyInfo(Variant::BOOL, vformat("%s/%s", PNAME("plugins"), plugins_configs[i].name)), false));
-	}
-	android_plugins_changed.clear();
-#endif // DISABLE_DEPRECATED
-
 	// Android supports multiple architectures in an app bundle, so
 	// we expose each option as a checkbox in the export dialog.
 	const Vector<ABI> abis = get_abis();
@@ -1945,13 +1840,6 @@ Ref<Texture2D> EditorExportPlatformAndroid::get_logo() const {
 }
 
 bool EditorExportPlatformAndroid::should_update_export_options() {
-#ifndef DISABLE_DEPRECATED
-	if (android_plugins_changed.is_set()) {
-		// don't clear unless we're reporting true, to avoid race
-		android_plugins_changed.clear();
-		return true;
-	}
-#endif // DISABLE_DEPRECATED
 	return false;
 }
 
@@ -2904,10 +2792,6 @@ String EditorExportPlatformAndroid::join_abis(const Vector<EditorExportPlatformA
 String EditorExportPlatformAndroid::_get_plugins_names(const Ref<EditorExportPreset> &p_preset) const {
 	Vector<String> names;
 
-#ifndef DISABLE_DEPRECATED
-	PluginConfigAndroid::get_plugins_names(get_enabled_plugins(p_preset), names);
-#endif // DISABLE_DEPRECATED
-
 	Vector<Ref<EditorExportPlugin>> export_plugins = EditorExport::get_singleton()->get_export_plugins();
 	for (int i = 0; i < export_plugins.size(); i++) {
 		if (export_plugins[i]->supports_platform(Ref<EditorExportPlatform>(this))) {
@@ -2942,17 +2826,6 @@ bool EditorExportPlatformAndroid::_is_clean_build_required(const Ref<EditorExpor
 
 	if (!first_build) {
 		have_plugins_changed = plugin_names != last_plugin_names;
-#ifndef DISABLE_DEPRECATED
-		if (!have_plugins_changed) {
-			Vector<PluginConfigAndroid> enabled_plugins = get_enabled_plugins(p_preset);
-			for (int i = 0; i < enabled_plugins.size(); i++) {
-				if (enabled_plugins.get(i).last_updated > last_gradle_build_time) {
-					have_plugins_changed = true;
-					break;
-				}
-			}
-		}
-#endif // DISABLE_DEPRECATED
 	}
 
 	last_gradle_build_time = OS::get_singleton()->get_unix_time();
@@ -3148,14 +3021,6 @@ Error EditorExportPlatformAndroid::export_project_helper(const Ref<EditorExportP
 		Vector<String> android_libraries;
 		Vector<String> android_dependencies;
 		Vector<String> android_dependencies_maven_repos;
-
-#ifndef DISABLE_DEPRECATED
-		Vector<PluginConfigAndroid> enabled_plugins = get_enabled_plugins(p_preset);
-		PluginConfigAndroid::get_plugins_binaries(PluginConfigAndroid::BINARY_TYPE_LOCAL, enabled_plugins, android_libraries);
-		PluginConfigAndroid::get_plugins_binaries(PluginConfigAndroid::BINARY_TYPE_REMOTE, enabled_plugins, android_dependencies);
-		PluginConfigAndroid::get_plugins_custom_maven_repos(enabled_plugins, android_dependencies_maven_repos);
-#endif // DISABLE_DEPRECATED
-
 		Vector<Ref<EditorExportPlugin>> export_plugins = EditorExport::get_singleton()->get_export_plugins();
 		for (int i = 0; i < export_plugins.size(); i++) {
 			if (export_plugins[i]->supports_platform(Ref<EditorExportPlatform>(this))) {
@@ -3621,9 +3486,6 @@ EditorExportPlatformAndroid::EditorExportPlatformAndroid() {
 #endif
 
 		devices_changed.set();
-#ifndef DISABLE_DEPRECATED
-		android_plugins_changed.set();
-#endif // DISABLE_DEPRECATED
 #ifndef ANDROID_ENABLED
 		_create_editor_debug_keystore_if_needed();
 		_update_preset_status();

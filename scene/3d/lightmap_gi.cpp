@@ -222,29 +222,6 @@ Dictionary LightmapGIData::_get_probe_data() const {
 	return d;
 }
 
-#ifndef DISABLE_DEPRECATED
-void LightmapGIData::set_light_texture(const Ref<TextureLayered> &p_light_texture) {
-	TypedArray<TextureLayered> arr;
-	arr.append(p_light_texture);
-	set_lightmap_textures(arr);
-}
-
-Ref<TextureLayered> LightmapGIData::get_light_texture() const {
-	if (light_textures.is_empty()) {
-		return Ref<TextureLayered>();
-	}
-	return light_textures.get(0);
-}
-
-void LightmapGIData::_set_light_textures_data(const Array &p_data) {
-	set_lightmap_textures(p_data);
-}
-
-Array LightmapGIData::_get_light_textures_data() const {
-	return Array(light_textures);
-}
-#endif
-
 void LightmapGIData::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_set_user_data", "data"), &LightmapGIData::_set_user_data);
 	ClassDB::bind_method(D_METHOD("_get_user_data"), &LightmapGIData::_get_user_data);
@@ -268,16 +245,6 @@ void LightmapGIData::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "user_data", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NO_EDITOR | PROPERTY_USAGE_INTERNAL), "_set_user_data", "_get_user_data");
 	ADD_PROPERTY(PropertyInfo(Variant::DICTIONARY, "probe_data", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NO_EDITOR | PROPERTY_USAGE_INTERNAL), "_set_probe_data", "_get_probe_data");
 
-#ifndef DISABLE_DEPRECATED
-	ClassDB::bind_method(D_METHOD("set_light_texture", "light_texture"), &LightmapGIData::set_light_texture);
-	ClassDB::bind_method(D_METHOD("get_light_texture"), &LightmapGIData::get_light_texture);
-
-	ClassDB::bind_method(D_METHOD("_set_light_textures_data", "data"), &LightmapGIData::_set_light_textures_data);
-	ClassDB::bind_method(D_METHOD("_get_light_textures_data"), &LightmapGIData::_get_light_textures_data);
-
-	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "light_texture", PROPERTY_HINT_RESOURCE_TYPE, "TextureLayered", PROPERTY_USAGE_EDITOR), "set_light_texture", "get_light_texture");
-	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "light_textures", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NO_EDITOR | PROPERTY_USAGE_INTERNAL), "_set_light_textures_data", "_get_light_textures_data");
-#endif
 }
 
 LightmapGIData::LightmapGIData() {

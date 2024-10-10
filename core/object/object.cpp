@@ -29,7 +29,6 @@
 /**************************************************************************/
 
 #include "object.h"
-#include "object.compat.inc"
 
 #include "core/extension/gdextension_manager.h"
 #include "core/io/resource.h"
@@ -488,11 +487,6 @@ void Object::get_property_list(List<PropertyInfo> *p_list, bool p_reversed) cons
 					if (current_extension->free_property_list2) {
 						current_extension->free_property_list2(_extension_instance, pinfo, pcount);
 					}
-#ifndef DISABLE_DEPRECATED
-					else if (current_extension->free_property_list) {
-						current_extension->free_property_list(_extension_instance, pinfo);
-					}
-#endif // DISABLE_DEPRECATED
 #ifdef TOOLS_ENABLED
 				}
 #endif
@@ -873,10 +867,6 @@ void Object::notification(int p_notification, bool p_reversed) {
 	if (_extension) {
 		if (_extension->notification2) {
 			_extension->notification2(_extension_instance, p_notification, static_cast<GDExtensionBool>(p_reversed));
-#ifndef DISABLE_DEPRECATED
-		} else if (_extension->notification) {
-			_extension->notification(_extension_instance, p_notification);
-#endif // DISABLE_DEPRECATED
 		}
 	}
 

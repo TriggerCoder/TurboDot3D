@@ -29,7 +29,6 @@
 /**************************************************************************/
 
 #include "editor_plugin.h"
-#include "editor_plugin.compat.inc"
 
 #include "editor/debugger/editor_debugger_node.h"
 #include "editor/editor_dock_manager.h"
@@ -551,24 +550,8 @@ void EditorPlugin::remove_resource_conversion_plugin(const Ref<EditorResourceCon
 	EditorNode::get_singleton()->remove_resource_conversion_plugin(p_plugin);
 }
 
-#ifndef DISABLE_DEPRECATED
-void EditorPlugin::_editor_project_settings_changed() {
-	emit_signal(SNAME("project_settings_changed"));
-}
-#endif
-
 void EditorPlugin::_notification(int p_what) {
-#ifndef DISABLE_DEPRECATED
-	switch (p_what) {
-		case NOTIFICATION_ENTER_TREE: {
-			ProjectSettings::get_singleton()->connect("settings_changed", callable_mp(this, &EditorPlugin::_editor_project_settings_changed));
-		} break;
 
-		case NOTIFICATION_EXIT_TREE: {
-			ProjectSettings::get_singleton()->disconnect("settings_changed", callable_mp(this, &EditorPlugin::_editor_project_settings_changed));
-		} break;
-	}
-#endif
 }
 
 void EditorPlugin::_bind_methods() {

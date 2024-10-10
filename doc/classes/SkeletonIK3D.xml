@@ -50,7 +50,7 @@
 		<method name="stop">
 			<return type="void" />
 			<description>
-				Stops applying IK effects on each frame to the [Skeleton3D] bones and also calls [method Skeleton3D.clear_bones_global_pose_override] to remove existing overrides on all bones.
+				Stops applying IK effects on each frame to the [Skeleton3D] bones and also calls [method Skeleton3D.clear_bones] to remove existing overrides on all bones.
 			</description>
 		</method>
 	</methods>

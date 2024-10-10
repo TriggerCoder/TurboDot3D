@@ -389,19 +389,6 @@ private:
 		}
 	}
 
-#ifndef DISABLE_DEPRECATED
-
-	RID _get_color_texture_compat_80214();
-	RID _get_color_layer_compat_80214(const uint32_t p_layer);
-	RID _get_depth_texture_compat_80214();
-	RID _get_depth_layer_compat_80214(const uint32_t p_layer);
-	RID _get_velocity_texture_compat_80214();
-	RID _get_velocity_layer_compat_80214(const uint32_t p_layer);
-
-	static void _bind_compatibility_methods();
-
-#endif // DISABLE_DEPRECATED
-
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Everything after this needs to be re-evaluated, this is all old implementation
 public:

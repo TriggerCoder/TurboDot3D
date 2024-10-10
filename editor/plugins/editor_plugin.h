@@ -63,10 +63,6 @@ class EditorPlugin : public Node {
 	String last_main_screen_name;
 	String plugin_version;
 
-#ifndef DISABLE_DEPRECATED
-	void _editor_project_settings_changed();
-#endif
-
 public:
 	enum CustomControlContainer {
 		CONTAINER_TOOLBAR,
@@ -134,12 +130,6 @@ protected:
 	GDVIRTUAL0R(bool, _build)
 	GDVIRTUAL0(_enable_plugin)
 	GDVIRTUAL0(_disable_plugin)
-
-#ifndef DISABLE_DEPRECATED
-	Button *_add_control_to_bottom_panel_compat_88081(Control *p_control, const String &p_title);
-	void _add_control_to_dock_compat_88081(DockSlot p_slot, Control *p_control);
-	static void _bind_compatibility_methods();
-#endif
 
 public:
 	//TODO: send a resource for editing to the editor node?

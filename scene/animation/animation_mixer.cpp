@@ -29,7 +29,6 @@
 /**************************************************************************/
 
 #include "animation_mixer.h"
-#include "animation_mixer.compat.inc"
 
 #include "core/config/engine.h"
 #include "core/config/project_settings.h"
@@ -56,24 +55,7 @@
 bool AnimationMixer::_set(const StringName &p_name, const Variant &p_value) {
 	String name = p_name;
 
-#ifndef DISABLE_DEPRECATED
-	if (name.begins_with("anims/")) {
-		// Backwards compatibility with 3.x, add them to "default" library.
-		String which = name.get_slicec('/', 1);
-
-		Ref<Animation> anim = p_value;
-		Ref<AnimationLibrary> al;
-		if (!has_animation_library(StringName())) {
-			al.instantiate();
-			add_animation_library(StringName(), al);
-		} else {
-			al = get_animation_library(StringName());
-		}
-		al->add_animation(which, anim);
-	} else if (name.begins_with("libraries")) {
-#else
 	if (name.begins_with("libraries")) {
-#endif // DISABLE_DEPRECATED
 		Dictionary d = p_value;
 		while (animation_libraries.size()) {
 			remove_animation_library(animation_libraries[0].name);

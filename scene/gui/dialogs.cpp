@@ -29,7 +29,6 @@
 /**************************************************************************/
 
 #include "dialogs.h"
-#include "dialogs.compat.inc"
 
 #include "core/os/keyboard.h"
 #include "core/string/print_string.h"

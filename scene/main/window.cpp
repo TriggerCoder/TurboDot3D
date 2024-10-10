@@ -29,7 +29,6 @@
 /**************************************************************************/
 
 #include "window.h"
-#include "window.compat.inc"
 
 #include "core/config/project_settings.h"
 #include "core/debugger/engine_debugger.h"
@@ -553,13 +552,6 @@ void Window::request_attention() {
 		DisplayServer::get_singleton()->window_request_attention(window_id);
 	}
 }
-
-#ifndef DISABLE_DEPRECATED
-void Window::move_to_foreground() {
-	WARN_DEPRECATED_MSG(R"*(The "move_to_foreground()" method is deprecated, use "grab_focus()" instead.)*");
-	grab_focus();
-}
-#endif // DISABLE_DEPRECATED
 
 bool Window::can_draw() const {
 	ERR_READ_THREAD_GUARD_V(false);
@@ -2712,18 +2704,6 @@ bool Window::is_layout_rtl() const {
 	}
 }
 
-#ifndef DISABLE_DEPRECATED
-void Window::set_auto_translate(bool p_enable) {
-	ERR_MAIN_THREAD_GUARD;
-	set_auto_translate_mode(p_enable ? AUTO_TRANSLATE_MODE_ALWAYS : AUTO_TRANSLATE_MODE_DISABLED);
-}
-
-bool Window::is_auto_translating() const {
-	ERR_READ_THREAD_GUARD_V(false);
-	return can_auto_translate();
-}
-#endif
-
 Transform2D Window::get_final_transform() const {
 	ERR_READ_THREAD_GUARD_V(Transform2D());
 	return window_transform * stretch_transform * global_canvas_transform;
@@ -2838,10 +2818,6 @@ void Window::_bind_methods() {
 
 	ClassDB::bind_method(D_METHOD("request_attention"), &Window::request_attention);
 
-#ifndef DISABLE_DEPRECATED
-	ClassDB::bind_method(D_METHOD("move_to_foreground"), &Window::move_to_foreground);
-#endif // DISABLE_DEPRECATED
-
 	ClassDB::bind_method(D_METHOD("set_visible", "visible"), &Window::set_visible);
 	ClassDB::bind_method(D_METHOD("is_visible"), &Window::is_visible);
 
@@ -2953,11 +2929,6 @@ void Window::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_layout_direction"), &Window::get_layout_direction);
 	ClassDB::bind_method(D_METHOD("is_layout_rtl"), &Window::is_layout_rtl);
 
-#ifndef DISABLE_DEPRECATED
-	ClassDB::bind_method(D_METHOD("set_auto_translate", "enable"), &Window::set_auto_translate);
-	ClassDB::bind_method(D_METHOD("is_auto_translating"), &Window::is_auto_translating);
-#endif
-
 	ClassDB::bind_method(D_METHOD("popup", "rect"), &Window::popup, DEFVAL(Rect2i()));
 	ClassDB::bind_method(D_METHOD("popup_on_parent", "parent_rect"), &Window::popup_on_parent);
 	ClassDB::bind_method(D_METHOD("popup_centered", "minsize"), &Window::popup_centered, DEFVAL(Size2i()));
@@ -3010,10 +2981,6 @@ void Window::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "content_scale_aspect", PROPERTY_HINT_ENUM, "Ignore,Keep,Keep Width,Keep Height,Expand"), "set_content_scale_aspect", "get_content_scale_aspect");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "content_scale_stretch", PROPERTY_HINT_ENUM, "Fractional,Integer"), "set_content_scale_stretch", "get_content_scale_stretch");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "content_scale_factor", PROPERTY_HINT_RANGE, "0.5,8.0,0.01"), "set_content_scale_factor", "get_content_scale_factor");
-
-#ifndef DISABLE_DEPRECATED
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "auto_translate", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NO_EDITOR), "set_auto_translate", "is_auto_translating");
-#endif
 
 	ADD_GROUP("Theme", "theme_");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "theme", PROPERTY_HINT_RESOURCE_TYPE, "Theme"), "set_theme", "get_theme");

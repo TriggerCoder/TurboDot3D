@@ -606,10 +606,6 @@ void EditorExportPlatformIOS::_fix_config_file(const Ref<EditorExportPreset> &p_
 		} else if (lines[i].contains("$pbx_launch_screen_build_reference")) {
 			String value = "90DD2D9E24B36E8000717FE1 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 90DD2D9D24B36E8000717FE1 /* Launch Screen.storyboard */; };";
 			strnew += lines[i].replace("$pbx_launch_screen_build_reference", value) + "\n";
-#ifndef DISABLE_DEPRECATED
-		} else if (lines[i].contains("$pbx_launch_image_usage_setting")) {
-			strnew += lines[i].replace("$pbx_launch_image_usage_setting", "") + "\n";
-#endif
 		} else if (lines[i].contains("$launch_screen_image_mode")) {
 			int image_scale_mode = p_preset->get("storyboard/image_scale_mode");
 			String value;

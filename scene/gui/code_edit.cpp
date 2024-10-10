@@ -29,7 +29,6 @@
 /**************************************************************************/
 
 #include "code_edit.h"
-#include "code_edit.compat.inc"
 
 #include "core/os/keyboard.h"
 #include "core/string/string_builder.h"

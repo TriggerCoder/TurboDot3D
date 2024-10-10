@@ -142,7 +142,7 @@
 			<return type="void" />
 			<param index="0" name="idx" type="int" />
 			<description>
-				Removes an outline created in the editor or by script. You have to call [method make_polygons_from_outlines] for the polygons to update.
+				Removes an outline created in the editor or by script.
 			</description>
 		</method>
 		<method name="set_outline">
@@ -150,7 +150,7 @@
 			<param index="0" name="idx" type="int" />
 			<param index="1" name="outline" type="PackedVector2Array" />
 			<description>
-				Changes an outline created in the editor or by script. You have to call [method make_polygons_from_outlines] for the polygons to update.
+				Changes an outline created in the editor or by script.
 			</description>
 		</method>
 		<method name="set_parsed_collision_mask_value">

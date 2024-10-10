@@ -29,7 +29,6 @@
 /**************************************************************************/
 
 #include "gdextension.h"
-#include "gdextension.compat.inc"
 
 #include "core/config/project_settings.h"
 #include "core/io/dir_access.h"
@@ -380,76 +379,6 @@ public:
 	}
 };
 
-#ifndef DISABLE_DEPRECATED
-void GDExtension::_register_extension_class(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringNamePtr p_parent_class_name, const GDExtensionClassCreationInfo *p_extension_funcs) {
-	const GDExtensionClassCreationInfo3 class_info3 = {
-		p_extension_funcs->is_virtual, // GDExtensionBool is_virtual;
-		p_extension_funcs->is_abstract, // GDExtensionBool is_abstract;
-		true, // GDExtensionBool is_exposed;
-		false, // GDExtensionBool is_runtime;
-		p_extension_funcs->set_func, // GDExtensionClassSet set_func;
-		p_extension_funcs->get_func, // GDExtensionClassGet get_func;
-		p_extension_funcs->get_property_list_func, // GDExtensionClassGetPropertyList get_property_list_func;
-		nullptr, // GDExtensionClassFreePropertyList2 free_property_list_func;
-		p_extension_funcs->property_can_revert_func, // GDExtensionClassPropertyCanRevert property_can_revert_func;
-		p_extension_funcs->property_get_revert_func, // GDExtensionClassPropertyGetRevert property_get_revert_func;
-		nullptr, // GDExtensionClassValidateProperty validate_property_func;
-		nullptr, // GDExtensionClassNotification2 notification_func;
-		p_extension_funcs->to_string_func, // GDExtensionClassToString to_string_func;
-		p_extension_funcs->reference_func, // GDExtensionClassReference reference_func;
-		p_extension_funcs->unreference_func, // GDExtensionClassUnreference unreference_func;
-		p_extension_funcs->create_instance_func, // GDExtensionClassCreateInstance create_instance_func; /* this one is mandatory */
-		p_extension_funcs->free_instance_func, // GDExtensionClassFreeInstance free_instance_func; /* this one is mandatory */
-		nullptr, // GDExtensionClassRecreateInstance recreate_instance_func;
-		p_extension_funcs->get_virtual_func, // GDExtensionClassGetVirtual get_virtual_func;
-		nullptr, // GDExtensionClassGetVirtualCallData get_virtual_call_data_func;
-		nullptr, // GDExtensionClassCallVirtualWithData call_virtual_func;
-		p_extension_funcs->get_rid_func, // GDExtensionClassGetRID get_rid;
-		p_extension_funcs->class_userdata, // void *class_userdata;
-	};
-
-	const ClassCreationDeprecatedInfo legacy = {
-		p_extension_funcs->notification_func, // GDExtensionClassNotification notification_func;
-		p_extension_funcs->free_property_list_func, // GDExtensionClassFreePropertyList free_property_list_func;
-	};
-	_register_extension_class_internal(p_library, p_class_name, p_parent_class_name, &class_info3, &legacy);
-}
-
-void GDExtension::_register_extension_class2(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringNamePtr p_parent_class_name, const GDExtensionClassCreationInfo2 *p_extension_funcs) {
-	const GDExtensionClassCreationInfo3 class_info3 = {
-		p_extension_funcs->is_virtual, // GDExtensionBool is_virtual;
-		p_extension_funcs->is_abstract, // GDExtensionBool is_abstract;
-		p_extension_funcs->is_exposed, // GDExtensionBool is_exposed;
-		false, // GDExtensionBool is_runtime;
-		p_extension_funcs->set_func, // GDExtensionClassSet set_func;
-		p_extension_funcs->get_func, // GDExtensionClassGet get_func;
-		p_extension_funcs->get_property_list_func, // GDExtensionClassGetPropertyList get_property_list_func;
-		nullptr, // GDExtensionClassFreePropertyList2 free_property_list_func;
-		p_extension_funcs->property_can_revert_func, // GDExtensionClassPropertyCanRevert property_can_revert_func;
-		p_extension_funcs->property_get_revert_func, // GDExtensionClassPropertyGetRevert property_get_revert_func;
-		p_extension_funcs->validate_property_func, // GDExtensionClassValidateProperty validate_property_func;
-		p_extension_funcs->notification_func, // GDExtensionClassNotification2 notification_func;
-		p_extension_funcs->to_string_func, // GDExtensionClassToString to_string_func;
-		p_extension_funcs->reference_func, // GDExtensionClassReference reference_func;
-		p_extension_funcs->unreference_func, // GDExtensionClassUnreference unreference_func;
-		p_extension_funcs->create_instance_func, // GDExtensionClassCreateInstance create_instance_func; /* this one is mandatory */
-		p_extension_funcs->free_instance_func, // GDExtensionClassFreeInstance free_instance_func; /* this one is mandatory */
-		p_extension_funcs->recreate_instance_func, // GDExtensionClassRecreateInstance recreate_instance_func;
-		p_extension_funcs->get_virtual_func, // GDExtensionClassGetVirtual get_virtual_func;
-		p_extension_funcs->get_virtual_call_data_func, // GDExtensionClassGetVirtualCallData get_virtual_call_data_func;
-		p_extension_funcs->call_virtual_with_data_func, // GDExtensionClassCallVirtualWithData call_virtual_func;
-		p_extension_funcs->get_rid_func, // GDExtensionClassGetRID get_rid;
-		p_extension_funcs->class_userdata, // void *class_userdata;
-	};
-
-	const ClassCreationDeprecatedInfo legacy = {
-		nullptr, // GDExtensionClassNotification notification_func;
-		p_extension_funcs->free_property_list_func, // GDExtensionClassFreePropertyList free_property_list_func;
-	};
-	_register_extension_class_internal(p_library, p_class_name, p_parent_class_name, &class_info3, &legacy);
-}
-#endif // DISABLE_DEPRECATED
-
 void GDExtension::_register_extension_class3(GDExtensionClassLibraryPtr p_library, GDExtensionConstStringNamePtr p_class_name, GDExtensionConstStringNamePtr p_parent_class_name, const GDExtensionClassCreationInfo3 *p_extension_funcs) {
 	_register_extension_class_internal(p_library, p_class_name, p_parent_class_name, p_extension_funcs);
 }
@@ -526,12 +455,6 @@ void GDExtension::_register_extension_class_internal(GDExtensionClassLibraryPtr 
 	extension->gdextension.property_can_revert = p_extension_funcs->property_can_revert_func;
 	extension->gdextension.property_get_revert = p_extension_funcs->property_get_revert_func;
 	extension->gdextension.validate_property = p_extension_funcs->validate_property_func;
-#ifndef DISABLE_DEPRECATED
-	if (p_deprecated_funcs) {
-		extension->gdextension.notification = p_deprecated_funcs->notification_func;
-		extension->gdextension.free_property_list = p_deprecated_funcs->free_property_list_func;
-	}
-#endif // DISABLE_DEPRECATED
 	extension->gdextension.notification2 = p_extension_funcs->notification_func;
 	extension->gdextension.to_string = p_extension_funcs->to_string_func;
 	extension->gdextension.reference = p_extension_funcs->reference_func;
@@ -894,10 +817,6 @@ GDExtension::~GDExtension() {
 void GDExtension::initialize_gdextensions() {
 	gdextension_setup_interface();
 
-#ifndef DISABLE_DEPRECATED
-	register_interface_function("classdb_register_extension_class", (GDExtensionInterfaceFunctionPtr)&GDExtension::_register_extension_class);
-	register_interface_function("classdb_register_extension_class2", (GDExtensionInterfaceFunctionPtr)&GDExtension::_register_extension_class2);
-#endif // DISABLE_DEPRECATED
 	register_interface_function("classdb_register_extension_class3", (GDExtensionInterfaceFunctionPtr)&GDExtension::_register_extension_class3);
 	register_interface_function("classdb_register_extension_class_method", (GDExtensionInterfaceFunctionPtr)&GDExtension::_register_extension_class_method);
 	register_interface_function("classdb_register_extension_class_virtual_method", (GDExtensionInterfaceFunctionPtr)&GDExtension::_register_extension_class_virtual_method);

@@ -27,8 +27,3 @@ def get_doc_classes():
 
 def get_doc_path():
     return "doc_classes"
-
-
-def is_enabled():
-    # The module is disabled by default. Use module_mono_enabled=yes to enable it.
-    return False

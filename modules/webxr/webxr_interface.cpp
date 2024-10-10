@@ -29,7 +29,6 @@
 /**************************************************************************/
 
 #include "webxr_interface.h"
-#include "webxr_interface.compat.inc"
 
 #include <stdlib.h>
 

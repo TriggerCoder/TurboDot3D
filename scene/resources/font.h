@@ -101,12 +101,6 @@ protected:
 	virtual void _update_rids() const;
 	virtual void reset_state() override;
 
-#ifndef DISABLE_DEPRECATED
-	RID _find_variation_compat_80954(const Dictionary &p_variation_coordinates, int p_face_index = 0, float p_strength = 0.0, Transform2D p_transform = Transform2D()) const;
-	RID _find_variation_compat_87668(const Dictionary &p_variation_coordinates, int p_face_index = 0, float p_strength = 0.0, Transform2D p_transform = Transform2D(), int p_spacing_top = 0, int p_spacing_bottom = 0, int p_spacing_space = 0, int p_spacing_glyph = 0) const;
-	static void _bind_compatibility_methods();
-#endif
-
 public:
 	virtual bool _is_cyclic(const Ref<Font> &p_f, int p_depth) const;
 	virtual bool _is_base_cyclic(const Ref<Font> &p_f, int p_depth) const;
@@ -198,11 +192,6 @@ class FontFile : public Font {
 	TextServer::Hinting hinting = TextServer::HINTING_LIGHT;
 	TextServer::SubpixelPositioning subpixel_positioning = TextServer::SUBPIXEL_POSITIONING_AUTO;
 	real_t oversampling = 0.f;
-
-#ifndef DISABLE_DEPRECATED
-	real_t bmp_height = 0.0;
-	real_t bmp_ascent = 0.0;
-#endif
 
 	// Cache.
 	mutable Vector<RID> cache;
