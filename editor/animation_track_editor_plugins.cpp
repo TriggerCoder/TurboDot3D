@@ -35,8 +35,6 @@
 #include "editor/editor_string_names.h"
 #include "editor/editor_undo_redo_manager.h"
 #include "editor/themes/editor_scale.h"
-#include "scene/2d/animated_sprite_2d.h"
-#include "scene/2d/sprite_2d.h"
 #include "scene/3d/sprite_3d.h"
 #include "scene/animation/animation_player.h"
 #include "scene/resources/text_line.h"
@@ -381,7 +379,7 @@ Rect2 AnimationTrackEditSpriteFrame::get_key_rect(int p_index, float p_pixels_se
 
 	Size2 size;
 
-	if (Object::cast_to<Sprite2D>(object) || Object::cast_to<Sprite3D>(object)) {
+	if (Object::cast_to<Sprite3D>(object)) {
 		Ref<Texture2D> texture = object->call("get_texture");
 		if (!texture.is_valid()) {
 			return AnimationTrackEdit::get_key_rect(p_index, p_pixels_sec);
@@ -402,35 +400,6 @@ Rect2 AnimationTrackEditSpriteFrame::get_key_rect(int p_index, float p_pixels_se
 		if (vframes > 1) {
 			size.y /= vframes;
 		}
-	} else if (Object::cast_to<AnimatedSprite2D>(object) || Object::cast_to<AnimatedSprite3D>(object)) {
-		Ref<SpriteFrames> sf = object->call("get_sprite_frames");
-		if (sf.is_null()) {
-			return AnimationTrackEdit::get_key_rect(p_index, p_pixels_sec);
-		}
-
-		List<StringName> animations;
-		sf->get_animation_list(&animations);
-
-		int frame = get_animation()->track_get_key_value(get_track(), p_index);
-		String animation_name;
-		if (animations.size() == 1) {
-			animation_name = animations.front()->get();
-		} else {
-			// Go through other track to find if animation is set
-			String animation_path = get_animation()->track_get_path(get_track());
-			animation_path = animation_path.replace(":frame", ":animation");
-			int animation_track = get_animation()->find_track(animation_path, get_animation()->track_get_type(get_track()));
-			float track_time = get_animation()->track_get_key_time(get_track(), p_index);
-			int animaiton_index = get_animation()->track_find_key(animation_track, track_time);
-			animation_name = get_animation()->track_get_key_value(animation_track, animaiton_index);
-		}
-
-		Ref<Texture2D> texture = sf->get_frame_texture(animation_name, frame);
-		if (!texture.is_valid()) {
-			return AnimationTrackEdit::get_key_rect(p_index, p_pixels_sec);
-		}
-
-		size = texture->get_size();
 	}
 
 	size = size.floor();
@@ -458,7 +427,7 @@ void AnimationTrackEditSpriteFrame::draw_key(int p_index, float p_pixels_sec, in
 	Ref<Texture2D> texture;
 	Rect2 region;
 
-	if (Object::cast_to<Sprite2D>(object) || Object::cast_to<Sprite3D>(object)) {
+	if (Object::cast_to<Sprite3D>(object)) {
 		texture = object->call("get_texture");
 		if (!texture.is_valid()) {
 			AnimationTrackEdit::draw_key(p_index, p_pixels_sec, p_x, p_selected, p_clip_left, p_clip_right);
@@ -493,37 +462,6 @@ void AnimationTrackEditSpriteFrame::draw_key(int p_index, float p_pixels_sec, in
 		region.position.x += region.size.x * coords.x;
 		region.position.y += region.size.y * coords.y;
 
-	} else if (Object::cast_to<AnimatedSprite2D>(object) || Object::cast_to<AnimatedSprite3D>(object)) {
-		Ref<SpriteFrames> sf = object->call("get_sprite_frames");
-		if (sf.is_null()) {
-			AnimationTrackEdit::draw_key(p_index, p_pixels_sec, p_x, p_selected, p_clip_left, p_clip_right);
-			return;
-		}
-
-		List<StringName> animations;
-		sf->get_animation_list(&animations);
-
-		int frame = get_animation()->track_get_key_value(get_track(), p_index);
-		String animation_name;
-		if (animations.size() == 1) {
-			animation_name = animations.front()->get();
-		} else {
-			// Go through other track to find if animation is set
-			String animation_path = get_animation()->track_get_path(get_track());
-			animation_path = animation_path.replace(":frame", ":animation");
-			int animation_track = get_animation()->find_track(animation_path, get_animation()->track_get_type(get_track()));
-			float track_time = get_animation()->track_get_key_time(get_track(), p_index);
-			int animaiton_index = get_animation()->track_find_key(animation_track, track_time);
-			animation_name = get_animation()->track_get_key_value(animation_track, animaiton_index);
-		}
-
-		texture = sf->get_frame_texture(animation_name, frame);
-		if (!texture.is_valid()) {
-			AnimationTrackEdit::draw_key(p_index, p_pixels_sec, p_x, p_selected, p_clip_left, p_clip_right);
-			return;
-		}
-
-		region.size = texture->get_size();
 	}
 
 	Ref<Font> font = get_theme_font(SceneStringName(font), SNAME("Label"));

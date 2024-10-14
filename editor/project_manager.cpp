@@ -69,7 +69,6 @@
 #include "scene/theme/theme_db.h"
 #include "servers/display_server.h"
 #include "servers/navigation_server_3d.h"
-#include "servers/physics_server_2d.h"
 
 constexpr int GODOT4_CONFIG_VERSION = 5;
 
@@ -1044,7 +1043,6 @@ ProjectManager::ProjectManager() {
 	// Turn off some servers we aren't going to be using in the Project Manager.
 	NavigationServer3D::get_singleton()->set_active(false);
 	PhysicsServer3D::get_singleton()->set_active(false);
-	PhysicsServer2D::get_singleton()->set_active(false);
 
 	// Initialize settings.
 	{

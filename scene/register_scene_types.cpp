@@ -154,78 +154,7 @@
 #include "scene/resources/visual_shader_nodes.h"
 #include "scene/resources/visual_shader_particle_nodes.h"
 #include "scene/resources/visual_shader_sdf_nodes.h"
-#include "scene/resources/world_2d.h"
 #include "scene/theme/theme_db.h"
-
-// 2D
-#include "scene/2d/animated_sprite_2d.h"
-#include "scene/2d/audio_listener_2d.h"
-#include "scene/2d/audio_stream_player_2d.h"
-#include "scene/2d/back_buffer_copy.h"
-#include "scene/2d/camera_2d.h"
-#include "scene/2d/canvas_group.h"
-#include "scene/2d/canvas_modulate.h"
-#include "scene/2d/cpu_particles_2d.h"
-#include "scene/2d/gpu_particles_2d.h"
-#include "scene/2d/light_2d.h"
-#include "scene/2d/light_occluder_2d.h"
-#include "scene/2d/line_2d.h"
-#include "scene/2d/marker_2d.h"
-#include "scene/2d/mesh_instance_2d.h"
-#include "scene/2d/multimesh_instance_2d.h"
-#include "scene/2d/navigation_agent_2d.h"
-#include "scene/2d/navigation_link_2d.h"
-#include "scene/2d/navigation_obstacle_2d.h"
-#include "scene/2d/navigation_region_2d.h"
-#include "scene/2d/parallax_2d.h"
-#include "scene/2d/parallax_background.h"
-#include "scene/2d/parallax_layer.h"
-#include "scene/2d/path_2d.h"
-#include "scene/2d/physics/animatable_body_2d.h"
-#include "scene/2d/physics/area_2d.h"
-#include "scene/2d/physics/character_body_2d.h"
-#include "scene/2d/physics/collision_polygon_2d.h"
-#include "scene/2d/physics/collision_shape_2d.h"
-#include "scene/2d/physics/joints/damped_spring_joint_2d.h"
-#include "scene/2d/physics/joints/groove_joint_2d.h"
-#include "scene/2d/physics/joints/joint_2d.h"
-#include "scene/2d/physics/joints/pin_joint_2d.h"
-#include "scene/2d/physics/kinematic_collision_2d.h"
-#include "scene/2d/physics/physical_bone_2d.h"
-#include "scene/2d/physics/physics_body_2d.h"
-#include "scene/2d/physics/ray_cast_2d.h"
-#include "scene/2d/physics/rigid_body_2d.h"
-#include "scene/2d/physics/shape_cast_2d.h"
-#include "scene/2d/physics/static_body_2d.h"
-#include "scene/2d/polygon_2d.h"
-#include "scene/2d/remote_transform_2d.h"
-#include "scene/2d/skeleton_2d.h"
-#include "scene/2d/sprite_2d.h"
-#include "scene/2d/tile_map.h"
-#include "scene/2d/tile_map_layer.h"
-#include "scene/2d/touch_screen_button.h"
-#include "scene/2d/visible_on_screen_notifier_2d.h"
-#include "scene/resources/2d/capsule_shape_2d.h"
-#include "scene/resources/2d/circle_shape_2d.h"
-#include "scene/resources/2d/concave_polygon_shape_2d.h"
-#include "scene/resources/2d/convex_polygon_shape_2d.h"
-#include "scene/resources/2d/navigation_mesh_source_geometry_data_2d.h"
-#include "scene/resources/2d/navigation_polygon.h"
-#include "scene/resources/2d/polygon_path_finder.h"
-#include "scene/resources/2d/rectangle_shape_2d.h"
-#include "scene/resources/2d/segment_shape_2d.h"
-#include "scene/resources/2d/separation_ray_shape_2d.h"
-#include "scene/resources/2d/skeleton/skeleton_modification_2d.h"
-#include "scene/resources/2d/skeleton/skeleton_modification_2d_ccdik.h"
-#include "scene/resources/2d/skeleton/skeleton_modification_2d_fabrik.h"
-#include "scene/resources/2d/skeleton/skeleton_modification_2d_jiggle.h"
-#include "scene/resources/2d/skeleton/skeleton_modification_2d_lookat.h"
-#include "scene/resources/2d/skeleton/skeleton_modification_2d_physicalbones.h"
-#include "scene/resources/2d/skeleton/skeleton_modification_2d_stackholder.h"
-#include "scene/resources/2d/skeleton/skeleton_modification_2d_twoboneik.h"
-#include "scene/resources/2d/skeleton/skeleton_modification_stack_2d.h"
-#include "scene/resources/2d/tile_set.h"
-#include "scene/resources/2d/world_boundary_shape_2d.h"
 
 #ifndef _3D_DISABLED
 #include "scene/3d/audio_listener_3d.h"
@@ -377,7 +306,6 @@ void register_scene_types() {
 	GDREGISTER_CLASS(HTTPRequest);
 	GDREGISTER_CLASS(Timer);
 	GDREGISTER_CLASS(CanvasLayer);
-	GDREGISTER_CLASS(CanvasModulate);
 	GDREGISTER_CLASS(ResourcePreloader);
 	GDREGISTER_CLASS(Window);
 
@@ -561,7 +489,6 @@ void register_scene_types() {
 	GDREGISTER_CLASS(PolygonOccluder3D);
 	GDREGISTER_ABSTRACT_CLASS(SpriteBase3D);
 	GDREGISTER_CLASS(Sprite3D);
-	GDREGISTER_CLASS(AnimatedSprite3D);
 	GDREGISTER_CLASS(Label3D);
 	GDREGISTER_ABSTRACT_CLASS(Light3D);
 	GDREGISTER_CLASS(DirectionalLight3D);
@@ -769,77 +696,6 @@ void register_scene_types() {
 	SceneTree::add_idle_callback(CanvasItemMaterial::flush_changes);
 	CanvasItemMaterial::init_shaders();
 
-	/* REGISTER 2D */
-
-	GDREGISTER_CLASS(Node2D);
-	GDREGISTER_CLASS(CanvasGroup);
-	GDREGISTER_CLASS(CPUParticles2D);
-	GDREGISTER_CLASS(GPUParticles2D);
-	GDREGISTER_CLASS(Sprite2D);
-	GDREGISTER_CLASS(SpriteFrames);
-	GDREGISTER_CLASS(AnimatedSprite2D);
-	GDREGISTER_CLASS(Marker2D);
-	GDREGISTER_CLASS(Line2D);
-	GDREGISTER_CLASS(MeshInstance2D);
-	GDREGISTER_CLASS(MultiMeshInstance2D);
-	GDREGISTER_ABSTRACT_CLASS(CollisionObject2D);
-	GDREGISTER_ABSTRACT_CLASS(PhysicsBody2D);
-	GDREGISTER_CLASS(StaticBody2D);
-	GDREGISTER_CLASS(AnimatableBody2D);
-	GDREGISTER_CLASS(RigidBody2D);
-	GDREGISTER_CLASS(CharacterBody2D);
-	GDREGISTER_CLASS(KinematicCollision2D);
-	GDREGISTER_CLASS(Area2D);
-	GDREGISTER_CLASS(CollisionShape2D);
-	GDREGISTER_CLASS(CollisionPolygon2D);
-	GDREGISTER_CLASS(RayCast2D);
-	GDREGISTER_CLASS(ShapeCast2D);
-	GDREGISTER_CLASS(VisibleOnScreenNotifier2D);
-	GDREGISTER_CLASS(VisibleOnScreenEnabler2D);
-	GDREGISTER_CLASS(Polygon2D);
-	GDREGISTER_CLASS(Skeleton2D);
-	GDREGISTER_CLASS(Bone2D);
-	GDREGISTER_ABSTRACT_CLASS(Light2D);
-	GDREGISTER_CLASS(PointLight2D);
-	GDREGISTER_CLASS(DirectionalLight2D);
-	GDREGISTER_CLASS(LightOccluder2D);
-	GDREGISTER_CLASS(OccluderPolygon2D);
-	GDREGISTER_CLASS(BackBufferCopy);
-
-	OS::get_singleton()->yield(); // may take time to init
-
-	GDREGISTER_CLASS(Camera2D);
-	GDREGISTER_CLASS(AudioListener2D);
-	GDREGISTER_ABSTRACT_CLASS(Joint2D);
-	GDREGISTER_CLASS(PinJoint2D);
-	GDREGISTER_CLASS(GrooveJoint2D);
-	GDREGISTER_CLASS(DampedSpringJoint2D);
-	GDREGISTER_CLASS(TileSet);
-	GDREGISTER_ABSTRACT_CLASS(TileSetSource);
-	GDREGISTER_CLASS(TileSetAtlasSource);
-	GDREGISTER_CLASS(TileSetScenesCollectionSource);
-	GDREGISTER_CLASS(TileMapPattern);
-	GDREGISTER_CLASS(TileData);
-	GDREGISTER_CLASS(TileMap);
-	GDREGISTER_CLASS(TileMapLayer);
-	GDREGISTER_CLASS(Parallax2D);
-	GDREGISTER_CLASS(ParallaxBackground);
-	GDREGISTER_CLASS(ParallaxLayer);
-	GDREGISTER_CLASS(TouchScreenButton);
-	GDREGISTER_CLASS(RemoteTransform2D);
-
-	GDREGISTER_CLASS(SkeletonModificationStack2D);
-	GDREGISTER_CLASS(SkeletonModification2D);
-	GDREGISTER_CLASS(SkeletonModification2DLookAt);
-	GDREGISTER_CLASS(SkeletonModification2DCCDIK);
-	GDREGISTER_CLASS(SkeletonModification2DFABRIK);
-	GDREGISTER_CLASS(SkeletonModification2DJiggle);
-	GDREGISTER_CLASS(SkeletonModification2DTwoBoneIK);
-	GDREGISTER_CLASS(SkeletonModification2DStackHolder);
-
-	GDREGISTER_CLASS(PhysicalBone2D);
-	GDREGISTER_CLASS(SkeletonModification2DPhysicalBones);
-
 	OS::get_singleton()->yield(); // may take time to init
 
 	/* REGISTER RESOURCES */
@@ -908,7 +764,6 @@ void register_scene_types() {
 	GDREGISTER_VIRTUAL_CLASS(CameraAttributes);
 	GDREGISTER_CLASS(CameraAttributesPhysical);
 	GDREGISTER_CLASS(CameraAttributesPractical);
-	GDREGISTER_CLASS(World2D);
 	GDREGISTER_VIRTUAL_CLASS(Texture);
 	GDREGISTER_VIRTUAL_CLASS(Texture2D);
 	GDREGISTER_CLASS(Sky);
@@ -988,31 +843,8 @@ void register_scene_types() {
 
 	OS::get_singleton()->yield(); // may take time to init
 
-	GDREGISTER_CLASS(AudioStreamPlayer2D);
-	GDREGISTER_ABSTRACT_CLASS(Shape2D);
-	GDREGISTER_CLASS(WorldBoundaryShape2D);
-	GDREGISTER_CLASS(SegmentShape2D);
-	GDREGISTER_CLASS(SeparationRayShape2D);
-	GDREGISTER_CLASS(CircleShape2D);
-	GDREGISTER_CLASS(RectangleShape2D);
-	GDREGISTER_CLASS(CapsuleShape2D);
-	GDREGISTER_CLASS(ConvexPolygonShape2D);
-	GDREGISTER_CLASS(ConcavePolygonShape2D);
 	GDREGISTER_CLASS(Curve2D);
-	GDREGISTER_CLASS(Path2D);
-	GDREGISTER_CLASS(PathFollow2D);
-	GDREGISTER_CLASS(PolygonPathFinder);
-
 	GDREGISTER_CLASS(NavigationMesh);
-	GDREGISTER_CLASS(NavigationMeshSourceGeometryData2D);
-	GDREGISTER_CLASS(NavigationPolygon);
-	GDREGISTER_CLASS(NavigationRegion2D);
-	GDREGISTER_CLASS(NavigationAgent2D);
-	GDREGISTER_CLASS(NavigationObstacle2D);
-	GDREGISTER_CLASS(NavigationLink2D);
-
-	OS::get_singleton()->yield(); // may take time to init
-
 	GDREGISTER_ABSTRACT_CLASS(SceneState);
 	GDREGISTER_CLASS(PackedScene);
 

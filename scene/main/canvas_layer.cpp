@@ -32,7 +32,6 @@
 
 #include "scene/main/canvas_item.h"
 #include "scene/main/viewport.h"
-#include "scene/resources/world_2d.h"
 
 void CanvasLayer::set_layer(int p_xform) {
 	layer = p_xform;
@@ -299,8 +298,6 @@ void CanvasLayer::_update_follow_viewport(bool p_force_exit) {
 	}
 	if (p_force_exit || !follow_viewport) {
 		RS::get_singleton()->canvas_set_parent(canvas, RID(), 1.0);
-	} else {
-		RS::get_singleton()->canvas_set_parent(canvas, vp->get_world_2d()->get_canvas(), follow_viewport_scale);
 	}
 }
 

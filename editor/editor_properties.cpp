@@ -48,7 +48,6 @@
 #include "editor/scene_tree_dock.h"
 #include "editor/themes/editor_scale.h"
 #include "editor/themes/editor_theme_manager.h"
-#include "scene/2d/gpu_particles_2d.h"
 #include "scene/3d/fog_volume.h"
 #include "scene/3d/gpu_particles_3d.h"
 #include "scene/gui/color_picker.h"
@@ -3232,7 +3231,7 @@ void EditorPropertyResource::_update_preferred_shader() {
 		const StringName &ed_property = parent_property->get_edited_property();
 
 		// Set preferred shader based on edited parent type.
-		if ((Object::cast_to<GPUParticles2D>(ed_object) || Object::cast_to<GPUParticles3D>(ed_object)) && ed_property == SNAME("process_material")) {
+		if ((Object::cast_to<GPUParticles3D>(ed_object)) && ed_property == SNAME("process_material")) {
 			shader_picker->set_preferred_mode(Shader::MODE_PARTICLES);
 		} else if (Object::cast_to<FogVolume>(ed_object)) {
 			shader_picker->set_preferred_mode(Shader::MODE_FOG);

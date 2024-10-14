@@ -5367,10 +5367,6 @@ void GLTFDocument::_convert_animation_player_to_gltf(AnimationPlayer *p_animatio
 void GLTFDocument::_check_visibility(Node *p_node, bool &r_retflag) {
 	r_retflag = true;
 	Node3D *spatial = Object::cast_to<Node3D>(p_node);
-	Node2D *node_2d = Object::cast_to<Node2D>(p_node);
-	if (node_2d && !node_2d->is_visible()) {
-		return;
-	}
 	if (spatial && !spatial->is_visible()) {
 		return;
 	}

@@ -34,7 +34,6 @@
 #include "core/math/geometry_2d.h"
 #include "core/math/math_funcs.h"
 #include "core/os/keyboard.h"
-#include "scene/2d/line_2d.h"
 #include "scene/gui/box_container.h"
 #include "scene/gui/button.h"
 #include "scene/gui/graph_edit_arranger.h"
@@ -273,6 +272,7 @@ Error GraphEdit::connect_node(const StringName &p_from, int p_from_port, const S
 	connection_map[p_from].push_back(c);
 	connection_map[p_to].push_back(c);
 
+/* FIXME
 	Line2D *line = memnew(Line2D);
 	line->set_texture_mode(Line2D::LineTextureMode::LINE_TEXTURE_STRETCH);
 
@@ -292,7 +292,7 @@ Error GraphEdit::connect_node(const StringName &p_from, int p_from_port, const S
 
 	connections_layer->add_child(line);
 	c->_cache.line = line;
-
+*/
 	minimap->queue_redraw();
 	queue_redraw();
 	connections_layer->queue_redraw();
@@ -316,7 +316,7 @@ void GraphEdit::disconnect_node(const StringName &p_from, int p_from_port, const
 		if (E->get()->from_node == p_from && E->get()->from_port == p_from_port && E->get()->to_node == p_to && E->get()->to_port == p_to_port) {
 			connection_map[p_from].erase(E->get());
 			connection_map[p_to].erase(E->get());
-			E->get()->_cache.line->queue_free();
+// FIXME			E->get()->_cache.line->queue_free();
 			connections.erase(E);
 
 			minimap->queue_redraw();
@@ -1368,7 +1368,7 @@ void GraphEdit::_update_connections() {
 			c->_cache.to_color = to_color;
 
 			PackedVector2Array line_points = get_connection_line(from_pos * zoom, to_pos * zoom);
-			c->_cache.line->set_points(line_points);
+/* FIXEME			c->_cache.line->set_points(line_points);
 
 			Ref<ShaderMaterial> line_material = c->_cache.line->get_material();
 			if (line_material.is_null()) {
@@ -1381,7 +1381,7 @@ void GraphEdit::_update_connections() {
 			line_material->set_shader_parameter("from_type", from_type);
 			line_material->set_shader_parameter("to_type", to_type);
 			line_material->set_shader_parameter("rim_color", theme_cache.connection_rim_color);
-
+*/
 			// Compute bounding box of the line, including the line width.
 			c->_cache.aabb = Rect2(line_points[0], Vector2());
 			for (int i = 0; i < line_points.size(); i++) {
@@ -1416,11 +1416,13 @@ void GraphEdit::_update_connections() {
 		Ref<Gradient> line_gradient = memnew(Gradient);
 
 		float line_width = _get_shader_line_width();
+		/* FIXME
 		c->_cache.line->set_width(line_width);
 		line_gradient->set_color(0, from_color);
 		line_gradient->set_color(1, to_color);
 
 		c->_cache.line->set_gradient(line_gradient);
+		*/
 	}
 
 	for (const List<Ref<Connection>>::Element *E : dead_connections) {
@@ -1428,7 +1430,7 @@ void GraphEdit::_update_connections() {
 		List<Ref<Connection>> &connections_to = connection_map[E->get()->to_node];
 		connections_from.erase(E->get());
 		connections_to.erase(E->get());
-		E->get()->_cache.line->queue_free();
+// FIXME		E->get()->_cache.line->queue_free();
 
 		connections.erase(E->get());
 	}
@@ -1447,7 +1449,7 @@ void GraphEdit::_update_top_connection_layer() {
 	_update_scroll();
 
 	if (!connecting) {
-		dragged_connection_line->clear_points();
+// FIXME		dragged_connection_line->clear_points();
 
 		return;
 	}
@@ -1495,6 +1497,7 @@ void GraphEdit::_update_top_connection_layer() {
 	}
 
 	PackedVector2Array line_points = get_connection_line(from_pos * zoom, to_pos * zoom);
+	/* FIXME
 	dragged_connection_line->set_points(line_points);
 
 	Ref<ShaderMaterial> line_material = dragged_connection_line->get_material();
@@ -1516,6 +1519,7 @@ void GraphEdit::_update_top_connection_layer() {
 	line_gradient->set_color(1, to_color);
 
 	dragged_connection_line->set_gradient(line_gradient);
+	*/
 }
 
 void GraphEdit::_minimap_draw() {
@@ -2056,10 +2060,10 @@ void GraphEdit::reset_all_connection_activity() {
 }
 
 void GraphEdit::clear_connections() {
-	for (Ref<Connection> &c : connections) {
+	/* FIXME for (Ref<Connection> &c : connections) {
 		c->_cache.line->queue_free();
 	}
-
+	*/
 	connections.clear();
 	connection_map.clear();
 
@@ -2806,11 +2810,11 @@ GraphEdit::GraphEdit() {
 	top_connection_layer->set_mouse_filter(MOUSE_FILTER_PASS);
 	top_connection_layer->set_anchors_and_offsets_preset(Control::PRESET_FULL_RECT);
 	top_connection_layer->connect(SceneStringName(gui_input), callable_mp(this, &GraphEdit::_top_connection_layer_input));
-
+	/* FIXME
 	dragged_connection_line = memnew(Line2D);
 	dragged_connection_line->set_texture_mode(Line2D::LINE_TEXTURE_STRETCH);
 	top_connection_layer->add_child(dragged_connection_line);
-
+	*/
 	h_scrollbar = memnew(HScrollBar);
 	h_scrollbar->set_name("_h_scroll");
 	top_layer->add_child(h_scrollbar);

@@ -21,12 +21,6 @@
 		<link title="3D Resolution Scaling Demo">https://godotengine.org/asset-library/asset/2805</link>
 	</tutorials>
 	<methods>
-		<method name="find_world_2d" qualifiers="const">
-			<return type="World2D" />
-			<description>
-				Returns the first valid [World2D] for this viewport, searching the [member world_2d] property of itself and any Viewport ancestor.
-			</description>
-		</method>
 		<method name="find_world_3d" qualifiers="const">
 			<return type="World3D" />
 			<description>
@@ -242,9 +236,6 @@
 		</method>
 	</methods>
 	<members>
-		<member name="audio_listener_enable_2d" type="bool" setter="set_as_audio_listener_2d" getter="is_audio_listener_2d" default="false">
-			If [code]true[/code], the viewport will process 2D audio streams.
-		</member>
 		<member name="audio_listener_enable_3d" type="bool" setter="set_as_audio_listener_3d" getter="is_audio_listener_3d" default="false">
 			If [code]true[/code], the viewport will process 3D audio streams.
 		</member>
@@ -409,9 +400,6 @@
 		</member>
 		<member name="vrs_update_mode" type="int" setter="set_vrs_update_mode" getter="get_vrs_update_mode" enum="Viewport.VRSUpdateMode" default="1">
 			Sets the update mode for Variable Rate Shading (VRS) for the viewport. VRS requires the input texture to be converted to the format usable by the VRS method supported by the hardware. The update mode defines how often this happens. If the GPU does not support VRS, or VRS is not enabled, this property is ignored.
-		</member>
-		<member name="world_2d" type="World2D" setter="set_world_2d" getter="get_world_2d">
-			The custom [World2D] which can be used as 2D environment source.
 		</member>
 		<member name="world_3d" type="World3D" setter="set_world_3d" getter="get_world_3d">
 			The custom [World3D] which can be used as 3D environment source.

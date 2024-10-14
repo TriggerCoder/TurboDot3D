@@ -40,7 +40,7 @@ class GraphEdit;
 class GraphEditArranger;
 class HScrollBar;
 class Label;
-class Line2D;
+// FIXME class Line2D;
 class PanelContainer;
 class SpinBox;
 class ViewPanner;
@@ -129,7 +129,8 @@ public:
 			Color from_color;
 			Color to_color;
 			Rect2 aabb; // In local screen space.
-			Line2D *line = nullptr; // In local screen space.
+
+// FIXEME	Line2D *line = nullptr; // In local screen space.
 		} _cache;
 
 		friend class GraphEdit;
@@ -251,7 +252,7 @@ private:
 	Control *connections_layer = nullptr;
 
 	GraphEditFilter *top_connection_layer = nullptr; // Draws a dragged connection. Necessary since the connection line shader can't be applied to the whole top layer.
-	Line2D *dragged_connection_line = nullptr;
+// FIXME	Line2D *dragged_connection_line = nullptr;
 	Control *top_layer = nullptr; // Used for drawing the box selection rect. Contains the minimap, menu panel and the scrollbars.
 
 	GraphEditMinimap *minimap = nullptr;

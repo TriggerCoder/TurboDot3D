@@ -35,9 +35,6 @@
 #include "core/string/translation.h"
 #include "core/templates/pair.h"
 #include "core/templates/sort_array.h"
-#include "scene/2d/audio_listener_2d.h"
-#include "scene/2d/camera_2d.h"
-#include "scene/2d/physics/collision_object_2d.h"
 #ifndef _3D_DISABLED
 #include "scene/3d/audio_listener_3d.h"
 #include "scene/3d/camera_3d.h"
@@ -53,7 +50,6 @@
 #include "scene/main/window.h"
 #include "scene/resources/mesh.h"
 #include "scene/resources/text_line.h"
-#include "scene/resources/world_2d.h"
 #include "servers/audio_server.h"
 #include "servers/rendering/rendering_server_globals.h"
 
@@ -517,12 +513,12 @@ void Viewport::_notification(int p_what) {
 			} else {
 				parent = nullptr;
 			}
-
+/* FIXME
 			current_canvas = find_world_2d()->get_canvas();
 			RenderingServer::get_singleton()->viewport_attach_canvas(viewport, current_canvas);
 			RenderingServer::get_singleton()->viewport_set_canvas_transform(viewport, current_canvas, canvas_transform);
 			RenderingServer::get_singleton()->viewport_set_canvas_cull_mask(viewport, canvas_cull_mask);
-			_update_audio_listener_2d();
+			_update_audio_listener_2d();*/
 #ifndef _3D_DISABLED
 			RenderingServer::get_singleton()->viewport_set_scenario(viewport, find_world_3d()->get_scenario());
 			_update_audio_listener_3d();
@@ -530,9 +526,6 @@ void Viewport::_notification(int p_what) {
 
 			add_to_group("_viewports");
 			if (get_tree()->is_debugging_collisions_hint()) {
-				PhysicsServer2D::get_singleton()->space_set_debug_contacts(find_world_2d()->get_space(), get_tree()->get_collision_debug_contact_count());
-				contact_2d_debug = RenderingServer::get_singleton()->canvas_item_create();
-				RenderingServer::get_singleton()->canvas_item_set_parent(contact_2d_debug, current_canvas);
 #ifndef _3D_DISABLED
 				PhysicsServer3D::get_singleton()->space_set_debug_contacts(find_world_3d()->get_space(), get_tree()->get_collision_debug_contact_count());
 				contact_3d_debug_multimesh = RenderingServer::get_singleton()->multimesh_create();
@@ -584,10 +577,6 @@ void Viewport::_notification(int p_what) {
 
 			RenderingServer::get_singleton()->viewport_set_scenario(viewport, RID());
 			RenderingServer::get_singleton()->viewport_remove_canvas(viewport, current_canvas);
-			if (contact_2d_debug.is_valid()) {
-				RenderingServer::get_singleton()->free(contact_2d_debug);
-				contact_2d_debug = RID();
-			}
 
 			if (contact_3d_debug_multimesh.is_valid()) {
 				RenderingServer::get_singleton()->free(contact_3d_debug_multimesh);
@@ -612,18 +601,6 @@ void Viewport::_notification(int p_what) {
 				return;
 			}
 
-			if (get_tree()->is_debugging_collisions_hint() && contact_2d_debug.is_valid()) {
-				RenderingServer::get_singleton()->canvas_item_clear(contact_2d_debug);
-				RenderingServer::get_singleton()->canvas_item_set_draw_index(contact_2d_debug, 0xFFFFF); //very high index
-
-				Vector<Vector2> points = PhysicsServer2D::get_singleton()->space_get_contacts(find_world_2d()->get_space());
-				int point_count = PhysicsServer2D::get_singleton()->space_get_contact_count(find_world_2d()->get_space());
-				Color ccol = get_tree()->get_debug_collision_contact_color();
-
-				for (int i = 0; i < point_count; i++) {
-					RenderingServer::get_singleton()->canvas_item_add_rect(contact_2d_debug, Rect2(points[i] - Vector2(2, 2), Vector2(5, 5)), ccol);
-				}
-			}
 #ifndef _3D_DISABLED
 			if (get_tree()->is_debugging_collisions_hint() && contact_3d_debug_multimesh.is_valid()) {
 				Vector<Vector3> points = PhysicsServer3D::get_singleton()->space_get_contacts(find_world_3d()->get_space());
@@ -710,8 +687,6 @@ void Viewport::_process_picking() {
 	PhysicsDirectSpaceState3D::RayResult result;
 #endif // _3D_DISABLED
 
-	PhysicsDirectSpaceState2D *ss2d = PhysicsServer2D::get_singleton()->space_get_direct_state(find_world_2d()->get_space());
-
 	SubViewportContainer *parent_svc = Object::cast_to<SubViewportContainer>(get_parent());
 	bool parent_ignore_mouse = (parent_svc && parent_svc->get_mouse_filter() == Control::MOUSE_FILTER_IGNORE);
 	bool create_passive_hover_event = true;
@@ -788,99 +763,6 @@ void Viewport::_process_picking() {
 
 		if (st.is_valid()) {
 			pos = st->get_position();
-		}
-
-		if (ss2d) {
-			// Send to 2D.
-
-			uint64_t frame = get_tree()->get_frame();
-
-			PhysicsDirectSpaceState2D::ShapeResult res[64];
-			for (const CanvasLayer *E : canvas_layers) {
-				Transform2D canvas_layer_transform;
-				ObjectID canvas_layer_id;
-				if (E) {
-					// A descendant CanvasLayer.
-					canvas_layer_transform = E->get_final_transform();
-					canvas_layer_id = E->get_instance_id();
-				} else {
-					// This Viewport's builtin canvas.
-					canvas_layer_transform = get_canvas_transform();
-					canvas_layer_id = ObjectID();
-				}
-
-				Vector2 point = canvas_layer_transform.affine_inverse().xform(pos);
-
-				PhysicsDirectSpaceState2D::PointParameters point_params;
-				point_params.position = point;
-				point_params.canvas_instance_id = canvas_layer_id;
-				point_params.collide_with_areas = true;
-				point_params.pick_point = true;
-
-				int rc = ss2d->intersect_point(point_params, res, 64);
-				if (physics_object_picking_sort) {
-					struct ComparatorCollisionObjects {
-						bool operator()(const PhysicsDirectSpaceState2D::ShapeResult &p_a, const PhysicsDirectSpaceState2D::ShapeResult &p_b) const {
-							CollisionObject2D *a = Object::cast_to<CollisionObject2D>(p_a.collider);
-							CollisionObject2D *b = Object::cast_to<CollisionObject2D>(p_b.collider);
-							if (!a || !b) {
-								return false;
-							}
-							int za = a->get_effective_z_index();
-							int zb = b->get_effective_z_index();
-							if (za != zb) {
-								return zb < za;
-							}
-							return a->is_greater_than(b);
-						}
-					};
-					SortArray<PhysicsDirectSpaceState2D::ShapeResult, ComparatorCollisionObjects> sorter;
-					sorter.sort(res, rc);
-				}
-				for (int i = 0; i < rc; i++) {
-					if (is_input_handled()) {
-						break;
-					}
-					if (res[i].collider_id.is_valid() && res[i].collider) {
-						CollisionObject2D *co = Object::cast_to<CollisionObject2D>(res[i].collider);
-						if (co && co->can_process()) {
-							bool send_event = true;
-							if (is_mouse) {
-								HashMap<ObjectID, uint64_t>::Iterator F = physics_2d_mouseover.find(res[i].collider_id);
-								if (!F) {
-									physics_2d_mouseover.insert(res[i].collider_id, frame);
-									co->_mouse_enter();
-								} else {
-									F->value = frame;
-									// It was already hovered, so don't send the event if it's faked.
-									if (mm.is_valid() && mm->get_device() == InputEvent::DEVICE_ID_INTERNAL) {
-										send_event = false;
-									}
-								}
-								HashMap<Pair<ObjectID, int>, uint64_t, PairHash<ObjectID, int>>::Iterator SF = physics_2d_shape_mouseover.find(Pair(res[i].collider_id, res[i].shape));
-								if (!SF) {
-									physics_2d_shape_mouseover.insert(Pair(res[i].collider_id, res[i].shape), frame);
-									co->_mouse_shape_enter(res[i].shape);
-								} else {
-									SF->value = frame;
-								}
-							}
-
-							if (send_event) {
-								co->_input_event_call(this, ev, res[i].shape);
-							}
-
-							if (physics_object_picking_first_only) {
-								break;
-							}
-						}
-					}
-				}
-			}
-
-			if (is_mouse) {
-				_cleanup_mouseover_colliders(false, false, frame);
-			}
 		}
 
 #ifndef _3D_DISABLED
@@ -1090,35 +972,9 @@ void Viewport::canvas_parent_mark_dirty(Node *p_node) {
 	}
 }
 
-void Viewport::enable_canvas_transform_override(bool p_enable) {
-	ERR_MAIN_THREAD_GUARD;
-	if (override_canvas_transform == p_enable) {
-		return;
-	}
-
-	override_canvas_transform = p_enable;
-	if (p_enable) {
-		RenderingServer::get_singleton()->viewport_set_canvas_transform(viewport, find_world_2d()->get_canvas(), canvas_transform_override);
-	} else {
-		RenderingServer::get_singleton()->viewport_set_canvas_transform(viewport, find_world_2d()->get_canvas(), canvas_transform);
-	}
-}
-
 bool Viewport::is_canvas_transform_override_enabled() const {
 	ERR_READ_THREAD_GUARD_V(false);
 	return override_canvas_transform;
-}
-
-void Viewport::set_canvas_transform_override(const Transform2D &p_transform) {
-	ERR_MAIN_THREAD_GUARD;
-	if (canvas_transform_override == p_transform) {
-		return;
-	}
-
-	canvas_transform_override = p_transform;
-	if (override_canvas_transform) {
-		RenderingServer::get_singleton()->viewport_set_canvas_transform(viewport, find_world_2d()->get_canvas(), canvas_transform_override);
-	}
 }
 
 Transform2D Viewport::get_canvas_transform_override() const {
@@ -1131,7 +987,7 @@ void Viewport::set_canvas_transform(const Transform2D &p_transform) {
 	canvas_transform = p_transform;
 
 	if (!override_canvas_transform) {
-		RenderingServer::get_singleton()->viewport_set_canvas_transform(viewport, find_world_2d()->get_canvas(), canvas_transform);
+// FIXME		RenderingServer::get_singleton()->viewport_set_canvas_transform(viewport, find_world_2d()->get_canvas(), canvas_transform);
 	}
 }
 
@@ -1188,51 +1044,6 @@ bool Viewport::is_using_hdr_2d() const {
 	return use_hdr_2d;
 }
 
-void Viewport::set_world_2d(const Ref<World2D> &p_world_2d) {
-	ERR_MAIN_THREAD_GUARD;
-	if (world_2d == p_world_2d) {
-		return;
-	}
-
-	if (is_inside_tree()) {
-		RenderingServer::get_singleton()->viewport_remove_canvas(viewport, current_canvas);
-	}
-
-	if (world_2d.is_valid()) {
-		world_2d->remove_viewport(this);
-	}
-
-	if (p_world_2d.is_valid()) {
-		bool do_propagate = world_2d.is_valid() && is_inside_tree();
-		world_2d = p_world_2d;
-		if (do_propagate) {
-			_propagate_world_2d_changed(this);
-		}
-	} else {
-		WARN_PRINT("Invalid world_2d");
-		world_2d = Ref<World2D>(memnew(World2D));
-	}
-
-	world_2d->register_viewport(this);
-	_update_audio_listener_2d();
-
-	if (is_inside_tree()) {
-		current_canvas = find_world_2d()->get_canvas();
-		RenderingServer::get_singleton()->viewport_attach_canvas(viewport, current_canvas);
-	}
-}
-
-Ref<World2D> Viewport::find_world_2d() const {
-	ERR_READ_THREAD_GUARD_V(Ref<World2D>());
-	if (world_2d.is_valid()) {
-		return world_2d;
-	} else if (parent) {
-		return parent->find_world_2d();
-	} else {
-		return Ref<World2D>();
-	}
-}
-
 void Viewport::_propagate_viewport_notification(Node *p_node, int p_what) {
 	p_node->notification(p_what);
 	for (int i = 0; i < p_node->get_child_count(); i++) {
@@ -1242,11 +1053,6 @@ void Viewport::_propagate_viewport_notification(Node *p_node, int p_what) {
 		}
 		_propagate_viewport_notification(c, p_what);
 	}
-}
-
-Ref<World2D> Viewport::get_world_2d() const {
-	ERR_READ_THREAD_GUARD_V(Ref<World2D>());
-	return world_2d;
 }
 
 Transform2D Viewport::get_final_transform() const {
@@ -2581,7 +2387,6 @@ void Viewport::_drop_mouse_focus() {
 }
 
 void Viewport::_drop_physics_mouseover(bool p_paused_only) {
-	_cleanup_mouseover_colliders(true, p_paused_only);
 
 #ifndef _3D_DISABLED
 	if (physics_object_over.is_valid()) {
@@ -3950,149 +3755,6 @@ bool Viewport::get_canvas_cull_mask_bit(uint32_t p_layer) const {
 	return (canvas_cull_mask & (1 << p_layer));
 }
 
-void Viewport::_update_audio_listener_2d() {
-	if (AudioServer::get_singleton()) {
-		AudioServer::get_singleton()->notify_listener_changed();
-	}
-}
-
-void Viewport::_audio_listener_2d_set(AudioListener2D *p_audio_listener) {
-	if (audio_listener_2d == p_audio_listener) {
-		return;
-	} else if (audio_listener_2d) {
-		audio_listener_2d->clear_current();
-	}
-	audio_listener_2d = p_audio_listener;
-}
-
-void Viewport::_audio_listener_2d_remove(AudioListener2D *p_audio_listener) {
-	if (audio_listener_2d == p_audio_listener) {
-		audio_listener_2d = nullptr;
-	}
-}
-
-void Viewport::_camera_2d_set(Camera2D *p_camera_2d) {
-	camera_2d = p_camera_2d;
-}
-
-void Viewport::_cleanup_mouseover_colliders(bool p_clean_all_frames, bool p_paused_only, uint64_t p_frame_reference) {
-	List<ObjectID> to_erase;
-	List<ObjectID> to_mouse_exit;
-
-	for (const KeyValue<ObjectID, uint64_t> &E : physics_2d_mouseover) {
-		if (!p_clean_all_frames && E.value == p_frame_reference) {
-			continue;
-		}
-
-		Object *o = ObjectDB::get_instance(E.key);
-		if (o) {
-			CollisionObject2D *co = Object::cast_to<CollisionObject2D>(o);
-			if (co && co->is_inside_tree()) {
-				if (p_clean_all_frames && p_paused_only && co->can_process()) {
-					continue;
-				}
-				to_mouse_exit.push_back(E.key);
-			}
-		}
-		to_erase.push_back(E.key);
-	}
-
-	while (to_erase.size()) {
-		physics_2d_mouseover.erase(to_erase.front()->get());
-		to_erase.pop_front();
-	}
-
-	// Per-shape.
-	List<Pair<ObjectID, int>> shapes_to_erase;
-	List<Pair<ObjectID, int>> shapes_to_mouse_exit;
-
-	for (KeyValue<Pair<ObjectID, int>, uint64_t> &E : physics_2d_shape_mouseover) {
-		if (!p_clean_all_frames && E.value == p_frame_reference) {
-			continue;
-		}
-
-		Object *o = ObjectDB::get_instance(E.key.first);
-		if (o) {
-			CollisionObject2D *co = Object::cast_to<CollisionObject2D>(o);
-			if (co && co->is_inside_tree()) {
-				if (p_clean_all_frames && p_paused_only && co->can_process()) {
-					continue;
-				}
-				shapes_to_mouse_exit.push_back(E.key);
-			}
-		}
-		shapes_to_erase.push_back(E.key);
-	}
-
-	while (shapes_to_erase.size()) {
-		physics_2d_shape_mouseover.erase(shapes_to_erase.front()->get());
-		shapes_to_erase.pop_front();
-	}
-
-	while (to_mouse_exit.size()) {
-		Object *o = ObjectDB::get_instance(to_mouse_exit.front()->get());
-		CollisionObject2D *co = Object::cast_to<CollisionObject2D>(o);
-		co->_mouse_exit();
-		to_mouse_exit.pop_front();
-	}
-
-	while (shapes_to_mouse_exit.size()) {
-		Pair<ObjectID, int> e = shapes_to_mouse_exit.front()->get();
-		Object *o = ObjectDB::get_instance(e.first);
-		CollisionObject2D *co = Object::cast_to<CollisionObject2D>(o);
-		co->_mouse_shape_exit(e.second);
-		shapes_to_mouse_exit.pop_front();
-	}
-}
-
-AudioListener2D *Viewport::get_audio_listener_2d() const {
-	ERR_READ_THREAD_GUARD_V(nullptr);
-	return audio_listener_2d;
-}
-
-void Viewport::set_as_audio_listener_2d(bool p_enable) {
-	ERR_MAIN_THREAD_GUARD;
-	if (p_enable == is_audio_listener_2d_enabled) {
-		return;
-	}
-
-	is_audio_listener_2d_enabled = p_enable;
-	_update_audio_listener_2d();
-}
-
-bool Viewport::is_audio_listener_2d() const {
-	ERR_READ_THREAD_GUARD_V(false);
-	return is_audio_listener_2d_enabled;
-}
-
-Camera2D *Viewport::get_camera_2d() const {
-	ERR_READ_THREAD_GUARD_V(nullptr);
-	return camera_2d;
-}
-
-void Viewport::assign_next_enabled_camera_2d(const StringName &p_camera_group) {
-	ERR_MAIN_THREAD_GUARD;
-	List<Node *> camera_list;
-	get_tree()->get_nodes_in_group(p_camera_group, &camera_list);
-
-	Camera2D *new_camera = nullptr;
-	for (Node *E : camera_list) {
-		Camera2D *cam = Object::cast_to<Camera2D>(E);
-		if (!cam) {
-			continue; // Non-camera node (e.g. ParallaxBackground).
-		}
-
-		if (cam->is_enabled()) {
-			new_camera = cam;
-			break;
-		}
-	}
-
-	_camera_2d_set(new_camera);
-	if (!camera_2d) {
-		set_canvas_transform(Transform2D());
-	}
-}
 
 #ifndef _3D_DISABLED
 AudioListener3D *Viewport::get_audio_listener_3d() const {
@@ -4595,30 +4257,7 @@ float Viewport::get_texture_mipmap_bias() const {
 
 #endif // _3D_DISABLED
 
-void Viewport::_propagate_world_2d_changed(Node *p_node) {
-	if (p_node != this) {
-		if (Object::cast_to<CanvasItem>(p_node)) {
-			p_node->notification(CanvasItem::NOTIFICATION_WORLD_2D_CHANGED);
-		} else {
-			Viewport *v = Object::cast_to<Viewport>(p_node);
-			if (v) {
-				if (v->world_2d.is_valid()) {
-					return;
-				}
-			}
-		}
-	}
-
-	for (int i = 0; i < p_node->get_child_count(); ++i) {
-		_propagate_world_2d_changed(p_node->get_child(i));
-	}
-}
-
 void Viewport::_bind_methods() {
-	ClassDB::bind_method(D_METHOD("set_world_2d", "world_2d"), &Viewport::set_world_2d);
-	ClassDB::bind_method(D_METHOD("get_world_2d"), &Viewport::get_world_2d);
-	ClassDB::bind_method(D_METHOD("find_world_2d"), &Viewport::find_world_2d);
-
 	ClassDB::bind_method(D_METHOD("set_canvas_transform", "xform"), &Viewport::set_canvas_transform);
 	ClassDB::bind_method(D_METHOD("get_canvas_transform"), &Viewport::get_canvas_transform);
 
@@ -4737,10 +4376,6 @@ void Viewport::_bind_methods() {
 
 	ClassDB::bind_method(D_METHOD("_process_picking"), &Viewport::_process_picking);
 
-	ClassDB::bind_method(D_METHOD("set_as_audio_listener_2d", "enable"), &Viewport::set_as_audio_listener_2d);
-	ClassDB::bind_method(D_METHOD("is_audio_listener_2d"), &Viewport::is_audio_listener_2d);
-	ClassDB::bind_method(D_METHOD("get_camera_2d"), &Viewport::get_camera_2d);
-
 #ifndef _3D_DISABLED
 	ClassDB::bind_method(D_METHOD("set_world_3d", "world_3d"), &Viewport::set_world_3d);
 	ClassDB::bind_method(D_METHOD("get_world_3d"), &Viewport::get_world_3d);
@@ -4785,7 +4420,6 @@ void Viewport::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "own_world_3d"), "set_use_own_world_3d", "is_using_own_world_3d");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "world_3d", PROPERTY_HINT_RESOURCE_TYPE, "World3D"), "set_world_3d", "get_world_3d");
 #endif // _3D_DISABLED
-	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "world_2d", PROPERTY_HINT_RESOURCE_TYPE, "World2D", PROPERTY_USAGE_NONE), "set_world_2d", "get_world_2d");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "transparent_bg"), "set_transparent_background", "has_transparent_background");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "handle_input_locally"), "set_handle_input_locally", "is_handling_input_locally");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "snap_2d_transforms_to_pixel"), "set_snap_2d_transforms_to_pixel", "is_snap_2d_transforms_to_pixel_enabled");
@@ -4816,7 +4450,6 @@ void Viewport::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "canvas_item_default_texture_filter", PROPERTY_HINT_ENUM, "Nearest,Linear,Linear Mipmap,Nearest Mipmap"), "set_default_canvas_item_texture_filter", "get_default_canvas_item_texture_filter");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "canvas_item_default_texture_repeat", PROPERTY_HINT_ENUM, "Disabled,Enabled,Mirror"), "set_default_canvas_item_texture_repeat", "get_default_canvas_item_texture_repeat");
 	ADD_GROUP("Audio Listener", "audio_listener_");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "audio_listener_enable_2d"), "set_as_audio_listener_2d", "is_audio_listener_2d");
 #ifndef _3D_DISABLED
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "audio_listener_enable_3d"), "set_as_audio_listener_3d", "is_audio_listener_3d");
 #endif // _3D_DISABLED
@@ -4951,9 +4584,6 @@ void Viewport::_validate_property(PropertyInfo &p_property) const {
 }
 
 Viewport::Viewport() {
-	world_2d = Ref<World2D>(memnew(World2D));
-	world_2d->register_viewport(this);
-
 	viewport = RenderingServer::get_singleton()->viewport_create();
 	texture_rid = RenderingServer::get_singleton()->viewport_get_texture(viewport);
 

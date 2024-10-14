@@ -345,9 +345,7 @@ void SceneTreeDock::_perform_create_audio_stream_players(const Vector<String> &p
 
 	StringName node_type = "AudioStreamPlayer";
 	if (Input::get_singleton()->is_key_pressed(Key::SHIFT)) {
-		if (Object::cast_to<Node2D>(p_parent)) {
-			node_type = "AudioStreamPlayer2D";
-		} else if (Object::cast_to<Node3D>(p_parent)) {
+		if (Object::cast_to<Node3D>(p_parent)) {
 			node_type = "AudioStreamPlayer3D";
 		}
 	}
@@ -1419,7 +1417,6 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
 				undo_redo->commit_action();
 			}
 		} break;
-		case TOOL_CREATE_2D_SCENE:
 		case TOOL_CREATE_3D_SCENE:
 		case TOOL_CREATE_USER_INTERFACE:
 		case TOOL_CREATE_FAVORITE: {
@@ -1446,9 +1443,6 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
 				}
 			} else {
 				switch (p_tool) {
-					case TOOL_CREATE_2D_SCENE:
-						new_node = memnew(Node2D);
-						break;
 					case TOOL_CREATE_3D_SCENE:
 						new_node = memnew(Node3D);
 						break;
@@ -1568,12 +1562,6 @@ void SceneTreeDock::_notification(int p_what) {
 			beginner_node_shortcuts = memnew(VBoxContainer);
 			node_shortcuts->add_child(beginner_node_shortcuts);
 
-			button_2d = memnew(Button);
-			beginner_node_shortcuts->add_child(button_2d);
-			button_2d->set_text(TTR("2D Scene"));
-			button_2d->set_icon(get_editor_theme_icon(SNAME("Node2D")));
-			button_2d->connect(SceneStringName(pressed), callable_mp(this, &SceneTreeDock::_tool_selected).bind(TOOL_CREATE_2D_SCENE, false));
-
 			button_3d = memnew(Button);
 			beginner_node_shortcuts->add_child(button_3d);
 			button_3d->set_text(TTR("3D Scene"));
@@ -1633,10 +1621,7 @@ void SceneTreeDock::_notification(int p_what) {
 			filter_menu->set_item_icon(filter_menu->get_item_index(FILTER_BY_TYPE), get_editor_theme_icon(SNAME("Node")));
 			filter_menu->set_item_icon(filter_menu->get_item_index(FILTER_BY_GROUP), get_editor_theme_icon(SNAME("Groups")));
 
-			// These buttons are created on READY, because reasons...
-			if (button_2d) {
-				button_2d->set_icon(get_editor_theme_icon(SNAME("Node2D")));
-			}
+			// These buttons are created on READY
 			if (button_3d) {
 				button_3d->set_icon(get_editor_theme_icon(SNAME("Node3D")));
 			}
@@ -2349,9 +2334,6 @@ void SceneTreeDock::_do_reparent(Node *p_new_parent, int p_position_in_parent, V
 		undo_redo->add_undo_method(ed, "live_debug_reparent_node", NodePath(String(edited_scene->get_path_to(new_parent)).path_join(new_name)), edited_scene->get_path_to(node->get_parent()), node->get_name(), node->get_index(false));
 
 		if (p_keep_global_xform) {
-			if (Object::cast_to<Node2D>(node)) {
-				undo_redo->add_do_method(node, "set_global_transform", Object::cast_to<Node2D>(node)->get_global_transform());
-			}
 			if (Object::cast_to<Node3D>(node)) {
 				undo_redo->add_do_method(node, "set_global_transform", Object::cast_to<Node3D>(node)->get_global_transform());
 			}
@@ -2394,9 +2376,6 @@ void SceneTreeDock::_do_reparent(Node *p_new_parent, int p_position_in_parent, V
 		}
 
 		if (p_keep_global_xform) {
-			if (Object::cast_to<Node2D>(node)) {
-				undo_redo->add_undo_method(node, "set_transform", Object::cast_to<Node2D>(node)->get_transform());
-			}
 			if (Object::cast_to<Node3D>(node)) {
 				undo_redo->add_undo_method(node, "set_transform", Object::cast_to<Node3D>(node)->get_transform());
 			}
@@ -2549,11 +2528,6 @@ void SceneTreeDock::_reparent_nodes_to_paths_with_transform_and_name(Node *p_roo
 		Node3D *node_3d = Object::cast_to<Node3D>(node);
 		if (node_3d) {
 			node_3d->set_transform(p_transforms[i]);
-		} else {
-			Node2D *node_2d = Object::cast_to<Node2D>(node);
-			if (node_2d) {
-				node_2d->set_transform(p_transforms[i]);
-			}
 		}
 
 		for (Node *F : owned) {
@@ -2599,13 +2573,6 @@ void SceneTreeDock::_toggle_editable_children(Node *p_node) {
 				Node3D *node_3d = Object::cast_to<Node3D>(owned_node);
 				if (node_3d) {
 					transform_array.push_back(node_3d->get_transform());
-				} else {
-					Node2D *node_2d = Object::cast_to<Node2D>(owned_node);
-					if (node_2d) {
-						transform_array.push_back(node_2d->get_transform());
-					} else {
-						transform_array.push_back(Variant());
-					}
 				}
 			}
 		}
@@ -2930,23 +2897,6 @@ void SceneTreeDock::_create() {
 
 				if (node_count > 0) {
 					parent_node_3d->set_global_position(position / node_count);
-				}
-			}
-
-			Node2D *parent_node_2d = Object::cast_to<Node2D>(last_created);
-			if (parent_node_2d) {
-				Vector2 position;
-				uint32_t node_count = 0;
-				for (const Node *node : nodes) {
-					const Node2D *node_2d = Object::cast_to<Node2D>(node);
-					if (node_2d) {
-						position += node_2d->get_global_position();
-						node_count++;
-					}
-				}
-
-				if (node_count > 0) {
-					parent_node_2d->set_global_position(position / (real_t)node_count);
 				}
 			}
 		}

@@ -36,7 +36,6 @@
 #include "editor/editor_string_names.h"
 #include "editor/gui/editor_validation_panel.h"
 #include "editor/themes/editor_scale.h"
-#include "scene/2d/node_2d.h"
 #include "scene/3d/node_3d.h"
 #include "scene/gui/box_container.h"
 #include "scene/gui/check_box.h"
@@ -49,7 +48,6 @@ void SceneCreateDialog::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_THEME_CHANGED: {
 			select_node_button->set_icon(get_editor_theme_icon(SNAME("ClassList")));
-			node_type_2d->set_icon(get_editor_theme_icon(SNAME("Node2D")));
 			node_type_3d->set_icon(get_editor_theme_icon(SNAME("Node3D")));
 			node_type_gui->set_icon(get_editor_theme_icon(SNAME("Control")));
 			node_type_other->add_theme_icon_override(SNAME("icon"), get_editor_theme_icon(SNAME("Node")));
@@ -156,9 +154,6 @@ Node *SceneCreateDialog::create_scene_root() {
 
 	Node *root = nullptr;
 	switch (type) {
-		case ROOT_2D_SCENE:
-			root = memnew(Node2D);
-			break;
 		case ROOT_3D_SCENE:
 			root = memnew(Node3D);
 			break;
@@ -201,13 +196,6 @@ SceneCreateDialog::SceneCreateDialog() {
 		gc->add_child(vb);
 
 		node_type_group.instantiate();
-
-		node_type_2d = memnew(CheckBox);
-		vb->add_child(node_type_2d);
-		node_type_2d->set_text(TTR("2D Scene"));
-		node_type_2d->set_button_group(node_type_group);
-		node_type_2d->set_meta(type_meta, ROOT_2D_SCENE);
-		node_type_2d->set_pressed(true);
 
 		node_type_3d = memnew(CheckBox);
 		vb->add_child(node_type_3d);

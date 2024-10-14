@@ -39,7 +39,6 @@ class CanvasLayer;
 class MultiMesh;
 class StyleBox;
 class Window;
-class World2D;
 
 class CanvasItem : public Node {
 	GDCLASS(CanvasItem, Node);
@@ -334,7 +333,6 @@ public:
 	RID get_viewport_rid() const;
 	RID get_canvas() const;
 	ObjectID get_canvas_layer_instance_id() const;
-	Ref<World2D> get_world_2d() const;
 
 	virtual void set_material(const Ref<Material> &p_material);
 	Ref<Material> get_material() const;

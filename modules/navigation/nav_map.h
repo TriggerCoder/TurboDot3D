@@ -37,9 +37,7 @@
 #include "core/math/math_defs.h"
 #include "core/object/worker_thread_pool.h"
 
-#include <KdTree2d.h>
 #include <KdTree3d.h>
-#include <RVOSimulator2d.h>
 #include <RVOSimulator3d.h>
 
 class NavLink;
@@ -85,11 +83,9 @@ class NavMap : public NavRid {
 	LocalVector<gd::Polygon> polygons;
 
 	/// RVO avoidance worlds
-	RVO2D::RVOSimulator2D rvo_simulation_2d;
 	RVO3D::RVOSimulator3D rvo_simulation_3d;
 
 	/// avoidance controlled agents
-	LocalVector<NavAgent *> active_2d_avoidance_agents;
 	LocalVector<NavAgent *> active_3d_avoidance_agents;
 
 	/// dirty flag when one of the agent's arrays are modified
@@ -225,8 +221,6 @@ private:
 
 	void clip_path(const LocalVector<gd::NavigationPoly> &p_navigation_polys, Vector<Vector3> &path, const gd::NavigationPoly *from_poly, const Vector3 &p_to_point, const gd::NavigationPoly *p_to_poly, Vector<int32_t> *r_path_types, TypedArray<RID> *r_path_rids, Vector<int64_t> *r_path_owners) const;
 	void _update_rvo_simulation();
-	void _update_rvo_obstacles_tree_2d();
-	void _update_rvo_agents_tree_2d();
 	void _update_rvo_agents_tree_3d();
 
 	void _update_merge_rasterizer_cell_dimensions();

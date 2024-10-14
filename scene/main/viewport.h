@@ -41,8 +41,6 @@ class AudioListener3D;
 class World3D;
 #endif // _3D_DISABLED
 
-class AudioListener2D;
-class Camera2D;
 class CanvasItem;
 class CanvasLayer;
 class Control;
@@ -50,7 +48,6 @@ class Label;
 class SceneTreeTimer;
 class Viewport;
 class Window;
-class World2D;
 
 class ViewportTexture : public Texture2D {
 	GDCLASS(ViewportTexture, Texture2D);
@@ -243,7 +240,6 @@ private:
 	Size2i size_2d_override;
 	bool size_allocated = false;
 
-	RID contact_2d_debug;
 	RID contact_3d_debug_multimesh;
 	RID contact_3d_debug_instance;
 
@@ -269,8 +265,6 @@ private:
 
 	bool handle_input_locally = true;
 	bool local_input_handled = false;
-
-	Ref<World2D> world_2d;
 
 	StringName input_group;
 	StringName shortcut_input_group;
@@ -473,7 +467,6 @@ private:
 	uint64_t event_count = 0;
 
 	void _process_dirty_canvas_parent_orders();
-	void _propagate_world_2d_changed(Node *p_node);
 
 protected:
 	bool _set_size(const Size2i &p_size, const Size2i &p_size_2d_override, bool p_allocated);
@@ -498,14 +491,8 @@ public:
 	Rect2 get_visible_rect() const;
 	RID get_viewport_rid() const;
 
-	void set_world_2d(const Ref<World2D> &p_world_2d);
-	Ref<World2D> get_world_2d() const;
-	Ref<World2D> find_world_2d() const;
-
-	void enable_canvas_transform_override(bool p_enable);
 	bool is_canvas_transform_override_enabled() const;
 
-	void set_canvas_transform_override(const Transform2D &p_transform);
 	Transform2D get_canvas_transform_override() const;
 
 	void set_canvas_transform(const Transform2D &p_transform);
@@ -675,33 +662,6 @@ public:
 	virtual bool is_attached_in_viewport() const { return false; };
 	virtual bool is_sub_viewport() const { return false; };
 
-private:
-	// 2D audio, camera, and physics. (don't put World2D here because World2D is needed for Control nodes).
-	friend class AudioListener2D; // Needs _audio_listener_2d_set and _audio_listener_2d_remove
-	AudioListener2D *audio_listener_2d = nullptr;
-	void _audio_listener_2d_set(AudioListener2D *p_audio_listener);
-	void _audio_listener_2d_remove(AudioListener2D *p_audio_listener);
-	bool is_audio_listener_2d_enabled = false;
-	RID internal_audio_listener_2d;
-
-	friend class Camera2D; // Needs _camera_2d_set
-	Camera2D *camera_2d = nullptr;
-	void _camera_2d_set(Camera2D *p_camera_2d);
-
-	// Collider to frame
-	HashMap<ObjectID, uint64_t> physics_2d_mouseover;
-	// Collider & shape to frame
-	HashMap<Pair<ObjectID, int>, uint64_t, PairHash<ObjectID, int>> physics_2d_shape_mouseover;
-	// Cleans up colliders corresponding to old frames or all of them.
-	void _cleanup_mouseover_colliders(bool p_clean_all_frames, bool p_paused_only, uint64_t p_frame_reference = 0);
-
-public:
-	AudioListener2D *get_audio_listener_2d() const;
-	void set_as_audio_listener_2d(bool p_enable);
-	bool is_audio_listener_2d() const;
-
-	Camera2D *get_camera_2d() const;
-	void assign_next_enabled_camera_2d(const StringName &p_camera_group);
 
 #ifndef _3D_DISABLED
 private:

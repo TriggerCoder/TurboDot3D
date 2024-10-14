@@ -53,7 +53,6 @@ class HSplitContainer;
 class LinkButton;
 class MenuBar;
 class MenuButton;
-class Node2D;
 class OptionButton;
 class Panel;
 class PanelContainer;

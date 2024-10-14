@@ -79,13 +79,6 @@
 #include "text/text_server_extension.h"
 #include "text_server.h"
 
-// 2D physics and navigation.
-#include "navigation_server_2d.h"
-#include "physics_2d/godot_physics_server_2d.h"
-#include "physics_server_2d.h"
-#include "physics_server_2d_wrap_mt.h"
-#include "servers/extensions/physics_server_2d_extension.h"
-
 // 3D physics and navigation (3D navigation is needed for 2D).
 #include "navigation_server_3d.h"
 #ifndef _3D_DISABLED
@@ -118,18 +111,6 @@ static PhysicsServer3D *_createGodotPhysics3DCallback() {
 	return memnew(PhysicsServer3DWrapMT(physics_server_3d, using_threads));
 }
 #endif // _3D_DISABLED
-
-static PhysicsServer2D *_createGodotPhysics2DCallback() {
-#ifdef THREADS_ENABLED
-	bool using_threads = GLOBAL_GET("physics/2d/run_on_separate_thread");
-#else
-	bool using_threads = false;
-#endif
-
-	PhysicsServer2D *physics_server_2d = memnew(GodotPhysicsServer2D(using_threads));
-
-	return memnew(PhysicsServer2DWrapMT(physics_server_2d, using_threads));
-}
 
 static bool has_server_feature_callback(const String &p_feature) {
 	if (RenderingServer::get_singleton()) {
@@ -265,37 +246,6 @@ void register_server_types() {
 
 	ServersDebugger::initialize();
 
-	// Physics 2D
-	GDREGISTER_CLASS(PhysicsServer2DManager);
-	Engine::get_singleton()->add_singleton(Engine::Singleton("PhysicsServer2DManager", PhysicsServer2DManager::get_singleton(), "PhysicsServer2DManager"));
-
-	GDREGISTER_ABSTRACT_CLASS(PhysicsServer2D);
-	GDREGISTER_VIRTUAL_CLASS(PhysicsServer2DExtension);
-	GDREGISTER_VIRTUAL_CLASS(PhysicsDirectBodyState2DExtension);
-	GDREGISTER_VIRTUAL_CLASS(PhysicsDirectSpaceState2DExtension);
-
-	GDREGISTER_NATIVE_STRUCT(PhysicsServer2DExtensionRayResult, "Vector2 position;Vector2 normal;RID rid;ObjectID collider_id;Object *collider;int shape");
-	GDREGISTER_NATIVE_STRUCT(PhysicsServer2DExtensionShapeResult, "RID rid;ObjectID collider_id;Object *collider;int shape");
-	GDREGISTER_NATIVE_STRUCT(PhysicsServer2DExtensionShapeRestInfo, "Vector2 point;Vector2 normal;RID rid;ObjectID collider_id;int shape;Vector2 linear_velocity");
-	GDREGISTER_NATIVE_STRUCT(PhysicsServer2DExtensionMotionResult, "Vector2 travel;Vector2 remainder;Vector2 collision_point;Vector2 collision_normal;Vector2 collider_velocity;real_t collision_depth;real_t collision_safe_fraction;real_t collision_unsafe_fraction;int collision_local_shape;ObjectID collider_id;RID collider;int collider_shape");
-
-	GDREGISTER_ABSTRACT_CLASS(PhysicsDirectBodyState2D);
-	GDREGISTER_ABSTRACT_CLASS(PhysicsDirectSpaceState2D);
-	GDREGISTER_CLASS(PhysicsRayQueryParameters2D);
-	GDREGISTER_CLASS(PhysicsPointQueryParameters2D);
-	GDREGISTER_CLASS(PhysicsShapeQueryParameters2D);
-	GDREGISTER_CLASS(PhysicsTestMotionParameters2D);
-	GDREGISTER_CLASS(PhysicsTestMotionResult2D);
-
-	GLOBAL_DEF(PropertyInfo(Variant::STRING, PhysicsServer2DManager::setting_property_name, PROPERTY_HINT_ENUM, "DEFAULT"), "DEFAULT");
-
-	PhysicsServer2DManager::get_singleton()->register_server("GodotPhysics2D", callable_mp_static(_createGodotPhysics2DCallback));
-	PhysicsServer2DManager::get_singleton()->set_default_server("GodotPhysics2D");
-
-	GDREGISTER_ABSTRACT_CLASS(NavigationServer2D);
-	GDREGISTER_CLASS(NavigationPathQueryParameters2D);
-	GDREGISTER_CLASS(NavigationPathQueryResult2D);
-
 #ifndef _3D_DISABLED
 	// Physics 3D
 	GDREGISTER_CLASS(PhysicsServer3DManager);
@@ -370,11 +320,9 @@ void register_server_singletons() {
 	Engine::get_singleton()->add_singleton(Engine::Singleton("CameraServer", CameraServer::get_singleton(), "CameraServer"));
 	Engine::get_singleton()->add_singleton(Engine::Singleton("DisplayServer", DisplayServer::get_singleton(), "DisplayServer"));
 	Engine::get_singleton()->add_singleton(Engine::Singleton("NativeMenu", NativeMenu::get_singleton(), "NativeMenu"));
-	Engine::get_singleton()->add_singleton(Engine::Singleton("NavigationServer2D", NavigationServer2D::get_singleton(), "NavigationServer2D"));
 	Engine::get_singleton()->add_singleton(Engine::Singleton("NavigationServer3D", NavigationServer3D::get_singleton(), "NavigationServer3D"));
 	Engine::get_singleton()->add_singleton(Engine::Singleton("RenderingServer", RenderingServer::get_singleton(), "RenderingServer"));
 
-	Engine::get_singleton()->add_singleton(Engine::Singleton("PhysicsServer2D", PhysicsServer2D::get_singleton(), "PhysicsServer2D"));
 #ifndef _3D_DISABLED
 	Engine::get_singleton()->add_singleton(Engine::Singleton("PhysicsServer3D", PhysicsServer3D::get_singleton(), "PhysicsServer3D"));
 	Engine::get_singleton()->add_singleton(Engine::Singleton("XRServer", XRServer::get_singleton(), "XRServer"));

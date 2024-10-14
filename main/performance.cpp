@@ -38,9 +38,6 @@
 #include "servers/navigation_server_3d.h"
 #include "servers/rendering_server.h"
 
-// 2D
-#include "servers/physics_server_2d.h"
-
 #ifndef _3D_DISABLED
 #include "servers/physics_server_3d.h"
 #endif // _3D_DISABLED
@@ -73,9 +70,6 @@ void Performance::_bind_methods() {
 	BIND_ENUM_CONSTANT(RENDER_VIDEO_MEM_USED);
 	BIND_ENUM_CONSTANT(RENDER_TEXTURE_MEM_USED);
 	BIND_ENUM_CONSTANT(RENDER_BUFFER_MEM_USED);
-	BIND_ENUM_CONSTANT(PHYSICS_2D_ACTIVE_OBJECTS);
-	BIND_ENUM_CONSTANT(PHYSICS_2D_COLLISION_PAIRS);
-	BIND_ENUM_CONSTANT(PHYSICS_2D_ISLAND_COUNT);
 #ifndef _3D_DISABLED
 	BIND_ENUM_CONSTANT(PHYSICS_3D_ACTIVE_OBJECTS);
 	BIND_ENUM_CONSTANT(PHYSICS_3D_COLLISION_PAIRS);
@@ -123,9 +117,6 @@ String Performance::get_monitor_name(Monitor p_monitor) const {
 		PNAME("video/video_mem"),
 		PNAME("video/texture_mem"),
 		PNAME("video/buffer_mem"),
-		PNAME("physics_2d/active_objects"),
-		PNAME("physics_2d/collision_pairs"),
-		PNAME("physics_2d/islands"),
 #ifndef _3D_DISABLED
 		PNAME("physics_3d/active_objects"),
 		PNAME("physics_3d/collision_pairs"),
@@ -183,12 +174,6 @@ double Performance::get_monitor(Monitor p_monitor) const {
 			return RS::get_singleton()->get_rendering_info(RS::RENDERING_INFO_TEXTURE_MEM_USED);
 		case RENDER_BUFFER_MEM_USED:
 			return RS::get_singleton()->get_rendering_info(RS::RENDERING_INFO_BUFFER_MEM_USED);
-		case PHYSICS_2D_ACTIVE_OBJECTS:
-			return PhysicsServer2D::get_singleton()->get_process_info(PhysicsServer2D::INFO_ACTIVE_OBJECTS);
-		case PHYSICS_2D_COLLISION_PAIRS:
-			return PhysicsServer2D::get_singleton()->get_process_info(PhysicsServer2D::INFO_COLLISION_PAIRS);
-		case PHYSICS_2D_ISLAND_COUNT:
-			return PhysicsServer2D::get_singleton()->get_process_info(PhysicsServer2D::INFO_ISLAND_COUNT);
 #ifdef _3D_DISABLED
 		case PHYSICS_3D_ACTIVE_OBJECTS:
 			return 0;
@@ -254,9 +239,6 @@ Performance::MonitorType Performance::get_monitor_type(Monitor p_monitor) const 
 		MONITOR_TYPE_MEMORY,
 		MONITOR_TYPE_MEMORY,
 		MONITOR_TYPE_MEMORY,
-		MONITOR_TYPE_QUANTITY,
-		MONITOR_TYPE_QUANTITY,
-		MONITOR_TYPE_QUANTITY,
 #ifndef _3D_DISABLED
 		MONITOR_TYPE_QUANTITY,
 		MONITOR_TYPE_QUANTITY,
