@@ -34,12 +34,10 @@
 #include "scene/main/node.h"
 #include "scene/resources/texture.h"
 
-#ifndef _3D_DISABLED
 class Camera3D;
 class CollisionObject3D;
 class AudioListener3D;
 class World3D;
-#endif // _3D_DISABLED
 
 class AudioListener2D;
 class Camera2D;
@@ -703,7 +701,6 @@ public:
 	Camera2D *get_camera_2d() const;
 	void assign_next_enabled_camera_2d(const StringName &p_camera_group);
 
-#ifndef _3D_DISABLED
 private:
 	// 3D audio, camera, physics, and world.
 	bool use_xr = false;
@@ -780,7 +777,6 @@ public:
 
 	void set_use_xr(bool p_use_xr);
 	bool is_using_xr();
-#endif // _3D_DISABLED
 
 	Viewport();
 	~Viewport();

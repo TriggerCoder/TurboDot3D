@@ -172,12 +172,10 @@ public:
 	void obstacle_set_avoidance_layers(RID p_obstacle, uint32_t p_layers) override {}
 	uint32_t obstacle_get_avoidance_layers(RID p_obstacle) const override { return 0; }
 
-#ifndef _3D_DISABLED
 	void parse_source_geometry_data(const Ref<NavigationMesh> &p_navigation_mesh, const Ref<NavigationMeshSourceGeometryData3D> &p_source_geometry_data, Node *p_root_node, const Callable &p_callback = Callable()) override {}
 	void bake_from_source_geometry_data(const Ref<NavigationMesh> &p_navigation_mesh, const Ref<NavigationMeshSourceGeometryData3D> &p_source_geometry_data, const Callable &p_callback = Callable()) override {}
 	void bake_from_source_geometry_data_async(const Ref<NavigationMesh> &p_navigation_mesh, const Ref<NavigationMeshSourceGeometryData3D> &p_source_geometry_data, const Callable &p_callback = Callable()) override {}
 	bool is_baking_navigation_mesh(Ref<NavigationMesh> p_navigation_mesh) const override { return false; }
-#endif // _3D_DISABLED
 
 	RID source_geometry_parser_create() override { return RID(); }
 	void source_geometry_parser_set_callback(RID p_parser, const Callable &p_callback) override {}

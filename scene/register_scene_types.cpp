@@ -226,8 +226,6 @@
 #include "scene/resources/2d/skeleton/skeleton_modification_stack_2d.h"
 #include "scene/resources/2d/tile_set.h"
 #include "scene/resources/2d/world_boundary_shape_2d.h"
-
-#ifndef _3D_DISABLED
 #include "scene/3d/audio_listener_3d.h"
 #include "scene/3d/audio_stream_player_3d.h"
 #include "scene/3d/bone_attachment_3d.h"
@@ -304,7 +302,6 @@
 #include "scene/resources/3d/sphere_shape_3d.h"
 #include "scene/resources/3d/world_3d.h"
 #include "scene/resources/3d/world_boundary_shape_3d.h"
-#endif // _3D_DISABLED
 
 static Ref<ResourceFormatSaverText> resource_saver_text;
 static Ref<ResourceFormatLoaderText> resource_loader_text;
@@ -531,7 +528,6 @@ void register_scene_types() {
 
 	/* REGISTER 3D */
 
-#ifndef _3D_DISABLED
 	GDREGISTER_CLASS(Node3D);
 	GDREGISTER_ABSTRACT_CLASS(Node3DGizmo);
 	GDREGISTER_CLASS(Skin);
@@ -640,7 +636,6 @@ void register_scene_types() {
 	GDREGISTER_CLASS(NavigationLink3D);
 
 	OS::get_singleton()->yield(); // may take time to init
-#endif // _3D_DISABLED
 
 	/* REGISTER SHADER */
 
@@ -858,7 +853,7 @@ void register_scene_types() {
 	GDREGISTER_CLASS(SurfaceTool);
 	GDREGISTER_CLASS(MeshDataTool);
 
-#ifndef _3D_DISABLED
+	// 3D
 	GDREGISTER_CLASS(AudioStreamPlayer3D);
 	GDREGISTER_VIRTUAL_CLASS(PrimitiveMesh);
 	GDREGISTER_CLASS(BoxMesh);
@@ -900,7 +895,6 @@ void register_scene_types() {
 	GDREGISTER_CLASS(World3D);
 
 	OS::get_singleton()->yield(); // may take time to init
-#endif // _3D_DISABLED
 
 	GDREGISTER_CLASS(PhysicsMaterial);
 	GDREGISTER_CLASS(Compositor);
@@ -1081,13 +1075,11 @@ void unregister_scene_types() {
 	resource_loader_shader_include.unref();
 
 	// StandardMaterial3D is not initialized when 3D is disabled, so it shouldn't be cleaned up either
-#ifndef _3D_DISABLED
 	BaseMaterial3D::finish_shaders();
 	PhysicalSkyMaterial::cleanup_shader();
 	PanoramaSkyMaterial::cleanup_shader();
 	ProceduralSkyMaterial::cleanup_shader();
 	FogMaterial::cleanup_shader();
-#endif // _3D_DISABLED
 
 	ParticleProcessMaterial::finish_shaders();
 	CanvasItemMaterial::finish_shaders();

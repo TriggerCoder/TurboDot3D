@@ -88,7 +88,6 @@
 
 // 3D physics and navigation (3D navigation is needed for 2D).
 #include "navigation_server_3d.h"
-#ifndef _3D_DISABLED
 #include "physics_3d/godot_physics_server_3d.h"
 #include "physics_server_3d.h"
 #include "physics_server_3d_wrap_mt.h"
@@ -101,11 +100,9 @@
 #include "xr/xr_interface_extension.h"
 #include "xr/xr_positional_tracker.h"
 #include "xr_server.h"
-#endif // _3D_DISABLED
 
 ShaderTypes *shader_types = nullptr;
 
-#ifndef _3D_DISABLED
 static PhysicsServer3D *_createGodotPhysics3DCallback() {
 #ifdef THREADS_ENABLED
 	bool using_threads = GLOBAL_GET("physics/3d/run_on_separate_thread");
@@ -117,7 +114,6 @@ static PhysicsServer3D *_createGodotPhysics3DCallback() {
 
 	return memnew(PhysicsServer3DWrapMT(physics_server_3d, using_threads));
 }
-#endif // _3D_DISABLED
 
 static PhysicsServer2D *_createGodotPhysics2DCallback() {
 #ifdef THREADS_ENABLED
@@ -296,7 +292,6 @@ void register_server_types() {
 	GDREGISTER_CLASS(NavigationPathQueryParameters2D);
 	GDREGISTER_CLASS(NavigationPathQueryResult2D);
 
-#ifndef _3D_DISABLED
 	// Physics 3D
 	GDREGISTER_CLASS(PhysicsServer3DManager);
 	Engine::get_singleton()->add_singleton(Engine::Singleton("PhysicsServer3DManager", PhysicsServer3DManager::get_singleton(), "PhysicsServer3DManager"));
@@ -337,8 +332,6 @@ void register_server_types() {
 	GDREGISTER_CLASS(XRPositionalTracker);
 	GDREGISTER_CLASS(XRServer);
 	GDREGISTER_ABSTRACT_CLASS(XRTracker);
-#endif // _3D_DISABLED
-
 	GDREGISTER_ABSTRACT_CLASS(NavigationServer3D);
 	GDREGISTER_CLASS(NavigationPathQueryParameters3D);
 	GDREGISTER_CLASS(NavigationPathQueryResult3D);
@@ -375,10 +368,8 @@ void register_server_singletons() {
 	Engine::get_singleton()->add_singleton(Engine::Singleton("RenderingServer", RenderingServer::get_singleton(), "RenderingServer"));
 
 	Engine::get_singleton()->add_singleton(Engine::Singleton("PhysicsServer2D", PhysicsServer2D::get_singleton(), "PhysicsServer2D"));
-#ifndef _3D_DISABLED
 	Engine::get_singleton()->add_singleton(Engine::Singleton("PhysicsServer3D", PhysicsServer3D::get_singleton(), "PhysicsServer3D"));
 	Engine::get_singleton()->add_singleton(Engine::Singleton("XRServer", XRServer::get_singleton(), "XRServer"));
-#endif // _3D_DISABLED
 
 	OS::get_singleton()->benchmark_end_measure("Servers", "Register Singletons");
 }

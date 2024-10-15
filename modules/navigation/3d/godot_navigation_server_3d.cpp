@@ -32,10 +32,7 @@
 
 #include "core/os/mutex.h"
 #include "scene/main/node.h"
-
-#ifndef _3D_DISABLED
 #include "nav_mesh_generator_3d.h"
-#endif // _3D_DISABLED
 
 using namespace NavigationUtilities;
 
@@ -1083,7 +1080,6 @@ uint32_t GodotNavigationServer3D::obstacle_get_avoidance_layers(RID p_obstacle) 
 }
 
 void GodotNavigationServer3D::parse_source_geometry_data(const Ref<NavigationMesh> &p_navigation_mesh, const Ref<NavigationMeshSourceGeometryData3D> &p_source_geometry_data, Node *p_root_node, const Callable &p_callback) {
-#ifndef _3D_DISABLED
 	ERR_FAIL_COND_MSG(!Thread::is_main_thread(), "The SceneTree can only be parsed on the main thread. Call this function from the main thread or use call_deferred().");
 	ERR_FAIL_COND_MSG(!p_navigation_mesh.is_valid(), "Invalid navigation mesh.");
 	ERR_FAIL_NULL_MSG(p_root_node, "No parsing root node specified.");
@@ -1091,35 +1087,26 @@ void GodotNavigationServer3D::parse_source_geometry_data(const Ref<NavigationMes
 
 	ERR_FAIL_NULL(NavMeshGenerator3D::get_singleton());
 	NavMeshGenerator3D::get_singleton()->parse_source_geometry_data(p_navigation_mesh, p_source_geometry_data, p_root_node, p_callback);
-#endif // _3D_DISABLED
 }
 
 void GodotNavigationServer3D::bake_from_source_geometry_data(const Ref<NavigationMesh> &p_navigation_mesh, const Ref<NavigationMeshSourceGeometryData3D> &p_source_geometry_data, const Callable &p_callback) {
-#ifndef _3D_DISABLED
 	ERR_FAIL_COND_MSG(!p_navigation_mesh.is_valid(), "Invalid navigation mesh.");
 	ERR_FAIL_COND_MSG(!p_source_geometry_data.is_valid(), "Invalid NavigationMeshSourceGeometryData3D.");
 
 	ERR_FAIL_NULL(NavMeshGenerator3D::get_singleton());
 	NavMeshGenerator3D::get_singleton()->bake_from_source_geometry_data(p_navigation_mesh, p_source_geometry_data, p_callback);
-#endif // _3D_DISABLED
 }
 
 void GodotNavigationServer3D::bake_from_source_geometry_data_async(const Ref<NavigationMesh> &p_navigation_mesh, const Ref<NavigationMeshSourceGeometryData3D> &p_source_geometry_data, const Callable &p_callback) {
-#ifndef _3D_DISABLED
 	ERR_FAIL_COND_MSG(!p_navigation_mesh.is_valid(), "Invalid navigation mesh.");
 	ERR_FAIL_COND_MSG(!p_source_geometry_data.is_valid(), "Invalid NavigationMeshSourceGeometryData3D.");
 
 	ERR_FAIL_NULL(NavMeshGenerator3D::get_singleton());
 	NavMeshGenerator3D::get_singleton()->bake_from_source_geometry_data_async(p_navigation_mesh, p_source_geometry_data, p_callback);
-#endif // _3D_DISABLED
 }
 
 bool GodotNavigationServer3D::is_baking_navigation_mesh(Ref<NavigationMesh> p_navigation_mesh) const {
-#ifdef _3D_DISABLED
-	return false;
-#else
 	return NavMeshGenerator3D::get_singleton()->is_baking(p_navigation_mesh);
-#endif // _3D_DISABLED
 }
 
 COMMAND_1(free, RID, p_object) {
@@ -1185,10 +1172,8 @@ COMMAND_1(free, RID, p_object) {
 	} else if (obstacle_owner.owns(p_object)) {
 		internal_free_obstacle(p_object);
 
-#ifndef _3D_DISABLED
 	} else if (navmesh_generator_3d && navmesh_generator_3d->owns(p_object)) {
 		navmesh_generator_3d->free(p_object);
-#endif // _3D_DISABLED
 
 	} else {
 		ERR_PRINT("Attempted to free a NavigationServer RID that did not exist (or was already freed).");
@@ -1259,11 +1244,9 @@ uint32_t GodotNavigationServer3D::map_get_iteration_id(RID p_map) const {
 }
 
 void GodotNavigationServer3D::sync() {
-#ifndef _3D_DISABLED
 	if (navmesh_generator_3d) {
 		navmesh_generator_3d->sync();
 	}
-#endif // _3D_DISABLED
 }
 
 void GodotNavigationServer3D::process(real_t p_delta_time) {
@@ -1318,20 +1301,16 @@ void GodotNavigationServer3D::process(real_t p_delta_time) {
 }
 
 void GodotNavigationServer3D::init() {
-#ifndef _3D_DISABLED
 	navmesh_generator_3d = memnew(NavMeshGenerator3D);
-#endif // _3D_DISABLED
 }
 
 void GodotNavigationServer3D::finish() {
 	flush_queries();
-#ifndef _3D_DISABLED
 	if (navmesh_generator_3d) {
 		navmesh_generator_3d->finish();
 		memdelete(navmesh_generator_3d);
 		navmesh_generator_3d = nullptr;
 	}
-#endif // _3D_DISABLED
 }
 
 PathQueryResult GodotNavigationServer3D::_query_path(const PathQueryParameters &p_parameters) const {
@@ -1417,20 +1396,16 @@ PathQueryResult GodotNavigationServer3D::_query_path(const PathQueryParameters &
 }
 
 RID GodotNavigationServer3D::source_geometry_parser_create() {
-#ifndef _3D_DISABLED
 	if (navmesh_generator_3d) {
 		return navmesh_generator_3d->source_geometry_parser_create();
 	}
-#endif // _3D_DISABLED
 	return RID();
 }
 
 void GodotNavigationServer3D::source_geometry_parser_set_callback(RID p_parser, const Callable &p_callback) {
-#ifndef _3D_DISABLED
 	if (navmesh_generator_3d) {
 		navmesh_generator_3d->source_geometry_parser_set_callback(p_parser, p_callback);
 	}
-#endif // _3D_DISABLED
 }
 
 Vector<Vector3> GodotNavigationServer3D::simplify_path(const Vector<Vector3> &p_path, real_t p_epsilon) {

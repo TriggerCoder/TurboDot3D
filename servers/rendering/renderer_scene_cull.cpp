@@ -40,7 +40,6 @@
 
 /* HALTON SEQUENCE */
 
-#ifndef _3D_DISABLED
 static float get_halton_value(int p_index, int p_base) {
 	float f = 1;
 	float r = 0;
@@ -51,7 +50,6 @@ static float get_halton_value(int p_index, int p_base) {
 	}
 	return r * 2.0f - 1.0f;
 }
-#endif // _3D_DISABLED
 
 /* CAMERA API */
 
@@ -2545,7 +2543,6 @@ bool RendererSceneCull::_light_instance_update_shadow(Instance *p_instance, cons
 }
 
 void RendererSceneCull::render_camera(const Ref<RenderSceneBuffers> &p_render_buffers, RID p_camera, RID p_scenario, RID p_viewport, Size2 p_viewport_size, uint32_t p_jitter_phase_count, float p_screen_mesh_lod_threshold, RID p_shadow_atlas, Ref<XRInterface> &p_xr_interface, RenderInfo *r_render_info) {
-#ifndef _3D_DISABLED
 
 	Camera *camera = camera_owner.get_or_null(p_camera);
 	ERR_FAIL_NULL(camera);
@@ -2644,7 +2641,6 @@ void RendererSceneCull::render_camera(const Ref<RenderSceneBuffers> &p_render_bu
 	RendererSceneOcclusionCull::get_singleton()->buffer_update(p_viewport, camera_data.main_transform, camera_data.main_projection, camera_data.is_orthogonal);
 
 	_render_scene(&camera_data, p_render_buffers, environment, camera->attributes, compositor, camera->visible_layers, p_scenario, p_viewport, p_shadow_atlas, RID(), -1, p_screen_mesh_lod_threshold, true, r_render_info);
-#endif
 }
 
 void RendererSceneCull::_visibility_cull_threaded(uint32_t p_thread, VisibilityCullData *cull_data) {
@@ -3461,7 +3457,6 @@ RID RendererSceneCull::_render_get_compositor(RID p_camera, RID p_scenario) {
 }
 
 void RendererSceneCull::render_empty_scene(const Ref<RenderSceneBuffers> &p_render_buffers, RID p_scenario, RID p_shadow_atlas) {
-#ifndef _3D_DISABLED
 	Scenario *scenario = scenario_owner.get_or_null(p_scenario);
 
 	RID environment;
@@ -3477,7 +3472,6 @@ void RendererSceneCull::render_empty_scene(const Ref<RenderSceneBuffers> &p_rend
 	camera_data.set_camera(Transform3D(), Projection(), true, false);
 
 	scene_render->render_scene(p_render_buffers, &camera_data, &camera_data, PagedArray<RenderGeometryInstance *>(), PagedArray<RID>(), PagedArray<RID>(), PagedArray<RID>(), PagedArray<RID>(), PagedArray<RID>(), PagedArray<RID>(), environment, RID(), compositor, p_shadow_atlas, RID(), scenario->reflection_atlas, RID(), 0, 0, nullptr, 0, nullptr, 0, nullptr);
-#endif
 }
 
 bool RendererSceneCull::_render_reflection_probe_step(Instance *p_instance, int p_step) {

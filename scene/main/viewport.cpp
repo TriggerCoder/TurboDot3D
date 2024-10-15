@@ -38,12 +38,10 @@
 #include "scene/2d/audio_listener_2d.h"
 #include "scene/2d/camera_2d.h"
 #include "scene/2d/physics/collision_object_2d.h"
-#ifndef _3D_DISABLED
 #include "scene/3d/audio_listener_3d.h"
 #include "scene/3d/camera_3d.h"
 #include "scene/3d/physics/collision_object_3d.h"
 #include "scene/3d/world_environment.h"
-#endif // _3D_DISABLED
 #include "scene/gui/control.h"
 #include "scene/gui/label.h"
 #include "scene/gui/popup.h"
@@ -523,17 +521,14 @@ void Viewport::_notification(int p_what) {
 			RenderingServer::get_singleton()->viewport_set_canvas_transform(viewport, current_canvas, canvas_transform);
 			RenderingServer::get_singleton()->viewport_set_canvas_cull_mask(viewport, canvas_cull_mask);
 			_update_audio_listener_2d();
-#ifndef _3D_DISABLED
 			RenderingServer::get_singleton()->viewport_set_scenario(viewport, find_world_3d()->get_scenario());
 			_update_audio_listener_3d();
-#endif // _3D_DISABLED
 
 			add_to_group("_viewports");
 			if (get_tree()->is_debugging_collisions_hint()) {
 				PhysicsServer2D::get_singleton()->space_set_debug_contacts(find_world_2d()->get_space(), get_tree()->get_collision_debug_contact_count());
 				contact_2d_debug = RenderingServer::get_singleton()->canvas_item_create();
 				RenderingServer::get_singleton()->canvas_item_set_parent(contact_2d_debug, current_canvas);
-#ifndef _3D_DISABLED
 				PhysicsServer3D::get_singleton()->space_set_debug_contacts(find_world_3d()->get_space(), get_tree()->get_collision_debug_contact_count());
 				contact_3d_debug_multimesh = RenderingServer::get_singleton()->multimesh_create();
 				RenderingServer::get_singleton()->multimesh_allocate_data(contact_3d_debug_multimesh, get_tree()->get_collision_debug_contact_count(), RS::MULTIMESH_TRANSFORM_3D, false);
@@ -543,13 +538,11 @@ void Viewport::_notification(int p_what) {
 				RenderingServer::get_singleton()->instance_set_base(contact_3d_debug_instance, contact_3d_debug_multimesh);
 				RenderingServer::get_singleton()->instance_set_scenario(contact_3d_debug_instance, find_world_3d()->get_scenario());
 				RenderingServer::get_singleton()->instance_geometry_set_flag(contact_3d_debug_instance, RS::INSTANCE_FLAG_DRAW_NEXT_FRAME_IF_VISIBLE, true);
-#endif // _3D_DISABLED
 				set_physics_process_internal(true);
 			}
 		} break;
 
 		case NOTIFICATION_READY: {
-#ifndef _3D_DISABLED
 			if (audio_listener_3d_set.size() && !audio_listener_3d) {
 				AudioListener3D *first = nullptr;
 				for (AudioListener3D *E : audio_listener_3d_set) {
@@ -576,7 +569,6 @@ void Viewport::_notification(int p_what) {
 					first->make_current();
 				}
 			}
-#endif // _3D_DISABLED
 		} break;
 
 		case NOTIFICATION_EXIT_TREE: {
@@ -624,7 +616,6 @@ void Viewport::_notification(int p_what) {
 					RenderingServer::get_singleton()->canvas_item_add_rect(contact_2d_debug, Rect2(points[i] - Vector2(2, 2), Vector2(5, 5)), ccol);
 				}
 			}
-#ifndef _3D_DISABLED
 			if (get_tree()->is_debugging_collisions_hint() && contact_3d_debug_multimesh.is_valid()) {
 				Vector<Vector3> points = PhysicsServer3D::get_singleton()->space_get_contacts(find_world_3d()->get_space());
 				int point_count = PhysicsServer3D::get_singleton()->space_get_contact_count(find_world_3d()->get_space());
@@ -637,7 +628,6 @@ void Viewport::_notification(int p_what) {
 					RS::get_singleton()->multimesh_instance_set_transform(contact_3d_debug_multimesh, i, point_transform);
 				}
 			}
-#endif // _3D_DISABLED
 		} break;
 
 		case NOTIFICATION_VP_MOUSE_ENTER: {
@@ -688,7 +678,6 @@ void Viewport::_process_picking() {
 		physics_picking_events.clear();
 		return;
 	}
-#ifndef _3D_DISABLED
 	if (use_xr) {
 		if (XRServer::get_singleton() != nullptr) {
 			Ref<XRInterface> xr_interface = XRServer::get_singleton()->get_primary_interface();
@@ -699,16 +688,13 @@ void Viewport::_process_picking() {
 			}
 		}
 	}
-#endif
 
 	_drop_physics_mouseover(true);
 
-#ifndef _3D_DISABLED
 	Vector2 last_pos(1e20, 1e20);
 	CollisionObject3D *last_object = nullptr;
 	ObjectID last_id;
 	PhysicsDirectSpaceState3D::RayResult result;
-#endif // _3D_DISABLED
 
 	PhysicsDirectSpaceState2D *ss2d = PhysicsServer2D::get_singleton()->space_get_direct_state(find_world_2d()->get_space());
 
@@ -883,7 +869,6 @@ void Viewport::_process_picking() {
 			}
 		}
 
-#ifndef _3D_DISABLED
 		CollisionObject3D *capture_object = nullptr;
 		if (physics_object_capture.is_valid()) {
 			capture_object = Object::cast_to<CollisionObject3D>(ObjectDB::get_instance(physics_object_capture));
@@ -958,7 +943,6 @@ void Viewport::_process_picking() {
 				last_pos = pos;
 			}
 		}
-#endif // _3D_DISABLED
 	}
 }
 
@@ -1001,19 +985,13 @@ bool Viewport::_set_size(const Size2i &p_size, const Size2i &p_size_2d_override,
 	size_2d_override = p_size_2d_override;
 	stretch_transform = stretch_transform_new;
 
-#ifndef _3D_DISABLED
 	if (!use_xr) {
-#endif
-
 		if (p_allocated) {
 			RS::get_singleton()->viewport_set_size(viewport, size.width, size.height);
 		} else {
 			RS::get_singleton()->viewport_set_size(viewport, 0, 0);
 		}
-
-#ifndef _3D_DISABLED
-	} // if (!use_xr)
-#endif
+	}
 
 	_update_global_transform();
 	update_configuration_warnings();
@@ -1040,7 +1018,6 @@ bool Viewport::_set_size(const Size2i &p_size, const Size2i &p_size_2d_override,
 }
 
 Size2i Viewport::_get_size() const {
-#ifndef _3D_DISABLED
 	if (use_xr) {
 		if (XRServer::get_singleton() != nullptr) {
 			Ref<XRInterface> xr_interface = XRServer::get_singleton()->get_primary_interface();
@@ -1051,7 +1028,6 @@ Size2i Viewport::_get_size() const {
 		}
 		return Size2i();
 	}
-#endif // _3D_DISABLED
 
 	return size;
 }
@@ -2583,7 +2559,6 @@ void Viewport::_drop_mouse_focus() {
 void Viewport::_drop_physics_mouseover(bool p_paused_only) {
 	_cleanup_mouseover_colliders(true, p_paused_only);
 
-#ifndef _3D_DISABLED
 	if (physics_object_over.is_valid()) {
 		CollisionObject3D *co = Object::cast_to<CollisionObject3D>(ObjectDB::get_instance(physics_object_over));
 		if (co) {
@@ -2597,7 +2572,6 @@ void Viewport::_drop_physics_mouseover(bool p_paused_only) {
 			}
 		}
 	}
-#endif // _3D_DISABLED
 }
 
 void Viewport::_gui_grab_click_focus(Control *p_control) {
@@ -4094,7 +4068,6 @@ void Viewport::assign_next_enabled_camera_2d(const StringName &p_camera_group) {
 	}
 }
 
-#ifndef _3D_DISABLED
 AudioListener3D *Viewport::get_audio_listener_3d() const {
 	ERR_READ_THREAD_GUARD_V(nullptr);
 	return audio_listener_3d;
@@ -4593,7 +4566,6 @@ float Viewport::get_texture_mipmap_bias() const {
 	return texture_mipmap_bias;
 }
 
-#endif // _3D_DISABLED
 
 void Viewport::_propagate_world_2d_changed(Node *p_node) {
 	if (p_node != this) {
@@ -4741,7 +4713,6 @@ void Viewport::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("is_audio_listener_2d"), &Viewport::is_audio_listener_2d);
 	ClassDB::bind_method(D_METHOD("get_camera_2d"), &Viewport::get_camera_2d);
 
-#ifndef _3D_DISABLED
 	ClassDB::bind_method(D_METHOD("set_world_3d", "world_3d"), &Viewport::set_world_3d);
 	ClassDB::bind_method(D_METHOD("get_world_3d"), &Viewport::get_world_3d);
 	ClassDB::bind_method(D_METHOD("find_world_3d"), &Viewport::find_world_3d);
@@ -4784,7 +4755,6 @@ void Viewport::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "use_xr"), "set_use_xr", "is_using_xr");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "own_world_3d"), "set_use_own_world_3d", "is_using_own_world_3d");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "world_3d", PROPERTY_HINT_RESOURCE_TYPE, "World3D"), "set_world_3d", "get_world_3d");
-#endif // _3D_DISABLED
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "world_2d", PROPERTY_HINT_RESOURCE_TYPE, "World2D", PROPERTY_USAGE_NONE), "set_world_2d", "get_world_2d");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "transparent_bg"), "set_transparent_background", "has_transparent_background");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "handle_input_locally"), "set_handle_input_locally", "is_handling_input_locally");
@@ -4801,7 +4771,6 @@ void Viewport::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "debug_draw", PROPERTY_HINT_ENUM, "Disabled,Unshaded,Lighting,Overdraw,Wireframe,Normal Buffer,VoxelGI Albedo,VoxelGI Lighting,VoxelGI Emission,Shadow Atlas,Directional Shadow Map,Scene Luminance,SSAO,SSIL,Directional Shadow Splits,Decal Atlas,SDFGI Cascades,SDFGI Probes,VoxelGI/SDFGI Buffer,Disable Mesh LOD,OmniLight3D Cluster,SpotLight3D Cluster,Decal Cluster,ReflectionProbe Cluster,Occlusion Culling Buffer,Motion Vectors,Internal Buffer"), "set_debug_draw", "get_debug_draw");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "use_hdr_2d"), "set_use_hdr_2d", "is_using_hdr_2d");
 
-#ifndef _3D_DISABLED
 	ADD_GROUP("Scaling 3D", "");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "scaling_3d_mode", PROPERTY_HINT_ENUM, "Bilinear (Fastest),FSR 1.0 (Fast),FSR 2.2 (Slow)"), "set_scaling_3d_mode", "get_scaling_3d_mode");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "scaling_3d_scale", PROPERTY_HINT_RANGE, "0.25,2.0,0.01"), "set_scaling_3d_scale", "get_scaling_3d_scale");
@@ -4811,15 +4780,12 @@ void Viewport::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "vrs_mode", PROPERTY_HINT_ENUM, "Disabled,Texture,Depth buffer,XR"), "set_vrs_mode", "get_vrs_mode");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "vrs_update_mode", PROPERTY_HINT_ENUM, "Disabled,Once,Always"), "set_vrs_update_mode", "get_vrs_update_mode");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "vrs_texture", PROPERTY_HINT_RESOURCE_TYPE, "Texture2D"), "set_vrs_texture", "get_vrs_texture");
-#endif
 	ADD_GROUP("Canvas Items", "canvas_item_");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "canvas_item_default_texture_filter", PROPERTY_HINT_ENUM, "Nearest,Linear,Linear Mipmap,Nearest Mipmap"), "set_default_canvas_item_texture_filter", "get_default_canvas_item_texture_filter");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "canvas_item_default_texture_repeat", PROPERTY_HINT_ENUM, "Disabled,Enabled,Mirror"), "set_default_canvas_item_texture_repeat", "get_default_canvas_item_texture_repeat");
 	ADD_GROUP("Audio Listener", "audio_listener_");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "audio_listener_enable_2d"), "set_as_audio_listener_2d", "is_audio_listener_2d");
-#ifndef _3D_DISABLED
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "audio_listener_enable_3d"), "set_as_audio_listener_3d", "is_audio_listener_3d");
-#endif // _3D_DISABLED
 	ADD_GROUP("Physics", "physics_");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "physics_object_picking"), "set_physics_object_picking", "get_physics_object_picking");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "physics_object_picking_sort"), "set_physics_object_picking_sort", "get_physics_object_picking_sort");
@@ -4985,12 +4951,10 @@ Viewport::Viewport() {
 	// Window tooltip.
 	gui.tooltip_delay = GLOBAL_GET("gui/timers/tooltip_delay_sec");
 
-#ifndef _3D_DISABLED
 	set_scaling_3d_mode((Viewport::Scaling3DMode)(int)GLOBAL_GET("rendering/scaling_3d/mode"));
 	set_scaling_3d_scale(GLOBAL_GET("rendering/scaling_3d/scale"));
 	set_fsr_sharpness((float)GLOBAL_GET("rendering/scaling_3d/fsr_sharpness"));
 	set_texture_mipmap_bias((float)GLOBAL_GET("rendering/textures/default_filters/texture_mipmap_bias"));
-#endif // _3D_DISABLED
 
 	set_sdf_oversize(sdf_oversize); // Set to server.
 }

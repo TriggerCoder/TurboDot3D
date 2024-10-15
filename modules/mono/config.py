@@ -27,3 +27,6 @@ def get_doc_classes():
 
 def get_doc_path():
     return "doc_classes"
+
+def is_enabled():
+    return True

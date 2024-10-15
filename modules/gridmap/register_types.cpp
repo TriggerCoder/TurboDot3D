@@ -28,8 +28,6 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef _3D_DISABLED
-
 #include "register_types.h"
 
 #include "grid_map.h"
@@ -56,5 +54,3 @@ void uninitialize_gridmap_module(ModuleInitializationLevel p_level) {
 		return;
 	}
 }
-
-#endif // _3D_DISABLED

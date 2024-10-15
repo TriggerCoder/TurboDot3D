@@ -28,8 +28,6 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef _3D_DISABLED
-
 #include "physics_server_3d.h"
 
 #include "core/config/project_settings.h"
@@ -690,8 +688,6 @@ RID PhysicsServer3D::shape_create(ShapeType p_shape) {
 }
 
 void PhysicsServer3D::_bind_methods() {
-#ifndef _3D_DISABLED
-
 	ClassDB::bind_method(D_METHOD("world_boundary_shape_create"), &PhysicsServer3D::world_boundary_shape_create);
 	ClassDB::bind_method(D_METHOD("separation_ray_shape_create"), &PhysicsServer3D::separation_ray_shape_create);
 	ClassDB::bind_method(D_METHOD("sphere_shape_create"), &PhysicsServer3D::sphere_shape_create);
@@ -1118,7 +1114,6 @@ void PhysicsServer3D::_bind_methods() {
 	BIND_ENUM_CONSTANT(BODY_AXIS_ANGULAR_Y);
 	BIND_ENUM_CONSTANT(BODY_AXIS_ANGULAR_Z);
 
-#endif
 }
 
 PhysicsServer3D::PhysicsServer3D() {
@@ -1230,4 +1225,3 @@ PhysicsServer3DManager::~PhysicsServer3DManager() {
 	singleton = nullptr;
 }
 
-#endif // _3D_DISABLED
