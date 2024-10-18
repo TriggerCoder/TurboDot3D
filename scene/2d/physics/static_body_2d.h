@@ -35,7 +35,6 @@
 #include "scene/2d/physics/physics_body_2d.h"
 
 class StaticBody2D : public PhysicsBody2D {
-//	GDCLASS(StaticBody2D, PhysicsBody2D);
 
 private:
 	Vector2 constant_linear_velocity;

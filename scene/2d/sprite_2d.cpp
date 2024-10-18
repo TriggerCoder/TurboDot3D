@@ -434,67 +434,6 @@ void Sprite2D::_texture_changed() {
 }
 
 void Sprite2D::_bind_methods() {
-/*
-	ClassDB::bind_method(D_METHOD("set_texture", "texture"), &Sprite2D::set_texture);
-	ClassDB::bind_method(D_METHOD("get_texture"), &Sprite2D::get_texture);
-
-	ClassDB::bind_method(D_METHOD("set_centered", "centered"), &Sprite2D::set_centered);
-	ClassDB::bind_method(D_METHOD("is_centered"), &Sprite2D::is_centered);
-
-	ClassDB::bind_method(D_METHOD("set_offset", "offset"), &Sprite2D::set_offset);
-	ClassDB::bind_method(D_METHOD("get_offset"), &Sprite2D::get_offset);
-
-	ClassDB::bind_method(D_METHOD("set_flip_h", "flip_h"), &Sprite2D::set_flip_h);
-	ClassDB::bind_method(D_METHOD("is_flipped_h"), &Sprite2D::is_flipped_h);
-
-	ClassDB::bind_method(D_METHOD("set_flip_v", "flip_v"), &Sprite2D::set_flip_v);
-	ClassDB::bind_method(D_METHOD("is_flipped_v"), &Sprite2D::is_flipped_v);
-
-	ClassDB::bind_method(D_METHOD("set_region_enabled", "enabled"), &Sprite2D::set_region_enabled);
-	ClassDB::bind_method(D_METHOD("is_region_enabled"), &Sprite2D::is_region_enabled);
-
-	ClassDB::bind_method(D_METHOD("is_pixel_opaque", "pos"), &Sprite2D::is_pixel_opaque);
-
-	ClassDB::bind_method(D_METHOD("set_region_rect", "rect"), &Sprite2D::set_region_rect);
-	ClassDB::bind_method(D_METHOD("get_region_rect"), &Sprite2D::get_region_rect);
-
-	ClassDB::bind_method(D_METHOD("set_region_filter_clip_enabled", "enabled"), &Sprite2D::set_region_filter_clip_enabled);
-	ClassDB::bind_method(D_METHOD("is_region_filter_clip_enabled"), &Sprite2D::is_region_filter_clip_enabled);
-
-	ClassDB::bind_method(D_METHOD("set_frame", "frame"), &Sprite2D::set_frame);
-	ClassDB::bind_method(D_METHOD("get_frame"), &Sprite2D::get_frame);
-
-	ClassDB::bind_method(D_METHOD("set_frame_coords", "coords"), &Sprite2D::set_frame_coords);
-	ClassDB::bind_method(D_METHOD("get_frame_coords"), &Sprite2D::get_frame_coords);
-
-	ClassDB::bind_method(D_METHOD("set_vframes", "vframes"), &Sprite2D::set_vframes);
-	ClassDB::bind_method(D_METHOD("get_vframes"), &Sprite2D::get_vframes);
-
-	ClassDB::bind_method(D_METHOD("set_hframes", "hframes"), &Sprite2D::set_hframes);
-	ClassDB::bind_method(D_METHOD("get_hframes"), &Sprite2D::get_hframes);
-
-	ClassDB::bind_method(D_METHOD("get_rect"), &Sprite2D::get_rect);
-
-	ADD_SIGNAL(MethodInfo("frame_changed"));
-	ADD_SIGNAL(MethodInfo("texture_changed"));
-
-	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "texture", PROPERTY_HINT_RESOURCE_TYPE, "Texture2D"), "set_texture", "get_texture");
-	ADD_GROUP("Offset", "");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "centered"), "set_centered", "is_centered");
-	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "offset", PROPERTY_HINT_NONE, "suffix:px"), "set_offset", "get_offset");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "flip_h"), "set_flip_h", "is_flipped_h");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "flip_v"), "set_flip_v", "is_flipped_v");
-	ADD_GROUP("Animation", "");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "hframes", PROPERTY_HINT_RANGE, "1,16384,1"), "set_hframes", "get_hframes");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "vframes", PROPERTY_HINT_RANGE, "1,16384,1"), "set_vframes", "get_vframes");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "frame"), "set_frame", "get_frame");
-	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2I, "frame_coords", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_EDITOR), "set_frame_coords", "get_frame_coords");
-
-	ADD_GROUP("Region", "region_");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "region_enabled"), "set_region_enabled", "is_region_enabled");
-	ADD_PROPERTY(PropertyInfo(Variant::RECT2, "region_rect"), "set_region_rect", "get_region_rect");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "region_filter_clip_enabled"), "set_region_filter_clip_enabled", "is_region_filter_clip_enabled");
-*/
 }
 
 Sprite2D::Sprite2D() {

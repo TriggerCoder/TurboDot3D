@@ -206,19 +206,6 @@ void TileMapPattern::_get_property_list(List<PropertyInfo> *p_list) const {
 }
 
 void TileMapPattern::_bind_methods() {
-/*
-	ClassDB::bind_method(D_METHOD("set_cell", "coords", "source_id", "atlas_coords", "alternative_tile"), &TileMapPattern::set_cell, DEFVAL(TileSet::INVALID_SOURCE), DEFVAL(TileSetSource::INVALID_ATLAS_COORDS), DEFVAL(TileSetSource::INVALID_TILE_ALTERNATIVE));
-	ClassDB::bind_method(D_METHOD("has_cell", "coords"), &TileMapPattern::has_cell);
-	ClassDB::bind_method(D_METHOD("remove_cell", "coords", "update_size"), &TileMapPattern::remove_cell);
-	ClassDB::bind_method(D_METHOD("get_cell_source_id", "coords"), &TileMapPattern::get_cell_source_id);
-	ClassDB::bind_method(D_METHOD("get_cell_atlas_coords", "coords"), &TileMapPattern::get_cell_atlas_coords);
-	ClassDB::bind_method(D_METHOD("get_cell_alternative_tile", "coords"), &TileMapPattern::get_cell_alternative_tile);
-
-	ClassDB::bind_method(D_METHOD("get_used_cells"), &TileMapPattern::get_used_cells);
-	ClassDB::bind_method(D_METHOD("get_size"), &TileMapPattern::get_size);
-	ClassDB::bind_method(D_METHOD("set_size", "size"), &TileMapPattern::set_size);
-	ClassDB::bind_method(D_METHOD("is_empty"), &TileMapPattern::is_empty);
-*/
 }
 
 /////////////////////////////// TileSet //////////////////////////////////////
@@ -3745,169 +3732,6 @@ void TileSet::_validate_property(PropertyInfo &p_property) const {
 }
 
 void TileSet::_bind_methods() {
-/*
-	// Sources management.
-	ClassDB::bind_method(D_METHOD("get_next_source_id"), &TileSet::get_next_source_id);
-	ClassDB::bind_method(D_METHOD("add_source", "source", "atlas_source_id_override"), &TileSet::add_source, DEFVAL(TileSet::INVALID_SOURCE));
-	ClassDB::bind_method(D_METHOD("remove_source", "source_id"), &TileSet::remove_source);
-	ClassDB::bind_method(D_METHOD("set_source_id", "source_id", "new_source_id"), &TileSet::set_source_id);
-	ClassDB::bind_method(D_METHOD("get_source_count"), &TileSet::get_source_count);
-	ClassDB::bind_method(D_METHOD("get_source_id", "index"), &TileSet::get_source_id);
-	ClassDB::bind_method(D_METHOD("has_source", "source_id"), &TileSet::has_source);
-	ClassDB::bind_method(D_METHOD("get_source", "source_id"), &TileSet::get_source);
-
-	// Shape and layout.
-	ClassDB::bind_method(D_METHOD("set_tile_shape", "shape"), &TileSet::set_tile_shape);
-	ClassDB::bind_method(D_METHOD("get_tile_shape"), &TileSet::get_tile_shape);
-	ClassDB::bind_method(D_METHOD("set_tile_layout", "layout"), &TileSet::set_tile_layout);
-	ClassDB::bind_method(D_METHOD("get_tile_layout"), &TileSet::get_tile_layout);
-	ClassDB::bind_method(D_METHOD("set_tile_offset_axis", "alignment"), &TileSet::set_tile_offset_axis);
-	ClassDB::bind_method(D_METHOD("get_tile_offset_axis"), &TileSet::get_tile_offset_axis);
-	ClassDB::bind_method(D_METHOD("set_tile_size", "size"), &TileSet::set_tile_size);
-	ClassDB::bind_method(D_METHOD("get_tile_size"), &TileSet::get_tile_size);
-
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "tile_shape", PROPERTY_HINT_ENUM, "Square,Isometric,Half-Offset Square,Hexagon"), "set_tile_shape", "get_tile_shape");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "tile_layout", PROPERTY_HINT_ENUM, "Stacked,Stacked Offset,Stairs Right,Stairs Down,Diamond Right,Diamond Down"), "set_tile_layout", "get_tile_layout");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "tile_offset_axis", PROPERTY_HINT_ENUM, "Horizontal Offset,Vertical Offset"), "set_tile_offset_axis", "get_tile_offset_axis");
-	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2I, "tile_size", PROPERTY_HINT_NONE, "suffix:px"), "set_tile_size", "get_tile_size");
-
-	// Rendering.
-	ClassDB::bind_method(D_METHOD("set_uv_clipping", "uv_clipping"), &TileSet::set_uv_clipping);
-	ClassDB::bind_method(D_METHOD("is_uv_clipping"), &TileSet::is_uv_clipping);
-
-	ClassDB::bind_method(D_METHOD("get_occlusion_layers_count"), &TileSet::get_occlusion_layers_count);
-	ClassDB::bind_method(D_METHOD("add_occlusion_layer", "to_position"), &TileSet::add_occlusion_layer, DEFVAL(-1));
-	ClassDB::bind_method(D_METHOD("move_occlusion_layer", "layer_index", "to_position"), &TileSet::move_occlusion_layer);
-	ClassDB::bind_method(D_METHOD("remove_occlusion_layer", "layer_index"), &TileSet::remove_occlusion_layer);
-	ClassDB::bind_method(D_METHOD("set_occlusion_layer_light_mask", "layer_index", "light_mask"), &TileSet::set_occlusion_layer_light_mask);
-	ClassDB::bind_method(D_METHOD("get_occlusion_layer_light_mask", "layer_index"), &TileSet::get_occlusion_layer_light_mask);
-	ClassDB::bind_method(D_METHOD("set_occlusion_layer_sdf_collision", "layer_index", "sdf_collision"), &TileSet::set_occlusion_layer_sdf_collision);
-	ClassDB::bind_method(D_METHOD("get_occlusion_layer_sdf_collision", "layer_index"), &TileSet::get_occlusion_layer_sdf_collision);
-
-	// Physics
-	ClassDB::bind_method(D_METHOD("get_physics_layers_count"), &TileSet::get_physics_layers_count);
-	ClassDB::bind_method(D_METHOD("add_physics_layer", "to_position"), &TileSet::add_physics_layer, DEFVAL(-1));
-	ClassDB::bind_method(D_METHOD("move_physics_layer", "layer_index", "to_position"), &TileSet::move_physics_layer);
-	ClassDB::bind_method(D_METHOD("remove_physics_layer", "layer_index"), &TileSet::remove_physics_layer);
-	ClassDB::bind_method(D_METHOD("set_physics_layer_collision_layer", "layer_index", "layer"), &TileSet::set_physics_layer_collision_layer);
-	ClassDB::bind_method(D_METHOD("get_physics_layer_collision_layer", "layer_index"), &TileSet::get_physics_layer_collision_layer);
-	ClassDB::bind_method(D_METHOD("set_physics_layer_collision_mask", "layer_index", "mask"), &TileSet::set_physics_layer_collision_mask);
-	ClassDB::bind_method(D_METHOD("get_physics_layer_collision_mask", "layer_index"), &TileSet::get_physics_layer_collision_mask);
-	ClassDB::bind_method(D_METHOD("set_physics_layer_physics_material", "layer_index", "physics_material"), &TileSet::set_physics_layer_physics_material);
-	ClassDB::bind_method(D_METHOD("get_physics_layer_physics_material", "layer_index"), &TileSet::get_physics_layer_physics_material);
-
-	// Terrains
-	ClassDB::bind_method(D_METHOD("get_terrain_sets_count"), &TileSet::get_terrain_sets_count);
-	ClassDB::bind_method(D_METHOD("add_terrain_set", "to_position"), &TileSet::add_terrain_set, DEFVAL(-1));
-	ClassDB::bind_method(D_METHOD("move_terrain_set", "terrain_set", "to_position"), &TileSet::move_terrain_set);
-	ClassDB::bind_method(D_METHOD("remove_terrain_set", "terrain_set"), &TileSet::remove_terrain_set);
-	ClassDB::bind_method(D_METHOD("set_terrain_set_mode", "terrain_set", "mode"), &TileSet::set_terrain_set_mode);
-	ClassDB::bind_method(D_METHOD("get_terrain_set_mode", "terrain_set"), &TileSet::get_terrain_set_mode);
-
-	ClassDB::bind_method(D_METHOD("get_terrains_count", "terrain_set"), &TileSet::get_terrains_count);
-	ClassDB::bind_method(D_METHOD("add_terrain", "terrain_set", "to_position"), &TileSet::add_terrain, DEFVAL(-1));
-	ClassDB::bind_method(D_METHOD("move_terrain", "terrain_set", "terrain_index", "to_position"), &TileSet::move_terrain);
-	ClassDB::bind_method(D_METHOD("remove_terrain", "terrain_set", "terrain_index"), &TileSet::remove_terrain);
-	ClassDB::bind_method(D_METHOD("set_terrain_name", "terrain_set", "terrain_index", "name"), &TileSet::set_terrain_name);
-	ClassDB::bind_method(D_METHOD("get_terrain_name", "terrain_set", "terrain_index"), &TileSet::get_terrain_name);
-	ClassDB::bind_method(D_METHOD("set_terrain_color", "terrain_set", "terrain_index", "color"), &TileSet::set_terrain_color);
-	ClassDB::bind_method(D_METHOD("get_terrain_color", "terrain_set", "terrain_index"), &TileSet::get_terrain_color);
-
-	// Navigation
-	ClassDB::bind_method(D_METHOD("get_navigation_layers_count"), &TileSet::get_navigation_layers_count);
-	ClassDB::bind_method(D_METHOD("add_navigation_layer", "to_position"), &TileSet::add_navigation_layer, DEFVAL(-1));
-	ClassDB::bind_method(D_METHOD("move_navigation_layer", "layer_index", "to_position"), &TileSet::move_navigation_layer);
-	ClassDB::bind_method(D_METHOD("remove_navigation_layer", "layer_index"), &TileSet::remove_navigation_layer);
-	ClassDB::bind_method(D_METHOD("set_navigation_layer_layers", "layer_index", "layers"), &TileSet::set_navigation_layer_layers);
-	ClassDB::bind_method(D_METHOD("get_navigation_layer_layers", "layer_index"), &TileSet::get_navigation_layer_layers);
-	ClassDB::bind_method(D_METHOD("set_navigation_layer_layer_value", "layer_index", "layer_number", "value"), &TileSet::set_navigation_layer_layer_value);
-	ClassDB::bind_method(D_METHOD("get_navigation_layer_layer_value", "layer_index", "layer_number"), &TileSet::get_navigation_layer_layer_value);
-
-	// Custom data
-	ClassDB::bind_method(D_METHOD("get_custom_data_layers_count"), &TileSet::get_custom_data_layers_count);
-	ClassDB::bind_method(D_METHOD("add_custom_data_layer", "to_position"), &TileSet::add_custom_data_layer, DEFVAL(-1));
-	ClassDB::bind_method(D_METHOD("move_custom_data_layer", "layer_index", "to_position"), &TileSet::move_custom_data_layer);
-	ClassDB::bind_method(D_METHOD("remove_custom_data_layer", "layer_index"), &TileSet::remove_custom_data_layer);
-	ClassDB::bind_method(D_METHOD("get_custom_data_layer_by_name", "layer_name"), &TileSet::get_custom_data_layer_by_name);
-	ClassDB::bind_method(D_METHOD("set_custom_data_layer_name", "layer_index", "layer_name"), &TileSet::set_custom_data_layer_name);
-	ClassDB::bind_method(D_METHOD("get_custom_data_layer_name", "layer_index"), &TileSet::get_custom_data_layer_name);
-	ClassDB::bind_method(D_METHOD("set_custom_data_layer_type", "layer_index", "layer_type"), &TileSet::set_custom_data_layer_type);
-	ClassDB::bind_method(D_METHOD("get_custom_data_layer_type", "layer_index"), &TileSet::get_custom_data_layer_type);
-
-	// Tile proxies
-	ClassDB::bind_method(D_METHOD("set_source_level_tile_proxy", "source_from", "source_to"), &TileSet::set_source_level_tile_proxy);
-	ClassDB::bind_method(D_METHOD("get_source_level_tile_proxy", "source_from"), &TileSet::get_source_level_tile_proxy);
-	ClassDB::bind_method(D_METHOD("has_source_level_tile_proxy", "source_from"), &TileSet::has_source_level_tile_proxy);
-	ClassDB::bind_method(D_METHOD("remove_source_level_tile_proxy", "source_from"), &TileSet::remove_source_level_tile_proxy);
-
-	ClassDB::bind_method(D_METHOD("set_coords_level_tile_proxy", "p_source_from", "coords_from", "source_to", "coords_to"), &TileSet::set_coords_level_tile_proxy);
-	ClassDB::bind_method(D_METHOD("get_coords_level_tile_proxy", "source_from", "coords_from"), &TileSet::get_coords_level_tile_proxy);
-	ClassDB::bind_method(D_METHOD("has_coords_level_tile_proxy", "source_from", "coords_from"), &TileSet::has_coords_level_tile_proxy);
-	ClassDB::bind_method(D_METHOD("remove_coords_level_tile_proxy", "source_from", "coords_from"), &TileSet::remove_coords_level_tile_proxy);
-
-	ClassDB::bind_method(D_METHOD("set_alternative_level_tile_proxy", "source_from", "coords_from", "alternative_from", "source_to", "coords_to", "alternative_to"), &TileSet::set_alternative_level_tile_proxy);
-	ClassDB::bind_method(D_METHOD("get_alternative_level_tile_proxy", "source_from", "coords_from", "alternative_from"), &TileSet::get_alternative_level_tile_proxy);
-	ClassDB::bind_method(D_METHOD("has_alternative_level_tile_proxy", "source_from", "coords_from", "alternative_from"), &TileSet::has_alternative_level_tile_proxy);
-	ClassDB::bind_method(D_METHOD("remove_alternative_level_tile_proxy", "source_from", "coords_from", "alternative_from"), &TileSet::remove_alternative_level_tile_proxy);
-
-	ClassDB::bind_method(D_METHOD("map_tile_proxy", "source_from", "coords_from", "alternative_from"), &TileSet::map_tile_proxy);
-
-	ClassDB::bind_method(D_METHOD("cleanup_invalid_tile_proxies"), &TileSet::cleanup_invalid_tile_proxies);
-	ClassDB::bind_method(D_METHOD("clear_tile_proxies"), &TileSet::clear_tile_proxies);
-
-	// Patterns
-	ClassDB::bind_method(D_METHOD("add_pattern", "pattern", "index"), &TileSet::add_pattern, DEFVAL(-1));
-	ClassDB::bind_method(D_METHOD("get_pattern", "index"), &TileSet::get_pattern, DEFVAL(-1));
-	ClassDB::bind_method(D_METHOD("remove_pattern", "index"), &TileSet::remove_pattern);
-	ClassDB::bind_method(D_METHOD("get_patterns_count"), &TileSet::get_patterns_count);
-
-	ADD_GROUP("Rendering", "");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "uv_clipping"), "set_uv_clipping", "is_uv_clipping");
-	ADD_ARRAY("occlusion_layers", "occlusion_layer_");
-
-	ADD_GROUP("", "");
-	ADD_ARRAY("physics_layers", "physics_layer_");
-	ADD_ARRAY("terrain_sets", "terrain_set_");
-	ADD_ARRAY("navigation_layers", "navigation_layer_");
-	ADD_ARRAY("custom_data_layers", "custom_data_layer_");
-
-	// -- Enum binding --
-	BIND_ENUM_CONSTANT(TILE_SHAPE_SQUARE);
-	BIND_ENUM_CONSTANT(TILE_SHAPE_ISOMETRIC);
-	BIND_ENUM_CONSTANT(TILE_SHAPE_HALF_OFFSET_SQUARE);
-	BIND_ENUM_CONSTANT(TILE_SHAPE_HEXAGON);
-
-	BIND_ENUM_CONSTANT(TILE_LAYOUT_STACKED);
-	BIND_ENUM_CONSTANT(TILE_LAYOUT_STACKED_OFFSET);
-	BIND_ENUM_CONSTANT(TILE_LAYOUT_STAIRS_RIGHT);
-	BIND_ENUM_CONSTANT(TILE_LAYOUT_STAIRS_DOWN);
-	BIND_ENUM_CONSTANT(TILE_LAYOUT_DIAMOND_RIGHT);
-	BIND_ENUM_CONSTANT(TILE_LAYOUT_DIAMOND_DOWN);
-
-	BIND_ENUM_CONSTANT(TILE_OFFSET_AXIS_HORIZONTAL);
-	BIND_ENUM_CONSTANT(TILE_OFFSET_AXIS_VERTICAL);
-
-	BIND_ENUM_CONSTANT(CELL_NEIGHBOR_RIGHT_SIDE);
-	BIND_ENUM_CONSTANT(CELL_NEIGHBOR_RIGHT_CORNER);
-	BIND_ENUM_CONSTANT(CELL_NEIGHBOR_BOTTOM_RIGHT_SIDE);
-	BIND_ENUM_CONSTANT(CELL_NEIGHBOR_BOTTOM_RIGHT_CORNER);
-	BIND_ENUM_CONSTANT(CELL_NEIGHBOR_BOTTOM_SIDE);
-	BIND_ENUM_CONSTANT(CELL_NEIGHBOR_BOTTOM_CORNER);
-	BIND_ENUM_CONSTANT(CELL_NEIGHBOR_BOTTOM_LEFT_SIDE);
-	BIND_ENUM_CONSTANT(CELL_NEIGHBOR_BOTTOM_LEFT_CORNER);
-	BIND_ENUM_CONSTANT(CELL_NEIGHBOR_LEFT_SIDE);
-	BIND_ENUM_CONSTANT(CELL_NEIGHBOR_LEFT_CORNER);
-	BIND_ENUM_CONSTANT(CELL_NEIGHBOR_TOP_LEFT_SIDE);
-	BIND_ENUM_CONSTANT(CELL_NEIGHBOR_TOP_LEFT_CORNER);
-	BIND_ENUM_CONSTANT(CELL_NEIGHBOR_TOP_SIDE);
-	BIND_ENUM_CONSTANT(CELL_NEIGHBOR_TOP_CORNER);
-	BIND_ENUM_CONSTANT(CELL_NEIGHBOR_TOP_RIGHT_SIDE);
-	BIND_ENUM_CONSTANT(CELL_NEIGHBOR_TOP_RIGHT_CORNER);
-
-	BIND_ENUM_CONSTANT(TERRAIN_MODE_MATCH_CORNERS_AND_SIDES);
-	BIND_ENUM_CONSTANT(TERRAIN_MODE_MATCH_CORNERS);
-	BIND_ENUM_CONSTANT(TERRAIN_MODE_MATCH_SIDES);
-*/
 }
 
 TileSet::TileSet() {
@@ -3937,17 +3761,6 @@ void TileSetSource::reset_state() {
 };
 
 void TileSetSource::_bind_methods() {
-/*
-	// Base tiles
-	ClassDB::bind_method(D_METHOD("get_tiles_count"), &TileSetSource::get_tiles_count);
-	ClassDB::bind_method(D_METHOD("get_tile_id", "index"), &TileSetSource::get_tile_id);
-	ClassDB::bind_method(D_METHOD("has_tile", "atlas_coords"), &TileSetSource::has_tile);
-
-	// Alternative tiles
-	ClassDB::bind_method(D_METHOD("get_alternative_tiles_count", "atlas_coords"), &TileSetSource::get_alternative_tiles_count);
-	ClassDB::bind_method(D_METHOD("get_alternative_tile_id", "atlas_coords", "index"), &TileSetSource::get_alternative_tile_id);
-	ClassDB::bind_method(D_METHOD("has_alternative_tile", "atlas_coords", "alternative_tile"), &TileSetSource::has_alternative_tile);
-*/
 }
 
 /////////////////////////////// TileSetAtlasSource //////////////////////////////////////
@@ -4940,75 +4753,6 @@ void TileSetAtlasSource::_notification(int p_notification) {
 }
 
 void TileSetAtlasSource::_bind_methods() {
-/*
-	ClassDB::bind_method(D_METHOD("set_texture", "texture"), &TileSetAtlasSource::set_texture);
-	ClassDB::bind_method(D_METHOD("get_texture"), &TileSetAtlasSource::get_texture);
-	ClassDB::bind_method(D_METHOD("set_margins", "margins"), &TileSetAtlasSource::set_margins);
-	ClassDB::bind_method(D_METHOD("get_margins"), &TileSetAtlasSource::get_margins);
-	ClassDB::bind_method(D_METHOD("set_separation", "separation"), &TileSetAtlasSource::set_separation);
-	ClassDB::bind_method(D_METHOD("get_separation"), &TileSetAtlasSource::get_separation);
-	ClassDB::bind_method(D_METHOD("set_texture_region_size", "texture_region_size"), &TileSetAtlasSource::set_texture_region_size);
-	ClassDB::bind_method(D_METHOD("get_texture_region_size"), &TileSetAtlasSource::get_texture_region_size);
-	ClassDB::bind_method(D_METHOD("set_use_texture_padding", "use_texture_padding"), &TileSetAtlasSource::set_use_texture_padding);
-	ClassDB::bind_method(D_METHOD("get_use_texture_padding"), &TileSetAtlasSource::get_use_texture_padding);
-
-	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "texture", PROPERTY_HINT_RESOURCE_TYPE, "Texture2D", PROPERTY_USAGE_NO_EDITOR), "set_texture", "get_texture");
-	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2I, "margins", PROPERTY_HINT_NONE, "suffix:px", PROPERTY_USAGE_NO_EDITOR), "set_margins", "get_margins");
-	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2I, "separation", PROPERTY_HINT_NONE, "suffix:px", PROPERTY_USAGE_NO_EDITOR), "set_separation", "get_separation");
-	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2I, "texture_region_size", PROPERTY_HINT_NONE, "suffix:px", PROPERTY_USAGE_NO_EDITOR), "set_texture_region_size", "get_texture_region_size");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "use_texture_padding", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NO_EDITOR), "set_use_texture_padding", "get_use_texture_padding");
-
-	// Base tiles
-	ClassDB::bind_method(D_METHOD("create_tile", "atlas_coords", "size"), &TileSetAtlasSource::create_tile, DEFVAL(Vector2i(1, 1)));
-	ClassDB::bind_method(D_METHOD("remove_tile", "atlas_coords"), &TileSetAtlasSource::remove_tile); // Remove a tile. If p_tile_key.alternative_tile if different from 0, remove the alternative
-	ClassDB::bind_method(D_METHOD("move_tile_in_atlas", "atlas_coords", "new_atlas_coords", "new_size"), &TileSetAtlasSource::move_tile_in_atlas, DEFVAL(INVALID_ATLAS_COORDS), DEFVAL(Vector2i(-1, -1)));
-	ClassDB::bind_method(D_METHOD("get_tile_size_in_atlas", "atlas_coords"), &TileSetAtlasSource::get_tile_size_in_atlas);
-
-	ClassDB::bind_method(D_METHOD("has_room_for_tile", "atlas_coords", "size", "animation_columns", "animation_separation", "frames_count", "ignored_tile"), &TileSetAtlasSource::has_room_for_tile, DEFVAL(INVALID_ATLAS_COORDS));
-	ClassDB::bind_method(D_METHOD("get_tiles_to_be_removed_on_change", "texture", "margins", "separation", "texture_region_size"), &TileSetAtlasSource::get_tiles_to_be_removed_on_change);
-	ClassDB::bind_method(D_METHOD("get_tile_at_coords", "atlas_coords"), &TileSetAtlasSource::get_tile_at_coords);
-
-	ClassDB::bind_method(D_METHOD("has_tiles_outside_texture"), &TileSetAtlasSource::has_tiles_outside_texture);
-	ClassDB::bind_method(D_METHOD("clear_tiles_outside_texture"), &TileSetAtlasSource::clear_tiles_outside_texture);
-
-	ClassDB::bind_method(D_METHOD("set_tile_animation_columns", "atlas_coords", "frame_columns"), &TileSetAtlasSource::set_tile_animation_columns);
-	ClassDB::bind_method(D_METHOD("get_tile_animation_columns", "atlas_coords"), &TileSetAtlasSource::get_tile_animation_columns);
-	ClassDB::bind_method(D_METHOD("set_tile_animation_separation", "atlas_coords", "separation"), &TileSetAtlasSource::set_tile_animation_separation);
-	ClassDB::bind_method(D_METHOD("get_tile_animation_separation", "atlas_coords"), &TileSetAtlasSource::get_tile_animation_separation);
-	ClassDB::bind_method(D_METHOD("set_tile_animation_speed", "atlas_coords", "speed"), &TileSetAtlasSource::set_tile_animation_speed);
-	ClassDB::bind_method(D_METHOD("get_tile_animation_speed", "atlas_coords"), &TileSetAtlasSource::get_tile_animation_speed);
-	ClassDB::bind_method(D_METHOD("set_tile_animation_mode", "atlas_coords", "mode"), &TileSetAtlasSource::set_tile_animation_mode);
-	ClassDB::bind_method(D_METHOD("get_tile_animation_mode", "atlas_coords"), &TileSetAtlasSource::get_tile_animation_mode);
-	ClassDB::bind_method(D_METHOD("set_tile_animation_frames_count", "atlas_coords", "frames_count"), &TileSetAtlasSource::set_tile_animation_frames_count);
-	ClassDB::bind_method(D_METHOD("get_tile_animation_frames_count", "atlas_coords"), &TileSetAtlasSource::get_tile_animation_frames_count);
-	ClassDB::bind_method(D_METHOD("set_tile_animation_frame_duration", "atlas_coords", "frame_index", "duration"), &TileSetAtlasSource::set_tile_animation_frame_duration);
-	ClassDB::bind_method(D_METHOD("get_tile_animation_frame_duration", "atlas_coords", "frame_index"), &TileSetAtlasSource::get_tile_animation_frame_duration);
-	ClassDB::bind_method(D_METHOD("get_tile_animation_total_duration", "atlas_coords"), &TileSetAtlasSource::get_tile_animation_total_duration);
-
-	// Alternative tiles
-	ClassDB::bind_method(D_METHOD("create_alternative_tile", "atlas_coords", "alternative_id_override"), &TileSetAtlasSource::create_alternative_tile, DEFVAL(INVALID_TILE_ALTERNATIVE));
-	ClassDB::bind_method(D_METHOD("remove_alternative_tile", "atlas_coords", "alternative_tile"), &TileSetAtlasSource::remove_alternative_tile);
-	ClassDB::bind_method(D_METHOD("set_alternative_tile_id", "atlas_coords", "alternative_tile", "new_id"), &TileSetAtlasSource::set_alternative_tile_id);
-	ClassDB::bind_method(D_METHOD("get_next_alternative_tile_id", "atlas_coords"), &TileSetAtlasSource::get_next_alternative_tile_id);
-
-	ClassDB::bind_method(D_METHOD("get_tile_data", "atlas_coords", "alternative_tile"), &TileSetAtlasSource::get_tile_data);
-
-	// Helpers.
-	ClassDB::bind_method(D_METHOD("get_atlas_grid_size"), &TileSetAtlasSource::get_atlas_grid_size);
-	ClassDB::bind_method(D_METHOD("get_tile_texture_region", "atlas_coords", "frame"), &TileSetAtlasSource::get_tile_texture_region, DEFVAL(0));
-
-	// Getters for texture and tile region (padded or not)
-	ClassDB::bind_method(D_METHOD("get_runtime_texture"), &TileSetAtlasSource::get_runtime_texture);
-	ClassDB::bind_method(D_METHOD("get_runtime_tile_texture_region", "atlas_coords", "frame"), &TileSetAtlasSource::get_runtime_tile_texture_region);
-
-	BIND_ENUM_CONSTANT(TILE_ANIMATION_MODE_DEFAULT)
-	BIND_ENUM_CONSTANT(TILE_ANIMATION_MODE_RANDOM_START_TIMES)
-	BIND_ENUM_CONSTANT(TILE_ANIMATION_MODE_MAX)
-
-	BIND_CONSTANT(TRANSFORM_FLIP_H)
-	BIND_CONSTANT(TRANSFORM_FLIP_V)
-	BIND_CONSTANT(TRANSFORM_TRANSPOSE)
-*/
 }
 
 TileSetAtlasSource::~TileSetAtlasSource() {
@@ -5395,19 +5139,6 @@ void TileSetScenesCollectionSource::_notification(int p_notification) {
 }
 
 void TileSetScenesCollectionSource::_bind_methods() {
-/*
-	ClassDB::bind_method(D_METHOD("get_scene_tiles_count"), &TileSetScenesCollectionSource::get_scene_tiles_count);
-	ClassDB::bind_method(D_METHOD("get_scene_tile_id", "index"), &TileSetScenesCollectionSource::get_scene_tile_id);
-	ClassDB::bind_method(D_METHOD("has_scene_tile_id", "id"), &TileSetScenesCollectionSource::has_scene_tile_id);
-	ClassDB::bind_method(D_METHOD("create_scene_tile", "packed_scene", "id_override"), &TileSetScenesCollectionSource::create_scene_tile, DEFVAL(INVALID_TILE_ALTERNATIVE));
-	ClassDB::bind_method(D_METHOD("set_scene_tile_id", "id", "new_id"), &TileSetScenesCollectionSource::set_scene_tile_id);
-	ClassDB::bind_method(D_METHOD("set_scene_tile_scene", "id", "packed_scene"), &TileSetScenesCollectionSource::set_scene_tile_scene);
-	ClassDB::bind_method(D_METHOD("get_scene_tile_scene", "id"), &TileSetScenesCollectionSource::get_scene_tile_scene);
-	ClassDB::bind_method(D_METHOD("set_scene_tile_display_placeholder", "id", "display_placeholder"), &TileSetScenesCollectionSource::set_scene_tile_display_placeholder);
-	ClassDB::bind_method(D_METHOD("get_scene_tile_display_placeholder", "id"), &TileSetScenesCollectionSource::get_scene_tile_display_placeholder);
-	ClassDB::bind_method(D_METHOD("remove_scene_tile", "id"), &TileSetScenesCollectionSource::remove_scene_tile);
-	ClassDB::bind_method(D_METHOD("get_next_scene_tile_id"), &TileSetScenesCollectionSource::get_next_scene_tile_id);
-*/
 }
 
 /////////////////////////////// TileData //////////////////////////////////////
@@ -6385,85 +6116,5 @@ void TileData::_get_property_list(List<PropertyInfo> *p_list) const {
 }
 
 void TileData::_bind_methods() {
-/*
-	// Rendering.
-	ClassDB::bind_method(D_METHOD("set_flip_h", "flip_h"), &TileData::set_flip_h);
-	ClassDB::bind_method(D_METHOD("get_flip_h"), &TileData::get_flip_h);
-	ClassDB::bind_method(D_METHOD("set_flip_v", "flip_v"), &TileData::set_flip_v);
-	ClassDB::bind_method(D_METHOD("get_flip_v"), &TileData::get_flip_v);
-	ClassDB::bind_method(D_METHOD("set_transpose", "transpose"), &TileData::set_transpose);
-	ClassDB::bind_method(D_METHOD("get_transpose"), &TileData::get_transpose);
-	ClassDB::bind_method(D_METHOD("set_material", "material"), &TileData::set_material);
-	ClassDB::bind_method(D_METHOD("get_material"), &TileData::get_material);
-	ClassDB::bind_method(D_METHOD("set_texture_origin", "texture_origin"), &TileData::set_texture_origin);
-	ClassDB::bind_method(D_METHOD("get_texture_origin"), &TileData::get_texture_origin);
-	ClassDB::bind_method(D_METHOD("set_modulate", "modulate"), &TileData::set_modulate);
-	ClassDB::bind_method(D_METHOD("get_modulate"), &TileData::get_modulate);
-	ClassDB::bind_method(D_METHOD("set_z_index", "z_index"), &TileData::set_z_index);
-	ClassDB::bind_method(D_METHOD("get_z_index"), &TileData::get_z_index);
-	ClassDB::bind_method(D_METHOD("set_y_sort_origin", "y_sort_origin"), &TileData::set_y_sort_origin);
-	ClassDB::bind_method(D_METHOD("get_y_sort_origin"), &TileData::get_y_sort_origin);
-
-	ClassDB::bind_method(D_METHOD("set_occluder", "layer_id", "occluder_polygon"), &TileData::set_occluder);
-	ClassDB::bind_method(D_METHOD("get_occluder", "layer_id", "flip_h", "flip_v", "transpose"), &TileData::get_occluder, DEFVAL(false), DEFVAL(false), DEFVAL(false));
-
-	// Physics.
-	ClassDB::bind_method(D_METHOD("set_constant_linear_velocity", "layer_id", "velocity"), &TileData::set_constant_linear_velocity);
-	ClassDB::bind_method(D_METHOD("get_constant_linear_velocity", "layer_id"), &TileData::get_constant_linear_velocity);
-	ClassDB::bind_method(D_METHOD("set_constant_angular_velocity", "layer_id", "velocity"), &TileData::set_constant_angular_velocity);
-	ClassDB::bind_method(D_METHOD("get_constant_angular_velocity", "layer_id"), &TileData::get_constant_angular_velocity);
-	ClassDB::bind_method(D_METHOD("set_collision_polygons_count", "layer_id", "polygons_count"), &TileData::set_collision_polygons_count);
-	ClassDB::bind_method(D_METHOD("get_collision_polygons_count", "layer_id"), &TileData::get_collision_polygons_count);
-	ClassDB::bind_method(D_METHOD("add_collision_polygon", "layer_id"), &TileData::add_collision_polygon);
-	ClassDB::bind_method(D_METHOD("remove_collision_polygon", "layer_id", "polygon_index"), &TileData::remove_collision_polygon);
-	ClassDB::bind_method(D_METHOD("set_collision_polygon_points", "layer_id", "polygon_index", "polygon"), &TileData::set_collision_polygon_points);
-	ClassDB::bind_method(D_METHOD("get_collision_polygon_points", "layer_id", "polygon_index"), &TileData::get_collision_polygon_points);
-	ClassDB::bind_method(D_METHOD("set_collision_polygon_one_way", "layer_id", "polygon_index", "one_way"), &TileData::set_collision_polygon_one_way);
-	ClassDB::bind_method(D_METHOD("is_collision_polygon_one_way", "layer_id", "polygon_index"), &TileData::is_collision_polygon_one_way);
-	ClassDB::bind_method(D_METHOD("set_collision_polygon_one_way_margin", "layer_id", "polygon_index", "one_way_margin"), &TileData::set_collision_polygon_one_way_margin);
-	ClassDB::bind_method(D_METHOD("get_collision_polygon_one_way_margin", "layer_id", "polygon_index"), &TileData::get_collision_polygon_one_way_margin);
-
-	// Terrain
-	ClassDB::bind_method(D_METHOD("set_terrain_set", "terrain_set"), &TileData::set_terrain_set);
-	ClassDB::bind_method(D_METHOD("get_terrain_set"), &TileData::get_terrain_set);
-	ClassDB::bind_method(D_METHOD("set_terrain", "terrain"), &TileData::set_terrain);
-	ClassDB::bind_method(D_METHOD("get_terrain"), &TileData::get_terrain);
-	ClassDB::bind_method(D_METHOD("set_terrain_peering_bit", "peering_bit", "terrain"), &TileData::set_terrain_peering_bit);
-	ClassDB::bind_method(D_METHOD("get_terrain_peering_bit", "peering_bit"), &TileData::get_terrain_peering_bit);
-	ClassDB::bind_method(D_METHOD("is_valid_terrain_peering_bit", "peering_bit"), &TileData::is_valid_terrain_peering_bit);
-
-	// Navigation
-	ClassDB::bind_method(D_METHOD("set_navigation_polygon", "layer_id", "navigation_polygon"), &TileData::set_navigation_polygon);
-	ClassDB::bind_method(D_METHOD("get_navigation_polygon", "layer_id", "flip_h", "flip_v", "transpose"), &TileData::get_navigation_polygon, DEFVAL(false), DEFVAL(false), DEFVAL(false));
-
-	// Misc.
-	ClassDB::bind_method(D_METHOD("set_probability", "probability"), &TileData::set_probability);
-	ClassDB::bind_method(D_METHOD("get_probability"), &TileData::get_probability);
-
-	// Custom data.
-	ClassDB::bind_method(D_METHOD("set_custom_data", "layer_name", "value"), &TileData::set_custom_data);
-	ClassDB::bind_method(D_METHOD("get_custom_data", "layer_name"), &TileData::get_custom_data);
-	ClassDB::bind_method(D_METHOD("set_custom_data_by_layer_id", "layer_id", "value"), &TileData::set_custom_data_by_layer_id);
-	ClassDB::bind_method(D_METHOD("get_custom_data_by_layer_id", "layer_id"), &TileData::get_custom_data_by_layer_id);
-
-	ADD_GROUP("Rendering", "");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "flip_h"), "set_flip_h", "get_flip_h");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "flip_v"), "set_flip_v", "get_flip_v");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "transpose"), "set_transpose", "get_transpose");
-	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2I, "texture_origin", PROPERTY_HINT_NONE, "suffix:px"), "set_texture_origin", "get_texture_origin");
-	ADD_PROPERTY(PropertyInfo(Variant::COLOR, "modulate"), "set_modulate", "get_modulate");
-	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "material", PROPERTY_HINT_RESOURCE_TYPE, "CanvasItemMaterial,ShaderMaterial"), "set_material", "get_material");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "z_index"), "set_z_index", "get_z_index");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "y_sort_origin"), "set_y_sort_origin", "get_y_sort_origin");
-
-	ADD_GROUP("Terrains", "");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "terrain_set"), "set_terrain_set", "get_terrain_set");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "terrain"), "set_terrain", "get_terrain");
-
-	ADD_GROUP("Miscellaneous", "");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "probability"), "set_probability", "get_probability");
-
-	ADD_SIGNAL(MethodInfo("changed"));
-*/
 }
 #endif

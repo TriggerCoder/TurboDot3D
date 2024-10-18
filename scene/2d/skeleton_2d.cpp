@@ -350,22 +350,6 @@ bool Bone2D::_editor_get_show_bone_gizmo() const {
 }
 
 void Bone2D::_bind_methods() {
-/*
-	ClassDB::bind_method(D_METHOD("set_rest", "rest"), &Bone2D::set_rest);
-	ClassDB::bind_method(D_METHOD("get_rest"), &Bone2D::get_rest);
-	ClassDB::bind_method(D_METHOD("apply_rest"), &Bone2D::apply_rest);
-	ClassDB::bind_method(D_METHOD("get_skeleton_rest"), &Bone2D::get_skeleton_rest);
-	ClassDB::bind_method(D_METHOD("get_index_in_skeleton"), &Bone2D::get_index_in_skeleton);
-
-	ClassDB::bind_method(D_METHOD("set_autocalculate_length_and_angle", "auto_calculate"), &Bone2D::set_autocalculate_length_and_angle);
-	ClassDB::bind_method(D_METHOD("get_autocalculate_length_and_angle"), &Bone2D::get_autocalculate_length_and_angle);
-	ClassDB::bind_method(D_METHOD("set_length", "length"), &Bone2D::set_length);
-	ClassDB::bind_method(D_METHOD("get_length"), &Bone2D::get_length);
-	ClassDB::bind_method(D_METHOD("set_bone_angle", "angle"), &Bone2D::set_bone_angle);
-	ClassDB::bind_method(D_METHOD("get_bone_angle"), &Bone2D::get_bone_angle);
-
-	ADD_PROPERTY(PropertyInfo(Variant::TRANSFORM2D, "rest", PROPERTY_HINT_NONE, "suffix:px"), "set_rest", "get_rest");
-*/
 }
 
 void Bone2D::set_rest(const Transform2D &p_rest) {
@@ -791,21 +775,6 @@ void Skeleton2D::execute_modifications(real_t p_delta, int p_execution_mode) {
 }
 
 void Skeleton2D::_bind_methods() {
-/*
-	ClassDB::bind_method(D_METHOD("get_bone_count"), &Skeleton2D::get_bone_count);
-	ClassDB::bind_method(D_METHOD("get_bone", "idx"), &Skeleton2D::get_bone);
-
-	ClassDB::bind_method(D_METHOD("get_skeleton"), &Skeleton2D::get_skeleton);
-
-	ClassDB::bind_method(D_METHOD("set_modification_stack", "modification_stack"), &Skeleton2D::set_modification_stack);
-	ClassDB::bind_method(D_METHOD("get_modification_stack"), &Skeleton2D::get_modification_stack);
-	ClassDB::bind_method(D_METHOD("execute_modifications", "delta", "execution_mode"), &Skeleton2D::execute_modifications);
-
-	ClassDB::bind_method(D_METHOD("set_bone_local_pose_override", "bone_idx", "override_pose", "strength", "persistent"), &Skeleton2D::set_bone_local_pose_override);
-	ClassDB::bind_method(D_METHOD("get_bone_local_pose_override", "bone_idx"), &Skeleton2D::get_bone_local_pose_override);
-
-	ADD_SIGNAL(MethodInfo("bone_setup_changed"));
-*/
 }
 
 Skeleton2D::Skeleton2D() {

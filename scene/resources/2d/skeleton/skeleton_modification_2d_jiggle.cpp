@@ -510,57 +510,6 @@ Vector2 SkeletonModification2DJiggle::get_jiggle_joint_gravity(int p_joint_idx) 
 }
 
 void SkeletonModification2DJiggle::_bind_methods() {
-/*
-	ClassDB::bind_method(D_METHOD("set_target_node", "target_nodepath"), &SkeletonModification2DJiggle::set_target_node);
-	ClassDB::bind_method(D_METHOD("get_target_node"), &SkeletonModification2DJiggle::get_target_node);
-
-	ClassDB::bind_method(D_METHOD("set_jiggle_data_chain_length", "length"), &SkeletonModification2DJiggle::set_jiggle_data_chain_length);
-	ClassDB::bind_method(D_METHOD("get_jiggle_data_chain_length"), &SkeletonModification2DJiggle::get_jiggle_data_chain_length);
-
-	ClassDB::bind_method(D_METHOD("set_stiffness", "stiffness"), &SkeletonModification2DJiggle::set_stiffness);
-	ClassDB::bind_method(D_METHOD("get_stiffness"), &SkeletonModification2DJiggle::get_stiffness);
-	ClassDB::bind_method(D_METHOD("set_mass", "mass"), &SkeletonModification2DJiggle::set_mass);
-	ClassDB::bind_method(D_METHOD("get_mass"), &SkeletonModification2DJiggle::get_mass);
-	ClassDB::bind_method(D_METHOD("set_damping", "damping"), &SkeletonModification2DJiggle::set_damping);
-	ClassDB::bind_method(D_METHOD("get_damping"), &SkeletonModification2DJiggle::get_damping);
-	ClassDB::bind_method(D_METHOD("set_use_gravity", "use_gravity"), &SkeletonModification2DJiggle::set_use_gravity);
-	ClassDB::bind_method(D_METHOD("get_use_gravity"), &SkeletonModification2DJiggle::get_use_gravity);
-	ClassDB::bind_method(D_METHOD("set_gravity", "gravity"), &SkeletonModification2DJiggle::set_gravity);
-	ClassDB::bind_method(D_METHOD("get_gravity"), &SkeletonModification2DJiggle::get_gravity);
-
-	ClassDB::bind_method(D_METHOD("set_use_colliders", "use_colliders"), &SkeletonModification2DJiggle::set_use_colliders);
-	ClassDB::bind_method(D_METHOD("get_use_colliders"), &SkeletonModification2DJiggle::get_use_colliders);
-	ClassDB::bind_method(D_METHOD("set_collision_mask", "collision_mask"), &SkeletonModification2DJiggle::set_collision_mask);
-	ClassDB::bind_method(D_METHOD("get_collision_mask"), &SkeletonModification2DJiggle::get_collision_mask);
-
-	// Jiggle joint data functions
-	ClassDB::bind_method(D_METHOD("set_jiggle_joint_bone2d_node", "joint_idx", "bone2d_node"), &SkeletonModification2DJiggle::set_jiggle_joint_bone2d_node);
-	ClassDB::bind_method(D_METHOD("get_jiggle_joint_bone2d_node", "joint_idx"), &SkeletonModification2DJiggle::get_jiggle_joint_bone2d_node);
-	ClassDB::bind_method(D_METHOD("set_jiggle_joint_bone_index", "joint_idx", "bone_idx"), &SkeletonModification2DJiggle::set_jiggle_joint_bone_index);
-	ClassDB::bind_method(D_METHOD("get_jiggle_joint_bone_index", "joint_idx"), &SkeletonModification2DJiggle::get_jiggle_joint_bone_index);
-	ClassDB::bind_method(D_METHOD("set_jiggle_joint_override", "joint_idx", "override"), &SkeletonModification2DJiggle::set_jiggle_joint_override);
-	ClassDB::bind_method(D_METHOD("get_jiggle_joint_override", "joint_idx"), &SkeletonModification2DJiggle::get_jiggle_joint_override);
-	ClassDB::bind_method(D_METHOD("set_jiggle_joint_stiffness", "joint_idx", "stiffness"), &SkeletonModification2DJiggle::set_jiggle_joint_stiffness);
-	ClassDB::bind_method(D_METHOD("get_jiggle_joint_stiffness", "joint_idx"), &SkeletonModification2DJiggle::get_jiggle_joint_stiffness);
-	ClassDB::bind_method(D_METHOD("set_jiggle_joint_mass", "joint_idx", "mass"), &SkeletonModification2DJiggle::set_jiggle_joint_mass);
-	ClassDB::bind_method(D_METHOD("get_jiggle_joint_mass", "joint_idx"), &SkeletonModification2DJiggle::get_jiggle_joint_mass);
-	ClassDB::bind_method(D_METHOD("set_jiggle_joint_damping", "joint_idx", "damping"), &SkeletonModification2DJiggle::set_jiggle_joint_damping);
-	ClassDB::bind_method(D_METHOD("get_jiggle_joint_damping", "joint_idx"), &SkeletonModification2DJiggle::get_jiggle_joint_damping);
-	ClassDB::bind_method(D_METHOD("set_jiggle_joint_use_gravity", "joint_idx", "use_gravity"), &SkeletonModification2DJiggle::set_jiggle_joint_use_gravity);
-	ClassDB::bind_method(D_METHOD("get_jiggle_joint_use_gravity", "joint_idx"), &SkeletonModification2DJiggle::get_jiggle_joint_use_gravity);
-	ClassDB::bind_method(D_METHOD("set_jiggle_joint_gravity", "joint_idx", "gravity"), &SkeletonModification2DJiggle::set_jiggle_joint_gravity);
-	ClassDB::bind_method(D_METHOD("get_jiggle_joint_gravity", "joint_idx"), &SkeletonModification2DJiggle::get_jiggle_joint_gravity);
-
-	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "target_nodepath", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Node2D"), "set_target_node", "get_target_node");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "jiggle_data_chain_length", PROPERTY_HINT_RANGE, "0,100,1"), "set_jiggle_data_chain_length", "get_jiggle_data_chain_length");
-	ADD_GROUP("Default Joint Settings", "");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "stiffness"), "set_stiffness", "get_stiffness");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "mass"), "set_mass", "get_mass");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "damping", PROPERTY_HINT_RANGE, "0, 1, 0.01"), "set_damping", "get_damping");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "use_gravity"), "set_use_gravity", "get_use_gravity");
-	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "gravity"), "set_gravity", "get_gravity");
-	ADD_GROUP("", "");
-*/
 }
 
 SkeletonModification2DJiggle::SkeletonModification2DJiggle() {

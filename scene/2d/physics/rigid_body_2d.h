@@ -35,7 +35,6 @@
 #include "scene/2d/physics/static_body_2d.h"
 
 class RigidBody2D : public PhysicsBody2D {
-//	GDCLASS(RigidBody2D, PhysicsBody2D);
 
 public:
 	enum FreezeMode {

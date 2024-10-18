@@ -207,25 +207,6 @@ bool SkeletonModification2D::get_editor_draw_gizmo() const {
 }
 
 void SkeletonModification2D::_bind_methods() {
-/*
-	GDVIRTUAL_BIND(_execute, "delta");
-	GDVIRTUAL_BIND(_setup_modification, "modification_stack")
-	GDVIRTUAL_BIND(_draw_editor_gizmo)
-
-	ClassDB::bind_method(D_METHOD("set_enabled", "enabled"), &SkeletonModification2D::set_enabled);
-	ClassDB::bind_method(D_METHOD("get_enabled"), &SkeletonModification2D::get_enabled);
-	ClassDB::bind_method(D_METHOD("get_modification_stack"), &SkeletonModification2D::get_modification_stack);
-	ClassDB::bind_method(D_METHOD("set_is_setup", "is_setup"), &SkeletonModification2D::set_is_setup);
-	ClassDB::bind_method(D_METHOD("get_is_setup"), &SkeletonModification2D::get_is_setup);
-	ClassDB::bind_method(D_METHOD("set_execution_mode", "execution_mode"), &SkeletonModification2D::set_execution_mode);
-	ClassDB::bind_method(D_METHOD("get_execution_mode"), &SkeletonModification2D::get_execution_mode);
-	ClassDB::bind_method(D_METHOD("clamp_angle", "angle", "min", "max", "invert"), &SkeletonModification2D::clamp_angle);
-	ClassDB::bind_method(D_METHOD("set_editor_draw_gizmo", "draw_gizmo"), &SkeletonModification2D::set_editor_draw_gizmo);
-	ClassDB::bind_method(D_METHOD("get_editor_draw_gizmo"), &SkeletonModification2D::get_editor_draw_gizmo);
-
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "enabled"), "set_enabled", "get_enabled");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "execution_mode", PROPERTY_HINT_ENUM, "process,physics_process"), "set_execution_mode", "get_execution_mode");
-*/
 }
 
 void SkeletonModification2D::reset_state() {

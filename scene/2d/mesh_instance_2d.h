@@ -35,8 +35,6 @@
 #include "scene/2d/node_2d.h"
 
 class MeshInstance2D : public Node2D {
-//	GDCLASS(MeshInstance2D, Node2D);
-
 	Ref<Mesh> mesh;
 
 	Ref<Texture2D> texture;

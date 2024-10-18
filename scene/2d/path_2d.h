@@ -38,8 +38,6 @@
 class Timer;
 
 class Path2D : public Node2D {
-//	GDCLASS(Path2D, Node2D);
-
 	Ref<Curve2D> curve;
 
 	void _curve_changed();
@@ -61,9 +59,7 @@ public:
 };
 
 class PathFollow2D : public Node2D {
-//	GDCLASS(PathFollow2D, Node2D);
 
-public:
 private:
 	Path2D *path = nullptr;
 	real_t progress = 0.0;

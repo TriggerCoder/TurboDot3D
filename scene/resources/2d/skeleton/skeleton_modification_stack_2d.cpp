@@ -226,33 +226,6 @@ float SkeletonModificationStack2D::get_strength() const {
 }
 
 void SkeletonModificationStack2D::_bind_methods() {
-/*
-	ClassDB::bind_method(D_METHOD("setup"), &SkeletonModificationStack2D::setup);
-	ClassDB::bind_method(D_METHOD("execute", "delta", "execution_mode"), &SkeletonModificationStack2D::execute);
-
-	ClassDB::bind_method(D_METHOD("enable_all_modifications", "enabled"), &SkeletonModificationStack2D::enable_all_modifications);
-	ClassDB::bind_method(D_METHOD("get_modification", "mod_idx"), &SkeletonModificationStack2D::get_modification);
-	ClassDB::bind_method(D_METHOD("add_modification", "modification"), &SkeletonModificationStack2D::add_modification);
-	ClassDB::bind_method(D_METHOD("delete_modification", "mod_idx"), &SkeletonModificationStack2D::delete_modification);
-	ClassDB::bind_method(D_METHOD("set_modification", "mod_idx", "modification"), &SkeletonModificationStack2D::set_modification);
-
-	ClassDB::bind_method(D_METHOD("set_modification_count", "count"), &SkeletonModificationStack2D::set_modification_count);
-	ClassDB::bind_method(D_METHOD("get_modification_count"), &SkeletonModificationStack2D::get_modification_count);
-
-	ClassDB::bind_method(D_METHOD("get_is_setup"), &SkeletonModificationStack2D::get_is_setup);
-
-	ClassDB::bind_method(D_METHOD("set_enabled", "enabled"), &SkeletonModificationStack2D::set_enabled);
-	ClassDB::bind_method(D_METHOD("get_enabled"), &SkeletonModificationStack2D::get_enabled);
-
-	ClassDB::bind_method(D_METHOD("set_strength", "strength"), &SkeletonModificationStack2D::set_strength);
-	ClassDB::bind_method(D_METHOD("get_strength"), &SkeletonModificationStack2D::get_strength);
-
-	ClassDB::bind_method(D_METHOD("get_skeleton"), &SkeletonModificationStack2D::get_skeleton);
-
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "enabled"), "set_enabled", "get_enabled");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "strength", PROPERTY_HINT_RANGE, "0, 1, 0.001"), "set_strength", "get_strength");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "modification_count", PROPERTY_HINT_RANGE, "0, 100, 1", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_ARRAY, "Modifications,modifications/"), "set_modification_count", "get_modification_count");
-*/
 }
 
 SkeletonModificationStack2D::SkeletonModificationStack2D() {

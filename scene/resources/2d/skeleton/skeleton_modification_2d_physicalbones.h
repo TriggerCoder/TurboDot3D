@@ -40,7 +40,6 @@
 ///////////////////////////////////////
 
 class SkeletonModification2DPhysicalBones : public SkeletonModification2D {
-//	GDCLASS(SkeletonModification2DPhysicalBones, SkeletonModification2D);
 
 private:
 	struct PhysicalBone_Data2D {

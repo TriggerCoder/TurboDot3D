@@ -593,68 +593,6 @@ PackedStringArray CollisionObject2D::get_configuration_warnings() const {
 }
 
 void CollisionObject2D::_bind_methods() {
-/*
-	ClassDB::bind_method(D_METHOD("get_rid"), &CollisionObject2D::get_rid);
-	ClassDB::bind_method(D_METHOD("set_collision_layer", "layer"), &CollisionObject2D::set_collision_layer);
-	ClassDB::bind_method(D_METHOD("get_collision_layer"), &CollisionObject2D::get_collision_layer);
-	ClassDB::bind_method(D_METHOD("set_collision_mask", "mask"), &CollisionObject2D::set_collision_mask);
-	ClassDB::bind_method(D_METHOD("get_collision_mask"), &CollisionObject2D::get_collision_mask);
-	ClassDB::bind_method(D_METHOD("set_collision_layer_value", "layer_number", "value"), &CollisionObject2D::set_collision_layer_value);
-	ClassDB::bind_method(D_METHOD("get_collision_layer_value", "layer_number"), &CollisionObject2D::get_collision_layer_value);
-	ClassDB::bind_method(D_METHOD("set_collision_mask_value", "layer_number", "value"), &CollisionObject2D::set_collision_mask_value);
-	ClassDB::bind_method(D_METHOD("get_collision_mask_value", "layer_number"), &CollisionObject2D::get_collision_mask_value);
-	ClassDB::bind_method(D_METHOD("set_collision_priority", "priority"), &CollisionObject2D::set_collision_priority);
-	ClassDB::bind_method(D_METHOD("get_collision_priority"), &CollisionObject2D::get_collision_priority);
-	ClassDB::bind_method(D_METHOD("set_disable_mode", "mode"), &CollisionObject2D::set_disable_mode);
-	ClassDB::bind_method(D_METHOD("get_disable_mode"), &CollisionObject2D::get_disable_mode);
-	ClassDB::bind_method(D_METHOD("set_pickable", "enabled"), &CollisionObject2D::set_pickable);
-	ClassDB::bind_method(D_METHOD("is_pickable"), &CollisionObject2D::is_pickable);
-	ClassDB::bind_method(D_METHOD("create_shape_owner", "owner"), &CollisionObject2D::create_shape_owner);
-	ClassDB::bind_method(D_METHOD("remove_shape_owner", "owner_id"), &CollisionObject2D::remove_shape_owner);
-	ClassDB::bind_method(D_METHOD("get_shape_owners"), &CollisionObject2D::_get_shape_owners);
-	ClassDB::bind_method(D_METHOD("shape_owner_set_transform", "owner_id", "transform"), &CollisionObject2D::shape_owner_set_transform);
-	ClassDB::bind_method(D_METHOD("shape_owner_get_transform", "owner_id"), &CollisionObject2D::shape_owner_get_transform);
-	ClassDB::bind_method(D_METHOD("shape_owner_get_owner", "owner_id"), &CollisionObject2D::shape_owner_get_owner);
-	ClassDB::bind_method(D_METHOD("shape_owner_set_disabled", "owner_id", "disabled"), &CollisionObject2D::shape_owner_set_disabled);
-	ClassDB::bind_method(D_METHOD("is_shape_owner_disabled", "owner_id"), &CollisionObject2D::is_shape_owner_disabled);
-	ClassDB::bind_method(D_METHOD("shape_owner_set_one_way_collision", "owner_id", "enable"), &CollisionObject2D::shape_owner_set_one_way_collision);
-	ClassDB::bind_method(D_METHOD("is_shape_owner_one_way_collision_enabled", "owner_id"), &CollisionObject2D::is_shape_owner_one_way_collision_enabled);
-	ClassDB::bind_method(D_METHOD("shape_owner_set_one_way_collision_margin", "owner_id", "margin"), &CollisionObject2D::shape_owner_set_one_way_collision_margin);
-	ClassDB::bind_method(D_METHOD("get_shape_owner_one_way_collision_margin", "owner_id"), &CollisionObject2D::get_shape_owner_one_way_collision_margin);
-	ClassDB::bind_method(D_METHOD("shape_owner_add_shape", "owner_id", "shape"), &CollisionObject2D::shape_owner_add_shape);
-	ClassDB::bind_method(D_METHOD("shape_owner_get_shape_count", "owner_id"), &CollisionObject2D::shape_owner_get_shape_count);
-	ClassDB::bind_method(D_METHOD("shape_owner_get_shape", "owner_id", "shape_id"), &CollisionObject2D::shape_owner_get_shape);
-	ClassDB::bind_method(D_METHOD("shape_owner_get_shape_index", "owner_id", "shape_id"), &CollisionObject2D::shape_owner_get_shape_index);
-	ClassDB::bind_method(D_METHOD("shape_owner_remove_shape", "owner_id", "shape_id"), &CollisionObject2D::shape_owner_remove_shape);
-	ClassDB::bind_method(D_METHOD("shape_owner_clear_shapes", "owner_id"), &CollisionObject2D::shape_owner_clear_shapes);
-	ClassDB::bind_method(D_METHOD("shape_find_owner", "shape_index"), &CollisionObject2D::shape_find_owner);
-
-	GDVIRTUAL_BIND(_input_event, "viewport", "event", "shape_idx");
-	GDVIRTUAL_BIND(_mouse_enter);
-	GDVIRTUAL_BIND(_mouse_exit);
-	GDVIRTUAL_BIND(_mouse_shape_enter, "shape_idx");
-	GDVIRTUAL_BIND(_mouse_shape_exit, "shape_idx");
-
-	ADD_SIGNAL(MethodInfo("input_event", PropertyInfo(Variant::OBJECT, "viewport", PROPERTY_HINT_RESOURCE_TYPE, "Node"), PropertyInfo(Variant::OBJECT, "event", PROPERTY_HINT_RESOURCE_TYPE, "InputEvent"), PropertyInfo(Variant::INT, "shape_idx")));
-	ADD_SIGNAL(MethodInfo("mouse_entered"));
-	ADD_SIGNAL(MethodInfo("mouse_exited"));
-	ADD_SIGNAL(MethodInfo("mouse_shape_entered", PropertyInfo(Variant::INT, "shape_idx")));
-	ADD_SIGNAL(MethodInfo("mouse_shape_exited", PropertyInfo(Variant::INT, "shape_idx")));
-
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "disable_mode", PROPERTY_HINT_ENUM, "Remove,Make Static,Keep Active"), "set_disable_mode", "get_disable_mode");
-
-	ADD_GROUP("Collision", "collision_");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "collision_layer", PROPERTY_HINT_LAYERS_2D_PHYSICS), "set_collision_layer", "get_collision_layer");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "collision_mask", PROPERTY_HINT_LAYERS_2D_PHYSICS), "set_collision_mask", "get_collision_mask");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "collision_priority"), "set_collision_priority", "get_collision_priority");
-
-	ADD_GROUP("Input", "input_");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "input_pickable"), "set_pickable", "is_pickable");
-
-	BIND_ENUM_CONSTANT(DISABLE_MODE_REMOVE);
-	BIND_ENUM_CONSTANT(DISABLE_MODE_MAKE_STATIC);
-	BIND_ENUM_CONSTANT(DISABLE_MODE_KEEP_ACTIVE);
-*/
 }
 
 CollisionObject2D::CollisionObject2D(RID p_rid, bool p_area) {

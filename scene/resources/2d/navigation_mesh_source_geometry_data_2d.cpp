@@ -277,32 +277,5 @@ void NavigationMeshSourceGeometryData2D::get_data(Vector<Vector<Vector2>> &r_tra
 }
 
 void NavigationMeshSourceGeometryData2D::_bind_methods() {
-/*
-	ClassDB::bind_method(D_METHOD("clear"), &NavigationMeshSourceGeometryData2D::clear);
-	ClassDB::bind_method(D_METHOD("has_data"), &NavigationMeshSourceGeometryData2D::has_data);
-
-	ClassDB::bind_method(D_METHOD("set_traversable_outlines", "traversable_outlines"), &NavigationMeshSourceGeometryData2D::set_traversable_outlines);
-	ClassDB::bind_method(D_METHOD("get_traversable_outlines"), &NavigationMeshSourceGeometryData2D::get_traversable_outlines);
-
-	ClassDB::bind_method(D_METHOD("set_obstruction_outlines", "obstruction_outlines"), &NavigationMeshSourceGeometryData2D::set_obstruction_outlines);
-	ClassDB::bind_method(D_METHOD("get_obstruction_outlines"), &NavigationMeshSourceGeometryData2D::get_obstruction_outlines);
-
-	ClassDB::bind_method(D_METHOD("append_traversable_outlines", "traversable_outlines"), &NavigationMeshSourceGeometryData2D::append_traversable_outlines);
-	ClassDB::bind_method(D_METHOD("append_obstruction_outlines", "obstruction_outlines"), &NavigationMeshSourceGeometryData2D::append_obstruction_outlines);
-
-	ClassDB::bind_method(D_METHOD("add_traversable_outline", "shape_outline"), &NavigationMeshSourceGeometryData2D::add_traversable_outline);
-	ClassDB::bind_method(D_METHOD("add_obstruction_outline", "shape_outline"), &NavigationMeshSourceGeometryData2D::add_obstruction_outline);
-
-	ClassDB::bind_method(D_METHOD("merge", "other_geometry"), &NavigationMeshSourceGeometryData2D::merge);
-
-	ClassDB::bind_method(D_METHOD("add_projected_obstruction", "vertices", "carve"), &NavigationMeshSourceGeometryData2D::add_projected_obstruction);
-	ClassDB::bind_method(D_METHOD("clear_projected_obstructions"), &NavigationMeshSourceGeometryData2D::clear_projected_obstructions);
-	ClassDB::bind_method(D_METHOD("set_projected_obstructions", "projected_obstructions"), &NavigationMeshSourceGeometryData2D::set_projected_obstructions);
-	ClassDB::bind_method(D_METHOD("get_projected_obstructions"), &NavigationMeshSourceGeometryData2D::get_projected_obstructions);
-
-	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "traversable_outlines", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NO_EDITOR | PROPERTY_USAGE_INTERNAL), "set_traversable_outlines", "get_traversable_outlines");
-	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "obstruction_outlines", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NO_EDITOR | PROPERTY_USAGE_INTERNAL), "set_obstruction_outlines", "get_obstruction_outlines");
-	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "projected_obstructions", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NO_EDITOR | PROPERTY_USAGE_INTERNAL), "set_projected_obstructions", "get_projected_obstructions");
-*/
 }
 #endif

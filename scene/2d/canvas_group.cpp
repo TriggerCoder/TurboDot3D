@@ -66,21 +66,6 @@ bool CanvasGroup::is_using_mipmaps() const {
 }
 
 void CanvasGroup::_bind_methods() {
-/*
-	ClassDB::bind_method(D_METHOD("set_fit_margin", "fit_margin"), &CanvasGroup::set_fit_margin);
-	ClassDB::bind_method(D_METHOD("get_fit_margin"), &CanvasGroup::get_fit_margin);
-
-	ClassDB::bind_method(D_METHOD("set_clear_margin", "clear_margin"), &CanvasGroup::set_clear_margin);
-	ClassDB::bind_method(D_METHOD("get_clear_margin"), &CanvasGroup::get_clear_margin);
-
-	ClassDB::bind_method(D_METHOD("set_use_mipmaps", "use_mipmaps"), &CanvasGroup::set_use_mipmaps);
-	ClassDB::bind_method(D_METHOD("is_using_mipmaps"), &CanvasGroup::is_using_mipmaps);
-
-	ADD_GROUP("Tweaks", "");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "fit_margin", PROPERTY_HINT_RANGE, "0,1024,1.0,or_greater,suffix:px"), "set_fit_margin", "get_fit_margin");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "clear_margin", PROPERTY_HINT_RANGE, "0,1024,1.0,or_greater,suffix:px"), "set_clear_margin", "get_clear_margin");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "use_mipmaps"), "set_use_mipmaps", "is_using_mipmaps");
-*/
 }
 
 CanvasGroup::CanvasGroup() {

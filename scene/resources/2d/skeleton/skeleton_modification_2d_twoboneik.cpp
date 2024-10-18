@@ -432,33 +432,6 @@ bool SkeletonModification2DTwoBoneIK::get_editor_draw_min_max() const {
 }
 
 void SkeletonModification2DTwoBoneIK::_bind_methods() {
-/*
-	ClassDB::bind_method(D_METHOD("set_target_node", "target_nodepath"), &SkeletonModification2DTwoBoneIK::set_target_node);
-	ClassDB::bind_method(D_METHOD("get_target_node"), &SkeletonModification2DTwoBoneIK::get_target_node);
-
-	ClassDB::bind_method(D_METHOD("set_target_minimum_distance", "minimum_distance"), &SkeletonModification2DTwoBoneIK::set_target_minimum_distance);
-	ClassDB::bind_method(D_METHOD("get_target_minimum_distance"), &SkeletonModification2DTwoBoneIK::get_target_minimum_distance);
-	ClassDB::bind_method(D_METHOD("set_target_maximum_distance", "maximum_distance"), &SkeletonModification2DTwoBoneIK::set_target_maximum_distance);
-	ClassDB::bind_method(D_METHOD("get_target_maximum_distance"), &SkeletonModification2DTwoBoneIK::get_target_maximum_distance);
-	ClassDB::bind_method(D_METHOD("set_flip_bend_direction", "flip_direction"), &SkeletonModification2DTwoBoneIK::set_flip_bend_direction);
-	ClassDB::bind_method(D_METHOD("get_flip_bend_direction"), &SkeletonModification2DTwoBoneIK::get_flip_bend_direction);
-
-	ClassDB::bind_method(D_METHOD("set_joint_one_bone2d_node", "bone2d_node"), &SkeletonModification2DTwoBoneIK::set_joint_one_bone2d_node);
-	ClassDB::bind_method(D_METHOD("get_joint_one_bone2d_node"), &SkeletonModification2DTwoBoneIK::get_joint_one_bone2d_node);
-	ClassDB::bind_method(D_METHOD("set_joint_one_bone_idx", "bone_idx"), &SkeletonModification2DTwoBoneIK::set_joint_one_bone_idx);
-	ClassDB::bind_method(D_METHOD("get_joint_one_bone_idx"), &SkeletonModification2DTwoBoneIK::get_joint_one_bone_idx);
-
-	ClassDB::bind_method(D_METHOD("set_joint_two_bone2d_node", "bone2d_node"), &SkeletonModification2DTwoBoneIK::set_joint_two_bone2d_node);
-	ClassDB::bind_method(D_METHOD("get_joint_two_bone2d_node"), &SkeletonModification2DTwoBoneIK::get_joint_two_bone2d_node);
-	ClassDB::bind_method(D_METHOD("set_joint_two_bone_idx", "bone_idx"), &SkeletonModification2DTwoBoneIK::set_joint_two_bone_idx);
-	ClassDB::bind_method(D_METHOD("get_joint_two_bone_idx"), &SkeletonModification2DTwoBoneIK::get_joint_two_bone_idx);
-
-	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "target_nodepath", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Node2D"), "set_target_node", "get_target_node");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "target_minimum_distance", PROPERTY_HINT_RANGE, "0,100000000,0.01,suffix:px"), "set_target_minimum_distance", "get_target_minimum_distance");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "target_maximum_distance", PROPERTY_HINT_NONE, "0,100000000,0.01,suffix:px"), "set_target_maximum_distance", "get_target_maximum_distance");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "flip_bend_direction", PROPERTY_HINT_NONE, ""), "set_flip_bend_direction", "get_flip_bend_direction");
-	ADD_GROUP("", "");
-*/
 }
 
 SkeletonModification2DTwoBoneIK::SkeletonModification2DTwoBoneIK() {

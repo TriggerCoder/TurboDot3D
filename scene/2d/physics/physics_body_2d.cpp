@@ -32,15 +32,6 @@
 #include "physics_body_2d.h"
 
 void PhysicsBody2D::_bind_methods() {
-/*
-	ClassDB::bind_method(D_METHOD("move_and_collide", "motion", "test_only", "safe_margin", "recovery_as_collision"), &PhysicsBody2D::_move, DEFVAL(false), DEFVAL(0.08), DEFVAL(false));
-	ClassDB::bind_method(D_METHOD("test_move", "from", "motion", "collision", "safe_margin", "recovery_as_collision"), &PhysicsBody2D::test_move, DEFVAL(Variant()), DEFVAL(0.08), DEFVAL(false));
-	ClassDB::bind_method(D_METHOD("get_gravity"), &PhysicsBody2D::get_gravity);
-
-	ClassDB::bind_method(D_METHOD("get_collision_exceptions"), &PhysicsBody2D::get_collision_exceptions);
-	ClassDB::bind_method(D_METHOD("add_collision_exception_with", "body"), &PhysicsBody2D::add_collision_exception_with);
-	ClassDB::bind_method(D_METHOD("remove_collision_exception_with", "body"), &PhysicsBody2D::remove_collision_exception_with);
-*/
 }
 
 PhysicsBody2D::PhysicsBody2D(PhysicsServer2D::BodyMode p_mode) :

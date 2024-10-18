@@ -37,47 +37,6 @@
 #include "servers/navigation_server_3d.h"
 
 void NavigationLink2D::_bind_methods() {
-/*
-	ClassDB::bind_method(D_METHOD("get_rid"), &NavigationLink2D::get_rid);
-
-	ClassDB::bind_method(D_METHOD("set_enabled", "enabled"), &NavigationLink2D::set_enabled);
-	ClassDB::bind_method(D_METHOD("is_enabled"), &NavigationLink2D::is_enabled);
-
-	ClassDB::bind_method(D_METHOD("set_bidirectional", "bidirectional"), &NavigationLink2D::set_bidirectional);
-	ClassDB::bind_method(D_METHOD("is_bidirectional"), &NavigationLink2D::is_bidirectional);
-
-	ClassDB::bind_method(D_METHOD("set_navigation_layers", "navigation_layers"), &NavigationLink2D::set_navigation_layers);
-	ClassDB::bind_method(D_METHOD("get_navigation_layers"), &NavigationLink2D::get_navigation_layers);
-
-	ClassDB::bind_method(D_METHOD("set_navigation_layer_value", "layer_number", "value"), &NavigationLink2D::set_navigation_layer_value);
-	ClassDB::bind_method(D_METHOD("get_navigation_layer_value", "layer_number"), &NavigationLink2D::get_navigation_layer_value);
-
-	ClassDB::bind_method(D_METHOD("set_start_position", "position"), &NavigationLink2D::set_start_position);
-	ClassDB::bind_method(D_METHOD("get_start_position"), &NavigationLink2D::get_start_position);
-
-	ClassDB::bind_method(D_METHOD("set_end_position", "position"), &NavigationLink2D::set_end_position);
-	ClassDB::bind_method(D_METHOD("get_end_position"), &NavigationLink2D::get_end_position);
-
-	ClassDB::bind_method(D_METHOD("set_global_start_position", "position"), &NavigationLink2D::set_global_start_position);
-	ClassDB::bind_method(D_METHOD("get_global_start_position"), &NavigationLink2D::get_global_start_position);
-
-	ClassDB::bind_method(D_METHOD("set_global_end_position", "position"), &NavigationLink2D::set_global_end_position);
-	ClassDB::bind_method(D_METHOD("get_global_end_position"), &NavigationLink2D::get_global_end_position);
-
-	ClassDB::bind_method(D_METHOD("set_enter_cost", "enter_cost"), &NavigationLink2D::set_enter_cost);
-	ClassDB::bind_method(D_METHOD("get_enter_cost"), &NavigationLink2D::get_enter_cost);
-
-	ClassDB::bind_method(D_METHOD("set_travel_cost", "travel_cost"), &NavigationLink2D::set_travel_cost);
-	ClassDB::bind_method(D_METHOD("get_travel_cost"), &NavigationLink2D::get_travel_cost);
-
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "enabled"), "set_enabled", "is_enabled");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "bidirectional"), "set_bidirectional", "is_bidirectional");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "navigation_layers", PROPERTY_HINT_LAYERS_2D_NAVIGATION), "set_navigation_layers", "get_navigation_layers");
-	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "start_position"), "set_start_position", "get_start_position");
-	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "end_position"), "set_end_position", "get_end_position");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "enter_cost"), "set_enter_cost", "get_enter_cost");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "travel_cost"), "set_travel_cost", "get_travel_cost");
-*/
 }
 
 void NavigationLink2D::_notification(int p_what) {

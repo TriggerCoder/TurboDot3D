@@ -249,46 +249,6 @@ bool Parallax2D::is_ignore_camera_scroll() {
 }
 
 void Parallax2D::_bind_methods() {
-/*
-	ClassDB::bind_method(D_METHOD("_camera_moved", "transform", "screen_offset", "adj_screen_offset"), &Parallax2D::_camera_moved);
-	ClassDB::bind_method(D_METHOD("set_scroll_scale", "scale"), &Parallax2D::set_scroll_scale);
-	ClassDB::bind_method(D_METHOD("get_scroll_scale"), &Parallax2D::get_scroll_scale);
-	ClassDB::bind_method(D_METHOD("set_repeat_size", "repeat_size"), &Parallax2D::set_repeat_size);
-	ClassDB::bind_method(D_METHOD("get_repeat_size"), &Parallax2D::get_repeat_size);
-	ClassDB::bind_method(D_METHOD("set_repeat_times", "repeat_times"), &Parallax2D::set_repeat_times);
-	ClassDB::bind_method(D_METHOD("get_repeat_times"), &Parallax2D::get_repeat_times);
-	ClassDB::bind_method(D_METHOD("set_autoscroll", "autoscroll"), &Parallax2D::set_autoscroll);
-	ClassDB::bind_method(D_METHOD("get_autoscroll"), &Parallax2D::get_autoscroll);
-	ClassDB::bind_method(D_METHOD("set_scroll_offset", "offset"), &Parallax2D::set_scroll_offset);
-	ClassDB::bind_method(D_METHOD("get_scroll_offset"), &Parallax2D::get_scroll_offset);
-	ClassDB::bind_method(D_METHOD("set_screen_offset", "offset"), &Parallax2D::set_screen_offset);
-	ClassDB::bind_method(D_METHOD("get_screen_offset"), &Parallax2D::get_screen_offset);
-	ClassDB::bind_method(D_METHOD("set_limit_begin", "offset"), &Parallax2D::set_limit_begin);
-	ClassDB::bind_method(D_METHOD("get_limit_begin"), &Parallax2D::get_limit_begin);
-	ClassDB::bind_method(D_METHOD("set_limit_end", "offset"), &Parallax2D::set_limit_end);
-	ClassDB::bind_method(D_METHOD("get_limit_end"), &Parallax2D::get_limit_end);
-	ClassDB::bind_method(D_METHOD("set_follow_viewport", "follow"), &Parallax2D::set_follow_viewport);
-	ClassDB::bind_method(D_METHOD("get_follow_viewport"), &Parallax2D::get_follow_viewport);
-	ClassDB::bind_method(D_METHOD("set_ignore_camera_scroll", "ignore"), &Parallax2D::set_ignore_camera_scroll);
-	ClassDB::bind_method(D_METHOD("is_ignore_camera_scroll"), &Parallax2D::is_ignore_camera_scroll);
-
-	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "scroll_scale", PROPERTY_HINT_LINK), "set_scroll_scale", "get_scroll_scale");
-	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "scroll_offset", PROPERTY_HINT_NONE, "suffix:px"), "set_scroll_offset", "get_scroll_offset");
-
-	ADD_GROUP("Repeat", "");
-	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "repeat_size"), "set_repeat_size", "get_repeat_size");
-	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "autoscroll", PROPERTY_HINT_NONE, "suffix:px/s"), "set_autoscroll", "get_autoscroll");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "repeat_times"), "set_repeat_times", "get_repeat_times");
-
-	ADD_GROUP("Limit", "limit_");
-	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "limit_begin", PROPERTY_HINT_NONE, "suffix:px"), "set_limit_begin", "get_limit_begin");
-	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "limit_end", PROPERTY_HINT_NONE, "suffix:px"), "set_limit_end", "get_limit_end");
-
-	ADD_GROUP("Override", "");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "follow_viewport"), "set_follow_viewport", "get_follow_viewport");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "ignore_camera_scroll"), "set_ignore_camera_scroll", "is_ignore_camera_scroll");
-	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "screen_offset", PROPERTY_HINT_NONE, "suffix:px"), "set_screen_offset", "get_screen_offset");
-*/
 }
 
 Parallax2D::Parallax2D() {

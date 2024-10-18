@@ -474,34 +474,6 @@ bool SkeletonModification2DCCDIK::get_ccdik_joint_editor_draw_gizmo(int p_joint_
 }
 
 void SkeletonModification2DCCDIK::_bind_methods() {
-/*
-	ClassDB::bind_method(D_METHOD("set_target_node", "target_nodepath"), &SkeletonModification2DCCDIK::set_target_node);
-	ClassDB::bind_method(D_METHOD("get_target_node"), &SkeletonModification2DCCDIK::get_target_node);
-	ClassDB::bind_method(D_METHOD("set_tip_node", "tip_nodepath"), &SkeletonModification2DCCDIK::set_tip_node);
-	ClassDB::bind_method(D_METHOD("get_tip_node"), &SkeletonModification2DCCDIK::get_tip_node);
-
-	ClassDB::bind_method(D_METHOD("set_ccdik_data_chain_length", "length"), &SkeletonModification2DCCDIK::set_ccdik_data_chain_length);
-	ClassDB::bind_method(D_METHOD("get_ccdik_data_chain_length"), &SkeletonModification2DCCDIK::get_ccdik_data_chain_length);
-
-	ClassDB::bind_method(D_METHOD("set_ccdik_joint_bone2d_node", "joint_idx", "bone2d_nodepath"), &SkeletonModification2DCCDIK::set_ccdik_joint_bone2d_node);
-	ClassDB::bind_method(D_METHOD("get_ccdik_joint_bone2d_node", "joint_idx"), &SkeletonModification2DCCDIK::get_ccdik_joint_bone2d_node);
-	ClassDB::bind_method(D_METHOD("set_ccdik_joint_bone_index", "joint_idx", "bone_idx"), &SkeletonModification2DCCDIK::set_ccdik_joint_bone_index);
-	ClassDB::bind_method(D_METHOD("get_ccdik_joint_bone_index", "joint_idx"), &SkeletonModification2DCCDIK::get_ccdik_joint_bone_index);
-	ClassDB::bind_method(D_METHOD("set_ccdik_joint_rotate_from_joint", "joint_idx", "rotate_from_joint"), &SkeletonModification2DCCDIK::set_ccdik_joint_rotate_from_joint);
-	ClassDB::bind_method(D_METHOD("get_ccdik_joint_rotate_from_joint", "joint_idx"), &SkeletonModification2DCCDIK::get_ccdik_joint_rotate_from_joint);
-	ClassDB::bind_method(D_METHOD("set_ccdik_joint_enable_constraint", "joint_idx", "enable_constraint"), &SkeletonModification2DCCDIK::set_ccdik_joint_enable_constraint);
-	ClassDB::bind_method(D_METHOD("get_ccdik_joint_enable_constraint", "joint_idx"), &SkeletonModification2DCCDIK::get_ccdik_joint_enable_constraint);
-	ClassDB::bind_method(D_METHOD("set_ccdik_joint_constraint_angle_min", "joint_idx", "angle_min"), &SkeletonModification2DCCDIK::set_ccdik_joint_constraint_angle_min);
-	ClassDB::bind_method(D_METHOD("get_ccdik_joint_constraint_angle_min", "joint_idx"), &SkeletonModification2DCCDIK::get_ccdik_joint_constraint_angle_min);
-	ClassDB::bind_method(D_METHOD("set_ccdik_joint_constraint_angle_max", "joint_idx", "angle_max"), &SkeletonModification2DCCDIK::set_ccdik_joint_constraint_angle_max);
-	ClassDB::bind_method(D_METHOD("get_ccdik_joint_constraint_angle_max", "joint_idx"), &SkeletonModification2DCCDIK::get_ccdik_joint_constraint_angle_max);
-	ClassDB::bind_method(D_METHOD("set_ccdik_joint_constraint_angle_invert", "joint_idx", "invert"), &SkeletonModification2DCCDIK::set_ccdik_joint_constraint_angle_invert);
-	ClassDB::bind_method(D_METHOD("get_ccdik_joint_constraint_angle_invert", "joint_idx"), &SkeletonModification2DCCDIK::get_ccdik_joint_constraint_angle_invert);
-
-	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "target_nodepath", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Node2D"), "set_target_node", "get_target_node");
-	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "tip_nodepath", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Node2D"), "set_tip_node", "get_tip_node");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "ccdik_data_chain_length", PROPERTY_HINT_RANGE, "0, 100, 1"), "set_ccdik_data_chain_length", "get_ccdik_data_chain_length");
-*/
 }
 
 SkeletonModification2DCCDIK::SkeletonModification2DCCDIK() {

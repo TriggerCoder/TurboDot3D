@@ -37,8 +37,6 @@
 class PhysicsBody2D;
 
 class DampedSpringJoint2D : public Joint2D {
-//	GDCLASS(DampedSpringJoint2D, Joint2D);
-
 	real_t stiffness = 20.0;
 	real_t damping = 1.0;
 	real_t rest_length = 0.0;

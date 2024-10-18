@@ -35,7 +35,6 @@
 #include "scene/2d/node_2d.h"
 
 class OccluderPolygon2D : public Resource {
-//	GDCLASS(OccluderPolygon2D, Resource);
 
 public:
 	enum CullMode {
@@ -79,8 +78,6 @@ public:
 VARIANT_ENUM_CAST(OccluderPolygon2D::CullMode);
 
 class LightOccluder2D : public Node2D {
-//	GDCLASS(LightOccluder2D, Node2D);
-
 	RID occluder;
 	int mask = 1;
 	Ref<OccluderPolygon2D> occluder_polygon;

@@ -267,19 +267,6 @@ NodePath SkeletonModification2DPhysicalBones::get_physical_bone_node(int p_joint
 }
 
 void SkeletonModification2DPhysicalBones::_bind_methods() {
-/*
-	ClassDB::bind_method(D_METHOD("set_physical_bone_chain_length", "length"), &SkeletonModification2DPhysicalBones::set_physical_bone_chain_length);
-	ClassDB::bind_method(D_METHOD("get_physical_bone_chain_length"), &SkeletonModification2DPhysicalBones::get_physical_bone_chain_length);
-
-	ClassDB::bind_method(D_METHOD("set_physical_bone_node", "joint_idx", "physicalbone2d_node"), &SkeletonModification2DPhysicalBones::set_physical_bone_node);
-	ClassDB::bind_method(D_METHOD("get_physical_bone_node", "joint_idx"), &SkeletonModification2DPhysicalBones::get_physical_bone_node);
-
-	ClassDB::bind_method(D_METHOD("fetch_physical_bones"), &SkeletonModification2DPhysicalBones::fetch_physical_bones);
-	ClassDB::bind_method(D_METHOD("start_simulation", "bones"), &SkeletonModification2DPhysicalBones::start_simulation, DEFVAL(Array()));
-	ClassDB::bind_method(D_METHOD("stop_simulation", "bones"), &SkeletonModification2DPhysicalBones::stop_simulation, DEFVAL(Array()));
-
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "physical_bone_chain_length", PROPERTY_HINT_RANGE, "0,100,1"), "set_physical_bone_chain_length", "get_physical_bone_chain_length");
-*/
 }
 
 SkeletonModification2DPhysicalBones::SkeletonModification2DPhysicalBones() {

@@ -35,8 +35,6 @@
 #include "scene/2d/node_2d.h"
 
 class GPUParticles2D : public Node2D {
-private:
-//	GDCLASS(GPUParticles2D, Node2D);
 
 public:
 	enum DrawOrder {

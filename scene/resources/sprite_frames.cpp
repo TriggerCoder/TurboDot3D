@@ -234,38 +234,6 @@ void SpriteFrames::get_argument_options(const StringName &p_function, int p_idx,
 #endif
 
 void SpriteFrames::_bind_methods() {
-/*
-	ClassDB::bind_method(D_METHOD("add_animation", "anim"), &SpriteFrames::add_animation);
-	ClassDB::bind_method(D_METHOD("has_animation", "anim"), &SpriteFrames::has_animation);
-	ClassDB::bind_method(D_METHOD("remove_animation", "anim"), &SpriteFrames::remove_animation);
-	ClassDB::bind_method(D_METHOD("rename_animation", "anim", "newname"), &SpriteFrames::rename_animation);
-
-	ClassDB::bind_method(D_METHOD("get_animation_names"), &SpriteFrames::get_animation_names);
-
-	ClassDB::bind_method(D_METHOD("set_animation_speed", "anim", "fps"), &SpriteFrames::set_animation_speed);
-	ClassDB::bind_method(D_METHOD("get_animation_speed", "anim"), &SpriteFrames::get_animation_speed);
-
-	ClassDB::bind_method(D_METHOD("set_animation_loop", "anim", "loop"), &SpriteFrames::set_animation_loop);
-	ClassDB::bind_method(D_METHOD("get_animation_loop", "anim"), &SpriteFrames::get_animation_loop);
-
-	ClassDB::bind_method(D_METHOD("add_frame", "anim", "texture", "duration", "at_position"), &SpriteFrames::add_frame, DEFVAL(1.0), DEFVAL(-1));
-	ClassDB::bind_method(D_METHOD("set_frame", "anim", "idx", "texture", "duration"), &SpriteFrames::set_frame, DEFVAL(1.0));
-	ClassDB::bind_method(D_METHOD("remove_frame", "anim", "idx"), &SpriteFrames::remove_frame);
-
-	ClassDB::bind_method(D_METHOD("get_frame_count", "anim"), &SpriteFrames::get_frame_count);
-	ClassDB::bind_method(D_METHOD("get_frame_texture", "anim", "idx"), &SpriteFrames::get_frame_texture);
-	ClassDB::bind_method(D_METHOD("get_frame_duration", "anim", "idx"), &SpriteFrames::get_frame_duration);
-
-	ClassDB::bind_method(D_METHOD("clear", "anim"), &SpriteFrames::clear);
-	ClassDB::bind_method(D_METHOD("clear_all"), &SpriteFrames::clear_all);
-
-	// `animations` property is for serialization.
-
-	ClassDB::bind_method(D_METHOD("_set_animations", "animations"), &SpriteFrames::_set_animations);
-	ClassDB::bind_method(D_METHOD("_get_animations"), &SpriteFrames::_get_animations);
-
-	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "animations", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NO_EDITOR | PROPERTY_USAGE_INTERNAL), "_set_animations", "_get_animations");
-*/
 }
 
 SpriteFrames::SpriteFrames() {

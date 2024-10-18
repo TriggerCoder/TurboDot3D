@@ -430,25 +430,6 @@ bool SkeletonModification2DFABRIK::get_fabrik_joint_use_target_rotation(int p_jo
 }
 
 void SkeletonModification2DFABRIK::_bind_methods() {
-/*
-	ClassDB::bind_method(D_METHOD("set_target_node", "target_nodepath"), &SkeletonModification2DFABRIK::set_target_node);
-	ClassDB::bind_method(D_METHOD("get_target_node"), &SkeletonModification2DFABRIK::get_target_node);
-
-	ClassDB::bind_method(D_METHOD("set_fabrik_data_chain_length", "length"), &SkeletonModification2DFABRIK::set_fabrik_data_chain_length);
-	ClassDB::bind_method(D_METHOD("get_fabrik_data_chain_length"), &SkeletonModification2DFABRIK::get_fabrik_data_chain_length);
-
-	ClassDB::bind_method(D_METHOD("set_fabrik_joint_bone2d_node", "joint_idx", "bone2d_nodepath"), &SkeletonModification2DFABRIK::set_fabrik_joint_bone2d_node);
-	ClassDB::bind_method(D_METHOD("get_fabrik_joint_bone2d_node", "joint_idx"), &SkeletonModification2DFABRIK::get_fabrik_joint_bone2d_node);
-	ClassDB::bind_method(D_METHOD("set_fabrik_joint_bone_index", "joint_idx", "bone_idx"), &SkeletonModification2DFABRIK::set_fabrik_joint_bone_index);
-	ClassDB::bind_method(D_METHOD("get_fabrik_joint_bone_index", "joint_idx"), &SkeletonModification2DFABRIK::get_fabrik_joint_bone_index);
-	ClassDB::bind_method(D_METHOD("set_fabrik_joint_magnet_position", "joint_idx", "magnet_position"), &SkeletonModification2DFABRIK::set_fabrik_joint_magnet_position);
-	ClassDB::bind_method(D_METHOD("get_fabrik_joint_magnet_position", "joint_idx"), &SkeletonModification2DFABRIK::get_fabrik_joint_magnet_position);
-	ClassDB::bind_method(D_METHOD("set_fabrik_joint_use_target_rotation", "joint_idx", "use_target_rotation"), &SkeletonModification2DFABRIK::set_fabrik_joint_use_target_rotation);
-	ClassDB::bind_method(D_METHOD("get_fabrik_joint_use_target_rotation", "joint_idx"), &SkeletonModification2DFABRIK::get_fabrik_joint_use_target_rotation);
-
-	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "target_nodepath", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Node2D"), "set_target_node", "get_target_node");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "fabrik_data_chain_length", PROPERTY_HINT_RANGE, "0, 100, 1"), "set_fabrik_data_chain_length", "get_fabrik_data_chain_length");
-*/
 }
 
 SkeletonModification2DFABRIK::SkeletonModification2DFABRIK() {

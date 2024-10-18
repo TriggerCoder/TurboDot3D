@@ -36,7 +36,6 @@
 #include "scene/2d/physics/physics_body_2d.h"
 
 class CharacterBody2D : public PhysicsBody2D {
-//	GDCLASS(CharacterBody2D, PhysicsBody2D);
 
 public:
 	enum MotionMode {

@@ -35,7 +35,6 @@
 #include "scene/resources/2d/shape_2d.h"
 
 class ConcavePolygonShape2D : public Shape2D {
-//	GDCLASS(ConcavePolygonShape2D, Shape2D);
 
 protected:
 	static void _bind_methods();

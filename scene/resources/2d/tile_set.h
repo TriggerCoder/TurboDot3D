@@ -109,8 +109,6 @@ union TileMapCell {
 };
 
 class TileMapPattern : public Resource {
-//	GDCLASS(TileMapPattern, Resource);
-
 	Size2i size;
 	HashMap<Vector2i, TileMapCell> pattern;
 
@@ -143,7 +141,6 @@ public:
 };
 
 class TileSet : public Resource {
-//	GDCLASS(TileSet, Resource);
 
 public:
 	static const int INVALID_SOURCE; // -1;
@@ -497,7 +494,6 @@ public:
 };
 
 class TileSetSource : public Resource {
-//	GDCLASS(TileSetSource, Resource);
 
 protected:
 	const TileSet *tile_set = nullptr;
@@ -544,7 +540,6 @@ public:
 };
 
 class TileSetAtlasSource : public TileSetSource {
-//	GDCLASS(TileSetAtlasSource, TileSetSource);
 
 public:
 	enum TileAnimationMode {
@@ -714,7 +709,6 @@ public:
 };
 
 class TileSetScenesCollectionSource : public TileSetSource {
-//	GDCLASS(TileSetScenesCollectionSource, TileSetSource);
 
 private:
 	struct SceneData {
@@ -764,7 +758,6 @@ public:
 };
 
 class TileData : public Object {
-//	GDCLASS(TileData, Object);
 
 private:
 	const TileSet *tile_set = nullptr;

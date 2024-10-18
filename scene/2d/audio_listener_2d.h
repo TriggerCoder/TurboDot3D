@@ -36,7 +36,6 @@
 #include "scene/main/window.h"
 
 class AudioListener2D : public Node2D {
-//	GDCLASS(AudioListener2D, Node2D);
 
 private:
 	bool current = false;

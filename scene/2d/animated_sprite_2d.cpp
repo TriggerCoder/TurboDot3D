@@ -597,66 +597,6 @@ void AnimatedSprite2D::get_argument_options(const StringName &p_function, int p_
 #endif
 
 void AnimatedSprite2D::_bind_methods() {
-/*
-	ClassDB::bind_method(D_METHOD("set_sprite_frames", "sprite_frames"), &AnimatedSprite2D::set_sprite_frames);
-	ClassDB::bind_method(D_METHOD("get_sprite_frames"), &AnimatedSprite2D::get_sprite_frames);
-
-	ClassDB::bind_method(D_METHOD("set_animation", "name"), &AnimatedSprite2D::set_animation);
-	ClassDB::bind_method(D_METHOD("get_animation"), &AnimatedSprite2D::get_animation);
-
-	ClassDB::bind_method(D_METHOD("set_autoplay", "name"), &AnimatedSprite2D::set_autoplay);
-	ClassDB::bind_method(D_METHOD("get_autoplay"), &AnimatedSprite2D::get_autoplay);
-
-	ClassDB::bind_method(D_METHOD("is_playing"), &AnimatedSprite2D::is_playing);
-
-	ClassDB::bind_method(D_METHOD("play", "name", "custom_speed", "from_end"), &AnimatedSprite2D::play, DEFVAL(StringName()), DEFVAL(1.0), DEFVAL(false));
-	ClassDB::bind_method(D_METHOD("play_backwards", "name"), &AnimatedSprite2D::play_backwards, DEFVAL(StringName()));
-	ClassDB::bind_method(D_METHOD("pause"), &AnimatedSprite2D::pause);
-	ClassDB::bind_method(D_METHOD("stop"), &AnimatedSprite2D::stop);
-
-	ClassDB::bind_method(D_METHOD("set_centered", "centered"), &AnimatedSprite2D::set_centered);
-	ClassDB::bind_method(D_METHOD("is_centered"), &AnimatedSprite2D::is_centered);
-
-	ClassDB::bind_method(D_METHOD("set_offset", "offset"), &AnimatedSprite2D::set_offset);
-	ClassDB::bind_method(D_METHOD("get_offset"), &AnimatedSprite2D::get_offset);
-
-	ClassDB::bind_method(D_METHOD("set_flip_h", "flip_h"), &AnimatedSprite2D::set_flip_h);
-	ClassDB::bind_method(D_METHOD("is_flipped_h"), &AnimatedSprite2D::is_flipped_h);
-
-	ClassDB::bind_method(D_METHOD("set_flip_v", "flip_v"), &AnimatedSprite2D::set_flip_v);
-	ClassDB::bind_method(D_METHOD("is_flipped_v"), &AnimatedSprite2D::is_flipped_v);
-
-	ClassDB::bind_method(D_METHOD("set_frame", "frame"), &AnimatedSprite2D::set_frame);
-	ClassDB::bind_method(D_METHOD("get_frame"), &AnimatedSprite2D::get_frame);
-
-	ClassDB::bind_method(D_METHOD("set_frame_progress", "progress"), &AnimatedSprite2D::set_frame_progress);
-	ClassDB::bind_method(D_METHOD("get_frame_progress"), &AnimatedSprite2D::get_frame_progress);
-
-	ClassDB::bind_method(D_METHOD("set_frame_and_progress", "frame", "progress"), &AnimatedSprite2D::set_frame_and_progress);
-
-	ClassDB::bind_method(D_METHOD("set_speed_scale", "speed_scale"), &AnimatedSprite2D::set_speed_scale);
-	ClassDB::bind_method(D_METHOD("get_speed_scale"), &AnimatedSprite2D::get_speed_scale);
-	ClassDB::bind_method(D_METHOD("get_playing_speed"), &AnimatedSprite2D::get_playing_speed);
-
-	ADD_SIGNAL(MethodInfo("sprite_frames_changed"));
-	ADD_SIGNAL(MethodInfo("animation_changed"));
-	ADD_SIGNAL(MethodInfo("frame_changed"));
-	ADD_SIGNAL(MethodInfo("animation_looped"));
-	ADD_SIGNAL(MethodInfo("animation_finished"));
-
-	ADD_GROUP("Animation", "");
-	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "sprite_frames", PROPERTY_HINT_RESOURCE_TYPE, "SpriteFrames"), "set_sprite_frames", "get_sprite_frames");
-	ADD_PROPERTY(PropertyInfo(Variant::STRING_NAME, "animation", PROPERTY_HINT_ENUM, ""), "set_animation", "get_animation");
-	ADD_PROPERTY(PropertyInfo(Variant::STRING_NAME, "autoplay", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NO_EDITOR), "set_autoplay", "get_autoplay");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "frame"), "set_frame", "get_frame");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "frame_progress", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NO_EDITOR), "set_frame_progress", "get_frame_progress");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "speed_scale"), "set_speed_scale", "get_speed_scale");
-	ADD_GROUP("Offset", "");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "centered"), "set_centered", "is_centered");
-	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "offset", PROPERTY_HINT_NONE, "suffix:px"), "set_offset", "get_offset");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "flip_h"), "set_flip_h", "is_flipped_h");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "flip_v"), "set_flip_v", "is_flipped_v");
-*/
 }
 
 AnimatedSprite2D::AnimatedSprite2D() {

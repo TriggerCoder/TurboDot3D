@@ -303,50 +303,6 @@ PackedStringArray NavigationRegion2D::get_configuration_warnings() const {
 }
 
 void NavigationRegion2D::_bind_methods() {
-/*
-	ClassDB::bind_method(D_METHOD("get_rid"), &NavigationRegion2D::get_rid);
-
-	ClassDB::bind_method(D_METHOD("set_navigation_polygon", "navigation_polygon"), &NavigationRegion2D::set_navigation_polygon);
-	ClassDB::bind_method(D_METHOD("get_navigation_polygon"), &NavigationRegion2D::get_navigation_polygon);
-
-	ClassDB::bind_method(D_METHOD("set_enabled", "enabled"), &NavigationRegion2D::set_enabled);
-	ClassDB::bind_method(D_METHOD("is_enabled"), &NavigationRegion2D::is_enabled);
-
-	ClassDB::bind_method(D_METHOD("set_navigation_map", "navigation_map"), &NavigationRegion2D::set_navigation_map);
-	ClassDB::bind_method(D_METHOD("get_navigation_map"), &NavigationRegion2D::get_navigation_map);
-
-	ClassDB::bind_method(D_METHOD("set_use_edge_connections", "enabled"), &NavigationRegion2D::set_use_edge_connections);
-	ClassDB::bind_method(D_METHOD("get_use_edge_connections"), &NavigationRegion2D::get_use_edge_connections);
-
-	ClassDB::bind_method(D_METHOD("set_navigation_layers", "navigation_layers"), &NavigationRegion2D::set_navigation_layers);
-	ClassDB::bind_method(D_METHOD("get_navigation_layers"), &NavigationRegion2D::get_navigation_layers);
-
-	ClassDB::bind_method(D_METHOD("set_navigation_layer_value", "layer_number", "value"), &NavigationRegion2D::set_navigation_layer_value);
-	ClassDB::bind_method(D_METHOD("get_navigation_layer_value", "layer_number"), &NavigationRegion2D::get_navigation_layer_value);
-
-	ClassDB::bind_method(D_METHOD("get_region_rid"), &NavigationRegion2D::get_region_rid);
-
-	ClassDB::bind_method(D_METHOD("set_enter_cost", "enter_cost"), &NavigationRegion2D::set_enter_cost);
-	ClassDB::bind_method(D_METHOD("get_enter_cost"), &NavigationRegion2D::get_enter_cost);
-
-	ClassDB::bind_method(D_METHOD("set_travel_cost", "travel_cost"), &NavigationRegion2D::set_travel_cost);
-	ClassDB::bind_method(D_METHOD("get_travel_cost"), &NavigationRegion2D::get_travel_cost);
-
-	ClassDB::bind_method(D_METHOD("bake_navigation_polygon", "on_thread"), &NavigationRegion2D::bake_navigation_polygon, DEFVAL(true));
-	ClassDB::bind_method(D_METHOD("is_baking"), &NavigationRegion2D::is_baking);
-
-	ClassDB::bind_method(D_METHOD("_navigation_polygon_changed"), &NavigationRegion2D::_navigation_polygon_changed);
-
-	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "navigation_polygon", PROPERTY_HINT_RESOURCE_TYPE, "NavigationPolygon"), "set_navigation_polygon", "get_navigation_polygon");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "enabled"), "set_enabled", "is_enabled");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "use_edge_connections"), "set_use_edge_connections", "get_use_edge_connections");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "navigation_layers", PROPERTY_HINT_LAYERS_2D_NAVIGATION), "set_navigation_layers", "get_navigation_layers");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "enter_cost"), "set_enter_cost", "get_enter_cost");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "travel_cost"), "set_travel_cost", "get_travel_cost");
-
-	ADD_SIGNAL(MethodInfo("navigation_polygon_changed"));
-	ADD_SIGNAL(MethodInfo("bake_finished"));
-*/
 }
 
 NavigationRegion2D::NavigationRegion2D() {

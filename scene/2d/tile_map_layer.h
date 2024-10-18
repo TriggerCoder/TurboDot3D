@@ -221,7 +221,6 @@ public:
 };
 
 class TileMapLayer : public Node2D {
-//	GDCLASS(TileMapLayer, Node2D);
 
 public:
 	enum HighlightMode {

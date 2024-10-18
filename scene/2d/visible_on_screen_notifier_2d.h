@@ -36,8 +36,6 @@
 
 class Viewport;
 class VisibleOnScreenNotifier2D : public Node2D {
-//	GDCLASS(VisibleOnScreenNotifier2D, Node2D);
-
 	HashSet<Viewport *> viewports;
 
 	Rect2 rect;
@@ -69,7 +67,6 @@ public:
 };
 
 class VisibleOnScreenEnabler2D : public VisibleOnScreenNotifier2D {
-//	GDCLASS(VisibleOnScreenEnabler2D, VisibleOnScreenNotifier2D);
 
 public:
 	enum EnableMode {

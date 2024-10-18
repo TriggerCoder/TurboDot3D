@@ -72,18 +72,6 @@ PhysicsDirectSpaceState2D *World2D::get_direct_space_state() {
 }
 
 void World2D::_bind_methods() {
-/*
-	ClassDB::bind_method(D_METHOD("get_canvas"), &World2D::get_canvas);
-	ClassDB::bind_method(D_METHOD("get_space"), &World2D::get_space);
-	ClassDB::bind_method(D_METHOD("get_navigation_map"), &World2D::get_navigation_map);
-
-	ClassDB::bind_method(D_METHOD("get_direct_space_state"), &World2D::get_direct_space_state);
-
-	ADD_PROPERTY(PropertyInfo(Variant::RID, "canvas", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NONE), "", "get_canvas");
-	ADD_PROPERTY(PropertyInfo(Variant::RID, "space", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NONE), "", "get_space");
-	ADD_PROPERTY(PropertyInfo(Variant::RID, "navigation_map", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NONE), "", "get_navigation_map");
-	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "direct_space_state", PROPERTY_HINT_RESOURCE_TYPE, "PhysicsDirectSpaceState2D", PROPERTY_USAGE_NONE), "", "get_direct_space_state");
-*/
 }
 
 void World2D::register_viewport(Viewport *p_viewport) {

@@ -36,8 +36,6 @@
 #include "scene/resources/multimesh.h"
 
 class MultiMeshInstance2D : public Node2D {
-//	GDCLASS(MultiMeshInstance2D, Node2D);
-
 	Ref<MultiMesh> multimesh;
 
 	Ref<Texture2D> texture;

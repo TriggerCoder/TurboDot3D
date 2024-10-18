@@ -107,11 +107,6 @@ bool AudioListener2D::is_current() const {
 }
 
 void AudioListener2D::_bind_methods() {
-/*
-	ClassDB::bind_method(D_METHOD("make_current"), &AudioListener2D::make_current);
-	ClassDB::bind_method(D_METHOD("clear_current"), &AudioListener2D::clear_current);
-	ClassDB::bind_method(D_METHOD("is_current"), &AudioListener2D::is_current);
-*/
 }
 
 AudioListener2D::AudioListener2D() {

@@ -35,8 +35,6 @@
 #include "scene/2d/node_2d.h"
 
 class NavigationObstacle2D : public Node2D {
-//	GDCLASS(NavigationObstacle2D, Node2D);
-
 	RID obstacle;
 	RID map_before_pause;
 	RID map_override;

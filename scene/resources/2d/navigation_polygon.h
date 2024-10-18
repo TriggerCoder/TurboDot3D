@@ -36,7 +36,6 @@
 #include "scene/resources/navigation_mesh.h"
 
 class NavigationPolygon : public Resource {
-//	GDCLASS(NavigationPolygon, Resource);
 	RWLock rwlock;
 
 	Vector<Vector2> vertices;

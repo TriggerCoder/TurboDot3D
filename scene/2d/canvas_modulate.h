@@ -35,8 +35,6 @@
 #include "scene/2d/node_2d.h"
 
 class CanvasModulate : public Node2D {
-	GDCLASS(CanvasModulate, Node2D);
-
 	Color color = Color(1, 1, 1, 1);
 
 	// CanvasModulate is in canvas-specific modulate group when both in canvas and visible in tree.

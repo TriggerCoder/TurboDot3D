@@ -296,28 +296,6 @@ real_t CollisionPolygon2D::get_one_way_collision_margin() const {
 }
 
 void CollisionPolygon2D::_bind_methods() {
-/*
-	ClassDB::bind_method(D_METHOD("set_polygon", "polygon"), &CollisionPolygon2D::set_polygon);
-	ClassDB::bind_method(D_METHOD("get_polygon"), &CollisionPolygon2D::get_polygon);
-
-	ClassDB::bind_method(D_METHOD("set_build_mode", "build_mode"), &CollisionPolygon2D::set_build_mode);
-	ClassDB::bind_method(D_METHOD("get_build_mode"), &CollisionPolygon2D::get_build_mode);
-	ClassDB::bind_method(D_METHOD("set_disabled", "disabled"), &CollisionPolygon2D::set_disabled);
-	ClassDB::bind_method(D_METHOD("is_disabled"), &CollisionPolygon2D::is_disabled);
-	ClassDB::bind_method(D_METHOD("set_one_way_collision", "enabled"), &CollisionPolygon2D::set_one_way_collision);
-	ClassDB::bind_method(D_METHOD("is_one_way_collision_enabled"), &CollisionPolygon2D::is_one_way_collision_enabled);
-	ClassDB::bind_method(D_METHOD("set_one_way_collision_margin", "margin"), &CollisionPolygon2D::set_one_way_collision_margin);
-	ClassDB::bind_method(D_METHOD("get_one_way_collision_margin"), &CollisionPolygon2D::get_one_way_collision_margin);
-
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "build_mode", PROPERTY_HINT_ENUM, "Solids,Segments"), "set_build_mode", "get_build_mode");
-	ADD_PROPERTY(PropertyInfo(Variant::PACKED_VECTOR2_ARRAY, "polygon"), "set_polygon", "get_polygon");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "disabled"), "set_disabled", "is_disabled");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "one_way_collision"), "set_one_way_collision", "is_one_way_collision_enabled");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "one_way_collision_margin", PROPERTY_HINT_RANGE, "0,128,0.1,suffix:px"), "set_one_way_collision_margin", "get_one_way_collision_margin");
-
-	BIND_ENUM_CONSTANT(BUILD_SOLIDS);
-	BIND_ENUM_CONSTANT(BUILD_SEGMENTS);
-*/
 }
 
 CollisionPolygon2D::CollisionPolygon2D() {

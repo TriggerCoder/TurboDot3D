@@ -38,7 +38,6 @@
 #include "scene/resources/texture.h"
 
 class TouchScreenButton : public Node2D {
-//	GDCLASS(TouchScreenButton, Node2D);
 
 public:
 	enum VisibilityMode {

@@ -142,16 +142,6 @@ real_t WorldBoundaryShape2D::get_enclosing_radius() const {
 }
 
 void WorldBoundaryShape2D::_bind_methods() {
-/*
-	ClassDB::bind_method(D_METHOD("set_normal", "normal"), &WorldBoundaryShape2D::set_normal);
-	ClassDB::bind_method(D_METHOD("get_normal"), &WorldBoundaryShape2D::get_normal);
-
-	ClassDB::bind_method(D_METHOD("set_distance", "distance"), &WorldBoundaryShape2D::set_distance);
-	ClassDB::bind_method(D_METHOD("get_distance"), &WorldBoundaryShape2D::get_distance);
-
-	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "normal"), "set_normal", "get_normal");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "distance", PROPERTY_HINT_RANGE, "-1024,1024,0.01,or_greater,or_less,suffix:px"), "set_distance", "get_distance");
-*/
 }
 
 WorldBoundaryShape2D::WorldBoundaryShape2D() :

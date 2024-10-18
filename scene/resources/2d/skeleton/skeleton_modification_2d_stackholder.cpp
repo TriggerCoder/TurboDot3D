@@ -112,10 +112,6 @@ Ref<SkeletonModificationStack2D> SkeletonModification2DStackHolder::get_held_mod
 }
 
 void SkeletonModification2DStackHolder::_bind_methods() {
-/*
-	ClassDB::bind_method(D_METHOD("set_held_modification_stack", "held_modification_stack"), &SkeletonModification2DStackHolder::set_held_modification_stack);
-	ClassDB::bind_method(D_METHOD("get_held_modification_stack"), &SkeletonModification2DStackHolder::get_held_modification_stack);
-*/
 }
 
 SkeletonModification2DStackHolder::SkeletonModification2DStackHolder() {

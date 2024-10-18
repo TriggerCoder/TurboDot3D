@@ -36,7 +36,6 @@
 #include "scene/2d/physics/collision_object_2d.h"
 
 class Area2D : public CollisionObject2D {
-//	GDCLASS(Area2D, CollisionObject2D);
 
 public:
 	enum SpaceOverride {

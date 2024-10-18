@@ -192,12 +192,6 @@ Ref<Curve2D> Path2D::get_curve() const {
 }
 
 void Path2D::_bind_methods() {
-/*
-	ClassDB::bind_method(D_METHOD("set_curve", "curve"), &Path2D::set_curve);
-	ClassDB::bind_method(D_METHOD("get_curve"), &Path2D::get_curve);
-
-	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "curve", PROPERTY_HINT_RESOURCE_TYPE, "Curve2D", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_EDITOR_INSTANTIATE_OBJECT), "set_curve", "get_curve");
-*/
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -295,36 +289,6 @@ PackedStringArray PathFollow2D::get_configuration_warnings() const {
 }
 
 void PathFollow2D::_bind_methods() {
-/*
-	ClassDB::bind_method(D_METHOD("set_progress", "progress"), &PathFollow2D::set_progress);
-	ClassDB::bind_method(D_METHOD("get_progress"), &PathFollow2D::get_progress);
-
-	ClassDB::bind_method(D_METHOD("set_h_offset", "h_offset"), &PathFollow2D::set_h_offset);
-	ClassDB::bind_method(D_METHOD("get_h_offset"), &PathFollow2D::get_h_offset);
-
-	ClassDB::bind_method(D_METHOD("set_v_offset", "v_offset"), &PathFollow2D::set_v_offset);
-	ClassDB::bind_method(D_METHOD("get_v_offset"), &PathFollow2D::get_v_offset);
-
-	ClassDB::bind_method(D_METHOD("set_progress_ratio", "ratio"), &PathFollow2D::set_progress_ratio);
-	ClassDB::bind_method(D_METHOD("get_progress_ratio"), &PathFollow2D::get_progress_ratio);
-
-	ClassDB::bind_method(D_METHOD("set_rotates", "enabled"), &PathFollow2D::set_rotation_enabled);
-	ClassDB::bind_method(D_METHOD("is_rotating"), &PathFollow2D::is_rotation_enabled);
-
-	ClassDB::bind_method(D_METHOD("set_cubic_interpolation", "enabled"), &PathFollow2D::set_cubic_interpolation_enabled);
-	ClassDB::bind_method(D_METHOD("get_cubic_interpolation"), &PathFollow2D::is_cubic_interpolation_enabled);
-
-	ClassDB::bind_method(D_METHOD("set_loop", "loop"), &PathFollow2D::set_loop);
-	ClassDB::bind_method(D_METHOD("has_loop"), &PathFollow2D::has_loop);
-
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "progress", PROPERTY_HINT_RANGE, "0,10000,0.01,or_less,or_greater,suffix:px"), "set_progress", "get_progress");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "progress_ratio", PROPERTY_HINT_RANGE, "0,1,0.0001,or_less,or_greater", PROPERTY_USAGE_EDITOR), "set_progress_ratio", "get_progress_ratio");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "h_offset"), "set_h_offset", "get_h_offset");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "v_offset"), "set_v_offset", "get_v_offset");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "rotates"), "set_rotates", "is_rotating");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "cubic_interp"), "set_cubic_interpolation", "get_cubic_interpolation");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "loop"), "set_loop", "has_loop");
-*/
 }
 
 void PathFollow2D::set_progress(real_t p_progress) {

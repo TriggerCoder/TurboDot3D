@@ -38,7 +38,6 @@
 #include "servers/physics_server_2d.h"
 
 class CollisionObject2D : public Node2D {
-//	GDCLASS(CollisionObject2D, Node2D);
 
 public:
 	enum DisableMode {

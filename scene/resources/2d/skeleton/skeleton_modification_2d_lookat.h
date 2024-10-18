@@ -40,7 +40,6 @@
 ///////////////////////////////////////
 
 class SkeletonModification2DLookAt : public SkeletonModification2D {
-//	GDCLASS(SkeletonModification2DLookAt, SkeletonModification2D);
 
 private:
 	int bone_idx = -1;

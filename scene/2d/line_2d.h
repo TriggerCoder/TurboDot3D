@@ -35,7 +35,6 @@
 #include "node_2d.h"
 
 class Line2D : public Node2D {
-//	GDCLASS(Line2D, Node2D);
 
 public:
 	enum LineJointMode {

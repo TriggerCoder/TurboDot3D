@@ -37,46 +37,6 @@
 #include "servers/navigation_server_3d.h"
 
 void NavigationObstacle2D::_bind_methods() {
-/*
-	ClassDB::bind_method(D_METHOD("get_rid"), &NavigationObstacle2D::get_rid);
-
-	ClassDB::bind_method(D_METHOD("set_avoidance_enabled", "enabled"), &NavigationObstacle2D::set_avoidance_enabled);
-	ClassDB::bind_method(D_METHOD("get_avoidance_enabled"), &NavigationObstacle2D::get_avoidance_enabled);
-
-	ClassDB::bind_method(D_METHOD("set_navigation_map", "navigation_map"), &NavigationObstacle2D::set_navigation_map);
-	ClassDB::bind_method(D_METHOD("get_navigation_map"), &NavigationObstacle2D::get_navigation_map);
-
-	ClassDB::bind_method(D_METHOD("set_radius", "radius"), &NavigationObstacle2D::set_radius);
-	ClassDB::bind_method(D_METHOD("get_radius"), &NavigationObstacle2D::get_radius);
-
-	ClassDB::bind_method(D_METHOD("set_velocity", "velocity"), &NavigationObstacle2D::set_velocity);
-	ClassDB::bind_method(D_METHOD("get_velocity"), &NavigationObstacle2D::get_velocity);
-
-	ClassDB::bind_method(D_METHOD("set_vertices", "vertices"), &NavigationObstacle2D::set_vertices);
-	ClassDB::bind_method(D_METHOD("get_vertices"), &NavigationObstacle2D::get_vertices);
-
-	ClassDB::bind_method(D_METHOD("set_avoidance_layers", "layers"), &NavigationObstacle2D::set_avoidance_layers);
-	ClassDB::bind_method(D_METHOD("get_avoidance_layers"), &NavigationObstacle2D::get_avoidance_layers);
-
-	ClassDB::bind_method(D_METHOD("set_avoidance_layer_value", "layer_number", "value"), &NavigationObstacle2D::set_avoidance_layer_value);
-	ClassDB::bind_method(D_METHOD("get_avoidance_layer_value", "layer_number"), &NavigationObstacle2D::get_avoidance_layer_value);
-
-	ClassDB::bind_method(D_METHOD("set_affect_navigation_mesh", "enabled"), &NavigationObstacle2D::set_affect_navigation_mesh);
-	ClassDB::bind_method(D_METHOD("get_affect_navigation_mesh"), &NavigationObstacle2D::get_affect_navigation_mesh);
-
-	ClassDB::bind_method(D_METHOD("set_carve_navigation_mesh", "enabled"), &NavigationObstacle2D::set_carve_navigation_mesh);
-	ClassDB::bind_method(D_METHOD("get_carve_navigation_mesh"), &NavigationObstacle2D::get_carve_navigation_mesh);
-
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "radius", PROPERTY_HINT_RANGE, "0.0,500,0.01,suffix:px"), "set_radius", "get_radius");
-	ADD_PROPERTY(PropertyInfo(Variant::PACKED_VECTOR2_ARRAY, "vertices"), "set_vertices", "get_vertices");
-	ADD_GROUP("NavigationMesh", "");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "affect_navigation_mesh"), "set_affect_navigation_mesh", "get_affect_navigation_mesh");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "carve_navigation_mesh"), "set_carve_navigation_mesh", "get_carve_navigation_mesh");
-	ADD_GROUP("Avoidance", "");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "avoidance_enabled"), "set_avoidance_enabled", "get_avoidance_enabled");
-	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "velocity", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NO_EDITOR), "set_velocity", "get_velocity");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "avoidance_layers", PROPERTY_HINT_LAYERS_AVOIDANCE), "set_avoidance_layers", "get_avoidance_layers");
-*/
 }
 
 void NavigationObstacle2D::_notification(int p_what) {
