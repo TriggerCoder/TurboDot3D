@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "parallax_background_editor_plugin.h"
 
 #include "canvas_item_editor_plugin.h"
@@ -135,3 +136,4 @@ ParallaxBackgroundEditorPlugin::ParallaxBackgroundEditorPlugin() {
 	menu->set_switch_on_hover(true);
 	toolbar->add_child(menu);
 }
+#endif

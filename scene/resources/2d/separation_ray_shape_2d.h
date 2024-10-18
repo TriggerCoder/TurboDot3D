@@ -28,13 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef SEPARATION_RAY_SHAPE_2D_H
 #define SEPARATION_RAY_SHAPE_2D_H
 
 #include "scene/resources/2d/shape_2d.h"
 
 class SeparationRayShape2D : public Shape2D {
-	GDCLASS(SeparationRayShape2D, Shape2D);
+//	GDCLASS(SeparationRayShape2D, Shape2D);
 
 	real_t length = 20.0;
 	bool slide_on_slope = false;
@@ -59,3 +60,4 @@ public:
 };
 
 #endif // SEPARATION_RAY_SHAPE_2D_H
+#endif //2D

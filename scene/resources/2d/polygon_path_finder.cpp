@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "polygon_path_finder.h"
 #include "core/math/geometry_2d.h"
 
@@ -543,6 +544,7 @@ float PolygonPathFinder::get_point_penalty(int p_point) const {
 }
 
 void PolygonPathFinder::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("setup", "points", "connections"), &PolygonPathFinder::setup);
 	ClassDB::bind_method(D_METHOD("find_path", "from", "to"), &PolygonPathFinder::find_path);
 	ClassDB::bind_method(D_METHOD("get_intersections", "from", "to"), &PolygonPathFinder::get_intersections);
@@ -556,7 +558,9 @@ void PolygonPathFinder::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_get_data"), &PolygonPathFinder::_get_data);
 
 	ADD_PROPERTY(PropertyInfo(Variant::DICTIONARY, "data", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NO_EDITOR | PROPERTY_USAGE_INTERNAL), "_set_data", "_get_data");
+*/
 }
 
 PolygonPathFinder::PolygonPathFinder() {
 }
+#endif

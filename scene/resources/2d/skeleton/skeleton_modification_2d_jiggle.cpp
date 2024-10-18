@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "skeleton_modification_2d_jiggle.h"
 
 #include "scene/2d/skeleton_2d.h"
@@ -509,6 +510,7 @@ Vector2 SkeletonModification2DJiggle::get_jiggle_joint_gravity(int p_joint_idx) 
 }
 
 void SkeletonModification2DJiggle::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_target_node", "target_nodepath"), &SkeletonModification2DJiggle::set_target_node);
 	ClassDB::bind_method(D_METHOD("get_target_node"), &SkeletonModification2DJiggle::get_target_node);
 
@@ -558,6 +560,7 @@ void SkeletonModification2DJiggle::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "use_gravity"), "set_use_gravity", "get_use_gravity");
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "gravity"), "set_gravity", "get_gravity");
 	ADD_GROUP("", "");
+*/
 }
 
 SkeletonModification2DJiggle::SkeletonModification2DJiggle() {
@@ -575,3 +578,4 @@ SkeletonModification2DJiggle::SkeletonModification2DJiggle() {
 
 SkeletonModification2DJiggle::~SkeletonModification2DJiggle() {
 }
+#endif

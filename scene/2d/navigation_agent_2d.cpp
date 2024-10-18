@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "navigation_agent_2d.h"
 
 #include "core/math/geometry_2d.h"
@@ -36,6 +37,7 @@
 #include "servers/navigation_server_2d.h"
 
 void NavigationAgent2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("get_rid"), &NavigationAgent2D::get_rid);
 
 	ClassDB::bind_method(D_METHOD("set_avoidance_enabled", "enabled"), &NavigationAgent2D::set_avoidance_enabled);
@@ -175,6 +177,7 @@ void NavigationAgent2D::_bind_methods() {
 	ADD_SIGNAL(MethodInfo("link_reached", PropertyInfo(Variant::DICTIONARY, "details")));
 	ADD_SIGNAL(MethodInfo("navigation_finished"));
 	ADD_SIGNAL(MethodInfo("velocity_computed", PropertyInfo(Variant::VECTOR2, "safe_velocity")));
+*/
 }
 
 void NavigationAgent2D::_notification(int p_what) {
@@ -1040,3 +1043,4 @@ void NavigationAgent2D::_update_debug_path() {
 	}
 }
 #endif // DEBUG_ENABLED
+#endif //2D

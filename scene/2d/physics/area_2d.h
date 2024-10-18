@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef AREA_2D_H
 #define AREA_2D_H
 
@@ -35,7 +36,7 @@
 #include "scene/2d/physics/collision_object_2d.h"
 
 class Area2D : public CollisionObject2D {
-	GDCLASS(Area2D, CollisionObject2D);
+//	GDCLASS(Area2D, CollisionObject2D);
 
 public:
 	enum SpaceOverride {
@@ -200,3 +201,4 @@ public:
 VARIANT_ENUM_CAST(Area2D::SpaceOverride);
 
 #endif // AREA_2D_H
+#endif //2D

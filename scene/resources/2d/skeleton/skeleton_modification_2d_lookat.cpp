@@ -28,12 +28,11 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "skeleton_modification_2d_lookat.h"
 #include "scene/2d/skeleton_2d.h"
 
-#ifdef TOOLS_ENABLED
 #include "editor/editor_settings.h"
-#endif // TOOLS_ENABLED
 
 bool SkeletonModification2DLookAt::_set(const StringName &p_path, const Variant &p_value) {
 	String path = p_path;
@@ -50,13 +49,9 @@ bool SkeletonModification2DLookAt::_set(const StringName &p_path, const Variant 
 		set_constraint_in_localspace(p_value);
 	} else if (path.begins_with("additional_rotation")) {
 		set_additional_rotation(Math::deg_to_rad(float(p_value)));
-	}
-#ifdef TOOLS_ENABLED
-	else if (path.begins_with("editor/draw_gizmo")) {
+	} else if (path.begins_with("editor/draw_gizmo")) {
 		set_editor_draw_gizmo(p_value);
-	}
-#endif // TOOLS_ENABLED
-	else {
+	} else {
 		return false;
 	}
 
@@ -78,13 +73,9 @@ bool SkeletonModification2DLookAt::_get(const StringName &p_path, Variant &r_ret
 		r_ret = get_constraint_in_localspace();
 	} else if (path.begins_with("additional_rotation")) {
 		r_ret = Math::rad_to_deg(get_additional_rotation());
-	}
-#ifdef TOOLS_ENABLED
-	else if (path.begins_with("editor/draw_gizmo")) {
+	} else if (path.begins_with("editor/draw_gizmo")) {
 		r_ret = get_editor_draw_gizmo();
-	}
-#endif // TOOLS_ENABLED
-	else {
+	} else {
 		return false;
 	}
 
@@ -101,11 +92,9 @@ void SkeletonModification2DLookAt::_get_property_list(List<PropertyInfo> *p_list
 	}
 	p_list->push_back(PropertyInfo(Variant::FLOAT, "additional_rotation", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT));
 
-#ifdef TOOLS_ENABLED
 	if (Engine::get_singleton()->is_editor_hint()) {
 		p_list->push_back(PropertyInfo(Variant::BOOL, "editor/draw_gizmo", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT));
 	}
-#endif // TOOLS_ENABLED
 }
 
 void SkeletonModification2DLookAt::_execute(float p_delta) {
@@ -307,11 +296,9 @@ void SkeletonModification2DLookAt::set_additional_rotation(float p_rotation) {
 void SkeletonModification2DLookAt::set_enable_constraint(bool p_constraint) {
 	enable_constraint = p_constraint;
 	notify_property_list_changed();
-#ifdef TOOLS_ENABLED
 	if (stack && is_setup) {
 		stack->set_editor_gizmos_dirty(true);
 	}
-#endif // TOOLS_ENABLED
 }
 
 bool SkeletonModification2DLookAt::get_enable_constraint() const {
@@ -320,11 +307,9 @@ bool SkeletonModification2DLookAt::get_enable_constraint() const {
 
 void SkeletonModification2DLookAt::set_constraint_angle_min(float p_angle_min) {
 	constraint_angle_min = p_angle_min;
-#ifdef TOOLS_ENABLED
 	if (stack && is_setup) {
 		stack->set_editor_gizmos_dirty(true);
 	}
-#endif // TOOLS_ENABLED
 }
 
 float SkeletonModification2DLookAt::get_constraint_angle_min() const {
@@ -333,11 +318,9 @@ float SkeletonModification2DLookAt::get_constraint_angle_min() const {
 
 void SkeletonModification2DLookAt::set_constraint_angle_max(float p_angle_max) {
 	constraint_angle_max = p_angle_max;
-#ifdef TOOLS_ENABLED
 	if (stack && is_setup) {
 		stack->set_editor_gizmos_dirty(true);
 	}
-#endif // TOOLS_ENABLED
 }
 
 float SkeletonModification2DLookAt::get_constraint_angle_max() const {
@@ -346,11 +329,9 @@ float SkeletonModification2DLookAt::get_constraint_angle_max() const {
 
 void SkeletonModification2DLookAt::set_constraint_angle_invert(bool p_invert) {
 	constraint_angle_invert = p_invert;
-#ifdef TOOLS_ENABLED
 	if (stack && is_setup) {
 		stack->set_editor_gizmos_dirty(true);
 	}
-#endif // TOOLS_ENABLED
 }
 
 bool SkeletonModification2DLookAt::get_constraint_angle_invert() const {
@@ -359,11 +340,9 @@ bool SkeletonModification2DLookAt::get_constraint_angle_invert() const {
 
 void SkeletonModification2DLookAt::set_constraint_in_localspace(bool p_constraint_in_localspace) {
 	constraint_in_localspace = p_constraint_in_localspace;
-#ifdef TOOLS_ENABLED
 	if (stack && is_setup) {
 		stack->set_editor_gizmos_dirty(true);
 	}
-#endif // TOOLS_ENABLED
 }
 
 bool SkeletonModification2DLookAt::get_constraint_in_localspace() const {
@@ -371,6 +350,7 @@ bool SkeletonModification2DLookAt::get_constraint_in_localspace() const {
 }
 
 void SkeletonModification2DLookAt::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_bone2d_node", "bone2d_nodepath"), &SkeletonModification2DLookAt::set_bone2d_node);
 	ClassDB::bind_method(D_METHOD("get_bone2d_node"), &SkeletonModification2DLookAt::get_bone2d_node);
 	ClassDB::bind_method(D_METHOD("set_bone_index", "bone_idx"), &SkeletonModification2DLookAt::set_bone_index);
@@ -394,6 +374,7 @@ void SkeletonModification2DLookAt::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "bone_index"), "set_bone_index", "get_bone_index");
 	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "bone2d_node", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Bone2D"), "set_bone2d_node", "get_bone2d_node");
 	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "target_nodepath", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Node2D"), "set_target_node", "get_target_node");
+*/
 }
 
 SkeletonModification2DLookAt::SkeletonModification2DLookAt() {
@@ -412,3 +393,4 @@ SkeletonModification2DLookAt::SkeletonModification2DLookAt() {
 
 SkeletonModification2DLookAt::~SkeletonModification2DLookAt() {
 }
+#endif

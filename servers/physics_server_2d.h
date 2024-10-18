@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef PHYSICS_SERVER_2D_H
 #define PHYSICS_SERVER_2D_H
 
@@ -847,3 +848,4 @@ VARIANT_ENUM_CAST(PhysicsServer2D::AreaBodyStatus);
 VARIANT_ENUM_CAST(PhysicsServer2D::ProcessInfo);
 
 #endif // PHYSICS_SERVER_2D_H
+#endif //2D

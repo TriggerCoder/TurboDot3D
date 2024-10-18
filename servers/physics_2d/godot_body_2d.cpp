@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "godot_body_2d.h"
 
 #include "godot_area_2d.h"
@@ -760,3 +761,4 @@ GodotBody2D::~GodotBody2D() {
 		memdelete(direct_state);
 	}
 }
+#endif

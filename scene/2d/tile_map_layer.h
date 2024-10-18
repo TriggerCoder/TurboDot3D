@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef TILE_MAP_LAYER_H
 #define TILE_MAP_LAYER_H
 
@@ -220,7 +221,7 @@ public:
 };
 
 class TileMapLayer : public Node2D {
-	GDCLASS(TileMapLayer, Node2D);
+//	GDCLASS(TileMapLayer, Node2D);
 
 public:
 	enum HighlightMode {
@@ -393,9 +394,8 @@ protected:
 	virtual void _update_self_texture_repeat(RS::CanvasItemTextureRepeat p_texture_repeat) override;
 
 public:
-#ifdef TOOLS_ENABLED
+
 	virtual bool _edit_is_selected_on_click(const Point2 &p_point, double p_tolerance) const override;
-#endif
 
 	// TileMap node.
 	void set_as_tile_map_internal_node(int p_index);
@@ -507,3 +507,4 @@ public:
 VARIANT_ENUM_CAST(TileMapLayer::DebugVisibilityMode);
 
 #endif // TILE_MAP_LAYER_H
+#endif

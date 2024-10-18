@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "skeleton_modification_stack_2d.h"
 #include "scene/2d/skeleton_2d.h"
 
@@ -77,9 +78,7 @@ void SkeletonModificationStack2D::setup() {
 			modifications.get(i)->_setup_modification(this);
 		}
 
-#ifdef TOOLS_ENABLED
 		set_editor_gizmos_dirty(true);
-#endif // TOOLS_ENABLED
 
 	} else {
 		WARN_PRINT("Cannot setup SkeletonModificationStack2D: no Skeleton2D set!");
@@ -164,19 +163,13 @@ void SkeletonModificationStack2D::add_modification(Ref<SkeletonModification2D> p
 
 	p_mod->_setup_modification(this);
 	modifications.push_back(p_mod);
-
-#ifdef TOOLS_ENABLED
 	set_editor_gizmos_dirty(true);
-#endif // TOOLS_ENABLED
 }
 
 void SkeletonModificationStack2D::delete_modification(int p_mod_idx) {
 	ERR_FAIL_INDEX(p_mod_idx, modifications.size());
 	modifications.remove_at(p_mod_idx);
-
-#ifdef TOOLS_ENABLED
 	set_editor_gizmos_dirty(true);
-#endif // TOOLS_ENABLED
 }
 
 void SkeletonModificationStack2D::set_modification(int p_mod_idx, Ref<SkeletonModification2D> p_mod) {
@@ -188,20 +181,14 @@ void SkeletonModificationStack2D::set_modification(int p_mod_idx, Ref<SkeletonMo
 		modifications.write[p_mod_idx] = p_mod;
 		p_mod->_setup_modification(this);
 	}
-
-#ifdef TOOLS_ENABLED
 	set_editor_gizmos_dirty(true);
-#endif // TOOLS_ENABLED
 }
 
 void SkeletonModificationStack2D::set_modification_count(int p_count) {
 	ERR_FAIL_COND_MSG(p_count < 0, "Modification count cannot be less than zero.");
 	modifications.resize(p_count);
 	notify_property_list_changed();
-
-#ifdef TOOLS_ENABLED
 	set_editor_gizmos_dirty(true);
-#endif // TOOLS_ENABLED
 }
 
 int SkeletonModificationStack2D::get_modification_count() const {
@@ -239,6 +226,7 @@ float SkeletonModificationStack2D::get_strength() const {
 }
 
 void SkeletonModificationStack2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("setup"), &SkeletonModificationStack2D::setup);
 	ClassDB::bind_method(D_METHOD("execute", "delta", "execution_mode"), &SkeletonModificationStack2D::execute);
 
@@ -264,7 +252,9 @@ void SkeletonModificationStack2D::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "enabled"), "set_enabled", "get_enabled");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "strength", PROPERTY_HINT_RANGE, "0, 1, 0.001"), "set_strength", "get_strength");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "modification_count", PROPERTY_HINT_RANGE, "0, 100, 1", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_ARRAY, "Modifications,modifications/"), "set_modification_count", "get_modification_count");
+*/
 }
 
 SkeletonModificationStack2D::SkeletonModificationStack2D() {
 }
+#endif

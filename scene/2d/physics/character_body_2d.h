@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef CHARACTER_BODY_2D_H
 #define CHARACTER_BODY_2D_H
 
@@ -35,7 +36,7 @@
 #include "scene/2d/physics/physics_body_2d.h"
 
 class CharacterBody2D : public PhysicsBody2D {
-	GDCLASS(CharacterBody2D, PhysicsBody2D);
+//	GDCLASS(CharacterBody2D, PhysicsBody2D);
 
 public:
 	enum MotionMode {
@@ -170,3 +171,4 @@ VARIANT_ENUM_CAST(CharacterBody2D::MotionMode);
 VARIANT_ENUM_CAST(CharacterBody2D::PlatformOnLeave);
 
 #endif // CHARACTER_BODY_2D_H
+#endif //2D

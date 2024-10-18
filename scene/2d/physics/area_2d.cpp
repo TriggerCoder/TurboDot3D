@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "area_2d.h"
 
 #include "servers/audio_server.h"
@@ -578,6 +579,7 @@ void Area2D::_validate_property(PropertyInfo &p_property) const {
 }
 
 void Area2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_gravity_space_override_mode", "space_override_mode"), &Area2D::set_gravity_space_override_mode);
 	ClassDB::bind_method(D_METHOD("get_gravity_space_override_mode"), &Area2D::get_gravity_space_override_mode);
 
@@ -671,6 +673,7 @@ void Area2D::_bind_methods() {
 	BIND_ENUM_CONSTANT(SPACE_OVERRIDE_COMBINE_REPLACE);
 	BIND_ENUM_CONSTANT(SPACE_OVERRIDE_REPLACE);
 	BIND_ENUM_CONSTANT(SPACE_OVERRIDE_REPLACE_COMBINE);
+*/
 }
 
 Area2D::Area2D() :
@@ -684,3 +687,4 @@ Area2D::Area2D() :
 
 Area2D::~Area2D() {
 }
+#endif

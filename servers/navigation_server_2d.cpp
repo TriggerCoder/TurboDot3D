@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "navigation_server_2d.h"
 
 #include "servers/navigation_server_3d.h"
@@ -426,3 +427,4 @@ NavigationServer2D *NavigationServer2DManager::new_default_server() {
 
 	return create_callback();
 }
+#endif

@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "godot_space_2d.h"
 
 #include "godot_collision_solver_2d.h"
@@ -1238,3 +1239,4 @@ GodotSpace2D::~GodotSpace2D() {
 	memdelete(broadphase);
 	memdelete(direct_access);
 }
+#endif

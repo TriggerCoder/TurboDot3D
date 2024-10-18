@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef PATH_2D_H
 #define PATH_2D_H
 
@@ -37,7 +38,7 @@
 class Timer;
 
 class Path2D : public Node2D {
-	GDCLASS(Path2D, Node2D);
+//	GDCLASS(Path2D, Node2D);
 
 	Ref<Curve2D> curve;
 
@@ -48,11 +49,10 @@ protected:
 	static void _bind_methods();
 
 public:
-#ifdef TOOLS_ENABLED
+
 	virtual Rect2 _edit_get_rect() const override;
 	virtual bool _edit_use_rect() const override;
 	virtual bool _edit_is_selected_on_click(const Point2 &p_point, double p_tolerance) const override;
-#endif
 
 	void set_curve(const Ref<Curve2D> &p_curve);
 	Ref<Curve2D> get_curve() const;
@@ -61,7 +61,7 @@ public:
 };
 
 class PathFollow2D : public Node2D {
-	GDCLASS(PathFollow2D, Node2D);
+//	GDCLASS(PathFollow2D, Node2D);
 
 public:
 private:
@@ -112,3 +112,4 @@ public:
 };
 
 #endif // PATH_2D_H
+#endif //2D

@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef SKELETON_MODIFICATION_2D_CCDIK_H
 #define SKELETON_MODIFICATION_2D_CCDIK_H
 
@@ -39,7 +40,7 @@
 ///////////////////////////////////////
 
 class SkeletonModification2DCCDIK : public SkeletonModification2D {
-	GDCLASS(SkeletonModification2DCCDIK, SkeletonModification2D);
+//	GDCLASS(SkeletonModification2DCCDIK, SkeletonModification2D);
 
 private:
 	struct CCDIK_Joint_Data2D {
@@ -114,3 +115,4 @@ public:
 };
 
 #endif // SKELETON_MODIFICATION_2D_CCDIK_H
+#endif //2D

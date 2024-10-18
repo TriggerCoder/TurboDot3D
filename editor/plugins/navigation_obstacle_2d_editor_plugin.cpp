@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "navigation_obstacle_2d_editor_plugin.h"
 
 #include "editor/editor_node.h"
@@ -72,3 +73,4 @@ NavigationObstacle2DEditor::NavigationObstacle2DEditor() {}
 NavigationObstacle2DEditorPlugin::NavigationObstacle2DEditorPlugin() :
 		AbstractPolygon2DEditorPlugin(memnew(NavigationObstacle2DEditor), "NavigationObstacle2D") {
 }
+#endif

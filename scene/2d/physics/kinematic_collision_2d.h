@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef KINEMATIC_COLLISION_2D_H
 #define KINEMATIC_COLLISION_2D_H
 
@@ -38,7 +39,7 @@ class CharacterBody2D;
 class PhysicsBody2D;
 
 class KinematicCollision2D : public RefCounted {
-	GDCLASS(KinematicCollision2D, RefCounted);
+//	GDCLASS(KinematicCollision2D, RefCounted);
 
 	ObjectID owner_id;
 	friend class PhysicsBody2D;
@@ -65,3 +66,4 @@ public:
 };
 
 #endif // KINEMATIC_COLLISION_2D_H
+#endif //2D

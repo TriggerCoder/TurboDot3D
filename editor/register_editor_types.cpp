@@ -71,52 +71,57 @@
 #include "editor/plugins/bit_map_editor_plugin.h"
 #include "editor/plugins/bone_map_editor_plugin.h"
 #include "editor/plugins/camera_3d_editor_plugin.h"
+
+#ifdef TOOLS_ENABLED //2D
 #include "editor/plugins/cast_2d_editor_plugin.h"
 #include "editor/plugins/collision_polygon_2d_editor_plugin.h"
 #include "editor/plugins/collision_shape_2d_editor_plugin.h"
-#include "editor/plugins/control_editor_plugin.h"
 #include "editor/plugins/cpu_particles_2d_editor_plugin.h"
+#include "editor/plugins/gpu_particles_2d_editor_plugin.h"
+#include "editor/plugins/light_occluder_2d_editor_plugin.h"
+#include "editor/plugins/line_2d_editor_plugin.h"
+#include "editor/plugins/navigation_link_2d_editor_plugin.h"
+#include "editor/plugins/navigation_obstacle_2d_editor_plugin.h"
+#include "editor/plugins/navigation_polygon_editor_plugin.h"
+#include "editor/plugins/parallax_background_editor_plugin.h"
+#include "editor/plugins/path_2d_editor_plugin.h"
+#include "editor/plugins/polygon_2d_editor_plugin.h"
+#include "editor/plugins/skeleton_2d_editor_plugin.h"
+#include "editor/plugins/sprite_2d_editor_plugin.h"
+#include "editor/plugins/sprite_frames_editor_plugin.h"
+#include "editor/plugins/tiles/tiles_editor_plugin.h"
+#endif
+
+#include "editor/plugins/control_editor_plugin.h"
 #include "editor/plugins/cpu_particles_3d_editor_plugin.h"
 #include "editor/plugins/curve_editor_plugin.h"
 #include "editor/plugins/editor_debugger_plugin.h"
 #include "editor/plugins/editor_resource_tooltip_plugins.h"
 #include "editor/plugins/font_config_plugin.h"
-#include "editor/plugins/gpu_particles_2d_editor_plugin.h"
 #include "editor/plugins/gpu_particles_3d_editor_plugin.h"
 #include "editor/plugins/gpu_particles_collision_sdf_editor_plugin.h"
 #include "editor/plugins/gradient_editor_plugin.h"
 #include "editor/plugins/gradient_texture_2d_editor_plugin.h"
 #include "editor/plugins/input_event_editor_plugin.h"
-#include "editor/plugins/light_occluder_2d_editor_plugin.h"
 #include "editor/plugins/lightmap_gi_editor_plugin.h"
-#include "editor/plugins/line_2d_editor_plugin.h"
 #include "editor/plugins/material_editor_plugin.h"
 #include "editor/plugins/mesh_editor_plugin.h"
 #include "editor/plugins/mesh_instance_3d_editor_plugin.h"
 #include "editor/plugins/mesh_library_editor_plugin.h"
 #include "editor/plugins/multimesh_editor_plugin.h"
-#include "editor/plugins/navigation_link_2d_editor_plugin.h"
-#include "editor/plugins/navigation_obstacle_2d_editor_plugin.h"
 #include "editor/plugins/navigation_obstacle_3d_editor_plugin.h"
-#include "editor/plugins/navigation_polygon_editor_plugin.h"
 #include "editor/plugins/node_3d_editor_gizmos.h"
 #include "editor/plugins/occluder_instance_3d_editor_plugin.h"
 #include "editor/plugins/packed_scene_editor_plugin.h"
-#include "editor/plugins/parallax_background_editor_plugin.h"
-#include "editor/plugins/path_2d_editor_plugin.h"
 #include "editor/plugins/path_3d_editor_plugin.h"
 #include "editor/plugins/physical_bone_3d_editor_plugin.h"
-#include "editor/plugins/polygon_2d_editor_plugin.h"
 #include "editor/plugins/polygon_3d_editor_plugin.h"
 #include "editor/plugins/resource_preloader_editor_plugin.h"
 #include "editor/plugins/script_editor_plugin.h"
 #include "editor/plugins/shader_editor_plugin.h"
 #include "editor/plugins/shader_file_editor_plugin.h"
-#include "editor/plugins/skeleton_2d_editor_plugin.h"
 #include "editor/plugins/skeleton_3d_editor_plugin.h"
 #include "editor/plugins/skeleton_ik_3d_editor_plugin.h"
-#include "editor/plugins/sprite_2d_editor_plugin.h"
-#include "editor/plugins/sprite_frames_editor_plugin.h"
 #include "editor/plugins/style_box_editor_plugin.h"
 #include "editor/plugins/sub_viewport_preview_editor_plugin.h"
 #include "editor/plugins/texture_3d_editor_plugin.h"
@@ -124,7 +129,6 @@
 #include "editor/plugins/texture_layered_editor_plugin.h"
 #include "editor/plugins/texture_region_editor_plugin.h"
 #include "editor/plugins/theme_editor_plugin.h"
-#include "editor/plugins/tiles/tiles_editor_plugin.h"
 #include "editor/plugins/version_control_editor_plugin.h"
 #include "editor/plugins/visual_shader_editor_plugin.h"
 #include "editor/plugins/voxel_gi_editor_plugin.h"
@@ -234,7 +238,9 @@ void register_editor_types() {
 	EditorPlugins::add_by_type<ShaderFileEditorPlugin>();
 	EditorPlugins::add_by_type<Skeleton3DEditorPlugin>();
 	EditorPlugins::add_by_type<SkeletonIK3DEditorPlugin>();
+#ifdef TOOLS_ENABLED //2D
 	EditorPlugins::add_by_type<SpriteFramesEditorPlugin>();
+#endif
 	EditorPlugins::add_by_type<StyleBoxEditorPlugin>();
 	EditorPlugins::add_by_type<SubViewportPreviewEditorPlugin>();
 	EditorPlugins::add_by_type<Texture3DEditorPlugin>();
@@ -245,6 +251,7 @@ void register_editor_types() {
 	EditorPlugins::add_by_type<VoxelGIEditorPlugin>();
 
 	// 2D
+#ifdef TOOLS_ENABLED //2D
 	EditorPlugins::add_by_type<CollisionPolygon2DEditorPlugin>();
 	EditorPlugins::add_by_type<CollisionShape2DEditorPlugin>();
 	EditorPlugins::add_by_type<CPUParticles2DEditorPlugin>();
@@ -262,6 +269,7 @@ void register_editor_types() {
 	EditorPlugins::add_by_type<Sprite2DEditorPlugin>();
 	EditorPlugins::add_by_type<TileSetEditorPlugin>();
 	EditorPlugins::add_by_type<TileMapEditorPlugin>();
+#endif
 
 	// For correct doc generation.
 	GLOBAL_DEF("editor/run/main_run_args", "");

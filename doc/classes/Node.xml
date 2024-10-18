@@ -398,25 +398,6 @@
 				- Element [code]0[/code] is the [Node], or [code]null[/code] if not found;
 				- Element [code]1[/code] is the subname's last nested [Resource], or [code]null[/code] if not found;
 				- Element [code]2[/code] is the remaining [NodePath], referring to an existing, non-[Resource] property (see [method Object.get_indexed]).
-				[b]Example:[/b] Assume that the child's [member Sprite2D.texture] has been assigned a [AtlasTexture]:
-				[codeblocks]
-				[csharp]
-				var a = GetNodeAndResource(NodePath("Area2D/Sprite2D"));
-				GD.Print(a[0].Name); // Prints Sprite2D
-				GD.Print(a[1]);      // Prints &lt;null&gt;
-				GD.Print(a[2]);      // Prints ^"
-
-				var b = GetNodeAndResource(NodePath("Area2D/Sprite2D:texture:atlas"));
-				GD.Print(b[0].name);        // Prints Sprite2D
-				GD.Print(b[1].get_class()); // Prints AtlasTexture
-				GD.Print(b[2]);             // Prints ^"
-
-				var c = GetNodeAndResource(NodePath("Area2D/Sprite2D:texture:atlas:region"));
-				GD.Print(c[0].name);        // Prints Sprite2D
-				GD.Print(c[1].get_class()); // Prints AtlasTexture
-				GD.Print(c[2]);             // Prints ^":region"
-				[/csharp]
-				[/codeblocks]
 			</description>
 		</method>
 		<method name="get_node_or_null" qualifiers="const">

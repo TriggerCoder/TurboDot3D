@@ -28,13 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef PARALLAX_LAYER_H
 #define PARALLAX_LAYER_H
 
 #include "scene/2d/node_2d.h"
 
 class ParallaxLayer : public Node2D {
-	GDCLASS(ParallaxLayer, Node2D);
+//	GDCLASS(ParallaxLayer, Node2D);
 
 	Point2 orig_offset;
 	Point2 orig_scale;
@@ -64,3 +65,4 @@ public:
 };
 
 #endif // PARALLAX_LAYER_H
+#endif //2D

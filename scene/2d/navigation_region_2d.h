@@ -28,13 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef NAVIGATION_REGION_2D_H
 #define NAVIGATION_REGION_2D_H
 
 #include "scene/resources/2d/navigation_polygon.h"
 
 class NavigationRegion2D : public Node2D {
-	GDCLASS(NavigationRegion2D, Node2D);
+//	GDCLASS(NavigationRegion2D, Node2D);
 
 	bool enabled = true;
 	bool use_edge_connections = true;
@@ -70,10 +71,10 @@ protected:
 	static void _bind_methods();
 
 public:
-#ifdef TOOLS_ENABLED
+
 	virtual Rect2 _edit_get_rect() const override;
 	virtual bool _edit_is_selected_on_click(const Point2 &p_point, double p_tolerance) const override;
-#endif
+
 	RID get_rid() const;
 
 	void set_enabled(bool p_enabled);
@@ -118,3 +119,4 @@ private:
 };
 
 #endif // NAVIGATION_REGION_2D_H
+#endif //2D

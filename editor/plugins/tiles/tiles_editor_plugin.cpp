@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "tiles_editor_plugin.h"
 
 #include "tile_set_editor.h"
@@ -557,3 +558,4 @@ TileSetEditorPlugin::TileSetEditorPlugin() {
 TileSetEditorPlugin::~TileSetEditorPlugin() {
 	tile_set_plugin_singleton = nullptr;
 }
+#endif

@@ -80,11 +80,13 @@
 #include "text_server.h"
 
 // 2D physics and navigation.
+#ifdef TOOLS_ENABLED //2D
 #include "navigation_server_2d.h"
 #include "physics_2d/godot_physics_server_2d.h"
 #include "physics_server_2d.h"
 #include "physics_server_2d_wrap_mt.h"
 #include "servers/extensions/physics_server_2d_extension.h"
+#endif
 
 // 3D physics and navigation (3D navigation is needed for 2D).
 #include "navigation_server_3d.h"
@@ -115,6 +117,7 @@ static PhysicsServer3D *_createGodotPhysics3DCallback() {
 	return memnew(PhysicsServer3DWrapMT(physics_server_3d, using_threads));
 }
 
+#ifdef TOOLS_ENABLED //2D
 static PhysicsServer2D *_createGodotPhysics2DCallback() {
 #ifdef THREADS_ENABLED
 	bool using_threads = GLOBAL_GET("physics/2d/run_on_separate_thread");
@@ -126,6 +129,7 @@ static PhysicsServer2D *_createGodotPhysics2DCallback() {
 
 	return memnew(PhysicsServer2DWrapMT(physics_server_2d, using_threads));
 }
+#endif
 
 static bool has_server_feature_callback(const String &p_feature) {
 	if (RenderingServer::get_singleton()) {
@@ -262,6 +266,7 @@ void register_server_types() {
 	ServersDebugger::initialize();
 
 	// Physics 2D
+#ifdef TOOLS_ENABLED //2D
 	GDREGISTER_CLASS(PhysicsServer2DManager);
 	Engine::get_singleton()->add_singleton(Engine::Singleton("PhysicsServer2DManager", PhysicsServer2DManager::get_singleton(), "PhysicsServer2DManager"));
 
@@ -291,6 +296,7 @@ void register_server_types() {
 	GDREGISTER_ABSTRACT_CLASS(NavigationServer2D);
 	GDREGISTER_CLASS(NavigationPathQueryParameters2D);
 	GDREGISTER_CLASS(NavigationPathQueryResult2D);
+#endif
 
 	// Physics 3D
 	GDREGISTER_CLASS(PhysicsServer3DManager);
@@ -363,11 +369,14 @@ void register_server_singletons() {
 	Engine::get_singleton()->add_singleton(Engine::Singleton("CameraServer", CameraServer::get_singleton(), "CameraServer"));
 	Engine::get_singleton()->add_singleton(Engine::Singleton("DisplayServer", DisplayServer::get_singleton(), "DisplayServer"));
 	Engine::get_singleton()->add_singleton(Engine::Singleton("NativeMenu", NativeMenu::get_singleton(), "NativeMenu"));
+#ifdef TOOLS_ENABLED //2D
 	Engine::get_singleton()->add_singleton(Engine::Singleton("NavigationServer2D", NavigationServer2D::get_singleton(), "NavigationServer2D"));
+#endif
 	Engine::get_singleton()->add_singleton(Engine::Singleton("NavigationServer3D", NavigationServer3D::get_singleton(), "NavigationServer3D"));
 	Engine::get_singleton()->add_singleton(Engine::Singleton("RenderingServer", RenderingServer::get_singleton(), "RenderingServer"));
-
+#ifdef TOOLS_ENABLED //2D
 	Engine::get_singleton()->add_singleton(Engine::Singleton("PhysicsServer2D", PhysicsServer2D::get_singleton(), "PhysicsServer2D"));
+#endif
 	Engine::get_singleton()->add_singleton(Engine::Singleton("PhysicsServer3D", PhysicsServer3D::get_singleton(), "PhysicsServer3D"));
 	Engine::get_singleton()->add_singleton(Engine::Singleton("XRServer", XRServer::get_singleton(), "XRServer"));
 

@@ -27,7 +27,7 @@
 /* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE      */
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
-
+#ifdef TOOLS_ENABLED //2D
 #include "abstract_polygon_2d_editor.h"
 
 #include "canvas_item_editor_plugin.h"
@@ -776,3 +776,4 @@ AbstractPolygon2DEditorPlugin::AbstractPolygon2DEditorPlugin(AbstractPolygon2DEd
 
 AbstractPolygon2DEditorPlugin::~AbstractPolygon2DEditorPlugin() {
 }
+#endif

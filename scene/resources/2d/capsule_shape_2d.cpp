@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "capsule_shape_2d.h"
 
 #include "core/math/geometry_2d.h"
@@ -106,6 +107,7 @@ real_t CapsuleShape2D::get_enclosing_radius() const {
 }
 
 void CapsuleShape2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_radius", "radius"), &CapsuleShape2D::set_radius);
 	ClassDB::bind_method(D_METHOD("get_radius"), &CapsuleShape2D::get_radius);
 
@@ -116,9 +118,11 @@ void CapsuleShape2D::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "height", PROPERTY_HINT_RANGE, "0.01,1024,0.01,or_greater,suffix:px"), "set_height", "get_height");
 	ADD_LINKED_PROPERTY("radius", "height");
 	ADD_LINKED_PROPERTY("height", "radius");
+*/
 }
 
 CapsuleShape2D::CapsuleShape2D() :
 		Shape2D(PhysicsServer2D::get_singleton()->capsule_shape_create()) {
 	_update_shape();
 }
+#endif

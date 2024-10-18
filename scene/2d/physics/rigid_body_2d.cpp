@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "rigid_body_2d.h"
 
 void RigidBody2D::_body_enter_tree(ObjectID p_id) {
@@ -651,6 +652,7 @@ PackedStringArray RigidBody2D::get_configuration_warnings() const {
 }
 
 void RigidBody2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_mass", "mass"), &RigidBody2D::set_mass);
 	ClassDB::bind_method(D_METHOD("get_mass"), &RigidBody2D::get_mass);
 
@@ -786,6 +788,7 @@ void RigidBody2D::_bind_methods() {
 	BIND_ENUM_CONSTANT(CCD_MODE_DISABLED);
 	BIND_ENUM_CONSTANT(CCD_MODE_CAST_RAY);
 	BIND_ENUM_CONSTANT(CCD_MODE_CAST_SHAPE);
+*/
 }
 
 void RigidBody2D::_validate_property(PropertyInfo &p_property) const {
@@ -818,3 +821,4 @@ void RigidBody2D::_reload_physics_characteristics() {
 		PhysicsServer2D::get_singleton()->body_set_param(get_rid(), PhysicsServer2D::BODY_PARAM_FRICTION, physics_material_override->computed_friction());
 	}
 }
+#endif

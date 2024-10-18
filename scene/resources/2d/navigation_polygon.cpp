@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "navigation_polygon.h"
 
 #include "core/math/geometry_2d.h"
@@ -36,7 +37,6 @@
 
 #include "thirdparty/misc/polypartition.h"
 
-#ifdef TOOLS_ENABLED
 Rect2 NavigationPolygon::_edit_get_rect() const {
 	RWLockRead read_lock(rwlock);
 	if (rect_cache_dirty) {
@@ -79,7 +79,6 @@ bool NavigationPolygon::_edit_is_selected_on_click(const Point2 &p_point, double
 	}
 	return false;
 }
-#endif
 
 void NavigationPolygon::set_vertices(const Vector<Vector2> &p_vertices) {
 	RWLockWrite write_lock(rwlock);
@@ -374,6 +373,7 @@ Vector2 NavigationPolygon::get_baking_rect_offset() const {
 }
 
 void NavigationPolygon::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_vertices", "vertices"), &NavigationPolygon::set_vertices);
 	ClassDB::bind_method(D_METHOD("get_vertices"), &NavigationPolygon::get_vertices);
 
@@ -457,6 +457,7 @@ void NavigationPolygon::_bind_methods() {
 	BIND_ENUM_CONSTANT(SOURCE_GEOMETRY_GROUPS_WITH_CHILDREN);
 	BIND_ENUM_CONSTANT(SOURCE_GEOMETRY_GROUPS_EXPLICIT);
 	BIND_ENUM_CONSTANT(SOURCE_GEOMETRY_MAX);
+*/
 }
 
 void NavigationPolygon::_validate_property(PropertyInfo &p_property) const {
@@ -474,3 +475,4 @@ void NavigationPolygon::_validate_property(PropertyInfo &p_property) const {
 		}
 	}
 }
+#endif

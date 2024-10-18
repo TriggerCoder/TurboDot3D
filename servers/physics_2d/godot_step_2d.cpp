@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "godot_step_2d.h"
 
 #include "core/object/worker_thread_pool.h"
@@ -304,3 +305,4 @@ GodotStep2D::GodotStep2D() {
 
 GodotStep2D::~GodotStep2D() {
 }
+#endif

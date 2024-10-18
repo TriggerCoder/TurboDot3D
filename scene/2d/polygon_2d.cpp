@@ -28,12 +28,12 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "polygon_2d.h"
 
 #include "core/math/geometry_2d.h"
 #include "skeleton_2d.h"
 
-#ifdef TOOLS_ENABLED
 Dictionary Polygon2D::_edit_get_state() const {
 	Dictionary state = Node2D::_edit_get_state();
 	state["offset"] = offset;
@@ -88,7 +88,6 @@ bool Polygon2D::_edit_is_selected_on_click(const Point2 &p_point, double p_toler
 	}
 	return Geometry2D::is_point_in_polygon(p_point - get_offset(), polygon2d);
 }
-#endif
 
 void Polygon2D::_validate_property(PropertyInfo &p_property) const {
 	if (!invert && p_property.name == "invert_border") {
@@ -603,6 +602,7 @@ NodePath Polygon2D::get_skeleton() const {
 }
 
 void Polygon2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_polygon", "polygon"), &Polygon2D::set_polygon);
 	ClassDB::bind_method(D_METHOD("get_polygon"), &Polygon2D::get_polygon);
 
@@ -684,6 +684,7 @@ void Polygon2D::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "polygons"), "set_polygons", "get_polygons");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "bones", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NO_EDITOR), "_set_bones", "_get_bones");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "internal_vertex_count", PROPERTY_HINT_RANGE, "0,1000"), "set_internal_vertex_count", "get_internal_vertex_count");
+*/
 }
 
 Polygon2D::Polygon2D() {
@@ -696,3 +697,4 @@ Polygon2D::~Polygon2D() {
 	RS::get_singleton()->canvas_item_attach_skeleton(get_canvas_item(), RID());
 	RS::get_singleton()->free(mesh);
 }
+#endif

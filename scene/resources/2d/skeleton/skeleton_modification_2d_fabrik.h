@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef SKELETON_MODIFICATION_2D_FABRIK_H
 #define SKELETON_MODIFICATION_2D_FABRIK_H
 
@@ -39,7 +40,7 @@
 ///////////////////////////////////////
 
 class SkeletonModification2DFABRIK : public SkeletonModification2D {
-	GDCLASS(SkeletonModification2DFABRIK, SkeletonModification2D);
+//	GDCLASS(SkeletonModification2DFABRIK, SkeletonModification2D);
 
 private:
 	struct FABRIK_Joint_Data2D {
@@ -106,3 +107,4 @@ public:
 };
 
 #endif // SKELETON_MODIFICATION_2D_FABRIK_H
+#endif //2D

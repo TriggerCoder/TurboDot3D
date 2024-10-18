@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef SPRITE_2D_H
 #define SPRITE_2D_H
 
@@ -35,7 +36,7 @@
 #include "scene/resources/texture.h"
 
 class Sprite2D : public Node2D {
-	GDCLASS(Sprite2D, Node2D);
+//	GDCLASS(Sprite2D, Node2D);
 
 	Ref<Texture2D> texture;
 	Color specular_color;
@@ -67,7 +68,7 @@ protected:
 	void _validate_property(PropertyInfo &p_property) const;
 
 public:
-#ifdef TOOLS_ENABLED
+
 	virtual Dictionary _edit_get_state() const override;
 	virtual void _edit_set_state(const Dictionary &p_state) override;
 
@@ -78,7 +79,6 @@ public:
 
 	virtual Rect2 _edit_get_rect() const override;
 	virtual bool _edit_use_rect() const override;
-#endif
 
 	bool is_pixel_opaque(const Point2 &p_point) const;
 
@@ -126,3 +126,4 @@ public:
 };
 
 #endif // SPRITE_2D_H
+#endif //2D

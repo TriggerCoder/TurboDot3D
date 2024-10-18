@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef TILES_EDITOR_PLUGIN_H
 #define TILES_EDITOR_PLUGIN_H
 
@@ -167,3 +168,4 @@ public:
 };
 
 #endif // TILES_EDITOR_PLUGIN_H
+#endif //2D

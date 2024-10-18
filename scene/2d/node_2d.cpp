@@ -28,11 +28,11 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "node_2d.h"
 
 #include "scene/main/viewport.h"
 
-#ifdef TOOLS_ENABLED
 Dictionary Node2D::_edit_get_state() const {
 	Dictionary state;
 	state["position"] = get_position();
@@ -110,7 +110,6 @@ void Node2D::_edit_set_rect(const Rect2 &p_edit_rect) {
 
 	_update_transform();
 }
-#endif
 
 void Node2D::_set_xform_dirty(bool p_dirty) const {
 	if (is_group_processing()) {
@@ -445,6 +444,7 @@ void Node2D::_notification(int p_notification) {
 }
 
 void Node2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_position", "position"), &Node2D::set_position);
 	ClassDB::bind_method(D_METHOD("set_rotation", "radians"), &Node2D::set_rotation);
 	ClassDB::bind_method(D_METHOD("set_rotation_degrees", "degrees"), &Node2D::set_rotation_degrees);
@@ -500,4 +500,6 @@ void Node2D::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "global_scale", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NONE), "set_global_scale", "get_global_scale");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "global_skew", PROPERTY_HINT_NONE, "radians_as_degrees", PROPERTY_USAGE_NONE), "set_global_skew", "get_global_skew");
 	ADD_PROPERTY(PropertyInfo(Variant::TRANSFORM2D, "global_transform", PROPERTY_HINT_NONE, "suffix:px", PROPERTY_USAGE_NONE), "set_global_transform", "get_global_transform");
+*/
 }
+#endif

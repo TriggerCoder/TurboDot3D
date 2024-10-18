@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef TILE_PROXIES_MANAGER_DIALOG_H
 #define TILE_PROXIES_MANAGER_DIALOG_H
 
@@ -87,3 +88,4 @@ public:
 };
 
 #endif // TILE_PROXIES_MANAGER_DIALOG_H
+#endif //2D

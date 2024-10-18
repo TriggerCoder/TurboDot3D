@@ -234,6 +234,7 @@ void SpriteFrames::get_argument_options(const StringName &p_function, int p_idx,
 #endif
 
 void SpriteFrames::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("add_animation", "anim"), &SpriteFrames::add_animation);
 	ClassDB::bind_method(D_METHOD("has_animation", "anim"), &SpriteFrames::has_animation);
 	ClassDB::bind_method(D_METHOD("remove_animation", "anim"), &SpriteFrames::remove_animation);
@@ -264,6 +265,7 @@ void SpriteFrames::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_get_animations"), &SpriteFrames::_get_animations);
 
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "animations", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NO_EDITOR | PROPERTY_USAGE_INTERNAL), "_set_animations", "_get_animations");
+*/
 }
 
 SpriteFrames::SpriteFrames() {

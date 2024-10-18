@@ -28,13 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef CAPSULE_SHAPE_2D_H
 #define CAPSULE_SHAPE_2D_H
 
 #include "scene/resources/2d/shape_2d.h"
 
 class CapsuleShape2D : public Shape2D {
-	GDCLASS(CapsuleShape2D, Shape2D);
+//	GDCLASS(CapsuleShape2D, Shape2D);
 
 	real_t height = 30.0;
 	real_t radius = 10.0;
@@ -62,3 +63,4 @@ public:
 };
 
 #endif // CAPSULE_SHAPE_2D_H
+#endif //2D

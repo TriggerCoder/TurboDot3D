@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef SKELETON_MODIFICATION_2D_STACKHOLDER_H
 #define SKELETON_MODIFICATION_2D_STACKHOLDER_H
 
@@ -39,7 +40,7 @@
 ///////////////////////////////////////
 
 class SkeletonModification2DStackHolder : public SkeletonModification2D {
-	GDCLASS(SkeletonModification2DStackHolder, SkeletonModification2D);
+//	GDCLASS(SkeletonModification2DStackHolder, SkeletonModification2D);
 
 protected:
 	static void _bind_methods();
@@ -62,3 +63,4 @@ public:
 };
 
 #endif // SKELETON_MODIFICATION_2D_STACKHOLDER_H
+#endif //2D

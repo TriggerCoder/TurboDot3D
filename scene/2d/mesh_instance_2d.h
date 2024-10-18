@@ -28,13 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef MESH_INSTANCE_2D_H
 #define MESH_INSTANCE_2D_H
 
 #include "scene/2d/node_2d.h"
 
 class MeshInstance2D : public Node2D {
-	GDCLASS(MeshInstance2D, Node2D);
+//	GDCLASS(MeshInstance2D, Node2D);
 
 	Ref<Mesh> mesh;
 
@@ -45,10 +46,9 @@ protected:
 	static void _bind_methods();
 
 public:
-#ifdef TOOLS_ENABLED
+
 	virtual Rect2 _edit_get_rect() const override;
 	virtual bool _edit_use_rect() const override;
-#endif
 
 	void set_mesh(const Ref<Mesh> &p_mesh);
 	Ref<Mesh> get_mesh() const;
@@ -60,3 +60,4 @@ public:
 };
 
 #endif // MESH_INSTANCE_2D_H
+#endif //2D

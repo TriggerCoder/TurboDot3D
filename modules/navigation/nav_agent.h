@@ -36,7 +36,9 @@
 #include "core/object/class_db.h"
 #include "core/templates/local_vector.h"
 
+#ifdef TOOLS_ENABLED //2D
 #include <Agent2d.h>
+#endif
 #include <Agent3d.h>
 
 class NavMap;
@@ -58,7 +60,9 @@ class NavAgent : public NavRid {
 
 	NavMap *map = nullptr;
 
+#ifdef TOOLS_ENABLED //2D
 	RVO2D::Agent2D rvo_agent_2d;
+#endif
 	RVO3D::Agent3D rvo_agent_3d;
 	bool use_3d_avoidance = false;
 	bool avoidance_enabled = false;
@@ -88,7 +92,9 @@ public:
 
 	bool is_map_changed();
 
+#ifdef TOOLS_ENABLED //2D
 	RVO2D::Agent2D *get_rvo_agent_2d() { return &rvo_agent_2d; }
+#endif
 	RVO3D::Agent3D *get_rvo_agent_3d() { return &rvo_agent_3d; }
 
 	void set_avoidance_callback(Callable p_callback);

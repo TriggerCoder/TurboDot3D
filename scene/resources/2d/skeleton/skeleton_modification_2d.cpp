@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "skeleton_modification_2d.h"
 #include "scene/2d/skeleton_2d.h"
 
@@ -35,9 +36,7 @@
 #include "scene/2d/physics/collision_shape_2d.h"
 #include "scene/2d/physics/physical_bone_2d.h"
 
-#ifdef TOOLS_ENABLED
 #include "editor/editor_settings.h"
-#endif // TOOLS_ENABLED
 
 ///////////////////////////////////////
 // Modification2D
@@ -69,13 +68,11 @@ void SkeletonModification2D::_draw_editor_gizmo() {
 void SkeletonModification2D::set_enabled(bool p_enabled) {
 	enabled = p_enabled;
 
-#ifdef TOOLS_ENABLED
 	if (editor_draw_gizmo) {
 		if (stack) {
 			stack->set_editor_gizmos_dirty(true);
 		}
 	}
-#endif // TOOLS_ENABLED
 }
 
 bool SkeletonModification2D::get_enabled() {
@@ -125,11 +122,9 @@ void SkeletonModification2D::editor_draw_angle_constraints(Bone2D *p_operation_b
 	}
 
 	Color bone_ik_color = Color(1.0, 0.65, 0.0, 0.4);
-#ifdef TOOLS_ENABLED
 	if (Engine::get_singleton()->is_editor_hint()) {
 		bone_ik_color = EDITOR_GET("editors/2d/bone_ik_color");
 	}
-#endif // TOOLS_ENABLED
 
 	float arc_angle_min = p_min_bound;
 	float arc_angle_max = p_max_bound;
@@ -200,13 +195,11 @@ int SkeletonModification2D::get_execution_mode() const {
 
 void SkeletonModification2D::set_editor_draw_gizmo(bool p_draw_gizmo) {
 	editor_draw_gizmo = p_draw_gizmo;
-#ifdef TOOLS_ENABLED
 	if (is_setup) {
 		if (stack) {
 			stack->set_editor_gizmos_dirty(true);
 		}
 	}
-#endif // TOOLS_ENABLED
 }
 
 bool SkeletonModification2D::get_editor_draw_gizmo() const {
@@ -214,6 +207,7 @@ bool SkeletonModification2D::get_editor_draw_gizmo() const {
 }
 
 void SkeletonModification2D::_bind_methods() {
+/*
 	GDVIRTUAL_BIND(_execute, "delta");
 	GDVIRTUAL_BIND(_setup_modification, "modification_stack")
 	GDVIRTUAL_BIND(_draw_editor_gizmo)
@@ -231,6 +225,7 @@ void SkeletonModification2D::_bind_methods() {
 
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "enabled"), "set_enabled", "get_enabled");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "execution_mode", PROPERTY_HINT_ENUM, "process,physics_process"), "set_execution_mode", "get_execution_mode");
+*/
 }
 
 void SkeletonModification2D::reset_state() {
@@ -242,3 +237,4 @@ SkeletonModification2D::SkeletonModification2D() {
 	stack = nullptr;
 	is_setup = false;
 }
+#endif

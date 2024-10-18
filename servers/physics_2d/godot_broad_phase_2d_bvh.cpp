@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "godot_broad_phase_2d_bvh.h"
 #include "godot_collision_object_2d.h"
 
@@ -121,3 +122,4 @@ GodotBroadPhase2DBVH::GodotBroadPhase2DBVH() {
 	bvh.set_pair_callback(_pair_callback, this);
 	bvh.set_unpair_callback(_unpair_callback, this);
 }
+#endif

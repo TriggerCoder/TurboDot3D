@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "godot_body_direct_state_2d.h"
 
 #include "godot_body_2d.h"
@@ -227,3 +228,4 @@ PhysicsDirectSpaceState2D *GodotPhysicsDirectBodyState2D::get_space_state() {
 real_t GodotPhysicsDirectBodyState2D::get_step() const {
 	return body->get_space()->get_last_step();
 }
+#endif

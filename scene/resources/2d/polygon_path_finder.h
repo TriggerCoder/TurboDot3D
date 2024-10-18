@@ -28,13 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef POLYGON_PATH_FINDER_H
 #define POLYGON_PATH_FINDER_H
 
 #include "core/io/resource.h"
 
 class PolygonPathFinder : public Resource {
-	GDCLASS(PolygonPathFinder, Resource);
+//	GDCLASS(PolygonPathFinder, Resource);
 
 	struct Point {
 		Vector2 pos;
@@ -96,3 +97,4 @@ public:
 };
 
 #endif // POLYGON_PATH_FINDER_H
+#endif //2D

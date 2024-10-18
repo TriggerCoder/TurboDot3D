@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "animatable_body_2d.h"
 
 void AnimatableBody2D::set_sync_to_physics(bool p_enable) {
@@ -100,12 +101,15 @@ void AnimatableBody2D::_notification(int p_what) {
 }
 
 void AnimatableBody2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_sync_to_physics", "enable"), &AnimatableBody2D::set_sync_to_physics);
 	ClassDB::bind_method(D_METHOD("is_sync_to_physics_enabled"), &AnimatableBody2D::is_sync_to_physics_enabled);
 
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "sync_to_physics"), "set_sync_to_physics", "is_sync_to_physics_enabled");
+*/
 }
 
 AnimatableBody2D::AnimatableBody2D() :
 		StaticBody2D(PhysicsServer2D::BODY_MODE_KINEMATIC) {
 }
+#endif

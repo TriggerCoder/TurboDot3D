@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifdef CLIPPER2_ENABLED
 
 #include "nav_mesh_generator_2d.h"
@@ -1073,3 +1074,4 @@ void NavMeshGenerator2D::generator_bake_from_source_geometry_data(Ref<Navigation
 }
 
 #endif // CLIPPER2_ENABLED
+#endif //2D

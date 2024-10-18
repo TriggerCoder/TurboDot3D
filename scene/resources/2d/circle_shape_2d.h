@@ -28,13 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef CIRCLE_SHAPE_2D_H
 #define CIRCLE_SHAPE_2D_H
 
 #include "scene/resources/2d/shape_2d.h"
 
 class CircleShape2D : public Shape2D {
-	GDCLASS(CircleShape2D, Shape2D);
+//	GDCLASS(CircleShape2D, Shape2D);
 
 	real_t radius = 10.0;
 	void _update_shape();
@@ -56,3 +57,4 @@ public:
 };
 
 #endif // CIRCLE_SHAPE_2D_H
+#endif //2D

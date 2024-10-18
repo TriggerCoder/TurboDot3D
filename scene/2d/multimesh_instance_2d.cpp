@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "multimesh_instance_2d.h"
 
 void MultiMeshInstance2D::_notification(int p_what) {
@@ -41,6 +42,7 @@ void MultiMeshInstance2D::_notification(int p_what) {
 }
 
 void MultiMeshInstance2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_multimesh", "multimesh"), &MultiMeshInstance2D::set_multimesh);
 	ClassDB::bind_method(D_METHOD("get_multimesh"), &MultiMeshInstance2D::get_multimesh);
 
@@ -51,6 +53,7 @@ void MultiMeshInstance2D::_bind_methods() {
 
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "multimesh", PROPERTY_HINT_RESOURCE_TYPE, "MultiMesh"), "set_multimesh", "get_multimesh");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "texture", PROPERTY_HINT_RESOURCE_TYPE, "Texture2D"), "set_texture", "get_texture");
+*/
 }
 
 void MultiMeshInstance2D::set_multimesh(const Ref<MultiMesh> &p_multimesh) {
@@ -84,7 +87,6 @@ Ref<Texture2D> MultiMeshInstance2D::get_texture() const {
 	return texture;
 }
 
-#ifdef TOOLS_ENABLED
 Rect2 MultiMeshInstance2D::_edit_get_rect() const {
 	if (multimesh.is_valid()) {
 		AABB aabb = multimesh->get_aabb();
@@ -93,10 +95,10 @@ Rect2 MultiMeshInstance2D::_edit_get_rect() const {
 
 	return Node2D::_edit_get_rect();
 }
-#endif
 
 MultiMeshInstance2D::MultiMeshInstance2D() {
 }
 
 MultiMeshInstance2D::~MultiMeshInstance2D() {
 }
+#endif

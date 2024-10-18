@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "gpu_particles_2d.h"
 
 #include "scene/2d/cpu_particles_2d.h"
@@ -743,6 +744,7 @@ void GPUParticles2D::_notification(int p_what) {
 }
 
 void GPUParticles2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_emitting", "emitting"), &GPUParticles2D::set_emitting);
 	ClassDB::bind_method(D_METHOD("set_amount", "amount"), &GPUParticles2D::set_amount);
 	ClassDB::bind_method(D_METHOD("set_lifetime", "secs"), &GPUParticles2D::set_lifetime);
@@ -850,6 +852,7 @@ void GPUParticles2D::_bind_methods() {
 	BIND_ENUM_CONSTANT(EMIT_FLAG_VELOCITY);
 	BIND_ENUM_CONSTANT(EMIT_FLAG_COLOR);
 	BIND_ENUM_CONSTANT(EMIT_FLAG_CUSTOM);
+*/
 }
 
 GPUParticles2D::GPUParticles2D() {
@@ -885,3 +888,4 @@ GPUParticles2D::~GPUParticles2D() {
 	RS::get_singleton()->free(particles);
 	RS::get_singleton()->free(mesh);
 }
+#endif

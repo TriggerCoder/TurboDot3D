@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef RAY_CAST_2D_H
 #define RAY_CAST_2D_H
 
@@ -36,7 +37,7 @@
 class CollisionObject2D;
 
 class RayCast2D : public Node2D {
-	GDCLASS(RayCast2D, Node2D);
+//	GDCLASS(RayCast2D, Node2D);
 
 	bool enabled = true;
 	bool collided = false;
@@ -107,3 +108,4 @@ public:
 };
 
 #endif // RAY_CAST_2D_H
+#endif //2D

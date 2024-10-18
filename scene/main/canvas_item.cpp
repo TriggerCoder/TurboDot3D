@@ -30,7 +30,10 @@
 
 #include "canvas_item.h"
 
+#ifdef TOOLS_ENABLED //2D
 #include "scene/2d/canvas_group.h"
+#endif
+
 #include "scene/main/canvas_layer.h"
 #include "scene/main/window.h"
 #include "scene/resources/atlas_texture.h"
@@ -38,7 +41,10 @@
 #include "scene/resources/font.h"
 #include "scene/resources/multimesh.h"
 #include "scene/resources/style_box.h"
+
+#ifdef TOOLS_ENABLED //2D
 #include "scene/resources/world_2d.h"
+#endif
 
 #define ERR_DRAW_GUARD \
 	ERR_FAIL_COND_MSG(!drawing, "Drawing is only allowed inside this node's `_draw()`, functions connected to its `draw` signal, or when it receives NOTIFICATION_DRAW.")
@@ -241,9 +247,12 @@ void CanvasItem::_enter_canvas() {
 		RID canvas;
 		if (canvas_layer) {
 			canvas = canvas_layer->get_canvas();
-		} else {
+		}
+#ifdef TOOLS_ENABLED //2D
+		else {
 			canvas = get_viewport()->find_world_2d()->get_canvas();
 		}
+#endif
 
 		RenderingServer::get_singleton()->canvas_item_set_parent(canvas_item, canvas);
 		RenderingServer::get_singleton()->canvas_item_set_visibility_layer(canvas_item, visibility_layer);
@@ -995,9 +1004,12 @@ RID CanvasItem::get_canvas() const {
 
 	if (canvas_layer) {
 		return canvas_layer->get_canvas();
-	} else {
+	}
+#ifdef TOOLS_ENABLED //2D
+	else {
 		return get_viewport()->find_world_2d()->get_canvas();
 	}
+#endif
 }
 
 ObjectID CanvasItem::get_canvas_layer_instance_id() const {
@@ -1019,6 +1031,7 @@ CanvasItem *CanvasItem::get_top_level() const {
 	return ci;
 }
 
+#ifdef TOOLS_ENABLED //2D
 Ref<World2D> CanvasItem::get_world_2d() const {
 	ERR_READ_THREAD_GUARD_V(Ref<World2D>());
 	ERR_FAIL_COND_V(!is_inside_tree(), Ref<World2D>());
@@ -1031,6 +1044,7 @@ Ref<World2D> CanvasItem::get_world_2d() const {
 		return Ref<World2D>();
 	}
 }
+#endif
 
 RID CanvasItem::get_viewport_rid() const {
 	ERR_READ_THREAD_GUARD_V(RID());
@@ -1235,7 +1249,9 @@ void CanvasItem::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_global_mouse_position"), &CanvasItem::get_global_mouse_position);
 	ClassDB::bind_method(D_METHOD("get_canvas"), &CanvasItem::get_canvas);
 	ClassDB::bind_method(D_METHOD("get_canvas_layer_node"), &CanvasItem::get_canvas_layer_node);
-	ClassDB::bind_method(D_METHOD("get_world_2d"), &CanvasItem::get_world_2d);
+#ifdef TOOLS_ENABLED //2D
+//	ClassDB::bind_method(D_METHOD("get_world_2d"), &CanvasItem::get_world_2d);
+#endif
 	//ClassDB::bind_method(D_METHOD("get_viewport"),&CanvasItem::get_viewport);
 
 	ClassDB::bind_method(D_METHOD("set_material", "material"), &CanvasItem::set_material);
@@ -1535,10 +1551,12 @@ void CanvasItem::set_clip_children_mode(ClipChildrenMode p_clip_mode) {
 	}
 	clip_children_mode = p_clip_mode;
 
+#ifdef TOOLS_ENABLED //2D
 	if (Object::cast_to<CanvasGroup>(this) != nullptr) {
 		//avoid accidental bugs, make this not work on CanvasGroup
 		return;
 	}
+#endif
 
 	RS::get_singleton()->canvas_item_set_canvas_group_mode(get_canvas_item(), RS::CanvasGroupMode(clip_children_mode));
 }

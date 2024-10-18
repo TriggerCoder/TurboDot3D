@@ -28,15 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "skeleton_2d.h"
 
 #include "core/math/transform_interpolator.h"
 
-#ifdef TOOLS_ENABLED
 #include "editor/editor_data.h"
 #include "editor/editor_settings.h"
 #include "editor/plugins/canvas_item_editor_plugin.h"
-#endif //TOOLS_ENABLED
 
 bool Bone2D::_set(const StringName &p_path, const Variant &p_value) {
 	String path = p_path;
@@ -49,13 +48,9 @@ bool Bone2D::_set(const StringName &p_path, const Variant &p_value) {
 		set_bone_angle(Math::deg_to_rad(real_t(p_value)));
 	} else if (path.begins_with("default_length")) {
 		set_length(p_value);
-	}
-#ifdef TOOLS_ENABLED
-	else if (path.begins_with("editor_settings/show_bone_gizmo")) {
+	} else if (path.begins_with("editor_settings/show_bone_gizmo")) {
 		_editor_set_show_bone_gizmo(p_value);
-	}
-#endif // TOOLS_ENABLED
-	else {
+	} else {
 		return false;
 	}
 
@@ -73,13 +68,9 @@ bool Bone2D::_get(const StringName &p_path, Variant &r_ret) const {
 		r_ret = Math::rad_to_deg(get_bone_angle());
 	} else if (path.begins_with("default_length")) {
 		r_ret = get_length();
-	}
-#ifdef TOOLS_ENABLED
-	else if (path.begins_with("editor_settings/show_bone_gizmo")) {
+	} else if (path.begins_with("editor_settings/show_bone_gizmo")) {
 		r_ret = _editor_get_show_bone_gizmo();
-	}
-#endif // TOOLS_ENABLED
-	else {
+	} else {
 		return false;
 	}
 
@@ -92,10 +83,7 @@ void Bone2D::_get_property_list(List<PropertyInfo> *p_list) const {
 		p_list->push_back(PropertyInfo(Variant::FLOAT, PNAME("length"), PROPERTY_HINT_RANGE, "1, 1024, 1", PROPERTY_USAGE_DEFAULT));
 		p_list->push_back(PropertyInfo(Variant::FLOAT, PNAME("bone_angle"), PROPERTY_HINT_RANGE, "-360, 360, 0.01", PROPERTY_USAGE_DEFAULT));
 	}
-
-#ifdef TOOLS_ENABLED
 	p_list->push_back(PropertyInfo(Variant::BOOL, PNAME("editor_settings/show_bone_gizmo"), PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT));
-#endif // TOOLS_ENABLED
 }
 
 void Bone2D::_notification(int p_what) {
@@ -127,14 +115,12 @@ void Bone2D::_notification(int p_what) {
 			cache_transform = get_transform();
 			copy_transform_to_cache = true;
 
-#ifdef TOOLS_ENABLED
 			// Only draw the gizmo in the editor!
 			if (Engine::get_singleton()->is_editor_hint() == false) {
 				return;
 			}
 
 			queue_redraw();
-#endif // TOOLS_ENABLED
 		} break;
 
 		case NOTIFICATION_LOCAL_TRANSFORM_CHANGED: {
@@ -144,7 +130,6 @@ void Bone2D::_notification(int p_what) {
 			if (copy_transform_to_cache) {
 				cache_transform = get_transform();
 			}
-#ifdef TOOLS_ENABLED
 			// Only draw the gizmo in the editor!
 			if (Engine::get_singleton()->is_editor_hint() == false) {
 				return;
@@ -158,7 +143,6 @@ void Bone2D::_notification(int p_what) {
 					p_bone->queue_redraw();
 				}
 			}
-#endif // TOOLS_ENABLED
 		} break;
 
 		case NOTIFICATION_EXIT_TREE: {
@@ -182,7 +166,6 @@ void Bone2D::_notification(int p_what) {
 			}
 		} break;
 
-#ifdef TOOLS_ENABLED
 		case NOTIFICATION_EDITOR_PRE_SAVE:
 		case NOTIFICATION_EDITOR_POST_SAVE: {
 			Transform2D tmp_trans = get_transform();
@@ -309,11 +292,9 @@ void Bone2D::_notification(int p_what) {
 				RenderingServer::get_singleton()->canvas_item_add_polygon(editor_gizmo_rid, bone_shape, colors);
 			}
 		} break;
-#endif // TOOLS_ENABLED
 	}
 }
 
-#ifdef TOOLS_ENABLED
 bool Bone2D::_editor_get_bone_shape(Vector<Vector2> *p_shape, Vector<Vector2> *p_outline_shape, Bone2D *p_other_bone) {
 	float bone_width = EDITOR_GET("editors/2d/bone_width");
 	float bone_outline_width = EDITOR_GET("editors/2d/bone_outline_size");
@@ -367,9 +348,9 @@ void Bone2D::_editor_set_show_bone_gizmo(bool p_show_gizmo) {
 bool Bone2D::_editor_get_show_bone_gizmo() const {
 	return _editor_show_bone_gizmo;
 }
-#endif // TOOLS_ENABLED
 
 void Bone2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_rest", "rest"), &Bone2D::set_rest);
 	ClassDB::bind_method(D_METHOD("get_rest"), &Bone2D::get_rest);
 	ClassDB::bind_method(D_METHOD("apply_rest"), &Bone2D::apply_rest);
@@ -384,6 +365,7 @@ void Bone2D::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_bone_angle"), &Bone2D::get_bone_angle);
 
 	ADD_PROPERTY(PropertyInfo(Variant::TRANSFORM2D, "rest", PROPERTY_HINT_NONE, "suffix:px"), "set_rest", "get_rest");
+*/
 }
 
 void Bone2D::set_rest(const Transform2D &p_rest) {
@@ -468,10 +450,7 @@ bool Bone2D::get_autocalculate_length_and_angle() const {
 
 void Bone2D::set_length(real_t p_length) {
 	length = p_length;
-
-#ifdef TOOLS_ENABLED
 	queue_redraw();
-#endif // TOOLS_ENABLED
 }
 
 real_t Bone2D::get_length() const {
@@ -480,10 +459,7 @@ real_t Bone2D::get_length() const {
 
 void Bone2D::set_bone_angle(real_t p_angle) {
 	bone_angle = p_angle;
-
-#ifdef TOOLS_ENABLED
 	queue_redraw();
-#endif // TOOLS_ENABLED
 }
 
 real_t Bone2D::get_bone_angle() const {
@@ -507,12 +483,10 @@ Bone2D::Bone2D() {
 }
 
 Bone2D::~Bone2D() {
-#ifdef TOOLS_ENABLED
 	if (!editor_gizmo_rid.is_null()) {
 		ERR_FAIL_NULL(RenderingServer::get_singleton());
 		RenderingServer::get_singleton()->free(editor_gizmo_rid);
 	}
-#endif // TOOLS_ENABLED
 }
 
 //////////////////////////////////////
@@ -726,7 +700,6 @@ void Skeleton2D::_notification(int p_what) {
 			_update_process_mode();
 		} break;
 
-#ifdef TOOLS_ENABLED
 		case NOTIFICATION_DRAW: {
 			if (Engine::get_singleton()->is_editor_hint()) {
 				if (modification_stack.is_valid()) {
@@ -734,7 +707,6 @@ void Skeleton2D::_notification(int p_what) {
 				}
 			}
 		} break;
-#endif // TOOLS_ENABLED
 	}
 }
 
@@ -763,10 +735,7 @@ void Skeleton2D::set_modification_stack(Ref<SkeletonModificationStack2D> p_stack
 	if (modification_stack.is_valid() && is_inside_tree()) {
 		modification_stack->set_skeleton(this);
 		modification_stack->setup();
-
-#ifdef TOOLS_ENABLED
 		modification_stack->set_editor_gizmos_dirty(true);
-#endif // TOOLS_ENABLED
 	}
 	_update_process_mode();
 }
@@ -818,12 +787,11 @@ void Skeleton2D::execute_modifications(real_t p_delta, int p_execution_mode) {
 		bones[i].bone->copy_transform_to_cache = true;
 	}
 
-#ifdef TOOLS_ENABLED
 	modification_stack->set_editor_gizmos_dirty(true);
-#endif // TOOLS_ENABLED
 }
 
 void Skeleton2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("get_bone_count"), &Skeleton2D::get_bone_count);
 	ClassDB::bind_method(D_METHOD("get_bone", "idx"), &Skeleton2D::get_bone);
 
@@ -837,6 +805,7 @@ void Skeleton2D::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_bone_local_pose_override", "bone_idx"), &Skeleton2D::get_bone_local_pose_override);
 
 	ADD_SIGNAL(MethodInfo("bone_setup_changed"));
+*/
 }
 
 Skeleton2D::Skeleton2D() {
@@ -849,3 +818,4 @@ Skeleton2D::~Skeleton2D() {
 	ERR_FAIL_NULL(RenderingServer::get_singleton());
 	RS::get_singleton()->free(skeleton);
 }
+#endif

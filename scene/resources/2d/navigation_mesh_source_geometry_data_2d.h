@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef NAVIGATION_MESH_SOURCE_GEOMETRY_DATA_2D_H
 #define NAVIGATION_MESH_SOURCE_GEOMETRY_DATA_2D_H
 
@@ -36,7 +37,7 @@
 #include "scene/resources/2d/navigation_polygon.h"
 
 class NavigationMeshSourceGeometryData2D : public Resource {
-	GDCLASS(NavigationMeshSourceGeometryData2D, Resource);
+//	GDCLASS(NavigationMeshSourceGeometryData2D, Resource);
 	RWLock geometry_rwlock;
 
 	Vector<Vector<Vector2>> traversable_outlines;
@@ -108,3 +109,4 @@ public:
 };
 
 #endif // NAVIGATION_MESH_SOURCE_GEOMETRY_DATA_2D_H
+#endif //2D

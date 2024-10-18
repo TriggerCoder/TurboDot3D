@@ -5,7 +5,7 @@
 	</brief_description>
 	<description>
 		Native image datatype. Contains image data which can be converted to an [ImageTexture] and provides commonly used [i]image processing[/i] methods. The maximum width and height for an [Image] are [constant MAX_WIDTH] and [constant MAX_HEIGHT].
-		An [Image] cannot be assigned to a texture property of an object directly (such as [member Sprite2D.texture]), and has to be converted manually to an [ImageTexture] first.
+		An [Image] cannot be assigned to a texture property of an object directly, and has to be converted manually to an [ImageTexture] first.
 		[b]Note:[/b] The maximum image size is 16384×16384 pixels due to graphics hardware limitations. Larger images may fail to import.
 	</description>
 	<tutorials>

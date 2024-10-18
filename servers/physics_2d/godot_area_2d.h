@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef GODOT_AREA_2D_H
 #define GODOT_AREA_2D_H
 
@@ -189,3 +190,4 @@ void GodotArea2D::remove_area_from_query(GodotArea2D *p_area, uint32_t p_area_sh
 }
 
 #endif // GODOT_AREA_2D_H
+#endif //2D

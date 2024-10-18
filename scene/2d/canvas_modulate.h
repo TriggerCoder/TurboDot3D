@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef CANVAS_MODULATE_H
 #define CANVAS_MODULATE_H
 
@@ -61,3 +62,4 @@ public:
 };
 
 #endif // CANVAS_MODULATE_H
+#endif //2D

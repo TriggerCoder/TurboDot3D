@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "kinematic_collision_2d.h"
 
 #include "scene/2d/physics/character_body_2d.h"
@@ -105,6 +106,7 @@ Vector2 KinematicCollision2D::get_collider_velocity() const {
 }
 
 void KinematicCollision2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("get_position"), &KinematicCollision2D::get_position);
 	ClassDB::bind_method(D_METHOD("get_normal"), &KinematicCollision2D::get_normal);
 	ClassDB::bind_method(D_METHOD("get_travel"), &KinematicCollision2D::get_travel);
@@ -118,4 +120,6 @@ void KinematicCollision2D::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_collider_shape"), &KinematicCollision2D::get_collider_shape);
 	ClassDB::bind_method(D_METHOD("get_collider_shape_index"), &KinematicCollision2D::get_collider_shape_index);
 	ClassDB::bind_method(D_METHOD("get_collider_velocity"), &KinematicCollision2D::get_collider_velocity);
+*/
 }
+#endif

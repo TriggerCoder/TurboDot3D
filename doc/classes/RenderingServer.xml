@@ -9,9 +9,7 @@
 		Resources are created using the [code]*_create[/code] functions. These functions return [RID]s which are not references to the objects themselves, but opaque [i]pointers[/i] towards these objects.
 		All objects are drawn to a viewport. You can use the [Viewport] attached to the [SceneTree] or you can create one yourself with [method viewport_create]. When using a custom scenario or canvas, the scenario or canvas needs to be attached to the viewport using [method viewport_set_scenario] or [method viewport_attach_canvas].
 		[b]Scenarios:[/b] In 3D, all visual objects must be associated with a scenario. The scenario is a visual representation of the world. If accessing the rendering server from a running game, the scenario can be accessed from the scene tree from any [Node3D] node with [method Node3D.get_world_3d]. Otherwise, a scenario can be created with [method scenario_create].
-		Similarly, in 2D, a canvas is needed to draw all canvas items.
 		[b]3D:[/b] In 3D, all visible objects are comprised of a resource and an instance. A resource can be a mesh, a particle system, a light, or any other 3D object. In order to be visible resources must be attached to an instance using [method instance_set_base]. The instance must also be attached to the scenario using [method instance_set_scenario] in order to be visible. RenderingServer methods that don't have a prefix are usually 3D-specific (but not always).
-		[b]2D:[/b] In 2D, all visible objects are some form of canvas item. In order to be visible, a canvas item needs to be the child of a canvas attached to a viewport, or it needs to be the child of another canvas item that is eventually attached to the canvas. 2D-specific RenderingServer methods generally start with [code]canvas_*[/code].
 		[b]Headless mode:[/b] Starting the engine with the [code]--headless[/code] [url=$DOCS_URL/tutorials/editor/command_line_tutorial.html]command line argument[/url] disables all rendering and window management functions. Most functions from [RenderingServer] will return dummy values in this case.
 	</description>
 	<tutorials>
@@ -258,7 +256,7 @@
 			<param index="3" name="modulate" type="Color" default="Color(1, 1, 1, 1)" />
 			<param index="4" name="texture" type="RID" default="RID()" />
 			<description>
-				Draws a mesh created with [method mesh_create] with given [param transform], [param modulate] color, and [param texture]. This is used internally by [MeshInstance2D].
+				Draws a mesh created with [method mesh_create] with given [param transform], [param modulate] color, and [param texture].
 			</description>
 		</method>
 		<method name="canvas_item_add_msdf_texture_rect_region">
@@ -408,7 +406,7 @@
 			<param index="7" name="texture" type="RID" default="RID()" />
 			<param index="8" name="count" type="int" default="-1" />
 			<description>
-				Draws a triangle array on the [CanvasItem] pointed to by the [param item] [RID]. This is internally used by [Line2D] and [StyleBoxFlat] for rendering. [method canvas_item_add_triangle_array] is highly flexible, but more complex to use than [method canvas_item_add_polygon].
+				Draws a triangle array on the [CanvasItem] pointed to by the [param item] [RID]. [method canvas_item_add_triangle_array] is highly flexible, but more complex to use than [method canvas_item_add_polygon].
 				[b]Note:[/b] [param count] is unused and can be left unspecified.
 			</description>
 		</method>
@@ -653,7 +651,6 @@
 			<description>
 				Creates a canvas light and adds it to the RenderingServer. It can be accessed with the RID that is returned. This RID will be used in all [code]canvas_light_*[/code] RenderingServer functions.
 				Once finished with your RID, you will want to free the RID using the RenderingServer's [method free_rid] method.
-				[b]Note:[/b] The equivalent node is [Light2D].
 			</description>
 		</method>
 		<method name="canvas_light_occluder_attach_to_canvas">
@@ -708,7 +705,7 @@
 			<param index="0" name="occluder" type="RID" />
 			<param index="1" name="mask" type="int" />
 			<description>
-				The light mask. See [LightOccluder2D] for more information on light masks.
+				The light mask.
 			</description>
 		</method>
 		<method name="canvas_light_occluder_set_polygon">
@@ -749,7 +746,7 @@
 			<param index="0" name="light" type="RID" />
 			<param index="1" name="mode" type="int" enum="RenderingServer.CanvasLightBlendMode" />
 			<description>
-				Sets the blend mode for the given canvas light. See [enum CanvasLightBlendMode] for options. Equivalent to [member Light2D.blend_mode].
+				Sets the blend mode for the given canvas light. See [enum CanvasLightBlendMode] for options.
 			</description>
 		</method>
 		<method name="canvas_light_set_color">
@@ -862,7 +859,7 @@
 			<param index="0" name="light" type="RID" />
 			<param index="1" name="texture" type="RID" />
 			<description>
-				Sets the texture to be used by a [PointLight2D]. Equivalent to [member PointLight2D.texture].
+				Sets the texture to be used by a PointLight.
 			</description>
 		</method>
 		<method name="canvas_light_set_texture_offset">
@@ -870,7 +867,7 @@
 			<param index="0" name="light" type="RID" />
 			<param index="1" name="offset" type="Vector2" />
 			<description>
-				Sets the offset of a [PointLight2D]'s texture. Equivalent to [member PointLight2D.offset].
+				Sets the offset of a PointLight's texture.
 			</description>
 		</method>
 		<method name="canvas_light_set_texture_scale">
@@ -878,7 +875,7 @@
 			<param index="0" name="light" type="RID" />
 			<param index="1" name="scale" type="float" />
 			<description>
-				Sets the scale factor of a [PointLight2D]'s texture. Equivalent to [member PointLight2D.texture_scale].
+				Sets the scale factor of a PointLight's texture.
 			</description>
 		</method>
 		<method name="canvas_light_set_transform">
@@ -895,7 +892,7 @@
 			<param index="1" name="min_z" type="int" />
 			<param index="2" name="max_z" type="int" />
 			<description>
-				Sets the Z range of objects that will be affected by this light. Equivalent to [member Light2D.range_z_min] and [member Light2D.range_z_max].
+				Sets the Z range of objects that will be affected by this light.
 			</description>
 		</method>
 		<method name="canvas_light_transform_physics_interpolation">
@@ -968,7 +965,7 @@
 			<return type="void" />
 			<param index="0" name="size" type="int" />
 			<description>
-				Sets the [member ProjectSettings.rendering/2d/shadow_atlas/size] to use for [Light2D] shadow rendering (in pixels). The value is rounded up to the nearest power of 2.
+				Sets the [member ProjectSettings.rendering/2d/shadow_atlas/size] to use for shadow rendering (in pixels). The value is rounded up to the nearest power of 2.
 			</description>
 		</method>
 		<method name="canvas_texture_create">
@@ -1582,12 +1579,6 @@
 			<return type="RID" />
 			<description>
 				Returns the RID of a 256×256 texture with a testing pattern on it (in [constant Image.FORMAT_RGB8] format). This texture will be created and returned on the first call to [method get_test_texture], then it will be cached for subsequent calls. See also [method get_white_texture].
-				Example of getting the test texture and applying it to a [Sprite2D] node:
-				[codeblock]
-				var texture_rid = RenderingServer.get_test_texture()
-				var texture = ImageTexture.create_from_image(RenderingServer.texture_2d_get(texture_rid))
-				$Sprite2D.texture = texture
-				[/codeblock]
 			</description>
 		</method>
 		<method name="get_video_adapter_api_version" qualifiers="const">
@@ -2586,11 +2577,6 @@
 				Set the entire data to use for drawing the [param multimesh] at once to [param buffer] (such as instance transforms and colors). [param buffer]'s size must match the number of instances multiplied by the per-instance data size (which depends on the enabled MultiMesh fields). Otherwise, an error message is printed and nothing is rendered. See also [method multimesh_get_buffer].
 				The per-instance data size and expected data order is:
 				[codeblock lang=text]
-				2D:
-				  - Position: 8 floats (8 floats for Transform2D)
-				  - Position + Vertex color: 12 floats (8 floats for Transform2D, 4 floats for Color)
-				  - Position + Custom data: 12 floats (8 floats for Transform2D, 4 floats of custom data)
-				  - Position + Vertex color + Custom data: 16 floats (8 floats for Transform2D, 4 floats for Color, 4 floats of custom data)
 				3D:
 				  - Position: 12 floats (12 floats for Transform3D)
 				  - Position + Vertex color: 16 floats (12 floats for Transform3D, 4 floats for Color)
@@ -2741,8 +2727,8 @@
 				Creates a GPU-based particle system and adds it to the RenderingServer. It can be accessed with the RID that is returned. This RID will be used in all [code]particles_*[/code] RenderingServer functions.
 				Once finished with your RID, you will want to free the RID using the RenderingServer's [method free_rid] method.
 				To place in a scene, attach these particles to an instance using [method instance_set_base] using the returned RID.
-				[b]Note:[/b] The equivalent nodes are [GPUParticles2D] and [GPUParticles3D].
-				[b]Note:[/b] All [code]particles_*[/code] methods only apply to GPU-based particles, not CPU-based particles. [CPUParticles2D] and [CPUParticles3D] do not have equivalent RenderingServer functions available, as these use [MultiMeshInstance2D] and [MultiMeshInstance3D] under the hood (see [code]multimesh_*[/code] methods).
+				[b]Note:[/b] The equivalent nodes are [GPUParticles3D].
+				[b]Note:[/b] All [code]particles_*[/code] methods only apply to GPU-based particles, not CPU-based particles. [CPUParticles3D] do not have equivalent RenderingServer functions available, as these use [MultiMeshInstance3D] under the hood (see [code]multimesh_*[/code] methods).
 			</description>
 		</method>
 		<method name="particles_emit">
@@ -2924,7 +2910,7 @@
 			<param index="0" name="particles" type="RID" />
 			<param index="1" name="mode" type="int" enum="RenderingServer.ParticlesMode" />
 			<description>
-				Sets whether the GPU particles specified by the [param particles] RID should be rendered in 2D or 3D according to [param mode].
+				Sets whether the GPU particles specified by the [param particles] RID should be rendered in 3D according to [param mode].
 			</description>
 		</method>
 		<method name="particles_set_one_shot">
@@ -3426,12 +3412,6 @@
 			<param index="0" name="texture" type="RID" />
 			<description>
 				Returns an [Image] instance from the given [param texture] [RID].
-				Example of getting the test texture from [method get_test_texture] and applying it to a [Sprite2D] node:
-				[codeblock]
-				var texture_rid = RenderingServer.get_test_texture()
-				var texture = ImageTexture.create_from_image(RenderingServer.texture_2d_get(texture_rid))
-				$Sprite2D.texture = texture
-				[/codeblock]
 			</description>
 		</method>
 		<method name="texture_2d_layer_get" qualifiers="const">
@@ -3929,7 +3909,7 @@
 			<param index="1" name="oversize" type="int" enum="RenderingServer.ViewportSDFOversize" />
 			<param index="2" name="scale" type="int" enum="RenderingServer.ViewportSDFScale" />
 			<description>
-				Sets the viewport's 2D signed distance field [member ProjectSettings.rendering/2d/sdf/oversize] and [member ProjectSettings.rendering/2d/sdf/scale]. This is used when sampling the signed distance field in [CanvasItem] shaders as well as [GPUParticles2D] collision. This is [i]not[/i] used by SDFGI in 3D rendering.
+				Sets the viewport's 2D signed distance field [member ProjectSettings.rendering/2d/sdf/oversize] and [member ProjectSettings.rendering/2d/sdf/scale]. This is used when sampling the signed distance field in [CanvasItem] shaders. This is [i]not[/i] used by SDFGI in 3D rendering.
 			</description>
 		</method>
 		<method name="viewport_set_size">
@@ -3946,7 +3926,7 @@
 			<param index="0" name="viewport" type="RID" />
 			<param index="1" name="enabled" type="bool" />
 			<description>
-				If [code]true[/code], canvas item transforms (i.e. origin position) are snapped to the nearest pixel when rendering. This can lead to a crisper appearance at the cost of less smooth movement, especially when [Camera2D] smoothing is enabled. Equivalent to [member ProjectSettings.rendering/2d/snap/snap_2d_transforms_to_pixel].
+				If [code]true[/code], canvas item transforms (i.e. origin position) are snapped to the nearest pixel when rendering. This can lead to a crisper appearance at the cost of less smooth movement.
 			</description>
 		</method>
 		<method name="viewport_set_snap_2d_vertices_to_pixel">
@@ -3954,7 +3934,7 @@
 			<param index="0" name="viewport" type="RID" />
 			<param index="1" name="enabled" type="bool" />
 			<description>
-				If [code]true[/code], canvas item vertices (i.e. polygon points) are snapped to the nearest pixel when rendering. This can lead to a crisper appearance at the cost of less smooth movement, especially when [Camera2D] smoothing is enabled. Equivalent to [member ProjectSettings.rendering/2d/snap/snap_2d_vertices_to_pixel].
+				If [code]true[/code], canvas item vertices (i.e. polygon points) are snapped to the nearest pixel when rendering. This can lead to a crisper appearance at the cost of less smooth movement.
 			</description>
 		</method>
 		<method name="viewport_set_texture_mipmap_bias">
@@ -4276,7 +4256,7 @@
 			Shader is a 2D shader.
 		</constant>
 		<constant name="SHADER_PARTICLES" value="2" enum="ShaderMode">
-			Shader is a particle shader (can be used in both 2D and 3D).
+			Shader is a particle shader.
 		</constant>
 		<constant name="SHADER_SKY" value="3" enum="ShaderMode">
 			Shader is a 3D sky shader.
@@ -5398,11 +5378,11 @@
 		</constant>
 		<constant name="CANVAS_ITEM_TEXTURE_FILTER_NEAREST_WITH_MIPMAPS" value="3" enum="CanvasItemTextureFilter">
 			The texture filter reads from the nearest pixel and blends between the nearest 2 mipmaps (or uses the nearest mipmap if [member ProjectSettings.rendering/textures/default_filters/use_nearest_mipmap_filter] is [code]true[/code]). This makes the texture look pixelated from up close, and smooth from a distance.
-			Use this for non-pixel art textures that may be viewed at a low scale (e.g. due to [Camera2D] zoom or sprite scaling), as mipmaps are important to smooth out pixels that are smaller than on-screen pixels.
+			Use this for non-pixel art textures that may be viewed at a low scale, as mipmaps are important to smooth out pixels that are smaller than on-screen pixels.
 		</constant>
 		<constant name="CANVAS_ITEM_TEXTURE_FILTER_LINEAR_WITH_MIPMAPS" value="4" enum="CanvasItemTextureFilter">
 			The texture filter blends between the nearest 4 pixels and between the nearest 2 mipmaps (or uses the nearest mipmap if [member ProjectSettings.rendering/textures/default_filters/use_nearest_mipmap_filter] is [code]true[/code]). This makes the texture look smooth from up close, and smooth from a distance.
-			Use this for non-pixel art textures that may be viewed at a low scale (e.g. due to [Camera2D] zoom or sprite scaling), as mipmaps are important to smooth out pixels that are smaller than on-screen pixels.
+			Use this for non-pixel art textures that may be viewed at a low scale, as mipmaps are important to smooth out pixels that are smaller than on-screen pixels.
 		</constant>
 		<constant name="CANVAS_ITEM_TEXTURE_FILTER_NEAREST_WITH_MIPMAPS_ANISOTROPIC" value="5" enum="CanvasItemTextureFilter">
 			The texture filter reads from the nearest pixel and blends between 2 mipmaps (or uses the nearest mipmap if [member ProjectSettings.rendering/textures/default_filters/use_nearest_mipmap_filter] is [code]true[/code]) based on the angle between the surface and the camera view. This makes the texture look pixelated from up close, and smooth from a distance. Anisotropic filtering improves texture quality on surfaces that are almost in line with the camera, but is slightly slower. The anisotropic filtering level can be changed by adjusting [member ProjectSettings.rendering/textures/default_filters/anisotropic_filtering_level].
@@ -5442,10 +5422,10 @@
 		<constant name="CANVAS_GROUP_MODE_TRANSPARENT" value="3" enum="CanvasGroupMode">
 		</constant>
 		<constant name="CANVAS_LIGHT_MODE_POINT" value="0" enum="CanvasLightMode">
-			2D point light (see [PointLight2D]).
+			2D point light.
 		</constant>
 		<constant name="CANVAS_LIGHT_MODE_DIRECTIONAL" value="1" enum="CanvasLightMode">
-			2D directional (sun/moon) light (see [DirectionalLight2D]).
+			2D directional (sun/moon) light.
 		</constant>
 		<constant name="CANVAS_LIGHT_BLEND_MODE_ADD" value="0" enum="CanvasLightBlendMode">
 			Adds light color additive to the canvas.

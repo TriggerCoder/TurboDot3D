@@ -28,13 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef NAVIGATION_OBSTACLE_2D_H
 #define NAVIGATION_OBSTACLE_2D_H
 
 #include "scene/2d/node_2d.h"
 
 class NavigationObstacle2D : public Node2D {
-	GDCLASS(NavigationObstacle2D, Node2D);
+//	GDCLASS(NavigationObstacle2D, Node2D);
 
 	RID obstacle;
 	RID map_before_pause;
@@ -112,3 +113,4 @@ private:
 };
 
 #endif // NAVIGATION_OBSTACLE_2D_H
+#endif //2D

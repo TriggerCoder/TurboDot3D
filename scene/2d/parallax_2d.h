@@ -28,13 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef PARALLAX_2D_H
 #define PARALLAX_2D_H
 
 #include "scene/2d/node_2d.h"
 
 class Parallax2D : public Node2D {
-	GDCLASS(Parallax2D, Node2D);
+//	GDCLASS(Parallax2D, Node2D);
 
 	static constexpr real_t DEFAULT_LIMIT = 10000000;
 
@@ -56,9 +57,8 @@ class Parallax2D : public Node2D {
 	void _update_scroll();
 
 protected:
-#ifdef TOOLS_ENABLED
+
 	void _edit_set_position(const Point2 &p_position) override;
-#endif // TOOLS_ENABLED
 	void _validate_property(PropertyInfo &p_property) const;
 	void _camera_moved(const Transform2D &p_transform, const Point2 &p_screen_offset, const Point2 &p_adj_screen_offset);
 	void _notification(int p_what);
@@ -99,3 +99,4 @@ public:
 };
 
 #endif // PARALLAX_2D_H
+#endif //2D

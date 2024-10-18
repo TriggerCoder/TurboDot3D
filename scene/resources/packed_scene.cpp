@@ -35,7 +35,11 @@
 #include "core/io/missing_resource.h"
 #include "core/io/resource_loader.h"
 #include "core/templates/local_vector.h"
+
+#ifdef TOOLS_ENABLED //2D
 #include "scene/2d/node_2d.h"
+#endif
+
 #include "scene/3d/node_3d.h"
 #include "scene/gui/control.h"
 #include "scene/main/instance_placeholder.h"
@@ -276,9 +280,13 @@ Node *SceneState::instantiate(GenEditState p_edit_state) const {
 					if (n.parent >= 0 && n.parent < nc && ret_nodes[n.parent]) {
 						if (Object::cast_to<Control>(ret_nodes[n.parent])) {
 							obj = memnew(Control);
-						} else if (Object::cast_to<Node2D>(ret_nodes[n.parent])) {
+						}
+#ifdef TOOLS_ENABLED //2D
+						else if (Object::cast_to<Node2D>(ret_nodes[n.parent])) {
 							obj = memnew(Node2D);
-						} else if (Object::cast_to<Node3D>(ret_nodes[n.parent])) {
+						}
+#endif
+						else if (Object::cast_to<Node3D>(ret_nodes[n.parent])) {
 							obj = memnew(Node3D);
 						}
 					}

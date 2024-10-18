@@ -28,12 +28,11 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "skeleton_modification_2d_ccdik.h"
 #include "scene/2d/skeleton_2d.h"
 
-#ifdef TOOLS_ENABLED
 #include "editor/editor_settings.h"
-#endif // TOOLS_ENABLED
 
 bool SkeletonModification2DCCDIK::_set(const StringName &p_path, const Variant &p_value) {
 	String path = p_path;
@@ -59,22 +58,14 @@ bool SkeletonModification2DCCDIK::_set(const StringName &p_path, const Variant &
 			set_ccdik_joint_constraint_angle_invert(which, p_value);
 		} else if (what == "constraint_in_localspace") {
 			set_ccdik_joint_constraint_in_localspace(which, p_value);
-		}
-#ifdef TOOLS_ENABLED
-		else if (what.begins_with("editor_draw_gizmo")) {
+		} else if (what.begins_with("editor_draw_gizmo")) {
 			set_ccdik_joint_editor_draw_gizmo(which, p_value);
-		}
-#endif // TOOLS_ENABLED
-		else {
+		} else {
 			return false;
 		}
-	}
-#ifdef TOOLS_ENABLED
-	else if (path.begins_with("editor/draw_gizmo")) {
+	} else if (path.begins_with("editor/draw_gizmo")) {
 		set_editor_draw_gizmo(p_value);
-	}
-#endif // TOOLS_ENABLED
-	else {
+	} else {
 		return false;
 	}
 
@@ -105,22 +96,14 @@ bool SkeletonModification2DCCDIK::_get(const StringName &p_path, Variant &r_ret)
 			r_ret = get_ccdik_joint_constraint_angle_invert(which);
 		} else if (what == "constraint_in_localspace") {
 			r_ret = get_ccdik_joint_constraint_in_localspace(which);
-		}
-#ifdef TOOLS_ENABLED
-		else if (what.begins_with("editor_draw_gizmo")) {
+		} else if (what.begins_with("editor_draw_gizmo")) {
 			r_ret = get_ccdik_joint_editor_draw_gizmo(which);
-		}
-#endif // TOOLS_ENABLED
-		else {
+		} else {
 			return false;
 		}
-	}
-#ifdef TOOLS_ENABLED
-	else if (path.begins_with("editor/draw_gizmo")) {
+	} else if (path.begins_with("editor/draw_gizmo")) {
 		r_ret = get_editor_draw_gizmo();
-	}
-#endif // TOOLS_ENABLED
-	else {
+	} else {
 		return false;
 	}
 
@@ -142,19 +125,13 @@ void SkeletonModification2DCCDIK::_get_property_list(List<PropertyInfo> *p_list)
 			p_list->push_back(PropertyInfo(Variant::BOOL, base_string + "constraint_angle_invert", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT));
 			p_list->push_back(PropertyInfo(Variant::BOOL, base_string + "constraint_in_localspace", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT));
 		}
-
-#ifdef TOOLS_ENABLED
 		if (Engine::get_singleton()->is_editor_hint()) {
 			p_list->push_back(PropertyInfo(Variant::BOOL, base_string + "editor_draw_gizmo", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT));
 		}
-#endif // TOOLS_ENABLED
 	}
-
-#ifdef TOOLS_ENABLED
 	if (Engine::get_singleton()->is_editor_hint()) {
 		p_list->push_back(PropertyInfo(Variant::BOOL, "editor/draw_gizmo", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT));
 	}
-#endif // TOOLS_ENABLED
 }
 
 void SkeletonModification2DCCDIK::_execute(float p_delta) {
@@ -421,12 +398,9 @@ void SkeletonModification2DCCDIK::set_ccdik_joint_enable_constraint(int p_joint_
 	ERR_FAIL_INDEX_MSG(p_joint_idx, ccdik_data_chain.size(), "CCDIK joint out of range!");
 	ccdik_data_chain.write[p_joint_idx].enable_constraint = p_constraint;
 	notify_property_list_changed();
-
-#ifdef TOOLS_ENABLED
 	if (stack && is_setup) {
 		stack->set_editor_gizmos_dirty(true);
 	}
-#endif // TOOLS_ENABLED
 }
 
 bool SkeletonModification2DCCDIK::get_ccdik_joint_enable_constraint(int p_joint_idx) const {
@@ -437,12 +411,9 @@ bool SkeletonModification2DCCDIK::get_ccdik_joint_enable_constraint(int p_joint_
 void SkeletonModification2DCCDIK::set_ccdik_joint_constraint_angle_min(int p_joint_idx, float p_angle_min) {
 	ERR_FAIL_INDEX_MSG(p_joint_idx, ccdik_data_chain.size(), "CCDIK joint out of range!");
 	ccdik_data_chain.write[p_joint_idx].constraint_angle_min = p_angle_min;
-
-#ifdef TOOLS_ENABLED
 	if (stack && is_setup) {
 		stack->set_editor_gizmos_dirty(true);
 	}
-#endif // TOOLS_ENABLED
 }
 
 float SkeletonModification2DCCDIK::get_ccdik_joint_constraint_angle_min(int p_joint_idx) const {
@@ -453,12 +424,9 @@ float SkeletonModification2DCCDIK::get_ccdik_joint_constraint_angle_min(int p_jo
 void SkeletonModification2DCCDIK::set_ccdik_joint_constraint_angle_max(int p_joint_idx, float p_angle_max) {
 	ERR_FAIL_INDEX_MSG(p_joint_idx, ccdik_data_chain.size(), "CCDIK joint out of range!");
 	ccdik_data_chain.write[p_joint_idx].constraint_angle_max = p_angle_max;
-
-#ifdef TOOLS_ENABLED
 	if (stack && is_setup) {
 		stack->set_editor_gizmos_dirty(true);
 	}
-#endif // TOOLS_ENABLED
 }
 
 float SkeletonModification2DCCDIK::get_ccdik_joint_constraint_angle_max(int p_joint_idx) const {
@@ -469,12 +437,9 @@ float SkeletonModification2DCCDIK::get_ccdik_joint_constraint_angle_max(int p_jo
 void SkeletonModification2DCCDIK::set_ccdik_joint_constraint_angle_invert(int p_joint_idx, bool p_invert) {
 	ERR_FAIL_INDEX_MSG(p_joint_idx, ccdik_data_chain.size(), "CCDIK joint out of range!");
 	ccdik_data_chain.write[p_joint_idx].constraint_angle_invert = p_invert;
-
-#ifdef TOOLS_ENABLED
 	if (stack && is_setup) {
 		stack->set_editor_gizmos_dirty(true);
 	}
-#endif // TOOLS_ENABLED
 }
 
 bool SkeletonModification2DCCDIK::get_ccdik_joint_constraint_angle_invert(int p_joint_idx) const {
@@ -485,12 +450,9 @@ bool SkeletonModification2DCCDIK::get_ccdik_joint_constraint_angle_invert(int p_
 void SkeletonModification2DCCDIK::set_ccdik_joint_constraint_in_localspace(int p_joint_idx, bool p_constraint_in_localspace) {
 	ERR_FAIL_INDEX_MSG(p_joint_idx, ccdik_data_chain.size(), "CCDIK joint out of range!");
 	ccdik_data_chain.write[p_joint_idx].constraint_in_localspace = p_constraint_in_localspace;
-
-#ifdef TOOLS_ENABLED
 	if (stack && is_setup) {
 		stack->set_editor_gizmos_dirty(true);
 	}
-#endif // TOOLS_ENABLED
 }
 
 bool SkeletonModification2DCCDIK::get_ccdik_joint_constraint_in_localspace(int p_joint_idx) const {
@@ -501,12 +463,9 @@ bool SkeletonModification2DCCDIK::get_ccdik_joint_constraint_in_localspace(int p
 void SkeletonModification2DCCDIK::set_ccdik_joint_editor_draw_gizmo(int p_joint_idx, bool p_draw_gizmo) {
 	ERR_FAIL_INDEX_MSG(p_joint_idx, ccdik_data_chain.size(), "CCDIK joint out of range!");
 	ccdik_data_chain.write[p_joint_idx].editor_draw_gizmo = p_draw_gizmo;
-
-#ifdef TOOLS_ENABLED
 	if (stack && is_setup) {
 		stack->set_editor_gizmos_dirty(true);
 	}
-#endif // TOOLS_ENABLED
 }
 
 bool SkeletonModification2DCCDIK::get_ccdik_joint_editor_draw_gizmo(int p_joint_idx) const {
@@ -515,6 +474,7 @@ bool SkeletonModification2DCCDIK::get_ccdik_joint_editor_draw_gizmo(int p_joint_
 }
 
 void SkeletonModification2DCCDIK::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_target_node", "target_nodepath"), &SkeletonModification2DCCDIK::set_target_node);
 	ClassDB::bind_method(D_METHOD("get_target_node"), &SkeletonModification2DCCDIK::get_target_node);
 	ClassDB::bind_method(D_METHOD("set_tip_node", "tip_nodepath"), &SkeletonModification2DCCDIK::set_tip_node);
@@ -541,6 +501,7 @@ void SkeletonModification2DCCDIK::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "target_nodepath", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Node2D"), "set_target_node", "get_target_node");
 	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "tip_nodepath", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Node2D"), "set_tip_node", "get_tip_node");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "ccdik_data_chain_length", PROPERTY_HINT_RANGE, "0, 100, 1"), "set_ccdik_data_chain_length", "get_ccdik_data_chain_length");
+*/
 }
 
 SkeletonModification2DCCDIK::SkeletonModification2DCCDIK() {
@@ -552,3 +513,4 @@ SkeletonModification2DCCDIK::SkeletonModification2DCCDIK() {
 
 SkeletonModification2DCCDIK::~SkeletonModification2DCCDIK() {
 }
+#endif

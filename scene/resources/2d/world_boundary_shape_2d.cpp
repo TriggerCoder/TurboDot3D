@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "world_boundary_shape_2d.h"
 
 #include "core/math/geometry_2d.h"
@@ -141,6 +142,7 @@ real_t WorldBoundaryShape2D::get_enclosing_radius() const {
 }
 
 void WorldBoundaryShape2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_normal", "normal"), &WorldBoundaryShape2D::set_normal);
 	ClassDB::bind_method(D_METHOD("get_normal"), &WorldBoundaryShape2D::get_normal);
 
@@ -149,9 +151,11 @@ void WorldBoundaryShape2D::_bind_methods() {
 
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "normal"), "set_normal", "get_normal");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "distance", PROPERTY_HINT_RANGE, "-1024,1024,0.01,or_greater,or_less,suffix:px"), "set_distance", "get_distance");
+*/
 }
 
 WorldBoundaryShape2D::WorldBoundaryShape2D() :
 		Shape2D(PhysicsServer2D::get_singleton()->world_boundary_shape_create()) {
 	_update_shape();
 }
+#endif

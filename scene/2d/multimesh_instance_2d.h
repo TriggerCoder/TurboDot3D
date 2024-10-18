@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef MULTIMESH_INSTANCE_2D_H
 #define MULTIMESH_INSTANCE_2D_H
 
@@ -35,7 +36,7 @@
 #include "scene/resources/multimesh.h"
 
 class MultiMeshInstance2D : public Node2D {
-	GDCLASS(MultiMeshInstance2D, Node2D);
+//	GDCLASS(MultiMeshInstance2D, Node2D);
 
 	Ref<MultiMesh> multimesh;
 
@@ -46,9 +47,8 @@ protected:
 	static void _bind_methods();
 
 public:
-#ifdef TOOLS_ENABLED
+
 	virtual Rect2 _edit_get_rect() const override;
-#endif
 
 	void set_multimesh(const Ref<MultiMesh> &p_multimesh);
 	Ref<MultiMesh> get_multimesh() const;
@@ -61,3 +61,4 @@ public:
 };
 
 #endif // MULTIMESH_INSTANCE_2D_H
+#endif //2D

@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "mesh_instance_2d.h"
 
 void MeshInstance2D::_notification(int p_what) {
@@ -41,6 +42,7 @@ void MeshInstance2D::_notification(int p_what) {
 }
 
 void MeshInstance2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_mesh", "mesh"), &MeshInstance2D::set_mesh);
 	ClassDB::bind_method(D_METHOD("get_mesh"), &MeshInstance2D::get_mesh);
 
@@ -51,6 +53,7 @@ void MeshInstance2D::_bind_methods() {
 
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "mesh", PROPERTY_HINT_RESOURCE_TYPE, "Mesh"), "set_mesh", "get_mesh");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "texture", PROPERTY_HINT_RESOURCE_TYPE, "Texture2D"), "set_texture", "get_texture");
+*/
 }
 
 void MeshInstance2D::set_mesh(const Ref<Mesh> &p_mesh) {
@@ -75,7 +78,6 @@ Ref<Texture2D> MeshInstance2D::get_texture() const {
 	return texture;
 }
 
-#ifdef TOOLS_ENABLED
 Rect2 MeshInstance2D::_edit_get_rect() const {
 	if (mesh.is_valid()) {
 		AABB aabb = mesh->get_aabb();
@@ -88,7 +90,7 @@ Rect2 MeshInstance2D::_edit_get_rect() const {
 bool MeshInstance2D::_edit_use_rect() const {
 	return mesh.is_valid();
 }
-#endif
 
 MeshInstance2D::MeshInstance2D() {
 }
+#endif

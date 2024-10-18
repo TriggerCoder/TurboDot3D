@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "groove_joint_2d.h"
 
 #include "scene/2d/physics/physics_body_2d.h"
@@ -79,6 +80,7 @@ real_t GrooveJoint2D::get_initial_offset() const {
 }
 
 void GrooveJoint2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_length", "length"), &GrooveJoint2D::set_length);
 	ClassDB::bind_method(D_METHOD("get_length"), &GrooveJoint2D::get_length);
 	ClassDB::bind_method(D_METHOD("set_initial_offset", "offset"), &GrooveJoint2D::set_initial_offset);
@@ -86,7 +88,9 @@ void GrooveJoint2D::_bind_methods() {
 
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "length", PROPERTY_HINT_RANGE, "1,65535,1,exp,suffix:px"), "set_length", "get_length");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "initial_offset", PROPERTY_HINT_RANGE, "1,65535,1,exp,suffix:px"), "set_initial_offset", "get_initial_offset");
+*/
 }
 
 GrooveJoint2D::GrooveJoint2D() {
 }
+#endif

@@ -28,13 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef BACK_BUFFER_COPY_H
 #define BACK_BUFFER_COPY_H
 
 #include "scene/2d/node_2d.h"
 
 class BackBufferCopy : public Node2D {
-	GDCLASS(BackBufferCopy, Node2D);
+//	GDCLASS(BackBufferCopy, Node2D);
 
 public:
 	enum CopyMode {
@@ -73,3 +74,4 @@ public:
 VARIANT_ENUM_CAST(BackBufferCopy::CopyMode);
 
 #endif // BACK_BUFFER_COPY_H
+#endif //2D

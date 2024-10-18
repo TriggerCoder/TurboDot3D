@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "godot_collision_object_2d.h"
 #include "godot_physics_server_2d.h"
 #include "godot_space_2d.h"
@@ -242,3 +243,4 @@ GodotCollisionObject2D::GodotCollisionObject2D(Type p_type) :
 		pending_shape_update_list(this) {
 	type = p_type;
 }
+#endif

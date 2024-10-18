@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "polygon_2d_editor_plugin.h"
 
 #include "core/input/input_event.h"
@@ -1577,3 +1578,4 @@ Polygon2DEditor::Polygon2DEditor() {
 Polygon2DEditorPlugin::Polygon2DEditorPlugin() :
 		AbstractPolygon2DEditorPlugin(memnew(Polygon2DEditor), "Polygon2D") {
 }
+#endif

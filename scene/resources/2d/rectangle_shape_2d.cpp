@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "rectangle_shape_2d.h"
 
 #include "servers/physics_server_2d.h"
@@ -74,10 +75,12 @@ real_t RectangleShape2D::get_enclosing_radius() const {
 }
 
 void RectangleShape2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_size", "size"), &RectangleShape2D::set_size);
 	ClassDB::bind_method(D_METHOD("get_size"), &RectangleShape2D::get_size);
 
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "size", PROPERTY_HINT_NONE, "suffix:px"), "set_size", "get_size");
+*/
 }
 
 RectangleShape2D::RectangleShape2D() :
@@ -85,3 +88,4 @@ RectangleShape2D::RectangleShape2D() :
 	size = Size2(20, 20);
 	_update_shape();
 }
+#endif

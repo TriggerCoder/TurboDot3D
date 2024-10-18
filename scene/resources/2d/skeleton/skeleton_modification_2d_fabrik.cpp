@@ -28,12 +28,11 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "skeleton_modification_2d_fabrik.h"
 #include "scene/2d/skeleton_2d.h"
 
-#ifdef TOOLS_ENABLED
 #include "editor/editor_settings.h"
-#endif // TOOLS_ENABLED
 
 bool SkeletonModification2DFABRIK::_set(const StringName &p_path, const Variant &p_value) {
 	String path = p_path;
@@ -431,6 +430,7 @@ bool SkeletonModification2DFABRIK::get_fabrik_joint_use_target_rotation(int p_jo
 }
 
 void SkeletonModification2DFABRIK::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_target_node", "target_nodepath"), &SkeletonModification2DFABRIK::set_target_node);
 	ClassDB::bind_method(D_METHOD("get_target_node"), &SkeletonModification2DFABRIK::get_target_node);
 
@@ -448,6 +448,7 @@ void SkeletonModification2DFABRIK::_bind_methods() {
 
 	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "target_nodepath", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Node2D"), "set_target_node", "get_target_node");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "fabrik_data_chain_length", PROPERTY_HINT_RANGE, "0, 100, 1"), "set_fabrik_data_chain_length", "get_fabrik_data_chain_length");
+*/
 }
 
 SkeletonModification2DFABRIK::SkeletonModification2DFABRIK() {
@@ -459,3 +460,4 @@ SkeletonModification2DFABRIK::SkeletonModification2DFABRIK() {
 
 SkeletonModification2DFABRIK::~SkeletonModification2DFABRIK() {
 }
+#endif

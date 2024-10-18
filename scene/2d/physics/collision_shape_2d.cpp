@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "collision_shape_2d.h"
 
 #include "scene/2d/physics/area_2d.h"
@@ -267,6 +268,7 @@ void CollisionShape2D::_validate_property(PropertyInfo &p_property) const {
 }
 
 void CollisionShape2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_shape", "shape"), &CollisionShape2D::set_shape);
 	ClassDB::bind_method(D_METHOD("get_shape"), &CollisionShape2D::get_shape);
 	ClassDB::bind_method(D_METHOD("set_disabled", "disabled"), &CollisionShape2D::set_disabled);
@@ -285,6 +287,7 @@ void CollisionShape2D::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::COLOR, "debug_color"), "set_debug_color", "get_debug_color");
 	// Default value depends on a project setting, override for doc generation purposes.
 	ADD_PROPERTY_DEFAULT("debug_color", Color());
+*/
 }
 
 CollisionShape2D::CollisionShape2D() {
@@ -292,3 +295,4 @@ CollisionShape2D::CollisionShape2D() {
 	set_hide_clip_children(true);
 	debug_color = _get_default_debug_color();
 }
+#endif

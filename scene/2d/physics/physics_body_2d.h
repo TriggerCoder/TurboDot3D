@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef PHYSICS_BODY_2D_H
 #define PHYSICS_BODY_2D_H
 
@@ -38,7 +39,7 @@
 #include "servers/physics_server_2d.h"
 
 class PhysicsBody2D : public CollisionObject2D {
-	GDCLASS(PhysicsBody2D, CollisionObject2D);
+//	GDCLASS(PhysicsBody2D, CollisionObject2D);
 
 protected:
 	static void _bind_methods();
@@ -59,3 +60,4 @@ public:
 };
 
 #endif // PHYSICS_BODY_2D_H
+#endif //2D

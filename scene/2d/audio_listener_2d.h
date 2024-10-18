@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef AUDIO_LISTENER_2D_H
 #define AUDIO_LISTENER_2D_H
 
@@ -35,7 +36,7 @@
 #include "scene/main/window.h"
 
 class AudioListener2D : public Node2D {
-	GDCLASS(AudioListener2D, Node2D);
+//	GDCLASS(AudioListener2D, Node2D);
 
 private:
 	bool current = false;
@@ -59,3 +60,4 @@ public:
 };
 
 #endif // AUDIO_LISTENER_2D_H
+#endif //2D

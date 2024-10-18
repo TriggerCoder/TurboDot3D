@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef NAVIGATION_SERVER_2D_H
 #define NAVIGATION_SERVER_2D_H
 
@@ -409,3 +410,4 @@ public:
 };
 
 #endif // NAVIGATION_SERVER_2D_H
+#endif //2D

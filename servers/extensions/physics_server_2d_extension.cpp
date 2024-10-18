@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "physics_server_2d_extension.h"
 
 bool PhysicsDirectSpaceState2DExtension::is_body_excluded_from_query(const RID &p_body) const {
@@ -349,3 +350,4 @@ PhysicsServer2DExtension::PhysicsServer2DExtension() {
 
 PhysicsServer2DExtension::~PhysicsServer2DExtension() {
 }
+#endif

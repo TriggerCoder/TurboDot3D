@@ -38,7 +38,9 @@
 #include "core/config/project_settings.h"
 #include "core/object/worker_thread_pool.h"
 
+#ifdef TOOLS_ENABLED //2D
 #include <Obstacle2d.h>
+#endif
 
 #define THREE_POINTS_CROSS_PRODUCT(m_a, m_b, m_c) (((m_c) - (m_a)).cross((m_b) - (m_a)))
 
@@ -807,13 +809,16 @@ void NavMap::set_agent_as_controlled(NavAgent *agent) {
 			active_3d_avoidance_agents.push_back(agent);
 			agents_dirty = true;
 		}
-	} else {
+	}
+#ifdef TOOLS_ENABLED //2D
+	else {
 		int64_t agent_2d_index = active_2d_avoidance_agents.find(agent);
 		if (agent_2d_index < 0) {
 			active_2d_avoidance_agents.push_back(agent);
 			agents_dirty = true;
 		}
 	}
+#endif
 }
 
 void NavMap::remove_agent_as_controlled(NavAgent *agent) {
@@ -822,11 +827,13 @@ void NavMap::remove_agent_as_controlled(NavAgent *agent) {
 		active_3d_avoidance_agents.remove_at_unordered(agent_3d_index);
 		agents_dirty = true;
 	}
+#ifdef TOOLS_ENABLED //2D
 	int64_t agent_2d_index = active_2d_avoidance_agents.find(agent);
 	if (agent_2d_index >= 0) {
 		active_2d_avoidance_agents.remove_at_unordered(agent_2d_index);
 		agents_dirty = true;
 	}
+#endif
 }
 
 Vector3 NavMap::get_random_point(uint32_t p_navigation_layers, bool p_uniformly) const {
@@ -1221,6 +1228,7 @@ void NavMap::sync() {
 	pm_edge_free_count = _new_pm_edge_free_count;
 }
 
+#ifdef TOOLS_ENABLED //2D
 void NavMap::_update_rvo_obstacles_tree_2d() {
 	int obstacle_vertex_count = 0;
 	for (NavObstacle *obstacle : obstacles) {
@@ -1254,11 +1262,9 @@ void NavMap::_update_rvo_obstacles_tree_2d() {
 		real_t _obstacle_height = obstacle->get_height();
 
 		for (const Vector3 &_obstacle_vertex : _obstacle_vertices) {
-#ifdef TOOLS_ENABLED
 			if (_obstacle_vertex.y != 0) {
 				WARN_PRINT_ONCE("Y coordinates of static obstacle vertices are ignored. Please use obstacle position Y to change elevation of obstacle.");
 			}
-#endif
 			rvo_2d_vertices.push_back(RVO2D::Vector2(_obstacle_vertex.x + _obstacle_position.x, _obstacle_vertex.z + _obstacle_position.z));
 		}
 
@@ -1308,6 +1314,7 @@ void NavMap::_update_rvo_agents_tree_2d() {
 	}
 	rvo_simulation_2d.kdTree_->buildAgentTree(raw_agents);
 }
+#endif
 
 void NavMap::_update_rvo_agents_tree_3d() {
 	// Cannot use LocalVector here as RVO library expects std::vector to build KdTree.
@@ -1320,21 +1327,27 @@ void NavMap::_update_rvo_agents_tree_3d() {
 }
 
 void NavMap::_update_rvo_simulation() {
+#ifdef TOOLS_ENABLED //2D
 	if (obstacles_dirty) {
 		_update_rvo_obstacles_tree_2d();
 	}
+#endif
 	if (agents_dirty) {
+#ifdef TOOLS_ENABLED //2D
 		_update_rvo_agents_tree_2d();
+#endif
 		_update_rvo_agents_tree_3d();
 	}
 }
 
+#ifdef TOOLS_ENABLED //2D
 void NavMap::compute_single_avoidance_step_2d(uint32_t index, NavAgent **agent) {
 	(*(agent + index))->get_rvo_agent_2d()->computeNeighbors(&rvo_simulation_2d);
 	(*(agent + index))->get_rvo_agent_2d()->computeNewVelocity(&rvo_simulation_2d);
 	(*(agent + index))->get_rvo_agent_2d()->update(&rvo_simulation_2d);
 	(*(agent + index))->update();
 }
+#endif
 
 void NavMap::compute_single_avoidance_step_3d(uint32_t index, NavAgent **agent) {
 	(*(agent + index))->get_rvo_agent_3d()->computeNeighbors(&rvo_simulation_3d);
@@ -1346,9 +1359,12 @@ void NavMap::compute_single_avoidance_step_3d(uint32_t index, NavAgent **agent) 
 void NavMap::step(real_t p_deltatime) {
 	deltatime = p_deltatime;
 
+#ifdef TOOLS_ENABLED //2D
 	rvo_simulation_2d.setTimeStep(float(deltatime));
+#endif
 	rvo_simulation_3d.setTimeStep(float(deltatime));
 
+#ifdef TOOLS_ENABLED //2D
 	if (active_2d_avoidance_agents.size() > 0) {
 		if (use_threads && avoidance_use_multiple_threads) {
 			WorkerThreadPool::GroupID group_task = WorkerThreadPool::get_singleton()->add_template_group_task(this, &NavMap::compute_single_avoidance_step_2d, active_2d_avoidance_agents.ptr(), active_2d_avoidance_agents.size(), -1, true, SNAME("RVOAvoidanceAgents2D"));
@@ -1362,6 +1378,7 @@ void NavMap::step(real_t p_deltatime) {
 			}
 		}
 	}
+#endif
 
 	if (active_3d_avoidance_agents.size() > 0) {
 		if (use_threads && avoidance_use_multiple_threads) {
@@ -1379,10 +1396,11 @@ void NavMap::step(real_t p_deltatime) {
 }
 
 void NavMap::dispatch_callbacks() {
+#ifdef TOOLS_ENABLED //2D
 	for (NavAgent *agent : active_2d_avoidance_agents) {
 		agent->dispatch_avoidance_callback();
 	}
-
+#endif
 	for (NavAgent *agent : active_3d_avoidance_agents) {
 		agent->dispatch_avoidance_callback();
 	}

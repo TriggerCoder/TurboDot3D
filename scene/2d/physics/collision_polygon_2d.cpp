@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "collision_polygon_2d.h"
 
 #include "core/math/geometry_2d.h"
@@ -295,6 +296,7 @@ real_t CollisionPolygon2D::get_one_way_collision_margin() const {
 }
 
 void CollisionPolygon2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_polygon", "polygon"), &CollisionPolygon2D::set_polygon);
 	ClassDB::bind_method(D_METHOD("get_polygon"), &CollisionPolygon2D::get_polygon);
 
@@ -315,9 +317,11 @@ void CollisionPolygon2D::_bind_methods() {
 
 	BIND_ENUM_CONSTANT(BUILD_SOLIDS);
 	BIND_ENUM_CONSTANT(BUILD_SEGMENTS);
+*/
 }
 
 CollisionPolygon2D::CollisionPolygon2D() {
 	set_notify_local_transform(true);
 	set_hide_clip_children(true);
 }
+#endif

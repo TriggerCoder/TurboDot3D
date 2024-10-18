@@ -28,13 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef RECTANGLE_SHAPE_2D_H
 #define RECTANGLE_SHAPE_2D_H
 
 #include "scene/resources/2d/shape_2d.h"
 
 class RectangleShape2D : public Shape2D {
-	GDCLASS(RectangleShape2D, Shape2D);
+//	GDCLASS(RectangleShape2D, Shape2D);
 
 	Size2 size;
 	void _update_shape();
@@ -54,3 +55,4 @@ public:
 };
 
 #endif // RECTANGLE_SHAPE_2D_H
+#endif //2D

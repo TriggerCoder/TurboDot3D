@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "line_builder.h"
 
 #include "core/math/geometry_2d.h"
@@ -591,3 +592,4 @@ void LineBuilder::new_arc(Vector2 center, Vector2 vbegin, float angle_delta, Col
 		indices.push_back(vi + 1);
 	}
 }
+#endif

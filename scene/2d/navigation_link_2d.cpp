@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "navigation_link_2d.h"
 
 #include "core/math/geometry_2d.h"
@@ -36,6 +37,7 @@
 #include "servers/navigation_server_3d.h"
 
 void NavigationLink2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("get_rid"), &NavigationLink2D::get_rid);
 
 	ClassDB::bind_method(D_METHOD("set_enabled", "enabled"), &NavigationLink2D::set_enabled);
@@ -75,6 +77,7 @@ void NavigationLink2D::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "end_position"), "set_end_position", "get_end_position");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "enter_cost"), "set_enter_cost", "get_enter_cost");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "travel_cost"), "set_travel_cost", "get_travel_cost");
+*/
 }
 
 void NavigationLink2D::_notification(int p_what) {
@@ -129,7 +132,6 @@ void NavigationLink2D::_notification(int p_what) {
 	}
 }
 
-#ifdef TOOLS_ENABLED
 Rect2 NavigationLink2D::_edit_get_rect() const {
 	if (!is_inside_tree()) {
 		return Rect2();
@@ -149,7 +151,6 @@ bool NavigationLink2D::_edit_is_selected_on_click(const Point2 &p_point, double 
 	Vector2 closest_point = Geometry2D::get_closest_point_to_segment(p_point, segment);
 	return p_point.distance_to(closest_point) < p_tolerance;
 }
-#endif // TOOLS_ENABLED
 
 RID NavigationLink2D::get_rid() const {
 	return link;
@@ -340,3 +341,4 @@ NavigationLink2D::~NavigationLink2D() {
 	NavigationServer2D::get_singleton()->free(link);
 	link = RID();
 }
+#endif

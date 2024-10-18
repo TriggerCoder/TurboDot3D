@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "tile_set_editor.h"
 
 #include "tile_data_editors.h"
@@ -1027,3 +1028,4 @@ bool TileSourceInspectorPlugin::parse_property(Object *p_object, const Variant::
 	}
 	return false;
 }
+#endif

@@ -28,16 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "path_2d.h"
 
 #include "core/math/geometry_2d.h"
 #include "scene/main/timer.h"
 
-#ifdef TOOLS_ENABLED
 #include "editor/themes/editor_scale.h"
-#endif
 
-#ifdef TOOLS_ENABLED
 Rect2 Path2D::_edit_get_rect() const {
 	if (!curve.is_valid() || curve->get_point_count() == 0) {
 		return Rect2(0, 0, 0, 0);
@@ -84,7 +82,6 @@ bool Path2D::_edit_is_selected_on_click(const Point2 &p_point, double p_toleranc
 
 	return false;
 }
-#endif
 
 void Path2D::_notification(int p_what) {
 	switch (p_what) {
@@ -102,11 +99,7 @@ void Path2D::_notification(int p_what) {
 				return;
 			}
 
-#ifdef TOOLS_ENABLED
 			const real_t line_width = get_tree()->get_debug_paths_width() * EDSCALE;
-#else
-			const real_t line_width = get_tree()->get_debug_paths_width();
-#endif
 			real_t interval = 10;
 			const real_t length = curve->get_baked_length();
 
@@ -199,10 +192,12 @@ Ref<Curve2D> Path2D::get_curve() const {
 }
 
 void Path2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_curve", "curve"), &Path2D::set_curve);
 	ClassDB::bind_method(D_METHOD("get_curve"), &Path2D::get_curve);
 
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "curve", PROPERTY_HINT_RESOURCE_TYPE, "Curve2D", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_EDITOR_INSTANTIATE_OBJECT), "set_curve", "get_curve");
+*/
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -300,6 +295,7 @@ PackedStringArray PathFollow2D::get_configuration_warnings() const {
 }
 
 void PathFollow2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_progress", "progress"), &PathFollow2D::set_progress);
 	ClassDB::bind_method(D_METHOD("get_progress"), &PathFollow2D::get_progress);
 
@@ -328,6 +324,7 @@ void PathFollow2D::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "rotates"), "set_rotates", "is_rotating");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "cubic_interp"), "set_cubic_interpolation", "get_cubic_interpolation");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "loop"), "set_loop", "has_loop");
+*/
 }
 
 void PathFollow2D::set_progress(real_t p_progress) {
@@ -407,3 +404,4 @@ void PathFollow2D::set_loop(bool p_loop) {
 bool PathFollow2D::has_loop() const {
 	return loop;
 }
+#endif

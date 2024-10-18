@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef SKELETON_MODIFICATION_STACK_2D_H
 #define SKELETON_MODIFICATION_STACK_2D_H
 
@@ -43,7 +44,7 @@ class SkeletonModification2D;
 class Bone2D;
 
 class SkeletonModificationStack2D : public Resource {
-	GDCLASS(SkeletonModificationStack2D, Resource);
+//	GDCLASS(SkeletonModificationStack2D, Resource);
 	friend class Skeleton2D;
 	friend class SkeletonModification2D;
 
@@ -97,3 +98,4 @@ public:
 };
 
 #endif // SKELETON_MODIFICATION_STACK_2D_H
+#endif //2D

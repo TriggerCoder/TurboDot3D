@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef SKELETON_MODIFICATION_2D_JIGGLE_H
 #define SKELETON_MODIFICATION_2D_JIGGLE_H
 
@@ -39,7 +40,7 @@
 ///////////////////////////////////////
 
 class SkeletonModification2DJiggle : public SkeletonModification2D {
-	GDCLASS(SkeletonModification2DJiggle, SkeletonModification2D);
+//	GDCLASS(SkeletonModification2DJiggle, SkeletonModification2D);
 
 private:
 	struct Jiggle_Joint_Data2D {
@@ -137,3 +138,4 @@ public:
 };
 
 #endif // SKELETON_MODIFICATION_2D_JIGGLE_H
+#endif //2D

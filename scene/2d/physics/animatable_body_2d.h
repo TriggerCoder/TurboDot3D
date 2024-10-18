@@ -28,13 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef ANIMATABLE_BODY_2D_H
 #define ANIMATABLE_BODY_2D_H
 
 #include "scene/2d/physics/static_body_2d.h"
 
 class AnimatableBody2D : public StaticBody2D {
-	GDCLASS(AnimatableBody2D, StaticBody2D);
+//	GDCLASS(AnimatableBody2D, StaticBody2D);
 
 private:
 	bool sync_to_physics = true;
@@ -59,3 +60,4 @@ private:
 };
 
 #endif // ANIMATABLE_BODY_2D_H
+#endif //2D

@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef COLLISION_OBJECT_2D_H
 #define COLLISION_OBJECT_2D_H
 
@@ -37,7 +38,7 @@
 #include "servers/physics_server_2d.h"
 
 class CollisionObject2D : public Node2D {
-	GDCLASS(CollisionObject2D, Node2D);
+//	GDCLASS(CollisionObject2D, Node2D);
 
 public:
 	enum DisableMode {
@@ -177,3 +178,4 @@ public:
 VARIANT_ENUM_CAST(CollisionObject2D::DisableMode);
 
 #endif // COLLISION_OBJECT_2D_H
+#endif //2D

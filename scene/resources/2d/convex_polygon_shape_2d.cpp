@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "convex_polygon_shape_2d.h"
 
 #include "core/math/geometry_2d.h"
@@ -94,11 +95,13 @@ Vector<Vector2> ConvexPolygonShape2D::get_points() const {
 }
 
 void ConvexPolygonShape2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_point_cloud", "point_cloud"), &ConvexPolygonShape2D::set_point_cloud);
 	ClassDB::bind_method(D_METHOD("set_points", "points"), &ConvexPolygonShape2D::set_points);
 	ClassDB::bind_method(D_METHOD("get_points"), &ConvexPolygonShape2D::get_points);
 
 	ADD_PROPERTY(PropertyInfo(Variant::PACKED_VECTOR2_ARRAY, "points"), "set_points", "get_points");
+*/
 }
 
 void ConvexPolygonShape2D::draw(const RID &p_to_rid, const Color &p_color) {
@@ -141,3 +144,4 @@ real_t ConvexPolygonShape2D::get_enclosing_radius() const {
 ConvexPolygonShape2D::ConvexPolygonShape2D() :
 		Shape2D(PhysicsServer2D::get_singleton()->convex_polygon_shape_create()) {
 }
+#endif

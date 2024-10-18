@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef COLLISION_POLYGON_2D_H
 #define COLLISION_POLYGON_2D_H
 
@@ -36,7 +37,7 @@
 class CollisionObject2D;
 
 class CollisionPolygon2D : public Node2D {
-	GDCLASS(CollisionPolygon2D, Node2D);
+//	GDCLASS(CollisionPolygon2D, Node2D);
 
 public:
 	enum BuildMode {
@@ -94,3 +95,4 @@ public:
 VARIANT_ENUM_CAST(CollisionPolygon2D::BuildMode);
 
 #endif // COLLISION_POLYGON_2D_H
+#endif //2D

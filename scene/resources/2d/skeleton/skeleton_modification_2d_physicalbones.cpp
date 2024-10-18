@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "skeleton_modification_2d_physicalbones.h"
 #include "scene/2d/physics/physical_bone_2d.h"
 #include "scene/2d/skeleton_2d.h"
@@ -35,8 +36,7 @@
 bool SkeletonModification2DPhysicalBones::_set(const StringName &p_path, const Variant &p_value) {
 	String path = p_path;
 
-#ifdef TOOLS_ENABLED
-	// Exposes a way to fetch the PhysicalBone2D nodes from the Godot editor.
+	// Exposes a way to fetch the PhysicalBone2D nodes from the editor.
 	if (is_setup) {
 		if (Engine::get_singleton()->is_editor_hint()) {
 			if (path.begins_with("fetch_bones")) {
@@ -46,7 +46,6 @@ bool SkeletonModification2DPhysicalBones::_set(const StringName &p_path, const V
 			}
 		}
 	}
-#endif //TOOLS_ENABLED
 
 	if (path.begins_with("joint_")) {
 		int which = path.get_slicec('_', 1).to_int();
@@ -64,13 +63,11 @@ bool SkeletonModification2DPhysicalBones::_set(const StringName &p_path, const V
 bool SkeletonModification2DPhysicalBones::_get(const StringName &p_path, Variant &r_ret) const {
 	String path = p_path;
 
-#ifdef TOOLS_ENABLED
 	if (Engine::get_singleton()->is_editor_hint()) {
 		if (path.begins_with("fetch_bones")) {
 			return true; // Do nothing!
 		}
 	}
-#endif //TOOLS_ENABLED
 
 	if (path.begins_with("joint_")) {
 		int which = path.get_slicec('_', 1).to_int();
@@ -86,11 +83,9 @@ bool SkeletonModification2DPhysicalBones::_get(const StringName &p_path, Variant
 }
 
 void SkeletonModification2DPhysicalBones::_get_property_list(List<PropertyInfo> *p_list) const {
-#ifdef TOOLS_ENABLED
 	if (Engine::get_singleton()->is_editor_hint()) {
 		p_list->push_back(PropertyInfo(Variant::BOOL, "fetch_bones", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT));
 	}
-#endif //TOOLS_ENABLED
 
 	for (int i = 0; i < physical_bone_chain.size(); i++) {
 		String base_string = "joint_" + itos(i) + "_";
@@ -272,6 +267,7 @@ NodePath SkeletonModification2DPhysicalBones::get_physical_bone_node(int p_joint
 }
 
 void SkeletonModification2DPhysicalBones::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_physical_bone_chain_length", "length"), &SkeletonModification2DPhysicalBones::set_physical_bone_chain_length);
 	ClassDB::bind_method(D_METHOD("get_physical_bone_chain_length"), &SkeletonModification2DPhysicalBones::get_physical_bone_chain_length);
 
@@ -283,6 +279,7 @@ void SkeletonModification2DPhysicalBones::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("stop_simulation", "bones"), &SkeletonModification2DPhysicalBones::stop_simulation, DEFVAL(Array()));
 
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "physical_bone_chain_length", PROPERTY_HINT_RANGE, "0,100,1"), "set_physical_bone_chain_length", "get_physical_bone_chain_length");
+*/
 }
 
 SkeletonModification2DPhysicalBones::SkeletonModification2DPhysicalBones() {
@@ -295,3 +292,4 @@ SkeletonModification2DPhysicalBones::SkeletonModification2DPhysicalBones() {
 
 SkeletonModification2DPhysicalBones::~SkeletonModification2DPhysicalBones() {
 }
+#endif

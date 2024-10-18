@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "tile_map_layer.h"
 
 #include "core/io/marshalls.h"
@@ -191,14 +192,12 @@ void TileMapLayer::_rendering_update(bool p_force_cleanup) {
 	if (!forced_cleanup) {
 		// Modulate the layer.
 		Color layer_modulate = get_modulate();
-#ifdef TOOLS_ENABLED
 		if (highlight_mode == HIGHLIGHT_MODE_BELOW) {
 			layer_modulate = layer_modulate.darkened(0.5);
 		} else if (highlight_mode == HIGHLIGHT_MODE_ABOVE) {
 			layer_modulate = layer_modulate.darkened(0.5);
 			layer_modulate.a *= 0.3;
 		}
-#endif // TOOLS_ENABLED
 		rs->canvas_item_set_modulate(get_canvas_item(), layer_modulate);
 	}
 
@@ -1761,6 +1760,7 @@ void TileMapLayer::_notification(int p_what) {
 }
 
 void TileMapLayer::_bind_methods() {
+/*
 	// --- Cells manipulation ---
 	// Generic cells manipulations and access.
 	ClassDB::bind_method(D_METHOD("set_cell", "coords", "source_id", "atlas_coords", "alternative_tile"), &TileMapLayer::set_cell, DEFVAL(TileSet::INVALID_SOURCE), DEFVAL(TileSetSource::INVALID_ATLAS_COORDS), DEFVAL(0));
@@ -1857,6 +1857,7 @@ void TileMapLayer::_bind_methods() {
 	BIND_ENUM_CONSTANT(DEBUG_VISIBILITY_MODE_DEFAULT);
 	BIND_ENUM_CONSTANT(DEBUG_VISIBILITY_MODE_FORCE_HIDE);
 	BIND_ENUM_CONSTANT(DEBUG_VISIBILITY_MODE_FORCE_SHOW);
+*/
 }
 
 void TileMapLayer::_validate_property(PropertyInfo &p_property) const {
@@ -1887,11 +1888,9 @@ void TileMapLayer::_update_self_texture_repeat(RS::CanvasItemTextureRepeat p_tex
 	emit_signal(CoreStringName(changed));
 }
 
-#ifdef TOOLS_ENABLED
 bool TileMapLayer::_edit_is_selected_on_click(const Point2 &p_point, double p_tolerance) const {
 	return tile_set.is_valid() && get_cell_source_id(local_to_map(p_point)) != TileSet::INVALID_SOURCE;
 }
-#endif
 
 void TileMapLayer::set_as_tile_map_internal_node(int p_index) {
 	// Compatibility with TileMap.
@@ -3312,3 +3311,4 @@ TerrainConstraint::TerrainConstraint(Ref<TileSet> p_tile_set, const Vector2i &p_
 	}
 	terrain = p_terrain;
 }
+#endif

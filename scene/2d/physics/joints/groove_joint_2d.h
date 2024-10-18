@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef GROOVE_JOINT_2D_H
 #define GROOVE_JOINT_2D_H
 
@@ -36,7 +37,7 @@
 class PhysicsBody2D;
 
 class GrooveJoint2D : public Joint2D {
-	GDCLASS(GrooveJoint2D, Joint2D);
+//	GDCLASS(GrooveJoint2D, Joint2D);
 
 	real_t length = 50.0;
 	real_t initial_offset = 25.0;
@@ -57,3 +58,4 @@ public:
 };
 
 #endif // GROOVE_JOINT_2D_H
+#endif //2D

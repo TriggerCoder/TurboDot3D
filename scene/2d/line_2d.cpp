@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "line_2d.h"
 
 #include "core/math/geometry_2d.h"
@@ -336,6 +337,7 @@ void Line2D::_curve_changed() {
 
 // static
 void Line2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_points", "points"), &Line2D::set_points);
 	ClassDB::bind_method(D_METHOD("get_points"), &Line2D::get_points);
 
@@ -417,4 +419,6 @@ void Line2D::_bind_methods() {
 	BIND_ENUM_CONSTANT(LINE_TEXTURE_NONE);
 	BIND_ENUM_CONSTANT(LINE_TEXTURE_TILE);
 	BIND_ENUM_CONSTANT(LINE_TEXTURE_STRETCH);
+*/
 }
+#endif

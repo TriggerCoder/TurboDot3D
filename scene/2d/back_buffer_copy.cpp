@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "back_buffer_copy.h"
 
 void BackBufferCopy::_update_copy_mode() {
@@ -86,6 +87,7 @@ void BackBufferCopy::_validate_property(PropertyInfo &p_property) const {
 }
 
 void BackBufferCopy::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_rect", "rect"), &BackBufferCopy::set_rect);
 	ClassDB::bind_method(D_METHOD("get_rect"), &BackBufferCopy::get_rect);
 
@@ -98,6 +100,7 @@ void BackBufferCopy::_bind_methods() {
 	BIND_ENUM_CONSTANT(COPY_MODE_DISABLED);
 	BIND_ENUM_CONSTANT(COPY_MODE_RECT);
 	BIND_ENUM_CONSTANT(COPY_MODE_VIEWPORT);
+*/
 }
 
 BackBufferCopy::BackBufferCopy() {
@@ -107,3 +110,4 @@ BackBufferCopy::BackBufferCopy() {
 
 BackBufferCopy::~BackBufferCopy() {
 }
+#endif

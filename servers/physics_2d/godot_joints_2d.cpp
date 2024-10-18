@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "godot_joints_2d.h"
 
 #include "godot_space_2d.h"
@@ -593,3 +594,4 @@ GodotDampedSpringJoint2D::GodotDampedSpringJoint2D(const Vector2 &p_anchor_a, co
 	A->add_constraint(this, 0);
 	B->add_constraint(this, 1);
 }
+#endif

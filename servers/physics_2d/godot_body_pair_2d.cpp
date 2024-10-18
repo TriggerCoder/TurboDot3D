@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "godot_body_pair_2d.h"
 
 #include "godot_collision_solver_2d.h"
@@ -606,3 +607,4 @@ GodotBodyPair2D::~GodotBodyPair2D() {
 	A->remove_constraint(this, 0);
 	B->remove_constraint(this, 1);
 }
+#endif

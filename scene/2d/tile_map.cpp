@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "tile_map.h"
 
 #include "core/io/marshalls.h"
@@ -52,7 +53,7 @@ void TileMap::_tile_set_changed() {
 }
 
 void TileMap::_emit_changed() {
-	emit_signal(CoreStringName(changed));
+//	emit_signal(CoreStringName(changed));
 }
 
 void TileMap::_set_tile_map_data_using_compatibility_format(int p_layer, TileMapDataFormat p_format, const Vector<int> &p_data) {
@@ -136,9 +137,7 @@ void TileMap::_notification(int p_what) {
 			// This is only executed when collision_animatable is enabled.
 
 			bool in_editor = false;
-#ifdef TOOLS_ENABLED
 			in_editor = Engine::get_singleton()->is_editor_hint();
-#endif
 			if (is_inside_tree() && collision_animatable && !in_editor) {
 				// Update transform on the physics tick when in animatable mode.
 				last_valid_transform = new_transform;
@@ -152,9 +151,7 @@ void TileMap::_notification(int p_what) {
 			// This is only executed when collision_animatable is enabled.
 
 			bool in_editor = false;
-#ifdef TOOLS_ENABLED
 			in_editor = Engine::get_singleton()->is_editor_hint();
-#endif
 
 			if (is_inside_tree() && collision_animatable && !in_editor) {
 				// Store last valid transform.
@@ -232,7 +229,7 @@ void TileMap::add_layer(int p_to_pos) {
 	for (uint32_t i = 0; i < layers.size(); i++) {
 		layers[i]->set_as_tile_map_internal_node(i);
 	}
-	new_layer->connect(CoreStringName(changed), callable_mp(this, &TileMap::_emit_changed));
+//	new_layer->connect(CoreStringName(changed), callable_mp(this, &TileMap::_emit_changed));
 
 	notify_property_list_changed();
 
@@ -562,12 +559,10 @@ void TileMap::fix_invalid_tiles() {
 	}
 }
 
-#ifdef TOOLS_ENABLED
 TileMapLayer *TileMap::duplicate_layer_from_internal(int p_layer) {
 	ERR_FAIL_INDEX_V(p_layer, (int)layers.size(), nullptr);
 	return Object::cast_to<TileMapLayer>(layers[p_layer]->duplicate(DUPLICATE_USE_INSTANTIATION | DUPLICATE_FROM_EDITOR));
 }
-#endif // TOOLS_ENABLED
 
 void TileMap::clear_layer(int p_layer) {
 	TILEMAP_CALL_FOR_LAYER(p_layer, clear)
@@ -595,7 +590,6 @@ void TileMap::notify_runtime_tile_data_update(int p_layer) {
 	}
 }
 
-#ifdef TOOLS_ENABLED
 Rect2 TileMap::_edit_get_rect() const {
 	// Return the visible rect of the tilemap.
 	if (layers.is_empty()) {
@@ -613,7 +607,6 @@ Rect2 TileMap::_edit_get_rect() const {
 	const_cast<TileMap *>(this)->item_rect_changed(any_changed);
 	return rect;
 }
-#endif
 
 bool TileMap::_set(const StringName &p_name, const Variant &p_value) {
 	int index;
@@ -634,7 +627,7 @@ bool TileMap::_set(const StringName &p_name, const Variant &p_value) {
 				new_layer->set_as_tile_map_internal_node(index);
 				new_layer->set_name(vformat("Layer%d", index));
 				new_layer->set_tile_set(tile_set);
-				new_layer->connect(CoreStringName(changed), callable_mp(this, &TileMap::_emit_changed));
+//				new_layer->connect(CoreStringName(changed), callable_mp(this, &TileMap::_emit_changed));
 				layers.push_back(new_layer);
 			}
 
@@ -824,6 +817,7 @@ PackedStringArray TileMap::get_configuration_warnings() const {
 }
 
 void TileMap::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_tileset", "tileset"), &TileMap::set_tileset);
 	ClassDB::bind_method(D_METHOD("get_tileset"), &TileMap::get_tileset);
 
@@ -912,6 +906,7 @@ void TileMap::_bind_methods() {
 	BIND_ENUM_CONSTANT(VISIBILITY_MODE_DEFAULT);
 	BIND_ENUM_CONSTANT(VISIBILITY_MODE_FORCE_HIDE);
 	BIND_ENUM_CONSTANT(VISIBILITY_MODE_FORCE_SHOW);
+*/
 }
 
 TileMap::TileMap() {
@@ -920,7 +915,7 @@ TileMap::TileMap() {
 	new_layer->set_as_tile_map_internal_node(0);
 	new_layer->set_name("Layer0");
 	new_layer->set_tile_set(tile_set);
-	new_layer->connect(CoreStringName(changed), callable_mp(this, &TileMap::_emit_changed));
+//	new_layer->connect(CoreStringName(changed), callable_mp(this, &TileMap::_emit_changed));
 	layers.push_back(new_layer);
 
 	if (!base_property_helper.is_initialized()) {
@@ -948,3 +943,4 @@ TileMap::TileMap() {
 
 #undef TILEMAP_CALL_FOR_LAYER
 #undef TILEMAP_CALL_FOR_LAYER_V
+#endif

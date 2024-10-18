@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "collision_object_2d.h"
 
 #include "scene/resources/world_2d.h"
@@ -592,6 +593,7 @@ PackedStringArray CollisionObject2D::get_configuration_warnings() const {
 }
 
 void CollisionObject2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("get_rid"), &CollisionObject2D::get_rid);
 	ClassDB::bind_method(D_METHOD("set_collision_layer", "layer"), &CollisionObject2D::set_collision_layer);
 	ClassDB::bind_method(D_METHOD("get_collision_layer"), &CollisionObject2D::get_collision_layer);
@@ -652,6 +654,7 @@ void CollisionObject2D::_bind_methods() {
 	BIND_ENUM_CONSTANT(DISABLE_MODE_REMOVE);
 	BIND_ENUM_CONSTANT(DISABLE_MODE_MAKE_STATIC);
 	BIND_ENUM_CONSTANT(DISABLE_MODE_KEEP_ACTIVE);
+*/
 }
 
 CollisionObject2D::CollisionObject2D(RID p_rid, bool p_area) {
@@ -681,3 +684,4 @@ CollisionObject2D::~CollisionObject2D() {
 	ERR_FAIL_NULL(PhysicsServer2D::get_singleton());
 	PhysicsServer2D::get_singleton()->free(rid);
 }
+#endif

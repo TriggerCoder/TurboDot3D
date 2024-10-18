@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "navigation_region_2d.h"
 
 #include "core/math/geometry_2d.h"
@@ -142,7 +143,6 @@ RID NavigationRegion2D::get_region_rid() const {
 	return get_rid();
 }
 
-#ifdef TOOLS_ENABLED
 Rect2 NavigationRegion2D::_edit_get_rect() const {
 	return navigation_polygon.is_valid() ? navigation_polygon->_edit_get_rect() : Rect2();
 }
@@ -150,7 +150,6 @@ Rect2 NavigationRegion2D::_edit_get_rect() const {
 bool NavigationRegion2D::_edit_is_selected_on_click(const Point2 &p_point, double p_tolerance) const {
 	return navigation_polygon.is_valid() ? navigation_polygon->_edit_is_selected_on_click(p_point, p_tolerance) : false;
 }
-#endif
 
 void NavigationRegion2D::_notification(int p_what) {
 	switch (p_what) {
@@ -304,6 +303,7 @@ PackedStringArray NavigationRegion2D::get_configuration_warnings() const {
 }
 
 void NavigationRegion2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("get_rid"), &NavigationRegion2D::get_rid);
 
 	ClassDB::bind_method(D_METHOD("set_navigation_polygon", "navigation_polygon"), &NavigationRegion2D::set_navigation_polygon);
@@ -346,6 +346,7 @@ void NavigationRegion2D::_bind_methods() {
 
 	ADD_SIGNAL(MethodInfo("navigation_polygon_changed"));
 	ADD_SIGNAL(MethodInfo("bake_finished"));
+*/
 }
 
 NavigationRegion2D::NavigationRegion2D() {
@@ -624,3 +625,4 @@ void NavigationRegion2D::_free_debug() {
 	}
 }
 #endif // DEBUG_ENABLED
+#endif //2D

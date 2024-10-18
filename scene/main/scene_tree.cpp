@@ -54,10 +54,14 @@
 #include "scene/resources/material.h"
 #include "scene/resources/mesh.h"
 #include "scene/resources/packed_scene.h"
+
+#ifdef TOOLS_ENABLED //2D
 #include "scene/resources/world_2d.h"
+#include "servers/physics_server_2d.h"
+#endif
+
 #include "servers/display_server.h"
 #include "servers/navigation_server_3d.h"
-#include "servers/physics_server_2d.h"
 #include "scene/resources/3d/world_3d.h"
 #include "servers/physics_server_3d.h"
 #include "window.h"
@@ -890,7 +894,9 @@ void SceneTree::set_pause(bool p_enabled) {
 	}
 	paused = p_enabled;
 	PhysicsServer3D::get_singleton()->set_active(!p_enabled);
+#ifdef TOOLS_ENABLED //2D
 	PhysicsServer2D::get_singleton()->set_active(!p_enabled);
+#endif
 	if (get_root()) {
 		get_root()->_propagate_pause_notification(p_enabled);
 	}
@@ -1756,7 +1762,10 @@ SceneTree::SceneTree() {
 	// Initialize network state.
 	set_multiplayer(MultiplayerAPI::create_default_interface());
 
+#ifdef TOOLS_ENABLED //2D
 	root->set_as_audio_listener_2d(true);
+#endif
+
 	current_scene = nullptr;
 
 	const int msaa_mode_2d = GLOBAL_DEF_BASIC(PropertyInfo(Variant::INT, "rendering/anti_aliasing/quality/msaa_2d", PROPERTY_HINT_ENUM, String::utf8("Disabled (Fastest),2× (Average),4× (Slow),8× (Slowest)")), 0);

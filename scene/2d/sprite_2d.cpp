@@ -28,11 +28,11 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "sprite_2d.h"
 
 #include "scene/main/window.h"
 
-#ifdef TOOLS_ENABLED
 Dictionary Sprite2D::_edit_get_state() const {
 	Dictionary state = Node2D::_edit_get_state();
 	state["offset"] = offset;
@@ -68,7 +68,6 @@ Rect2 Sprite2D::_edit_get_rect() const {
 bool Sprite2D::_edit_use_rect() const {
 	return texture.is_valid();
 }
-#endif
 
 Rect2 Sprite2D::get_anchorable_rect() const {
 	return get_rect();
@@ -435,6 +434,7 @@ void Sprite2D::_texture_changed() {
 }
 
 void Sprite2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_texture", "texture"), &Sprite2D::set_texture);
 	ClassDB::bind_method(D_METHOD("get_texture"), &Sprite2D::get_texture);
 
@@ -494,6 +494,7 @@ void Sprite2D::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "region_enabled"), "set_region_enabled", "is_region_enabled");
 	ADD_PROPERTY(PropertyInfo(Variant::RECT2, "region_rect"), "set_region_rect", "get_region_rect");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "region_filter_clip_enabled"), "set_region_filter_clip_enabled", "is_region_filter_clip_enabled");
+*/
 }
 
 Sprite2D::Sprite2D() {
@@ -501,3 +502,4 @@ Sprite2D::Sprite2D() {
 
 Sprite2D::~Sprite2D() {
 }
+#endif

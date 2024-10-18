@@ -28,13 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef NODE_2D_H
 #define NODE_2D_H
 
 #include "scene/main/canvas_item.h"
 
 class Node2D : public CanvasItem {
-	GDCLASS(Node2D, CanvasItem);
+//	GDCLASS(Node2D, CanvasItem);
 
 	mutable MTFlag xform_dirty;
 	mutable Point2 position;
@@ -56,7 +57,7 @@ protected:
 	static void _bind_methods();
 
 public:
-#ifdef TOOLS_ENABLED
+
 	virtual Dictionary _edit_get_state() const override;
 	virtual void _edit_set_state(const Dictionary &p_state) override;
 
@@ -71,7 +72,7 @@ public:
 	virtual bool _edit_use_rotation() const override;
 
 	virtual void _edit_set_rect(const Rect2 &p_edit_rect) override;
-#endif
+
 	virtual void reparent(Node *p_parent, bool p_keep_global_transform = true) override;
 
 	void set_position(const Point2 &p_pos);
@@ -121,3 +122,4 @@ public:
 };
 
 #endif // NODE_2D_H
+#endif //2D

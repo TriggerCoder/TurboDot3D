@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef COLLISION_SHAPE_2D_H
 #define COLLISION_SHAPE_2D_H
 
@@ -37,7 +38,7 @@
 class CollisionObject2D;
 
 class CollisionShape2D : public Node2D {
-	GDCLASS(CollisionShape2D, Node2D);
+//	GDCLASS(CollisionShape2D, Node2D);
 	Ref<Shape2D> shape;
 	Rect2 rect = Rect2(-Point2(10, 10), Point2(20, 20));
 	uint32_t owner_id = 0;
@@ -86,3 +87,4 @@ public:
 };
 
 #endif // COLLISION_SHAPE_2D_H
+#endif //2D

@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "atlas_merging_dialog.h"
 
 #include "editor/editor_properties_vector.h"
@@ -366,3 +367,4 @@ AtlasMergingDialog::AtlasMergingDialog() {
 	editor_file_dialog->connect("file_selected", callable_mp(this, &AtlasMergingDialog::_merge_confirmed));
 	add_child(editor_file_dialog);
 }
+#endif

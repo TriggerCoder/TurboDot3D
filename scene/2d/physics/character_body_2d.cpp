@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "character_body_2d.h"
 
 // So, if you pass 45 as limit, avoid numerical precision errors when angle is 45.
@@ -658,6 +659,7 @@ void CharacterBody2D::_validate_property(PropertyInfo &p_property) const {
 }
 
 void CharacterBody2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("move_and_slide"), &CharacterBody2D::move_and_slide);
 	ClassDB::bind_method(D_METHOD("apply_floor_snap"), &CharacterBody2D::apply_floor_snap);
 
@@ -740,8 +742,10 @@ void CharacterBody2D::_bind_methods() {
 	BIND_ENUM_CONSTANT(PLATFORM_ON_LEAVE_ADD_VELOCITY);
 	BIND_ENUM_CONSTANT(PLATFORM_ON_LEAVE_ADD_UPWARD_VELOCITY);
 	BIND_ENUM_CONSTANT(PLATFORM_ON_LEAVE_DO_NOTHING);
+*/
 }
 
 CharacterBody2D::CharacterBody2D() :
 		PhysicsBody2D(PhysicsServer2D::BODY_MODE_KINEMATIC) {
 }
+#endif

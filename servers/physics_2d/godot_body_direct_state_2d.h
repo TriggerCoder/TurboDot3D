@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef GODOT_BODY_DIRECT_STATE_2D_H
 #define GODOT_BODY_DIRECT_STATE_2D_H
 
@@ -102,3 +103,4 @@ public:
 };
 
 #endif // GODOT_BODY_DIRECT_STATE_2D_H
+#endif //2D

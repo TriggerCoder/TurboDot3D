@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef PHYSICAL_BONE_2D_H
 #define PHYSICAL_BONE_2D_H
 
@@ -37,7 +38,7 @@
 class Joint2D;
 
 class PhysicalBone2D : public RigidBody2D {
-	GDCLASS(PhysicalBone2D, RigidBody2D);
+//	GDCLASS(PhysicalBone2D, RigidBody2D);
 
 protected:
 	void _notification(int p_what);
@@ -86,3 +87,4 @@ public:
 };
 
 #endif // PHYSICAL_BONE_2D_H
+#endif //2D

@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef PARALLAX_BACKGROUND_EDITOR_PLUGIN_H
 #define PARALLAX_BACKGROUND_EDITOR_PLUGIN_H
 
@@ -65,3 +66,4 @@ public:
 };
 
 #endif // PARALLAX_BACKGROUND_EDITOR_PLUGIN_H
+#endif //2D

@@ -28,9 +28,11 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "godot_broad_phase_2d.h"
 
 GodotBroadPhase2D::CreateFunction GodotBroadPhase2D::create_func = nullptr;
 
 GodotBroadPhase2D::~GodotBroadPhase2D() {
 }
+#endif

@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef DAMPED_SPRING_JOINT_2D_H
 #define DAMPED_SPRING_JOINT_2D_H
 
@@ -36,7 +37,7 @@
 class PhysicsBody2D;
 
 class DampedSpringJoint2D : public Joint2D {
-	GDCLASS(DampedSpringJoint2D, Joint2D);
+//	GDCLASS(DampedSpringJoint2D, Joint2D);
 
 	real_t stiffness = 20.0;
 	real_t damping = 1.0;
@@ -65,3 +66,4 @@ public:
 };
 
 #endif // DAMPED_SPRING_JOINT_2D_H
+#endif //2D

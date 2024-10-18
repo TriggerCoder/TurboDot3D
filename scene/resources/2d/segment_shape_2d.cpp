@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "segment_shape_2d.h"
 
 #include "core/math/geometry_2d.h"
@@ -82,6 +83,7 @@ real_t SegmentShape2D::get_enclosing_radius() const {
 }
 
 void SegmentShape2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_a", "a"), &SegmentShape2D::set_a);
 	ClassDB::bind_method(D_METHOD("get_a"), &SegmentShape2D::get_a);
 
@@ -90,6 +92,7 @@ void SegmentShape2D::_bind_methods() {
 
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "a", PROPERTY_HINT_NONE, "suffix:px"), "set_a", "get_a");
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "b", PROPERTY_HINT_NONE, "suffix:px"), "set_b", "get_b");
+*/
 }
 
 SegmentShape2D::SegmentShape2D() :
@@ -98,3 +101,4 @@ SegmentShape2D::SegmentShape2D() :
 	b = Vector2(0, 10);
 	_update_shape();
 }
+#endif

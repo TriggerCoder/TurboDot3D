@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "light_occluder_2d.h"
 
 #include "core/config/engine.h"
@@ -125,6 +126,7 @@ RID OccluderPolygon2D::get_rid() const {
 }
 
 void OccluderPolygon2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_closed", "closed"), &OccluderPolygon2D::set_closed);
 	ClassDB::bind_method(D_METHOD("is_closed"), &OccluderPolygon2D::is_closed);
 
@@ -141,6 +143,7 @@ void OccluderPolygon2D::_bind_methods() {
 	BIND_ENUM_CONSTANT(CULL_DISABLED);
 	BIND_ENUM_CONSTANT(CULL_CLOCKWISE);
 	BIND_ENUM_CONSTANT(CULL_COUNTER_CLOCKWISE);
+*/
 }
 
 OccluderPolygon2D::OccluderPolygon2D() {
@@ -285,6 +288,7 @@ bool LightOccluder2D::is_set_as_sdf_collision() const {
 }
 
 void LightOccluder2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_occluder_polygon", "polygon"), &LightOccluder2D::set_occluder_polygon);
 	ClassDB::bind_method(D_METHOD("get_occluder_polygon"), &LightOccluder2D::get_occluder_polygon);
 
@@ -297,6 +301,7 @@ void LightOccluder2D::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "occluder", PROPERTY_HINT_RESOURCE_TYPE, "OccluderPolygon2D"), "set_occluder_polygon", "get_occluder_polygon");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "sdf_collision"), "set_as_sdf_collision", "is_set_as_sdf_collision");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "occluder_light_mask", PROPERTY_HINT_LAYERS_2D_RENDER), "set_occluder_light_mask", "get_occluder_light_mask");
+*/
 }
 
 LightOccluder2D::LightOccluder2D() {
@@ -311,3 +316,4 @@ LightOccluder2D::~LightOccluder2D() {
 
 	RS::get_singleton()->free(occluder);
 }
+#endif

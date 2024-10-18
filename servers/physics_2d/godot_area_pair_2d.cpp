@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "godot_area_pair_2d.h"
 #include "godot_collision_solver_2d.h"
 
@@ -201,3 +202,4 @@ GodotArea2Pair2D::~GodotArea2Pair2D() {
 	area_a->remove_constraint(this);
 	area_b->remove_constraint(this);
 }
+#endif

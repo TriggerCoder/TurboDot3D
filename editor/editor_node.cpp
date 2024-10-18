@@ -68,7 +68,9 @@
 #include "scene/theme/theme_db.h"
 #include "servers/display_server.h"
 #include "servers/navigation_server_3d.h"
+#ifdef TOOLS_ENABLED //2D
 #include "servers/physics_server_2d.h"
+#endif
 #include "servers/rendering_server.h"
 
 #include "editor/audio_stream_preview.h"
@@ -655,7 +657,9 @@ void EditorNode::_notification(int p_what) {
 
 			OS::get_singleton()->set_low_processor_usage_mode_sleep_usec(int(EDITOR_GET("interface/editor/low_processor_mode_sleep_usec")));
 			get_tree()->get_root()->set_as_audio_listener_3d(false);
+#ifdef TOOLS_ENABLED //2D
 			get_tree()->get_root()->set_as_audio_listener_2d(false);
+#endif
 			get_tree()->get_root()->set_snap_2d_transforms_to_pixel(false);
 			get_tree()->get_root()->set_snap_2d_vertices_to_pixel(false);
 			get_tree()->set_auto_accept_quit(false);
@@ -4346,11 +4350,12 @@ void EditorNode::get_preload_scene_modification_table(
 				new_additive_node_entry.parent = p_reimported_root->get_path_to(p_node->get_parent());
 				new_additive_node_entry.owner = p_node->get_owner();
 				new_additive_node_entry.index = p_node->get_index();
-
+#ifdef TOOLS_ENABLED //2D
 				Node2D *node_2d = Object::cast_to<Node2D>(p_node);
 				if (node_2d) {
 					new_additive_node_entry.transform_2d = node_2d->get_transform();
 				}
+#endif
 				Node3D *node_3d = Object::cast_to<Node3D>(p_node);
 				if (node_3d) {
 					new_additive_node_entry.transform_3d = node_3d->get_transform();
@@ -6207,11 +6212,12 @@ void EditorNode::reload_instances_with_path_in_edited_scenes() {
 
 				// If the parent node was lost, attempt to restore the original global transform.
 				{
+#ifdef TOOLS_ENABLED //2D
 					Node2D *node_2d = Object::cast_to<Node2D>(additive_node_entry.node);
 					if (node_2d) {
 						node_2d->set_transform(additive_node_entry.transform_2d);
 					}
-
+#endif
 					Node3D *node_3d = Object::cast_to<Node3D>(additive_node_entry.node);
 					if (node_3d) {
 						node_3d->set_transform(additive_node_entry.transform_3d);
@@ -6601,8 +6607,9 @@ EditorNode::EditorNode() {
 
 		// No physics by default if in editor.
 		PhysicsServer3D::get_singleton()->set_active(false);
+#ifdef TOOLS_ENABLED //2D
 		PhysicsServer2D::get_singleton()->set_active(false);
-
+#endif
 		// No scripting by default if in editor (except for tool).
 		ScriptServer::set_scripting_enabled(false);
 
@@ -7018,8 +7025,9 @@ EditorNode::EditorNode() {
 	scene_root->set_embedding_subwindows(true);
 	scene_root->set_disable_3d(true);
 	scene_root->set_disable_input(true);
+#ifdef TOOLS_ENABLED //2D
 	scene_root->set_as_audio_listener_2d(true);
-
+#endif
 	main_screen_vbox = memnew(VBoxContainer);
 	main_screen_vbox->set_name("MainScreen");
 	main_screen_vbox->set_v_size_flags(Control::SIZE_EXPAND_FILL);

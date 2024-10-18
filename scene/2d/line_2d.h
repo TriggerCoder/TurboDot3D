@@ -28,13 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef LINE_2D_H
 #define LINE_2D_H
 
 #include "node_2d.h"
 
 class Line2D : public Node2D {
-	GDCLASS(Line2D, Node2D);
+//	GDCLASS(Line2D, Node2D);
 
 public:
 	enum LineJointMode {
@@ -148,3 +149,4 @@ VARIANT_ENUM_CAST(Line2D::LineCapMode)
 VARIANT_ENUM_CAST(Line2D::LineTextureMode)
 
 #endif // LINE_2D_H
+#endif //2D

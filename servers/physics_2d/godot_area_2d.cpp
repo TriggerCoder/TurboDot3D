@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "godot_area_2d.h"
 #include "godot_body_2d.h"
 #include "godot_space_2d.h"
@@ -312,3 +313,4 @@ GodotArea2D::GodotArea2D() :
 
 GodotArea2D::~GodotArea2D() {
 }
+#endif

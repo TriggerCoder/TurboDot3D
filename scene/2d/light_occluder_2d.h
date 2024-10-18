@@ -28,13 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef LIGHT_OCCLUDER_2D_H
 #define LIGHT_OCCLUDER_2D_H
 
 #include "scene/2d/node_2d.h"
 
 class OccluderPolygon2D : public Resource {
-	GDCLASS(OccluderPolygon2D, Resource);
+//	GDCLASS(OccluderPolygon2D, Resource);
 
 public:
 	enum CullMode {
@@ -78,7 +79,7 @@ public:
 VARIANT_ENUM_CAST(OccluderPolygon2D::CullMode);
 
 class LightOccluder2D : public Node2D {
-	GDCLASS(LightOccluder2D, Node2D);
+//	GDCLASS(LightOccluder2D, Node2D);
 
 	RID occluder;
 	int mask = 1;
@@ -114,3 +115,4 @@ public:
 };
 
 #endif // LIGHT_OCCLUDER_2D_H
+#endif //2D

@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "tile_set_atlas_source_editor.h"
 
 #include "tiles_editor_plugin.h"
@@ -3018,3 +3019,4 @@ Control::CursorShape TileSetAtlasSourceEditor::TileAtlasControl::get_cursor_shap
 	}
 	return cursor_shape;
 }
+#endif

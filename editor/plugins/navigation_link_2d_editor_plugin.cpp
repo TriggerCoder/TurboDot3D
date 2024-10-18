@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "navigation_link_2d_editor_plugin.h"
 
 #include "canvas_item_editor_plugin.h"
@@ -186,3 +187,4 @@ NavigationLink2DEditorPlugin::NavigationLink2DEditorPlugin() {
 	editor = memnew(NavigationLink2DEditor);
 	EditorNode::get_singleton()->get_gui_base()->add_child(editor);
 }
+#endif

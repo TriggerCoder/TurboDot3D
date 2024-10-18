@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef TOUCH_SCREEN_BUTTON_H
 #define TOUCH_SCREEN_BUTTON_H
 
@@ -37,7 +38,7 @@
 #include "scene/resources/texture.h"
 
 class TouchScreenButton : public Node2D {
-	GDCLASS(TouchScreenButton, Node2D);
+//	GDCLASS(TouchScreenButton, Node2D);
 
 public:
 	enum VisibilityMode {
@@ -73,10 +74,9 @@ protected:
 	static void _bind_methods();
 
 public:
-#ifdef TOOLS_ENABLED
+
 	virtual Rect2 _edit_get_rect() const override;
 	virtual bool _edit_use_rect() const override;
-#endif
 
 	void set_texture_normal(const Ref<Texture2D> &p_texture);
 	Ref<Texture2D> get_texture_normal() const;
@@ -115,3 +115,4 @@ public:
 VARIANT_ENUM_CAST(TouchScreenButton::VisibilityMode);
 
 #endif // TOUCH_SCREEN_BUTTON_H
+#endif //2D

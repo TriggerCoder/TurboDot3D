@@ -28,13 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef PARALLAX_BACKGROUND_H
 #define PARALLAX_BACKGROUND_H
 
 #include "scene/main/canvas_layer.h"
 
 class ParallaxBackground : public CanvasLayer {
-	GDCLASS(ParallaxBackground, CanvasLayer);
+//	GDCLASS(ParallaxBackground, CanvasLayer);
 
 	Point2 offset;
 	real_t scale = 1.0;
@@ -83,3 +84,4 @@ public:
 };
 
 #endif // PARALLAX_BACKGROUND_H
+#endif //2D

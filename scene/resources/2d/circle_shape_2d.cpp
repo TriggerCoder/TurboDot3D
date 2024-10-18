@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "circle_shape_2d.h"
 
 #include "servers/physics_server_2d.h"
@@ -53,10 +54,12 @@ real_t CircleShape2D::get_radius() const {
 }
 
 void CircleShape2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_radius", "radius"), &CircleShape2D::set_radius);
 	ClassDB::bind_method(D_METHOD("get_radius"), &CircleShape2D::get_radius);
 
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "radius", PROPERTY_HINT_RANGE, "0.01,1024,0.01,or_greater,suffix:px"), "set_radius", "get_radius");
+*/
 }
 
 Rect2 CircleShape2D::get_rect() const {
@@ -93,3 +96,4 @@ CircleShape2D::CircleShape2D() :
 		Shape2D(PhysicsServer2D::get_singleton()->circle_shape_create()) {
 	_update_shape();
 }
+#endif

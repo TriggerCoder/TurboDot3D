@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "godot_physics_server_2d.h"
 
 #include "godot_body_direct_state_2d.h"
@@ -1398,3 +1399,4 @@ GodotPhysicsServer2D::GodotPhysicsServer2D(bool p_using_threads) {
 
 	using_threads = p_using_threads;
 }
+#endif

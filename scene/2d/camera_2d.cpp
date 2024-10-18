@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "camera_2d.h"
 
 #include "core/config/project_settings.h"
@@ -822,6 +823,7 @@ void Camera2D::_validate_property(PropertyInfo &p_property) const {
 }
 
 void Camera2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_offset", "offset"), &Camera2D::set_offset);
 	ClassDB::bind_method(D_METHOD("get_offset"), &Camera2D::get_offset);
 
@@ -942,6 +944,7 @@ void Camera2D::_bind_methods() {
 	BIND_ENUM_CONSTANT(ANCHOR_MODE_DRAG_CENTER);
 	BIND_ENUM_CONSTANT(CAMERA2D_PROCESS_PHYSICS);
 	BIND_ENUM_CONSTANT(CAMERA2D_PROCESS_IDLE);
+*/
 }
 
 Camera2D::Camera2D() {
@@ -958,3 +961,4 @@ Camera2D::Camera2D() {
 	set_notify_transform(true);
 	set_hide_clip_children(true);
 }
+#endif

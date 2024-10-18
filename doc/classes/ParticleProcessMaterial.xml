@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="ParticleProcessMaterial" inherits="Material" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../class.xsd">
 	<brief_description>
-		Holds a particle configuration for [GPUParticles2D] or [GPUParticles3D] nodes.
+		Holds a particle configuration for [GPUParticles3D] nodes.
 	</brief_description>
 	<description>
-		[ParticleProcessMaterial] defines particle properties and behavior. It is used in the [code]process_material[/code] of the [GPUParticles2D] and [GPUParticles3D] nodes. Some of this material's properties are applied to each particle when emitted, while others can have a [CurveTexture] or a [GradientTexture1D] applied to vary numerical or color values over the lifetime of the particle.
+		[ParticleProcessMaterial] defines particle properties and behavior. It is used in the [code]process_material[/code] of the [GPUParticles3D] nodes. Some of this material's properties are applied to each particle when emitted, while others can have a [CurveTexture] or a [GradientTexture1D] applied to vary numerical or color values over the lifetime of the particle.
 	</description>
 	<tutorials>
 	</tutorials>
@@ -148,7 +148,7 @@
 			If [code]true[/code], [member GPUParticles3D.collision_base_size] is multiplied by the particle's effective scale (see [member scale_min], [member scale_max], [member scale_curve], and [member scale_over_velocity_curve]).
 		</member>
 		<member name="color" type="Color" setter="set_color" getter="get_color" default="Color(1, 1, 1, 1)" keywords="colour">
-			Each particle's initial color. If the [GPUParticles2D]'s [code]texture[/code] is defined, it will be multiplied by this color.
+			Each particle's initial color. If the [GPUParticles3D]'s [code]texture[/code] is defined, it will be multiplied by this color.
 			[b]Note:[/b] [member color] multiplies the particle mesh's vertex colors. To have a visible effect on a [BaseMaterial3D], [member BaseMaterial3D.vertex_color_use_as_albedo] [i]must[/i] be [code]true[/code]. For a [ShaderMaterial], [code]ALBEDO *= COLOR.rgb;[/code] must be inserted in the shader's [code]fragment()[/code] function. Otherwise, [member color] will have no visible effect.
 		</member>
 		<member name="color_initial_ramp" type="Texture2D" setter="set_color_initial_ramp" getter="get_color_initial_ramp">
@@ -244,7 +244,7 @@
 			Minimum equivalent of [member hue_variation_max].
 		</member>
 		<member name="inherit_velocity_ratio" type="float" setter="set_inherit_velocity_ratio" getter="get_inherit_velocity_ratio" default="0.0">
-			Percentage of the velocity of the respective [GPUParticles2D] or [GPUParticles3D] inherited by each particle when spawning.
+			Percentage of the velocity of the respective [GPUParticles3D] inherited by each particle when spawning.
 		</member>
 		<member name="initial_velocity_max" type="float" setter="set_param_max" getter="get_param_max" default="0.0">
 			Maximum initial velocity magnitude for each particle. Direction comes from [member direction] and [member spread].
@@ -335,21 +335,21 @@
 		</member>
 		<member name="sub_emitter_amount_at_collision" type="int" setter="set_sub_emitter_amount_at_collision" getter="get_sub_emitter_amount_at_collision">
 			The amount of particles to spawn from the subemitter node when a collision occurs. When combined with [constant COLLISION_HIDE_ON_CONTACT] on the main particles material, this can be used to achieve effects such as raindrops hitting the ground.
-			[b]Note:[/b] This value shouldn't exceed [member GPUParticles2D.amount] or [member GPUParticles3D.amount] defined on the [i]subemitter node[/i] (not the main node), relative to the subemitter's particle lifetime. If the number of particles is exceeded, no new particles will spawn from the subemitter until enough particles have expired.
+			[b]Note:[/b] This value shouldn't exceed or [member GPUParticles3D.amount] defined on the [i]subemitter node[/i] (not the main node), relative to the subemitter's particle lifetime. If the number of particles is exceeded, no new particles will spawn from the subemitter until enough particles have expired.
 		</member>
 		<member name="sub_emitter_amount_at_end" type="int" setter="set_sub_emitter_amount_at_end" getter="get_sub_emitter_amount_at_end">
 			The amount of particles to spawn from the subemitter node when the particle expires.
-			[b]Note:[/b] This value shouldn't exceed [member GPUParticles2D.amount] or [member GPUParticles3D.amount] defined on the [i]subemitter node[/i] (not the main node), relative to the subemitter's particle lifetime. If the number of particles is exceeded, no new particles will spawn from the subemitter until enough particles have expired.
+			[b]Note:[/b] This value shouldn't exceed or [member GPUParticles3D.amount] defined on the [i]subemitter node[/i] (not the main node), relative to the subemitter's particle lifetime. If the number of particles is exceeded, no new particles will spawn from the subemitter until enough particles have expired.
 		</member>
 		<member name="sub_emitter_frequency" type="float" setter="set_sub_emitter_frequency" getter="get_sub_emitter_frequency">
 			The frequency at which particles should be emitted from the subemitter node. One particle will be spawned every [member sub_emitter_frequency] seconds.
-			[b]Note:[/b] This value shouldn't exceed [member GPUParticles2D.amount] or [member GPUParticles3D.amount] defined on the [i]subemitter node[/i] (not the main node), relative to the subemitter's particle lifetime. If the number of particles is exceeded, no new particles will spawn from the subemitter until enough particles have expired.
+			[b]Note:[/b] This value shouldn't exceed or [member GPUParticles3D.amount] defined on the [i]subemitter node[/i] (not the main node), relative to the subemitter's particle lifetime. If the number of particles is exceeded, no new particles will spawn from the subemitter until enough particles have expired.
 		</member>
 		<member name="sub_emitter_keep_velocity" type="bool" setter="set_sub_emitter_keep_velocity" getter="get_sub_emitter_keep_velocity" default="false">
 			If [code]true[/code], the subemitter inherits the parent particle's velocity when it spawns.
 		</member>
 		<member name="sub_emitter_mode" type="int" setter="set_sub_emitter_mode" getter="get_sub_emitter_mode" enum="ParticleProcessMaterial.SubEmitterMode" default="0">
-			The particle subemitter mode (see [member GPUParticles2D.sub_emitter] and [member GPUParticles3D.sub_emitter]).
+			The particle subemitter mode (see [member GPUParticles3D.sub_emitter]).
 		</member>
 		<member name="tangential_accel_curve" type="Texture2D" setter="set_param_texture" getter="get_param_texture">
 			Each particle's tangential acceleration will vary along this [CurveTexture].

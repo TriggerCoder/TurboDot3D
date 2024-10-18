@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef SHAPE_CAST_2D_H
 #define SHAPE_CAST_2D_H
 
@@ -38,7 +39,7 @@
 class CollisionObject2D;
 
 class ShapeCast2D : public Node2D {
-	GDCLASS(ShapeCast2D, Node2D);
+//	GDCLASS(ShapeCast2D, Node2D);
 
 	bool enabled = true;
 
@@ -124,3 +125,4 @@ public:
 };
 
 #endif // SHAPE_CAST_2D_H
+#endif //2D

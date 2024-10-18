@@ -28,13 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef STATIC_BODY_2D_H
 #define STATIC_BODY_2D_H
 
 #include "scene/2d/physics/physics_body_2d.h"
 
 class StaticBody2D : public PhysicsBody2D {
-	GDCLASS(StaticBody2D, PhysicsBody2D);
+//	GDCLASS(StaticBody2D, PhysicsBody2D);
 
 private:
 	Vector2 constant_linear_velocity;
@@ -62,3 +63,4 @@ private:
 };
 
 #endif // STATIC_BODY_2D_H
+#endif //2D

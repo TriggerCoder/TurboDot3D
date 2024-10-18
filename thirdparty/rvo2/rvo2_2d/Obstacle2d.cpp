@@ -30,9 +30,11 @@
  * <http://gamma.cs.unc.edu/RVO2/>
  */
 
+#ifdef TOOLS_ENABLED //2D
 #include "Obstacle2d.h"
 #include "RVOSimulator2d.h"
 
 namespace RVO2D {
 	Obstacle2D::Obstacle2D() : isConvex_(false), nextObstacle_(NULL), prevObstacle_(NULL), id_(0) { }
 }
+#endif

@@ -39,7 +39,9 @@
 #include "servers/rendering_server.h"
 
 // 2D
+#ifdef TOOLS_ENABLED //2D
 #include "servers/physics_server_2d.h"
+#endif
 
 // 3D
 #include "servers/physics_server_3d.h"
@@ -72,9 +74,11 @@ void Performance::_bind_methods() {
 	BIND_ENUM_CONSTANT(RENDER_VIDEO_MEM_USED);
 	BIND_ENUM_CONSTANT(RENDER_TEXTURE_MEM_USED);
 	BIND_ENUM_CONSTANT(RENDER_BUFFER_MEM_USED);
+#ifdef TOOLS_ENABLED //2D
 	BIND_ENUM_CONSTANT(PHYSICS_2D_ACTIVE_OBJECTS);
 	BIND_ENUM_CONSTANT(PHYSICS_2D_COLLISION_PAIRS);
 	BIND_ENUM_CONSTANT(PHYSICS_2D_ISLAND_COUNT);
+#endif
 	BIND_ENUM_CONSTANT(PHYSICS_3D_ACTIVE_OBJECTS);
 	BIND_ENUM_CONSTANT(PHYSICS_3D_COLLISION_PAIRS);
 	BIND_ENUM_CONSTANT(PHYSICS_3D_ISLAND_COUNT);
@@ -120,9 +124,11 @@ String Performance::get_monitor_name(Monitor p_monitor) const {
 		PNAME("video/video_mem"),
 		PNAME("video/texture_mem"),
 		PNAME("video/buffer_mem"),
+#ifdef TOOLS_ENABLED //2D
 		PNAME("physics_2d/active_objects"),
 		PNAME("physics_2d/collision_pairs"),
 		PNAME("physics_2d/islands"),
+#endif
 		PNAME("physics_3d/active_objects"),
 		PNAME("physics_3d/collision_pairs"),
 		PNAME("physics_3d/islands"),
@@ -178,12 +184,14 @@ double Performance::get_monitor(Monitor p_monitor) const {
 			return RS::get_singleton()->get_rendering_info(RS::RENDERING_INFO_TEXTURE_MEM_USED);
 		case RENDER_BUFFER_MEM_USED:
 			return RS::get_singleton()->get_rendering_info(RS::RENDERING_INFO_BUFFER_MEM_USED);
+#ifdef TOOLS_ENABLED //2D
 		case PHYSICS_2D_ACTIVE_OBJECTS:
 			return PhysicsServer2D::get_singleton()->get_process_info(PhysicsServer2D::INFO_ACTIVE_OBJECTS);
 		case PHYSICS_2D_COLLISION_PAIRS:
 			return PhysicsServer2D::get_singleton()->get_process_info(PhysicsServer2D::INFO_COLLISION_PAIRS);
 		case PHYSICS_2D_ISLAND_COUNT:
 			return PhysicsServer2D::get_singleton()->get_process_info(PhysicsServer2D::INFO_ISLAND_COUNT);
+#endif
 		case PHYSICS_3D_ACTIVE_OBJECTS:
 			return PhysicsServer3D::get_singleton()->get_process_info(PhysicsServer3D::INFO_ACTIVE_OBJECTS);
 		case PHYSICS_3D_COLLISION_PAIRS:
@@ -239,9 +247,11 @@ Performance::MonitorType Performance::get_monitor_type(Monitor p_monitor) const 
 		MONITOR_TYPE_MEMORY,
 		MONITOR_TYPE_MEMORY,
 		MONITOR_TYPE_MEMORY,
+#ifdef TOOLS_ENABLED //2D
 		MONITOR_TYPE_QUANTITY,
 		MONITOR_TYPE_QUANTITY,
 		MONITOR_TYPE_QUANTITY,
+#endif
 		MONITOR_TYPE_QUANTITY,
 		MONITOR_TYPE_QUANTITY,
 		MONITOR_TYPE_QUANTITY,

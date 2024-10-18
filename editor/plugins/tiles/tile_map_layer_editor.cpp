@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "tile_map_layer_editor.h"
 
 #include "tiles_editor_plugin.h"
@@ -4536,3 +4537,4 @@ TileMapLayerEditor::~TileMapLayerEditor() {
 		memdelete(tile_map_editor_plugins[i]);
 	}
 }
+#endif

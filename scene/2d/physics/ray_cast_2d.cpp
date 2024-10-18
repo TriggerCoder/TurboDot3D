@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "ray_cast_2d.h"
 
 #include "scene/2d/physics/collision_object_2d.h"
@@ -317,6 +318,7 @@ bool RayCast2D::is_hit_from_inside_enabled() const {
 }
 
 void RayCast2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_enabled", "enabled"), &RayCast2D::set_enabled);
 	ClassDB::bind_method(D_METHOD("is_enabled"), &RayCast2D::is_enabled);
 
@@ -367,8 +369,10 @@ void RayCast2D::_bind_methods() {
 	ADD_GROUP("Collide With", "collide_with");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "collide_with_areas", PROPERTY_HINT_LAYERS_3D_PHYSICS), "set_collide_with_areas", "is_collide_with_areas_enabled");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "collide_with_bodies", PROPERTY_HINT_LAYERS_3D_PHYSICS), "set_collide_with_bodies", "is_collide_with_bodies_enabled");
+*/
 }
 
 RayCast2D::RayCast2D() {
 	set_hide_clip_children(true);
 }
+#endif

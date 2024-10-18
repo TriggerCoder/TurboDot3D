@@ -39,7 +39,9 @@ class AtlasTexture;
 class NinePatchRect;
 class OptionButton;
 class PanelContainer;
+#ifdef TOOLS_ENABLED //2D
 class Sprite2D;
+#endif
 class Sprite3D;
 class StyleBoxTexture;
 class ViewPanner;
@@ -83,8 +85,9 @@ class TextureRegionEditor : public AcceptDialog {
 	Vector2 snap_offset;
 	Vector2 snap_step;
 	Vector2 snap_separation;
-
+#ifdef TOOLS_ENABLED //2D
 	Sprite2D *node_sprite_2d = nullptr;
+#endif
 	Sprite3D *node_sprite_3d = nullptr;
 	NinePatchRect *node_ninepatch = nullptr;
 	Ref<StyleBoxTexture> res_stylebox;

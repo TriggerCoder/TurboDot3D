@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "touch_screen_button.h"
 
 #include "scene/main/window.h"
@@ -329,7 +330,6 @@ void TouchScreenButton::_release(bool p_exiting_tree) {
 	}
 }
 
-#ifdef TOOLS_ENABLED
 Rect2 TouchScreenButton::_edit_get_rect() const {
 	if (texture_normal.is_null()) {
 		return CanvasItem::_edit_get_rect();
@@ -341,7 +341,6 @@ Rect2 TouchScreenButton::_edit_get_rect() const {
 bool TouchScreenButton::_edit_use_rect() const {
 	return !texture_normal.is_null();
 }
-#endif
 
 Rect2 TouchScreenButton::get_anchorable_rect() const {
 	if (texture_normal.is_null()) {
@@ -369,6 +368,7 @@ bool TouchScreenButton::is_passby_press_enabled() const {
 }
 
 void TouchScreenButton::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_texture_normal", "texture"), &TouchScreenButton::set_texture_normal);
 	ClassDB::bind_method(D_METHOD("get_texture_normal"), &TouchScreenButton::get_texture_normal);
 
@@ -413,9 +413,11 @@ void TouchScreenButton::_bind_methods() {
 
 	BIND_ENUM_CONSTANT(VISIBILITY_ALWAYS);
 	BIND_ENUM_CONSTANT(VISIBILITY_TOUCHSCREEN_ONLY);
+*/
 }
 
 TouchScreenButton::TouchScreenButton() {
 	unit_rect = Ref<RectangleShape2D>(memnew(RectangleShape2D));
 	unit_rect->set_size(Vector2(1, 1));
 }
+#endif

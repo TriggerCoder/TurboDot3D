@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef JOINT_2D_H
 #define JOINT_2D_H
 
@@ -36,7 +37,7 @@
 class PhysicsBody2D;
 
 class Joint2D : public Node2D {
-	GDCLASS(Joint2D, Node2D);
+//	GDCLASS(Joint2D, Node2D);
 
 	RID joint;
 	RID ba, bb;
@@ -82,3 +83,4 @@ public:
 };
 
 #endif // JOINT_2D_H
+#endif //2D

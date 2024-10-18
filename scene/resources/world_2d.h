@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef WORLD_2D_H
 #define WORLD_2D_H
 
@@ -39,7 +40,7 @@ class Viewport;
 struct SpatialIndexer2D;
 
 class World2D : public Resource {
-	GDCLASS(World2D, Resource);
+//	GDCLASS(World2D, Resource);
 
 	RID canvas;
 	mutable RID space;
@@ -68,3 +69,4 @@ public:
 };
 
 #endif // WORLD_2D_H
+#endif //2D

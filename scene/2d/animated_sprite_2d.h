@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef ANIMATED_SPRITE_2D_H
 #define ANIMATED_SPRITE_2D_H
 
@@ -35,7 +36,7 @@
 #include "scene/resources/sprite_frames.h"
 
 class AnimatedSprite2D : public Node2D {
-	GDCLASS(AnimatedSprite2D, Node2D);
+//	GDCLASS(AnimatedSprite2D, Node2D);
 
 	Ref<SpriteFrames> frames;
 	String autoplay;
@@ -132,3 +133,4 @@ public:
 };
 
 #endif // ANIMATED_SPRITE_2D_H
+#endif //2D

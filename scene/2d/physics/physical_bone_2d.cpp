@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "physical_bone_2d.h"
 
 #include "scene/2d/physics/joints/joint_2d.h"
@@ -264,6 +265,7 @@ bool PhysicalBone2D::get_follow_bone_when_simulating() const {
 }
 
 void PhysicalBone2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("get_joint"), &PhysicalBone2D::get_joint);
 	ClassDB::bind_method(D_METHOD("get_auto_configure_joint"), &PhysicalBone2D::get_auto_configure_joint);
 	ClassDB::bind_method(D_METHOD("set_auto_configure_joint", "auto_configure_joint"), &PhysicalBone2D::set_auto_configure_joint);
@@ -284,6 +286,7 @@ void PhysicalBone2D::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "auto_configure_joint"), "set_auto_configure_joint", "get_auto_configure_joint");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "simulate_physics"), "set_simulate_physics", "get_simulate_physics");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "follow_bone_when_simulating"), "set_follow_bone_when_simulating", "get_follow_bone_when_simulating");
+*/
 }
 
 PhysicalBone2D::PhysicalBone2D() {
@@ -297,3 +300,4 @@ PhysicalBone2D::PhysicalBone2D() {
 
 PhysicalBone2D::~PhysicalBone2D() {
 }
+#endif

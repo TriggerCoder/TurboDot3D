@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "audio_stream_player_2d.h"
 
 #include "core/config/project_settings.h"
@@ -362,6 +363,7 @@ void AudioStreamPlayer2D::_get_property_list(List<PropertyInfo> *p_list) const {
 }
 
 void AudioStreamPlayer2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_stream", "stream"), &AudioStreamPlayer2D::set_stream);
 	ClassDB::bind_method(D_METHOD("get_stream"), &AudioStreamPlayer2D::get_stream);
 
@@ -426,6 +428,7 @@ void AudioStreamPlayer2D::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "playback_type", PROPERTY_HINT_ENUM, "Default,Stream,Sample"), "set_playback_type", "get_playback_type");
 
 	ADD_SIGNAL(MethodInfo("finished"));
+*/
 }
 
 AudioStreamPlayer2D::AudioStreamPlayer2D() {
@@ -437,3 +440,4 @@ AudioStreamPlayer2D::AudioStreamPlayer2D() {
 AudioStreamPlayer2D::~AudioStreamPlayer2D() {
 	memdelete(internal);
 }
+#endif

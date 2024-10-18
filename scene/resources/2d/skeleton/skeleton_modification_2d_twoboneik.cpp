@@ -28,12 +28,11 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "skeleton_modification_2d_twoboneik.h"
 #include "scene/2d/skeleton_2d.h"
 
-#ifdef TOOLS_ENABLED
 #include "editor/editor_settings.h"
-#endif // TOOLS_ENABLED
 
 bool SkeletonModification2DTwoBoneIK::_set(const StringName &p_path, const Variant &p_value) {
 	String path = p_path;
@@ -46,15 +45,11 @@ bool SkeletonModification2DTwoBoneIK::_set(const StringName &p_path, const Varia
 		set_joint_two_bone_idx(p_value);
 	} else if (path == "joint_two_bone2d_node") {
 		set_joint_two_bone2d_node(p_value);
-	}
-#ifdef TOOLS_ENABLED
-	else if (path.begins_with("editor/draw_gizmo")) {
+	} else if (path.begins_with("editor/draw_gizmo")) {
 		set_editor_draw_gizmo(p_value);
 	} else if (path.begins_with("editor/draw_min_max")) {
 		set_editor_draw_min_max(p_value);
-	}
-#endif // TOOLS_ENABLED
-	else {
+	} else {
 		return false;
 	}
 
@@ -72,15 +67,11 @@ bool SkeletonModification2DTwoBoneIK::_get(const StringName &p_path, Variant &r_
 		r_ret = get_joint_two_bone_idx();
 	} else if (path == "joint_two_bone2d_node") {
 		r_ret = get_joint_two_bone2d_node();
-	}
-#ifdef TOOLS_ENABLED
-	else if (path.begins_with("editor/draw_gizmo")) {
+	} else if (path.begins_with("editor/draw_gizmo")) {
 		r_ret = get_editor_draw_gizmo();
 	} else if (path.begins_with("editor/draw_min_max")) {
 		r_ret = get_editor_draw_min_max();
-	}
-#endif // TOOLS_ENABLED
-	else {
+	} else {
 		return false;
 	}
 
@@ -94,12 +85,10 @@ void SkeletonModification2DTwoBoneIK::_get_property_list(List<PropertyInfo> *p_l
 	p_list->push_back(PropertyInfo(Variant::INT, "joint_two_bone_idx", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT));
 	p_list->push_back(PropertyInfo(Variant::NODE_PATH, "joint_two_bone2d_node", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Bone2D", PROPERTY_USAGE_DEFAULT));
 
-#ifdef TOOLS_ENABLED
 	if (Engine::get_singleton()->is_editor_hint()) {
 		p_list->push_back(PropertyInfo(Variant::BOOL, "editor/draw_gizmo", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT));
 		p_list->push_back(PropertyInfo(Variant::BOOL, "editor/draw_min_max", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT));
 	}
-#endif // TOOLS_ENABLED
 }
 
 void SkeletonModification2DTwoBoneIK::_execute(float p_delta) {
@@ -214,12 +203,10 @@ void SkeletonModification2DTwoBoneIK::_draw_editor_gizmo() {
 			operation_bone_one->get_global_rotation() - stack->skeleton->get_global_rotation());
 
 	Color bone_ik_color = Color(1.0, 0.65, 0.0, 0.4);
-#ifdef TOOLS_ENABLED
+
 	if (Engine::get_singleton()->is_editor_hint()) {
 		bone_ik_color = EDITOR_GET("editors/2d/bone_ik_color");
 	}
-#endif // TOOLS_ENABLED
-
 	if (flip_bend_direction) {
 		float angle = -(Math_PI * 0.5) + operation_bone_one->get_bone_angle();
 		stack->skeleton->draw_line(Vector2(0, 0), Vector2(Math::cos(angle), sin(angle)) * (operation_bone_one->get_length() * 0.5), bone_ik_color, 2.0);
@@ -228,7 +215,6 @@ void SkeletonModification2DTwoBoneIK::_draw_editor_gizmo() {
 		stack->skeleton->draw_line(Vector2(0, 0), Vector2(Math::cos(angle), sin(angle)) * (operation_bone_one->get_length() * 0.5), bone_ik_color, 2.0);
 	}
 
-#ifdef TOOLS_ENABLED
 	if (Engine::get_singleton()->is_editor_hint()) {
 		if (editor_draw_min_max) {
 			if (target_maximum_distance != 0.0 || target_minimum_distance != 0.0) {
@@ -245,7 +231,6 @@ void SkeletonModification2DTwoBoneIK::_draw_editor_gizmo() {
 			}
 		}
 	}
-#endif // TOOLS_ENABLED
 }
 
 void SkeletonModification2DTwoBoneIK::update_target_cache() {
@@ -367,11 +352,9 @@ float SkeletonModification2DTwoBoneIK::get_target_maximum_distance() const {
 void SkeletonModification2DTwoBoneIK::set_flip_bend_direction(bool p_flip_direction) {
 	flip_bend_direction = p_flip_direction;
 
-#ifdef TOOLS_ENABLED
 	if (stack && is_setup) {
 		stack->set_editor_gizmos_dirty(true);
 	}
-#endif // TOOLS_ENABLED
 }
 
 bool SkeletonModification2DTwoBoneIK::get_flip_bend_direction() const {
@@ -440,7 +423,6 @@ int SkeletonModification2DTwoBoneIK::get_joint_two_bone_idx() const {
 	return joint_two_bone_idx;
 }
 
-#ifdef TOOLS_ENABLED
 void SkeletonModification2DTwoBoneIK::set_editor_draw_min_max(bool p_draw) {
 	editor_draw_min_max = p_draw;
 }
@@ -448,9 +430,9 @@ void SkeletonModification2DTwoBoneIK::set_editor_draw_min_max(bool p_draw) {
 bool SkeletonModification2DTwoBoneIK::get_editor_draw_min_max() const {
 	return editor_draw_min_max;
 }
-#endif // TOOLS_ENABLED
 
 void SkeletonModification2DTwoBoneIK::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_target_node", "target_nodepath"), &SkeletonModification2DTwoBoneIK::set_target_node);
 	ClassDB::bind_method(D_METHOD("get_target_node"), &SkeletonModification2DTwoBoneIK::get_target_node);
 
@@ -476,6 +458,7 @@ void SkeletonModification2DTwoBoneIK::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "target_maximum_distance", PROPERTY_HINT_NONE, "0,100000000,0.01,suffix:px"), "set_target_maximum_distance", "get_target_maximum_distance");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "flip_bend_direction", PROPERTY_HINT_NONE, ""), "set_flip_bend_direction", "get_flip_bend_direction");
 	ADD_GROUP("", "");
+*/
 }
 
 SkeletonModification2DTwoBoneIK::SkeletonModification2DTwoBoneIK() {
@@ -487,3 +470,4 @@ SkeletonModification2DTwoBoneIK::SkeletonModification2DTwoBoneIK() {
 
 SkeletonModification2DTwoBoneIK::~SkeletonModification2DTwoBoneIK() {
 }
+#endif

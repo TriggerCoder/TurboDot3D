@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "navigation_mesh_source_geometry_data_2d.h"
 
 #include "scene/resources/mesh.h"
@@ -276,6 +277,7 @@ void NavigationMeshSourceGeometryData2D::get_data(Vector<Vector<Vector2>> &r_tra
 }
 
 void NavigationMeshSourceGeometryData2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("clear"), &NavigationMeshSourceGeometryData2D::clear);
 	ClassDB::bind_method(D_METHOD("has_data"), &NavigationMeshSourceGeometryData2D::has_data);
 
@@ -301,4 +303,6 @@ void NavigationMeshSourceGeometryData2D::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "traversable_outlines", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NO_EDITOR | PROPERTY_USAGE_INTERNAL), "set_traversable_outlines", "get_traversable_outlines");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "obstruction_outlines", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NO_EDITOR | PROPERTY_USAGE_INTERNAL), "set_obstruction_outlines", "get_obstruction_outlines");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "projected_obstructions", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NO_EDITOR | PROPERTY_USAGE_INTERNAL), "set_projected_obstructions", "get_projected_obstructions");
+*/
 }
+#endif

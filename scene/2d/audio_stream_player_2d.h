@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef AUDIO_STREAM_PLAYER_2D_H
 #define AUDIO_STREAM_PLAYER_2D_H
 
@@ -40,7 +41,7 @@ class AudioStreamPlayback;
 class AudioStreamPlayerInternal;
 
 class AudioStreamPlayer2D : public Node2D {
-	GDCLASS(AudioStreamPlayer2D, Node2D);
+//	GDCLASS(AudioStreamPlayer2D, Node2D);
 
 private:
 	enum {
@@ -143,3 +144,4 @@ public:
 };
 
 #endif // AUDIO_STREAM_PLAYER_2D_H
+#endif //2D

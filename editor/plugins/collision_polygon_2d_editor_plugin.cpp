@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "collision_polygon_2d_editor_plugin.h"
 
 Node2D *CollisionPolygon2DEditor::_get_node() const {
@@ -43,3 +44,4 @@ CollisionPolygon2DEditor::CollisionPolygon2DEditor() {}
 CollisionPolygon2DEditorPlugin::CollisionPolygon2DEditorPlugin() :
 		AbstractPolygon2DEditorPlugin(memnew(CollisionPolygon2DEditor), "CollisionPolygon2D") {
 }
+#endif

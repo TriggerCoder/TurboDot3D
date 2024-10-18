@@ -30,6 +30,7 @@
  * <http://gamma.cs.unc.edu/RVO2/>
  */
 
+#ifdef TOOLS_ENABLED //2D
 #include "RVOSimulator2d.h"
 
 #include "Agent2d.h"
@@ -361,3 +362,4 @@ namespace RVO2D {
 		timeStep_ = timeStep;
 	}
 }
+#endif

@@ -28,13 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef REMOTE_TRANSFORM_2D_H
 #define REMOTE_TRANSFORM_2D_H
 
 #include "scene/2d/node_2d.h"
 
 class RemoteTransform2D : public Node2D {
-	GDCLASS(RemoteTransform2D, Node2D);
+//	GDCLASS(RemoteTransform2D, Node2D);
 
 	NodePath remote_node;
 
@@ -76,3 +77,4 @@ public:
 };
 
 #endif // REMOTE_TRANSFORM_2D_H
+#endif //2D

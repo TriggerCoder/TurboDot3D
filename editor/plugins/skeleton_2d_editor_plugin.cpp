@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "skeleton_2d_editor_plugin.h"
 
 #include "editor/editor_node.h"
@@ -140,3 +141,4 @@ Skeleton2DEditorPlugin::Skeleton2DEditorPlugin() {
 
 Skeleton2DEditorPlugin::~Skeleton2DEditorPlugin() {
 }
+#endif

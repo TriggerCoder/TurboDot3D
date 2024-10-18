@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "pin_joint_2d.h"
 
 #include "scene/2d/physics/physics_body_2d.h"
@@ -150,6 +151,7 @@ bool PinJoint2D::is_angular_limit_enabled() const {
 }
 
 void PinJoint2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_softness", "softness"), &PinJoint2D::set_softness);
 	ClassDB::bind_method(D_METHOD("get_softness"), &PinJoint2D::get_softness);
 	ClassDB::bind_method(D_METHOD("set_angular_limit_lower", "angular_limit_lower"), &PinJoint2D::set_angular_limit_lower);
@@ -171,7 +173,9 @@ void PinJoint2D::_bind_methods() {
 	ADD_GROUP("Motor", "motor_");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "motor_enabled"), "set_motor_enabled", "is_motor_enabled");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "motor_target_velocity", PROPERTY_HINT_RANGE, U"-200,200,0.01,or_greater,or_less,radians_as_degrees,suffix:\u00B0/s"), "set_motor_target_velocity", "get_motor_target_velocity");
+*/
 }
 
 PinJoint2D::PinJoint2D() {
 }
+#endif

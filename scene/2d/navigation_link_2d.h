@@ -28,13 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef NAVIGATION_LINK_2D_H
 #define NAVIGATION_LINK_2D_H
 
 #include "scene/2d/node_2d.h"
 
 class NavigationLink2D : public Node2D {
-	GDCLASS(NavigationLink2D, Node2D);
+//	GDCLASS(NavigationLink2D, Node2D);
 
 	bool enabled = true;
 	RID link;
@@ -52,10 +53,10 @@ protected:
 	void _notification(int p_what);
 
 public:
-#ifdef TOOLS_ENABLED
+
 	virtual Rect2 _edit_get_rect() const override;
 	virtual bool _edit_is_selected_on_click(const Point2 &p_point, double p_tolerance) const override;
-#endif
+
 	RID get_rid() const;
 
 	void set_enabled(bool p_enabled);
@@ -95,3 +96,4 @@ public:
 };
 
 #endif // NAVIGATION_LINK_2D_H
+#endif //2D

@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "remote_transform_2d.h"
 
 void RemoteTransform2D::_update_cache() {
@@ -211,6 +212,7 @@ PackedStringArray RemoteTransform2D::get_configuration_warnings() const {
 }
 
 void RemoteTransform2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_remote_node", "path"), &RemoteTransform2D::set_remote_node);
 	ClassDB::bind_method(D_METHOD("get_remote_node"), &RemoteTransform2D::get_remote_node);
 	ClassDB::bind_method(D_METHOD("force_update_cache"), &RemoteTransform2D::force_update_cache);
@@ -232,6 +234,7 @@ void RemoteTransform2D::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "update_position"), "set_update_position", "get_update_position");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "update_rotation"), "set_update_rotation", "get_update_rotation");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "update_scale"), "set_update_scale", "get_update_scale");
+*/
 }
 
 RemoteTransform2D::RemoteTransform2D() {
@@ -239,3 +242,4 @@ RemoteTransform2D::RemoteTransform2D() {
 	set_notify_local_transform(!use_global_coordinates);
 	set_hide_clip_children(true);
 }
+#endif

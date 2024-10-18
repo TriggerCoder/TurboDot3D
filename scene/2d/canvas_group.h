@@ -28,13 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef CANVAS_GROUP_H
 #define CANVAS_GROUP_H
 
 #include "scene/2d/node_2d.h"
 
 class CanvasGroup : public Node2D {
-	GDCLASS(CanvasGroup, Node2D)
+//	GDCLASS(CanvasGroup, Node2D)
 	real_t fit_margin = 10.0;
 	real_t clear_margin = 10.0;
 	bool use_mipmaps = false;
@@ -57,3 +58,4 @@ public:
 };
 
 #endif // CANVAS_GROUP_H
+#endif //2D

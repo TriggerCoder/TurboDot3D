@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "parallax_2d.h"
 
 #include "core/config/project_settings.h"
@@ -59,11 +60,9 @@ void Parallax2D::_notification(int p_what) {
 	}
 }
 
-#ifdef TOOLS_ENABLED
 void Parallax2D::_edit_set_position(const Point2 &p_position) {
 	set_scroll_offset(p_position);
 }
-#endif // TOOLS_ENABLED
 
 void Parallax2D::_validate_property(PropertyInfo &p_property) const {
 	if (p_property.name == "position") {
@@ -250,6 +249,7 @@ bool Parallax2D::is_ignore_camera_scroll() {
 }
 
 void Parallax2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("_camera_moved", "transform", "screen_offset", "adj_screen_offset"), &Parallax2D::_camera_moved);
 	ClassDB::bind_method(D_METHOD("set_scroll_scale", "scale"), &Parallax2D::set_scroll_scale);
 	ClassDB::bind_method(D_METHOD("get_scroll_scale"), &Parallax2D::get_scroll_scale);
@@ -288,9 +288,11 @@ void Parallax2D::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "follow_viewport"), "set_follow_viewport", "get_follow_viewport");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "ignore_camera_scroll"), "set_ignore_camera_scroll", "is_ignore_camera_scroll");
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "screen_offset", PROPERTY_HINT_NONE, "suffix:px"), "set_screen_offset", "get_screen_offset");
+*/
 }
 
 Parallax2D::Parallax2D() {
 	// Parallax2D is always updated every frame so there is no need to interpolate.
 	set_physics_interpolation_mode(Node::PHYSICS_INTERPOLATION_MODE_OFF);
 }
+#endif

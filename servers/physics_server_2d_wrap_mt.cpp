@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "physics_server_2d_wrap_mt.h"
 
 #include "core/os/os.h"
@@ -110,3 +111,4 @@ PhysicsServer2DWrapMT::PhysicsServer2DWrapMT(PhysicsServer2D *p_contained, bool 
 PhysicsServer2DWrapMT::~PhysicsServer2DWrapMT() {
 	memdelete(physics_server_2d);
 }
+#endif

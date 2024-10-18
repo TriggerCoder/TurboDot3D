@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "cast_2d_editor_plugin.h"
 
 #include "canvas_item_editor_plugin.h"
@@ -154,3 +155,4 @@ Cast2DEditorPlugin::Cast2DEditorPlugin() {
 	cast_2d_editor = memnew(Cast2DEditor);
 	EditorNode::get_singleton()->get_gui_base()->add_child(cast_2d_editor);
 }
+#endif

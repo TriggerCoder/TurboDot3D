@@ -28,13 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef SHAPE_2D_H
 #define SHAPE_2D_H
 
 #include "core/io/resource.h"
 
 class Shape2D : public Resource {
-	GDCLASS(Shape2D, Resource);
+//	GDCLASS(Shape2D, Resource);
 	OBJ_SAVE_TYPE(Shape2D);
 
 	RID shape;
@@ -68,3 +69,4 @@ public:
 };
 
 #endif // SHAPE_2D_H
+#endif //2D

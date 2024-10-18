@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "canvas_modulate.h"
 
 void CanvasModulate::_on_in_canvas_visibility_changed(bool p_new_visibility) {
@@ -96,10 +97,12 @@ void CanvasModulate::_notification(int p_what) {
 }
 
 void CanvasModulate::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_color", "color"), &CanvasModulate::set_color);
 	ClassDB::bind_method(D_METHOD("get_color"), &CanvasModulate::get_color);
 
 	ADD_PROPERTY(PropertyInfo(Variant::COLOR, "color"), "set_color", "get_color");
+*/
 }
 
 void CanvasModulate::set_color(const Color &p_color) {
@@ -133,3 +136,4 @@ CanvasModulate::CanvasModulate() {
 
 CanvasModulate::~CanvasModulate() {
 }
+#endif

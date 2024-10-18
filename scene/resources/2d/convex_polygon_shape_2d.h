@@ -28,13 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef CONVEX_POLYGON_SHAPE_2D_H
 #define CONVEX_POLYGON_SHAPE_2D_H
 
 #include "scene/resources/2d/shape_2d.h"
 
 class ConvexPolygonShape2D : public Shape2D {
-	GDCLASS(ConvexPolygonShape2D, Shape2D);
+//	GDCLASS(ConvexPolygonShape2D, Shape2D);
 
 	Vector<Vector2> points;
 	void _update_shape();
@@ -57,3 +58,4 @@ public:
 };
 
 #endif // CONVEX_POLYGON_SHAPE_2D_H
+#endif //2D

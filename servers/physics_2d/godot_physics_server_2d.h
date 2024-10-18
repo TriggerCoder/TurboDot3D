@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef GODOT_PHYSICS_SERVER_2D_H
 #define GODOT_PHYSICS_SERVER_2D_H
 
@@ -305,3 +306,4 @@ public:
 };
 
 #endif // GODOT_PHYSICS_SERVER_2D_H
+#endif //2D

@@ -37,9 +37,12 @@
 #include "core/math/math_defs.h"
 #include "core/object/worker_thread_pool.h"
 
+#ifdef TOOLS_ENABLED //2D
 #include <KdTree2d.h>
-#include <KdTree3d.h>
 #include <RVOSimulator2d.h>
+#endif
+
+#include <KdTree3d.h>
 #include <RVOSimulator3d.h>
 
 class NavLink;
@@ -85,11 +88,15 @@ class NavMap : public NavRid {
 	LocalVector<gd::Polygon> polygons;
 
 	/// RVO avoidance worlds
+#ifdef TOOLS_ENABLED //2D
 	RVO2D::RVOSimulator2D rvo_simulation_2d;
+#endif
 	RVO3D::RVOSimulator3D rvo_simulation_3d;
 
 	/// avoidance controlled agents
+#ifdef TOOLS_ENABLED //2D
 	LocalVector<NavAgent *> active_2d_avoidance_agents;
+#endif
 	LocalVector<NavAgent *> active_3d_avoidance_agents;
 
 	/// dirty flag when one of the agent's arrays are modified
@@ -220,13 +227,16 @@ public:
 private:
 	void compute_single_step(uint32_t index, NavAgent **agent);
 
+#ifdef TOOLS_ENABLED //2D
 	void compute_single_avoidance_step_2d(uint32_t index, NavAgent **agent);
+	void _update_rvo_obstacles_tree_2d();
+	void _update_rvo_agents_tree_2d();
+#endif
+
 	void compute_single_avoidance_step_3d(uint32_t index, NavAgent **agent);
 
 	void clip_path(const LocalVector<gd::NavigationPoly> &p_navigation_polys, Vector<Vector3> &path, const gd::NavigationPoly *from_poly, const Vector3 &p_to_point, const gd::NavigationPoly *p_to_poly, Vector<int32_t> *r_path_types, TypedArray<RID> *r_path_rids, Vector<int64_t> *r_path_owners) const;
 	void _update_rvo_simulation();
-	void _update_rvo_obstacles_tree_2d();
-	void _update_rvo_agents_tree_2d();
 	void _update_rvo_agents_tree_3d();
 
 	void _update_merge_rasterizer_cell_dimensions();

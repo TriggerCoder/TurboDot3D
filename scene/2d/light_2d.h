@@ -28,13 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef LIGHT_2D_H
 #define LIGHT_2D_H
 
 #include "scene/2d/node_2d.h"
 
 class Light2D : public Node2D {
-	GDCLASS(Light2D, Node2D);
+//	GDCLASS(Light2D, Node2D);
 
 public:
 	enum ShadowFilter {
@@ -139,7 +140,7 @@ VARIANT_ENUM_CAST(Light2D::ShadowFilter);
 VARIANT_ENUM_CAST(Light2D::BlendMode);
 
 class PointLight2D : public Light2D {
-	GDCLASS(PointLight2D, Light2D);
+//	GDCLASS(PointLight2D, Light2D);
 
 private:
 	real_t _scale = 1.0;
@@ -150,7 +151,7 @@ protected:
 	static void _bind_methods();
 
 public:
-#ifdef TOOLS_ENABLED
+
 	virtual Dictionary _edit_get_state() const override;
 	virtual void _edit_set_state(const Dictionary &p_state) override;
 
@@ -159,7 +160,6 @@ public:
 	virtual bool _edit_use_pivot() const override;
 	virtual Rect2 _edit_get_rect() const override;
 	virtual bool _edit_use_rect() const override;
-#endif
 
 	virtual Rect2 get_anchorable_rect() const override;
 
@@ -178,7 +178,7 @@ public:
 };
 
 class DirectionalLight2D : public Light2D {
-	GDCLASS(DirectionalLight2D, Light2D);
+//	GDCLASS(DirectionalLight2D, Light2D);
 
 	real_t max_distance = 10000.0;
 
@@ -193,3 +193,4 @@ public:
 };
 
 #endif // LIGHT_2D_H
+#endif //2D

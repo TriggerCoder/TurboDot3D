@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef NAVIGATION_POLYGON_H
 #define NAVIGATION_POLYGON_H
 
@@ -35,7 +36,7 @@
 #include "scene/resources/navigation_mesh.h"
 
 class NavigationPolygon : public Resource {
-	GDCLASS(NavigationPolygon, Resource);
+//	GDCLASS(NavigationPolygon, Resource);
 	RWLock rwlock;
 
 	Vector<Vector2> vertices;
@@ -70,10 +71,9 @@ protected:
 	TypedArray<Vector<Vector2>> _get_outlines() const;
 
 public:
-#ifdef TOOLS_ENABLED
+
 	Rect2 _edit_get_rect() const;
 	bool _edit_is_selected_on_click(const Point2 &p_point, double p_tolerance) const;
-#endif
 
 	enum ParsedGeometryType {
 		PARSED_GEOMETRY_MESH_INSTANCES = 0,
@@ -162,3 +162,4 @@ VARIANT_ENUM_CAST(NavigationPolygon::ParsedGeometryType);
 VARIANT_ENUM_CAST(NavigationPolygon::SourceGeometryMode);
 
 #endif // NAVIGATION_POLYGON_H
+#endif //2D

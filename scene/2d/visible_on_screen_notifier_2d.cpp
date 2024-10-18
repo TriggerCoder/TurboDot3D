@@ -28,9 +28,9 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "visible_on_screen_notifier_2d.h"
 
-#ifdef TOOLS_ENABLED
 Rect2 VisibleOnScreenNotifier2D::_edit_get_rect() const {
 	return rect;
 }
@@ -38,7 +38,6 @@ Rect2 VisibleOnScreenNotifier2D::_edit_get_rect() const {
 bool VisibleOnScreenNotifier2D::_edit_use_rect() const {
 	return true;
 }
-#endif
 
 void VisibleOnScreenNotifier2D::_visibility_enter() {
 	if (!is_inside_tree() || Engine::get_singleton()->is_editor_hint()) {
@@ -96,6 +95,7 @@ bool VisibleOnScreenNotifier2D::is_on_screen() const {
 }
 
 void VisibleOnScreenNotifier2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_rect", "rect"), &VisibleOnScreenNotifier2D::set_rect);
 	ClassDB::bind_method(D_METHOD("get_rect"), &VisibleOnScreenNotifier2D::get_rect);
 	ClassDB::bind_method(D_METHOD("is_on_screen"), &VisibleOnScreenNotifier2D::is_on_screen);
@@ -104,6 +104,7 @@ void VisibleOnScreenNotifier2D::_bind_methods() {
 
 	ADD_SIGNAL(MethodInfo("screen_entered"));
 	ADD_SIGNAL(MethodInfo("screen_exited"));
+*/
 }
 
 VisibleOnScreenNotifier2D::VisibleOnScreenNotifier2D() {
@@ -198,6 +199,7 @@ void VisibleOnScreenEnabler2D::_notification(int p_what) {
 }
 
 void VisibleOnScreenEnabler2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_enable_mode", "mode"), &VisibleOnScreenEnabler2D::set_enable_mode);
 	ClassDB::bind_method(D_METHOD("get_enable_mode"), &VisibleOnScreenEnabler2D::get_enable_mode);
 
@@ -211,7 +213,9 @@ void VisibleOnScreenEnabler2D::_bind_methods() {
 	BIND_ENUM_CONSTANT(ENABLE_MODE_INHERIT);
 	BIND_ENUM_CONSTANT(ENABLE_MODE_ALWAYS);
 	BIND_ENUM_CONSTANT(ENABLE_MODE_WHEN_PAUSED);
+*/
 }
 
 VisibleOnScreenEnabler2D::VisibleOnScreenEnabler2D() {
 }
+#endif

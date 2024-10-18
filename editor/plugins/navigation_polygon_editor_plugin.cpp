@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "navigation_polygon_editor_plugin.h"
 
 #include "editor/editor_node.h"
@@ -258,3 +259,4 @@ void NavigationPolygonEditor::_rebake_timer_timeout() {
 NavigationPolygonEditorPlugin::NavigationPolygonEditorPlugin() :
 		AbstractPolygon2DEditorPlugin(memnew(NavigationPolygonEditor), "NavigationRegion2D") {
 }
+#endif //2D

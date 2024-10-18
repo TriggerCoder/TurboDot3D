@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "parallax_background.h"
 
 #include "parallax_layer.h"
@@ -162,6 +163,7 @@ Vector2 ParallaxBackground::get_final_offset() const {
 }
 
 void ParallaxBackground::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("_camera_moved"), &ParallaxBackground::_camera_moved);
 	ClassDB::bind_method(D_METHOD("set_scroll_offset", "offset"), &ParallaxBackground::set_scroll_offset);
 	ClassDB::bind_method(D_METHOD("get_scroll_offset"), &ParallaxBackground::get_scroll_offset);
@@ -183,8 +185,10 @@ void ParallaxBackground::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "scroll_limit_begin", PROPERTY_HINT_NONE, "suffix:px"), "set_limit_begin", "get_limit_begin");
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "scroll_limit_end", PROPERTY_HINT_NONE, "suffix:px"), "set_limit_end", "get_limit_end");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "scroll_ignore_camera_zoom"), "set_ignore_camera_zoom", "is_ignore_camera_zoom");
+*/
 }
 
 ParallaxBackground::ParallaxBackground() {
 	set_layer(-100); //behind all by default
 }
+#endif

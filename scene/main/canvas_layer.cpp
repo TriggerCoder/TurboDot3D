@@ -32,7 +32,9 @@
 
 #include "scene/main/canvas_item.h"
 #include "scene/main/viewport.h"
+#ifdef TOOLS_ENABLED //2D
 #include "scene/resources/world_2d.h"
+#endif
 
 void CanvasLayer::set_layer(int p_xform) {
 	layer = p_xform;
@@ -299,9 +301,12 @@ void CanvasLayer::_update_follow_viewport(bool p_force_exit) {
 	}
 	if (p_force_exit || !follow_viewport) {
 		RS::get_singleton()->canvas_set_parent(canvas, RID(), 1.0);
-	} else {
+	}
+#ifdef TOOLS_ENABLED //2D
+	else {
 		RS::get_singleton()->canvas_set_parent(canvas, vp->get_world_2d()->get_canvas(), follow_viewport_scale);
 	}
+#endif
 }
 
 void CanvasLayer::_validate_property(PropertyInfo &p_property) const {

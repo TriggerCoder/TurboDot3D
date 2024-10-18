@@ -53,7 +53,9 @@ class HSplitContainer;
 class LinkButton;
 class MenuBar;
 class MenuButton;
+#ifdef TOOLS_ENABLED //2D
 class Node2D;
+#endif
 class OptionButton;
 class Panel;
 class PanelContainer;

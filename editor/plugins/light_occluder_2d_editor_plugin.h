@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef LIGHT_OCCLUDER_2D_EDITOR_PLUGIN_H
 #define LIGHT_OCCLUDER_2D_EDITOR_PLUGIN_H
 
@@ -67,3 +68,4 @@ public:
 };
 
 #endif // LIGHT_OCCLUDER_2D_EDITOR_PLUGIN_H
+#endif //2D

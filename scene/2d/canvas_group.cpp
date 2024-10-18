@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "canvas_group.h"
 
 void CanvasGroup::set_fit_margin(real_t p_fit_margin) {
@@ -65,6 +66,7 @@ bool CanvasGroup::is_using_mipmaps() const {
 }
 
 void CanvasGroup::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_fit_margin", "fit_margin"), &CanvasGroup::set_fit_margin);
 	ClassDB::bind_method(D_METHOD("get_fit_margin"), &CanvasGroup::get_fit_margin);
 
@@ -78,6 +80,7 @@ void CanvasGroup::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "fit_margin", PROPERTY_HINT_RANGE, "0,1024,1.0,or_greater,suffix:px"), "set_fit_margin", "get_fit_margin");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "clear_margin", PROPERTY_HINT_RANGE, "0,1024,1.0,or_greater,suffix:px"), "set_clear_margin", "get_clear_margin");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "use_mipmaps"), "set_use_mipmaps", "is_using_mipmaps");
+*/
 }
 
 CanvasGroup::CanvasGroup() {
@@ -86,3 +89,4 @@ CanvasGroup::CanvasGroup() {
 CanvasGroup::~CanvasGroup() {
 	RS::get_singleton()->canvas_item_set_canvas_group_mode(get_canvas_item(), RS::CANVAS_GROUP_MODE_DISABLED);
 }
+#endif

@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "light_2d.h"
 
 void Light2D::owner_changed_notify() {
@@ -42,7 +43,6 @@ void Light2D::_update_light_visibility() {
 
 	bool editor_ok = true;
 
-#ifdef TOOLS_ENABLED
 	if (editor_only) {
 		if (!Engine::get_singleton()->is_editor_hint()) {
 			editor_ok = false;
@@ -50,11 +50,6 @@ void Light2D::_update_light_visibility() {
 			editor_ok = (get_tree()->get_edited_scene_root() && (this == get_tree()->get_edited_scene_root() || get_owner() == get_tree()->get_edited_scene_root()));
 		}
 	}
-#else
-	if (editor_only) {
-		editor_ok = false;
-	}
-#endif
 
 	RS::get_singleton()->canvas_light_set_enabled(canvas_light, enabled && is_visible_in_tree() && editor_ok);
 }
@@ -254,6 +249,7 @@ void Light2D::_validate_property(PropertyInfo &p_property) const {
 }
 
 void Light2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_enabled", "enabled"), &Light2D::set_enabled);
 	ClassDB::bind_method(D_METHOD("is_enabled"), &Light2D::is_enabled);
 
@@ -328,6 +324,7 @@ void Light2D::_bind_methods() {
 	BIND_ENUM_CONSTANT(BLEND_MODE_ADD);
 	BIND_ENUM_CONSTANT(BLEND_MODE_SUB);
 	BIND_ENUM_CONSTANT(BLEND_MODE_MIX);
+*/
 }
 
 Light2D::Light2D() {
@@ -339,10 +336,6 @@ Light2D::~Light2D() {
 	ERR_FAIL_NULL(RenderingServer::get_singleton());
 	RenderingServer::get_singleton()->free(canvas_light);
 }
-
-//////////////////////////////
-
-#ifdef TOOLS_ENABLED
 
 Dictionary PointLight2D::_edit_get_state() const {
 	Dictionary state = Node2D::_edit_get_state();
@@ -380,7 +373,7 @@ Rect2 PointLight2D::_edit_get_rect() const {
 bool PointLight2D::_edit_use_rect() const {
 	return !texture.is_null();
 }
-#endif
+
 
 Rect2 PointLight2D::get_anchorable_rect() const {
 	if (texture.is_null()) {
@@ -441,6 +434,7 @@ real_t PointLight2D::get_texture_scale() const {
 }
 
 void PointLight2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_texture", "texture"), &PointLight2D::set_texture);
 	ClassDB::bind_method(D_METHOD("get_texture"), &PointLight2D::get_texture);
 
@@ -454,14 +448,13 @@ void PointLight2D::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "offset", PROPERTY_HINT_NONE, "suffix:px"), "set_texture_offset", "get_texture_offset");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "texture_scale", PROPERTY_HINT_RANGE, "0.01,50,0.01"), "set_texture_scale", "get_texture_scale");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "height", PROPERTY_HINT_RANGE, "0,1024,1,or_greater,suffix:px"), "set_height", "get_height");
+*/
 }
 
 PointLight2D::PointLight2D() {
 	RS::get_singleton()->canvas_light_set_mode(_get_light(), RS::CANVAS_LIGHT_MODE_POINT);
 	set_hide_clip_children(true);
 }
-
-//////////
 
 void DirectionalLight2D::set_max_distance(real_t p_distance) {
 	max_distance = p_distance;
@@ -473,11 +466,13 @@ real_t DirectionalLight2D::get_max_distance() const {
 }
 
 void DirectionalLight2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_max_distance", "pixels"), &DirectionalLight2D::set_max_distance);
 	ClassDB::bind_method(D_METHOD("get_max_distance"), &DirectionalLight2D::get_max_distance);
 
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "height", PROPERTY_HINT_RANGE, "0,1,0.01"), "set_height", "get_height");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "max_distance", PROPERTY_HINT_RANGE, "0,16384.0,1.0,or_greater,suffix:px"), "set_max_distance", "get_max_distance");
+*/
 }
 
 DirectionalLight2D::DirectionalLight2D() {
@@ -485,3 +480,4 @@ DirectionalLight2D::DirectionalLight2D() {
 	set_max_distance(max_distance); // Update RenderingServer.
 	set_hide_clip_children(true);
 }
+#endif

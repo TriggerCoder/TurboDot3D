@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef PATH_2D_EDITOR_PLUGIN_H
 #define PATH_2D_EDITOR_PLUGIN_H
 
@@ -136,3 +137,4 @@ public:
 };
 
 #endif // PATH_2D_EDITOR_PLUGIN_H
+#endif //2D

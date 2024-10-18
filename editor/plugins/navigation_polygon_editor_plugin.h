@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef NAVIGATION_POLYGON_EDITOR_PLUGIN_H
 #define NAVIGATION_POLYGON_EDITOR_PLUGIN_H
 
@@ -96,3 +97,4 @@ public:
 };
 
 #endif // NAVIGATION_POLYGON_EDITOR_PLUGIN_H
+#endif //2D

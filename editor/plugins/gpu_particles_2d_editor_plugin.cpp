@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "gpu_particles_2d_editor_plugin.h"
 
 #include "canvas_item_editor_plugin.h"
@@ -428,3 +429,4 @@ GPUParticles2DEditorPlugin::GPUParticles2DEditorPlugin() {
 
 GPUParticles2DEditorPlugin::~GPUParticles2DEditorPlugin() {
 }
+#endif

@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "navigation_obstacle_2d.h"
 
 #include "core/math/geometry_2d.h"
@@ -36,6 +37,7 @@
 #include "servers/navigation_server_3d.h"
 
 void NavigationObstacle2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("get_rid"), &NavigationObstacle2D::get_rid);
 
 	ClassDB::bind_method(D_METHOD("set_avoidance_enabled", "enabled"), &NavigationObstacle2D::set_avoidance_enabled);
@@ -74,6 +76,7 @@ void NavigationObstacle2D::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "avoidance_enabled"), "set_avoidance_enabled", "get_avoidance_enabled");
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "velocity", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NO_EDITOR), "set_velocity", "get_velocity");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "avoidance_layers", PROPERTY_HINT_LAYERS_AVOIDANCE), "set_avoidance_layers", "get_avoidance_layers");
+*/
 }
 
 void NavigationObstacle2D::_notification(int p_what) {
@@ -366,3 +369,4 @@ void NavigationObstacle2D::_update_static_obstacle_debug() {
 	}
 }
 #endif // DEBUG_ENABLED
+#endif //2D

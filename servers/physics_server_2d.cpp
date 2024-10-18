@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "physics_server_2d.h"
 
 #include "core/config/project_settings.h"
@@ -1000,3 +1001,4 @@ PhysicsServer2DManager::PhysicsServer2DManager() {
 PhysicsServer2DManager::~PhysicsServer2DManager() {
 	singleton = nullptr;
 }
+#endif

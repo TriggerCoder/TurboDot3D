@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "path_2d_editor_plugin.h"
 
 #include "canvas_item_editor_plugin.h"
@@ -733,3 +734,4 @@ Path2DEditorPlugin::Path2DEditorPlugin() {
 
 Path2DEditorPlugin::~Path2DEditorPlugin() {
 }
+#endif

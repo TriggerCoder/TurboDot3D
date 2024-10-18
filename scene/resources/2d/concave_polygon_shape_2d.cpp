@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "concave_polygon_shape_2d.h"
 
 #include "core/math/geometry_2d.h"
@@ -106,10 +107,12 @@ real_t ConcavePolygonShape2D::get_enclosing_radius() const {
 }
 
 void ConcavePolygonShape2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_segments", "segments"), &ConcavePolygonShape2D::set_segments);
 	ClassDB::bind_method(D_METHOD("get_segments"), &ConcavePolygonShape2D::get_segments);
 
 	ADD_PROPERTY(PropertyInfo(Variant::PACKED_VECTOR2_ARRAY, "segments"), "set_segments", "get_segments");
+*/
 }
 
 ConcavePolygonShape2D::ConcavePolygonShape2D() :
@@ -117,3 +120,4 @@ ConcavePolygonShape2D::ConcavePolygonShape2D() :
 	Vector<Vector2> empty;
 	set_segments(empty);
 }
+#endif

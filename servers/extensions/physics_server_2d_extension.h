@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef PHYSICS_SERVER_2D_EXTENSION_H
 #define PHYSICS_SERVER_2D_EXTENSION_H
 
@@ -454,3 +455,4 @@ public:
 };
 
 #endif // PHYSICS_SERVER_2D_EXTENSION_H
+#endif //2D

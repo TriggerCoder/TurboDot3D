@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "audio_listener_2d.h"
 
 bool AudioListener2D::_set(const StringName &p_name, const Variant &p_value) {
@@ -106,11 +107,14 @@ bool AudioListener2D::is_current() const {
 }
 
 void AudioListener2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("make_current"), &AudioListener2D::make_current);
 	ClassDB::bind_method(D_METHOD("clear_current"), &AudioListener2D::clear_current);
 	ClassDB::bind_method(D_METHOD("is_current"), &AudioListener2D::is_current);
+*/
 }
 
 AudioListener2D::AudioListener2D() {
 	set_hide_clip_children(true);
 }
+#endif

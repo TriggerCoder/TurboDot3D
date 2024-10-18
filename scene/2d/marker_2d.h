@@ -28,13 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef MARKER_2D_H
 #define MARKER_2D_H
 
 #include "scene/2d/node_2d.h"
 
 class Marker2D : public Node2D {
-	GDCLASS(Marker2D, Node2D);
+//	GDCLASS(Marker2D, Node2D);
 
 	real_t gizmo_extents = 10.0;
 
@@ -57,3 +58,4 @@ public:
 };
 
 #endif // MARKER_2D_H
+#endif //2D

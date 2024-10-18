@@ -30,6 +30,7 @@
  * <http://gamma.cs.unc.edu/RVO2/>
  */
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef RVO2D_RVO_SIMULATOR_H_
 #define RVO2D_RVO_SIMULATOR_H_
 
@@ -590,3 +591,4 @@ namespace RVO2D {
 }
 
 #endif /* RVO2D_RVO_SIMULATOR_H_ */
+#endif //2D

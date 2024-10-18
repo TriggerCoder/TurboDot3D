@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef SKELETON_2D_H
 #define SKELETON_2D_H
 
@@ -37,12 +38,10 @@
 class Skeleton2D;
 
 class Bone2D : public Node2D {
-	GDCLASS(Bone2D, Node2D);
+//	GDCLASS(Bone2D, Node2D);
 
 	friend class Skeleton2D;
-#ifdef TOOLS_ENABLED
 	friend class AnimatedValuesBackup;
-#endif
 
 	Bone2D *parent_bone = nullptr;
 	Skeleton2D *skeleton = nullptr;
@@ -55,12 +54,9 @@ class Bone2D : public Node2D {
 	int skeleton_index = -1;
 
 	void calculate_length_and_rotation();
-
-#ifdef TOOLS_ENABLED
 	RID editor_gizmo_rid;
 	bool _editor_get_bone_shape(Vector<Vector2> *p_shape, Vector<Vector2> *p_outline_shape, Bone2D *p_other_bone);
 	bool _editor_show_bone_gizmo = true;
-#endif // TOOLS ENABLED
 
 protected:
 	void _notification(int p_what);
@@ -89,10 +85,8 @@ public:
 
 	int get_index_in_skeleton() const;
 
-#ifdef TOOLS_ENABLED
 	void _editor_set_show_bone_gizmo(bool p_show_gizmo);
 	bool _editor_get_show_bone_gizmo() const;
-#endif // TOOLS_ENABLED
 
 	Bone2D();
 	~Bone2D();
@@ -101,12 +95,10 @@ public:
 class SkeletonModificationStack2D;
 
 class Skeleton2D : public Node2D {
-	GDCLASS(Skeleton2D, Node2D);
+//	GDCLASS(Skeleton2D, Node2D);
 
 	friend class Bone2D;
-#ifdef TOOLS_ENABLED
 	friend class AnimatedValuesBackup;
-#endif
 
 	struct Bone {
 		bool operator<(const Bone &p_bone) const {
@@ -176,3 +168,4 @@ public:
 };
 
 #endif // SKELETON_2D_H
+#endif //2D

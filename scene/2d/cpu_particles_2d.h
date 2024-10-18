@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef CPU_PARTICLES_2D_H
 #define CPU_PARTICLES_2D_H
 
@@ -35,7 +36,7 @@
 
 class CPUParticles2D : public Node2D {
 private:
-	GDCLASS(CPUParticles2D, Node2D);
+//	GDCLASS(CPUParticles2D, Node2D);
 
 public:
 	enum DrawOrder {
@@ -298,3 +299,4 @@ VARIANT_ENUM_CAST(CPUParticles2D::ParticleFlags)
 VARIANT_ENUM_CAST(CPUParticles2D::EmissionShape)
 
 #endif // CPU_PARTICLES_2D_H
+#endif //2D

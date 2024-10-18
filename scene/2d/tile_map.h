@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef TILE_MAP_H
 #define TILE_MAP_H
 
@@ -47,7 +48,7 @@ enum TileMapDataFormat {
 };
 
 class TileMap : public Node2D {
-	GDCLASS(TileMap, Node2D)
+//	GDCLASS(TileMap, Node2D)
 
 public:
 	// Kept for compatibility, but should use TileMapLayer::VisibilityMode instead.
@@ -100,9 +101,8 @@ protected:
 	static void _bind_methods();
 
 public:
-#ifdef TOOLS_ENABLED
+
 	virtual Rect2 _edit_get_rect() const override;
-#endif
 
 	void set_rendering_quadrant_size(int p_size);
 	int get_rendering_quadrant_size() const;
@@ -197,10 +197,8 @@ public:
 	// Fixing and clearing methods.
 	void fix_invalid_tiles();
 
-#ifdef TOOLS_ENABLED
 	// Moving layers outside of TileMap.
 	TileMapLayer *duplicate_layer_from_internal(int p_layer);
-#endif // TOOLS_ENABLED
 
 	// Clears tiles from a given layer.
 	void clear_layer(int p_layer);
@@ -226,3 +224,4 @@ public:
 VARIANT_ENUM_CAST(TileMap::VisibilityMode);
 
 #endif // TILE_MAP_H
+#endif //2D

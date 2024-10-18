@@ -28,13 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef RIGID_BODY_2D_H
 #define RIGID_BODY_2D_H
 
 #include "scene/2d/physics/static_body_2d.h"
 
 class RigidBody2D : public PhysicsBody2D {
-	GDCLASS(RigidBody2D, PhysicsBody2D);
+//	GDCLASS(RigidBody2D, PhysicsBody2D);
 
 public:
 	enum FreezeMode {
@@ -247,3 +248,4 @@ VARIANT_ENUM_CAST(RigidBody2D::DampMode);
 VARIANT_ENUM_CAST(RigidBody2D::CCDMode);
 
 #endif // RIGID_BODY_2D_H
+#endif //2D

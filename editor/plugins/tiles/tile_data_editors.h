@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef TILE_DATA_EDITORS_H
 #define TILE_DATA_EDITORS_H
 
@@ -418,3 +419,4 @@ public:
 };
 
 #endif // TILE_DATA_EDITORS_H
+#endif //2D

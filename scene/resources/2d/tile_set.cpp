@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "tile_set.h"
 
 #include "core/io/marshalls.h"
@@ -205,6 +206,7 @@ void TileMapPattern::_get_property_list(List<PropertyInfo> *p_list) const {
 }
 
 void TileMapPattern::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_cell", "coords", "source_id", "atlas_coords", "alternative_tile"), &TileMapPattern::set_cell, DEFVAL(TileSet::INVALID_SOURCE), DEFVAL(TileSetSource::INVALID_ATLAS_COORDS), DEFVAL(TileSetSource::INVALID_TILE_ALTERNATIVE));
 	ClassDB::bind_method(D_METHOD("has_cell", "coords"), &TileMapPattern::has_cell);
 	ClassDB::bind_method(D_METHOD("remove_cell", "coords", "update_size"), &TileMapPattern::remove_cell);
@@ -216,6 +218,7 @@ void TileMapPattern::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_size"), &TileMapPattern::get_size);
 	ClassDB::bind_method(D_METHOD("set_size", "size"), &TileMapPattern::set_size);
 	ClassDB::bind_method(D_METHOD("is_empty"), &TileMapPattern::is_empty);
+*/
 }
 
 /////////////////////////////// TileSet //////////////////////////////////////
@@ -3742,6 +3745,7 @@ void TileSet::_validate_property(PropertyInfo &p_property) const {
 }
 
 void TileSet::_bind_methods() {
+/*
 	// Sources management.
 	ClassDB::bind_method(D_METHOD("get_next_source_id"), &TileSet::get_next_source_id);
 	ClassDB::bind_method(D_METHOD("add_source", "source", "atlas_source_id_override"), &TileSet::add_source, DEFVAL(TileSet::INVALID_SOURCE));
@@ -3903,6 +3907,7 @@ void TileSet::_bind_methods() {
 	BIND_ENUM_CONSTANT(TERRAIN_MODE_MATCH_CORNERS_AND_SIDES);
 	BIND_ENUM_CONSTANT(TERRAIN_MODE_MATCH_CORNERS);
 	BIND_ENUM_CONSTANT(TERRAIN_MODE_MATCH_SIDES);
+*/
 }
 
 TileSet::TileSet() {
@@ -3932,6 +3937,7 @@ void TileSetSource::reset_state() {
 };
 
 void TileSetSource::_bind_methods() {
+/*
 	// Base tiles
 	ClassDB::bind_method(D_METHOD("get_tiles_count"), &TileSetSource::get_tiles_count);
 	ClassDB::bind_method(D_METHOD("get_tile_id", "index"), &TileSetSource::get_tile_id);
@@ -3941,6 +3947,7 @@ void TileSetSource::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_alternative_tiles_count", "atlas_coords"), &TileSetSource::get_alternative_tiles_count);
 	ClassDB::bind_method(D_METHOD("get_alternative_tile_id", "atlas_coords", "index"), &TileSetSource::get_alternative_tile_id);
 	ClassDB::bind_method(D_METHOD("has_alternative_tile", "atlas_coords", "alternative_tile"), &TileSetSource::has_alternative_tile);
+*/
 }
 
 /////////////////////////////// TileSetAtlasSource //////////////////////////////////////
@@ -4933,6 +4940,7 @@ void TileSetAtlasSource::_notification(int p_notification) {
 }
 
 void TileSetAtlasSource::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_texture", "texture"), &TileSetAtlasSource::set_texture);
 	ClassDB::bind_method(D_METHOD("get_texture"), &TileSetAtlasSource::get_texture);
 	ClassDB::bind_method(D_METHOD("set_margins", "margins"), &TileSetAtlasSource::set_margins);
@@ -5000,6 +5008,7 @@ void TileSetAtlasSource::_bind_methods() {
 	BIND_CONSTANT(TRANSFORM_FLIP_H)
 	BIND_CONSTANT(TRANSFORM_FLIP_V)
 	BIND_CONSTANT(TRANSFORM_TRANSPOSE)
+*/
 }
 
 TileSetAtlasSource::~TileSetAtlasSource() {
@@ -5386,6 +5395,7 @@ void TileSetScenesCollectionSource::_notification(int p_notification) {
 }
 
 void TileSetScenesCollectionSource::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("get_scene_tiles_count"), &TileSetScenesCollectionSource::get_scene_tiles_count);
 	ClassDB::bind_method(D_METHOD("get_scene_tile_id", "index"), &TileSetScenesCollectionSource::get_scene_tile_id);
 	ClassDB::bind_method(D_METHOD("has_scene_tile_id", "id"), &TileSetScenesCollectionSource::has_scene_tile_id);
@@ -5397,6 +5407,7 @@ void TileSetScenesCollectionSource::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_scene_tile_display_placeholder", "id"), &TileSetScenesCollectionSource::get_scene_tile_display_placeholder);
 	ClassDB::bind_method(D_METHOD("remove_scene_tile", "id"), &TileSetScenesCollectionSource::remove_scene_tile);
 	ClassDB::bind_method(D_METHOD("get_next_scene_tile_id"), &TileSetScenesCollectionSource::get_next_scene_tile_id);
+*/
 }
 
 /////////////////////////////// TileData //////////////////////////////////////
@@ -6374,6 +6385,7 @@ void TileData::_get_property_list(List<PropertyInfo> *p_list) const {
 }
 
 void TileData::_bind_methods() {
+/*
 	// Rendering.
 	ClassDB::bind_method(D_METHOD("set_flip_h", "flip_h"), &TileData::set_flip_h);
 	ClassDB::bind_method(D_METHOD("get_flip_h"), &TileData::get_flip_h);
@@ -6452,4 +6464,6 @@ void TileData::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "probability"), "set_probability", "get_probability");
 
 	ADD_SIGNAL(MethodInfo("changed"));
+*/
 }
+#endif

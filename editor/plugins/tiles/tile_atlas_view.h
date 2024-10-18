@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef TILE_ATLAS_VIEW_H
 #define TILE_ATLAS_VIEW_H
 
@@ -172,3 +173,4 @@ public:
 };
 
 #endif // TILE_ATLAS_VIEW_H
+#endif //2D

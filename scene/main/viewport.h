@@ -39,8 +39,11 @@ class CollisionObject3D;
 class AudioListener3D;
 class World3D;
 
+#ifdef TOOLS_ENABLED //2D
 class AudioListener2D;
 class Camera2D;
+#endif
+
 class CanvasItem;
 class CanvasLayer;
 class Control;
@@ -48,7 +51,10 @@ class Label;
 class SceneTreeTimer;
 class Viewport;
 class Window;
+
+#ifdef TOOLS_ENABLED //2D
 class World2D;
+#endif
 
 class ViewportTexture : public Texture2D {
 	GDCLASS(ViewportTexture, Texture2D);
@@ -241,7 +247,10 @@ private:
 	Size2i size_2d_override;
 	bool size_allocated = false;
 
+#ifdef TOOLS_ENABLED //2D
 	RID contact_2d_debug;
+#endif
+
 	RID contact_3d_debug_multimesh;
 	RID contact_3d_debug_instance;
 
@@ -268,7 +277,9 @@ private:
 	bool handle_input_locally = true;
 	bool local_input_handled = false;
 
+#ifdef TOOLS_ENABLED //2D
 	Ref<World2D> world_2d;
+#endif
 
 	StringName input_group;
 	StringName shortcut_input_group;
@@ -471,7 +482,9 @@ private:
 	uint64_t event_count = 0;
 
 	void _process_dirty_canvas_parent_orders();
+#ifdef TOOLS_ENABLED //2D
 	void _propagate_world_2d_changed(Node *p_node);
+#endif
 
 protected:
 	bool _set_size(const Size2i &p_size, const Size2i &p_size_2d_override, bool p_allocated);
@@ -496,14 +509,17 @@ public:
 	Rect2 get_visible_rect() const;
 	RID get_viewport_rid() const;
 
+#ifdef TOOLS_ENABLED //2D
 	void set_world_2d(const Ref<World2D> &p_world_2d);
 	Ref<World2D> get_world_2d() const;
 	Ref<World2D> find_world_2d() const;
 
 	void enable_canvas_transform_override(bool p_enable);
+	void set_canvas_transform_override(const Transform2D &p_transform);
+#endif
+
 	bool is_canvas_transform_override_enabled() const;
 
-	void set_canvas_transform_override(const Transform2D &p_transform);
 	Transform2D get_canvas_transform_override() const;
 
 	void set_canvas_transform(const Transform2D &p_transform);
@@ -673,6 +689,7 @@ public:
 	virtual bool is_attached_in_viewport() const { return false; };
 	virtual bool is_sub_viewport() const { return false; };
 
+#ifdef TOOLS_ENABLED //2D
 private:
 	// 2D audio, camera, and physics. (don't put World2D here because World2D is needed for Control nodes).
 	friend class AudioListener2D; // Needs _audio_listener_2d_set and _audio_listener_2d_remove
@@ -700,6 +717,7 @@ public:
 
 	Camera2D *get_camera_2d() const;
 	void assign_next_enabled_camera_2d(const StringName &p_camera_group);
+#endif
 
 private:
 	// 3D audio, camera, physics, and world.

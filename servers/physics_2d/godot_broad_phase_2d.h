@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef GODOT_BROAD_PHASE_2D_H
 #define GODOT_BROAD_PHASE_2D_H
 
@@ -69,3 +70,4 @@ public:
 };
 
 #endif // GODOT_BROAD_PHASE_2D_H
+#endif //2D

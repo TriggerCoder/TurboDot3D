@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef SKELETON_MODIFICATION_2D_PHYSICALBONES_H
 #define SKELETON_MODIFICATION_2D_PHYSICALBONES_H
 
@@ -39,7 +40,7 @@
 ///////////////////////////////////////
 
 class SkeletonModification2DPhysicalBones : public SkeletonModification2D {
-	GDCLASS(SkeletonModification2DPhysicalBones, SkeletonModification2D);
+//	GDCLASS(SkeletonModification2DPhysicalBones, SkeletonModification2D);
 
 private:
 	struct PhysicalBone_Data2D {
@@ -80,3 +81,4 @@ public:
 };
 
 #endif // SKELETON_MODIFICATION_2D_PHYSICALBONES_H
+#endif //2D

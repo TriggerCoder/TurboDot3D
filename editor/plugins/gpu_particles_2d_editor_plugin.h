@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef GPU_PARTICLES_2D_EDITOR_PLUGIN_H
 #define GPU_PARTICLES_2D_EDITOR_PLUGIN_H
 
@@ -100,3 +101,4 @@ public:
 };
 
 #endif // GPU_PARTICLES_2D_EDITOR_PLUGIN_H
+#endif //2D

@@ -30,7 +30,9 @@
 
 #include "register_types.h"
 
+#ifdef TOOLS_ENABLED //2D
 #include "2d/godot_navigation_server_2d.h"
+#endif
 #include "3d/godot_navigation_server_3d.h"
 
 #ifdef TOOLS_ENABLED
@@ -38,22 +40,29 @@
 #endif
 
 #include "core/config/engine.h"
+
+#ifdef TOOLS_ENABLED //2D
 #include "servers/navigation_server_2d.h"
+#endif
+
 #include "servers/navigation_server_3d.h"
 
 NavigationServer3D *new_navigation_server_3d() {
 	return memnew(GodotNavigationServer3D);
 }
 
+#ifdef TOOLS_ENABLED //2D
 NavigationServer2D *new_navigation_server_2d() {
 	return memnew(GodotNavigationServer2D);
 }
+#endif
 
 void initialize_navigation_module(ModuleInitializationLevel p_level) {
 	if (p_level == MODULE_INITIALIZATION_LEVEL_SERVERS) {
 		NavigationServer3DManager::set_default_server(new_navigation_server_3d);
+#ifdef TOOLS_ENABLED //2D
 		NavigationServer2DManager::set_default_server(new_navigation_server_2d);
-
+#endif
 	}
 
 #ifdef TOOLS_ENABLED

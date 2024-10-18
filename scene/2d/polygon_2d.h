@@ -28,13 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef POLYGON_2D_H
 #define POLYGON_2D_H
 
 #include "scene/2d/node_2d.h"
 
 class Polygon2D : public Node2D {
-	GDCLASS(Polygon2D, Node2D);
+//	GDCLASS(Polygon2D, Node2D);
 
 	Vector<Vector2> polygon;
 	Vector<Vector2> uv;
@@ -80,7 +81,7 @@ protected:
 	void _validate_property(PropertyInfo &p_property) const;
 
 public:
-#ifdef TOOLS_ENABLED
+
 	virtual Dictionary _edit_get_state() const override;
 	virtual void _edit_set_state(const Dictionary &p_state) override;
 
@@ -91,7 +92,6 @@ public:
 	virtual bool _edit_use_rect() const override;
 
 	virtual bool _edit_is_selected_on_click(const Point2 &p_point, double p_tolerance) const override;
-#endif
 
 	void set_polygon(const Vector<Vector2> &p_polygon);
 	Vector<Vector2> get_polygon() const;
@@ -152,3 +152,4 @@ public:
 };
 
 #endif // POLYGON_2D_H
+#endif //2D

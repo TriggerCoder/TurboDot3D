@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "cpu_particles_2d.h"
 
 #include "scene/2d/gpu_particles_2d.h"
@@ -1250,6 +1251,7 @@ void CPUParticles2D::convert_from_particles(Node *p_particles) {
 }
 
 void CPUParticles2D::_bind_methods() {
+/*
 	ClassDB::bind_method(D_METHOD("set_emitting", "emitting"), &CPUParticles2D::set_emitting);
 	ClassDB::bind_method(D_METHOD("set_amount", "amount"), &CPUParticles2D::set_amount);
 	ClassDB::bind_method(D_METHOD("set_lifetime", "secs"), &CPUParticles2D::set_lifetime);
@@ -1465,6 +1467,7 @@ void CPUParticles2D::_bind_methods() {
 	BIND_ENUM_CONSTANT(EMISSION_SHAPE_POINTS);
 	BIND_ENUM_CONSTANT(EMISSION_SHAPE_DIRECTED_POINTS);
 	BIND_ENUM_CONSTANT(EMISSION_SHAPE_MAX);
+*/
 }
 
 CPUParticles2D::CPUParticles2D() {
@@ -1516,3 +1519,4 @@ CPUParticles2D::~CPUParticles2D() {
 	RS::get_singleton()->free(multimesh);
 	RS::get_singleton()->free(mesh);
 }
+#endif

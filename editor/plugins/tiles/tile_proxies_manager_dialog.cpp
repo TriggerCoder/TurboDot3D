@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "tile_proxies_manager_dialog.h"
 
 #include "editor/editor_properties_vector.h"
@@ -492,3 +493,4 @@ TileProxiesManagerDialog::TileProxiesManagerDialog() {
 	h_separator = memnew(HSeparator);
 	vbox_container->add_child(h_separator);
 }
+#endif

@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef VISIBLE_ON_SCREEN_NOTIFIER_2D_H
 #define VISIBLE_ON_SCREEN_NOTIFIER_2D_H
 
@@ -35,7 +36,7 @@
 
 class Viewport;
 class VisibleOnScreenNotifier2D : public Node2D {
-	GDCLASS(VisibleOnScreenNotifier2D, Node2D);
+//	GDCLASS(VisibleOnScreenNotifier2D, Node2D);
 
 	HashSet<Viewport *> viewports;
 
@@ -68,7 +69,7 @@ public:
 };
 
 class VisibleOnScreenEnabler2D : public VisibleOnScreenNotifier2D {
-	GDCLASS(VisibleOnScreenEnabler2D, VisibleOnScreenNotifier2D);
+//	GDCLASS(VisibleOnScreenEnabler2D, VisibleOnScreenNotifier2D);
 
 public:
 	enum EnableMode {
@@ -103,3 +104,4 @@ public:
 VARIANT_ENUM_CAST(VisibleOnScreenEnabler2D::EnableMode);
 
 #endif // VISIBLE_ON_SCREEN_NOTIFIER_2D_H
+#endif //2D

@@ -30,6 +30,7 @@
  * <http://gamma.cs.unc.edu/RVO2/>
  */
 
+#ifdef TOOLS_ENABLED //2D
 #include "KdTree2d.h"
 
 #include "Agent2d.h"
@@ -355,3 +356,4 @@ namespace RVO2D {
 		}
 	}
 }
+#endif

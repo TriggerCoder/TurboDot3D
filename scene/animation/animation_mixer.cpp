@@ -32,7 +32,11 @@
 
 #include "core/config/engine.h"
 #include "core/config/project_settings.h"
+
+#ifdef TOOLS_ENABLED //2D
 #include "scene/2d/audio_stream_player_2d.h"
+#endif
+
 #include "scene/animation/animation_player.h"
 #include "scene/audio/audio_stream_player.h"
 #include "scene/resources/animation.h"

@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "godot_collision_solver_2d_sat.h"
 
 #include "core/math/geometry_2d.h"
@@ -1402,3 +1403,4 @@ bool sat_2d_calculate_penetration(const GodotShape2D *p_shape_A, const Transform
 
 	return callback.collided;
 }
+#endif

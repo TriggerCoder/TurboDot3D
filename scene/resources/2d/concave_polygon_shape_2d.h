@@ -28,13 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef CONCAVE_POLYGON_SHAPE_2D_H
 #define CONCAVE_POLYGON_SHAPE_2D_H
 
 #include "scene/resources/2d/shape_2d.h"
 
 class ConcavePolygonShape2D : public Shape2D {
-	GDCLASS(ConcavePolygonShape2D, Shape2D);
+//	GDCLASS(ConcavePolygonShape2D, Shape2D);
 
 protected:
 	static void _bind_methods();
@@ -53,3 +54,4 @@ public:
 };
 
 #endif // CONCAVE_POLYGON_SHAPE_2D_H
+#endif //2D

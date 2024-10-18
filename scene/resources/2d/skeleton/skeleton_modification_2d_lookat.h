@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef SKELETON_MODIFICATION_2D_LOOKAT_H
 #define SKELETON_MODIFICATION_2D_LOOKAT_H
 
@@ -39,7 +40,7 @@
 ///////////////////////////////////////
 
 class SkeletonModification2DLookAt : public SkeletonModification2D {
-	GDCLASS(SkeletonModification2DLookAt, SkeletonModification2D);
+//	GDCLASS(SkeletonModification2DLookAt, SkeletonModification2D);
 
 private:
 	int bone_idx = -1;
@@ -98,3 +99,4 @@ public:
 };
 
 #endif // SKELETON_MODIFICATION_2D_LOOKAT_H
+#endif //2D

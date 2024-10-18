@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "tile_set_scenes_collection_source_editor.h"
 
 #include "editor/editor_file_system.h"
@@ -587,3 +588,4 @@ TileSetScenesCollectionSourceEditor::~TileSetScenesCollectionSourceEditor() {
 	memdelete(scenes_collection_source_proxy_object);
 	memdelete(tile_proxy_object);
 }
+#endif

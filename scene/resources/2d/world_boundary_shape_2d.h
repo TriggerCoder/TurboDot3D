@@ -28,13 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef WORLD_BOUNDARY_SHAPE_2D_H
 #define WORLD_BOUNDARY_SHAPE_2D_H
 
 #include "scene/resources/2d/shape_2d.h"
 
 class WorldBoundaryShape2D : public Shape2D {
-	GDCLASS(WorldBoundaryShape2D, Shape2D);
+//	GDCLASS(WorldBoundaryShape2D, Shape2D);
 
 	// WorldBoundaryShape2D is often used for one-way platforms, where the normal pointing up makes sense.
 	Vector2 normal = Vector2(0, -1);
@@ -62,3 +63,4 @@ public:
 };
 
 #endif // WORLD_BOUNDARY_SHAPE_2D_H
+#endif //2D

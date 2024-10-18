@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "godot_navigation_server_2d.h"
 
 #ifdef CLIPPER2_ENABLED
@@ -479,3 +480,4 @@ void GodotNavigationServer2D::source_geometry_parser_set_callback(RID p_parser, 
 	}
 #endif // CLIPPER2_ENABLED
 }
+#endif //2D

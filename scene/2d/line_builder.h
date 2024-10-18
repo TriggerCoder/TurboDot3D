@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef LINE_BUILDER_H
 #define LINE_BUILDER_H
 
@@ -84,3 +85,4 @@ private:
 };
 
 #endif // LINE_BUILDER_H
+#endif //2D

@@ -28,13 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef SEGMENT_SHAPE_2D_H
 #define SEGMENT_SHAPE_2D_H
 
 #include "scene/resources/2d/shape_2d.h"
 
 class SegmentShape2D : public Shape2D {
-	GDCLASS(SegmentShape2D, Shape2D);
+//	GDCLASS(SegmentShape2D, Shape2D);
 
 	Vector2 a;
 	Vector2 b;
@@ -61,3 +62,4 @@ public:
 };
 
 #endif // SEGMENT_SHAPE_2D_H
+#endif //2D

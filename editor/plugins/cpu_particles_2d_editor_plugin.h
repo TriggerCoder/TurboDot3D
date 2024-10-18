@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef CPU_PARTICLES_2D_EDITOR_PLUGIN_H
 #define CPU_PARTICLES_2D_EDITOR_PLUGIN_H
 
@@ -93,3 +94,4 @@ public:
 };
 
 #endif // CPU_PARTICLES_2D_EDITOR_PLUGIN_H
+#endif //2D

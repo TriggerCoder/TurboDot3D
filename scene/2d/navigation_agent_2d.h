@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef NAVIGATION_AGENT_2D_H
 #define NAVIGATION_AGENT_2D_H
 
@@ -38,7 +39,7 @@
 class Node2D;
 
 class NavigationAgent2D : public Node {
-	GDCLASS(NavigationAgent2D, Node);
+//	GDCLASS(NavigationAgent2D, Node);
 
 	Node2D *agent_parent = nullptr;
 
@@ -257,3 +258,4 @@ private:
 };
 
 #endif // NAVIGATION_AGENT_2D_H
+#endif //2D
