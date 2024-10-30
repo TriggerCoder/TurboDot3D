@@ -57,7 +57,7 @@
 		</member>
 		<member name="mipmaps/generate" type="bool" setter="" getter="" default="false">
 			If [code]true[/code], smaller versions of the texture are generated on import. For example, a 64×64 texture will generate 6 mipmaps (32×32, 16×16, 8×8, 4×4, 2×2, 1×1). This has several benefits:
-			- Textures will not become grainy in the distance (in 3D), or if scaled down due to [Camera2D] zoom or [CanvasItem] scale (in 2D).
+			- Textures will not become grainy in the distance (in 3D), or if scaled down due to [CanvasItem] scale (in 2D).
 			- Performance will improve if the texture is displayed in the distance, since sampling smaller versions of the original texture is faster and requires less memory bandwidth.
 			The downside of mipmaps is that they increase memory usage by roughly 33%.
 			It's recommended to enable mipmaps in 3D. However, in 2D, this should only be enabled if your project visibly benefits from having mipmaps enabled. If the camera never zooms out significantly, there won't be a benefit to enabling mipmaps but memory usage will increase.

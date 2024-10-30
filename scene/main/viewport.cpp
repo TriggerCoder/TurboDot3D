@@ -39,7 +39,6 @@
 #ifdef TOOLS_ENABLED //2D
 #include "scene/2d/audio_listener_2d.h"
 #include "scene/2d/camera_2d.h"
-#include "scene/2d/physics/collision_object_2d.h"
 #include "scene/resources/world_2d.h"
 #endif
 
@@ -531,11 +530,6 @@ void Viewport::_notification(int p_what) {
 
 			add_to_group("_viewports");
 			if (get_tree()->is_debugging_collisions_hint()) {
-#ifdef TOOLS_ENABLED //2D
-				PhysicsServer2D::get_singleton()->space_set_debug_contacts(find_world_2d()->get_space(), get_tree()->get_collision_debug_contact_count());
-				contact_2d_debug = RenderingServer::get_singleton()->canvas_item_create();
-				RenderingServer::get_singleton()->canvas_item_set_parent(contact_2d_debug, current_canvas);
-#endif
 				PhysicsServer3D::get_singleton()->space_set_debug_contacts(find_world_3d()->get_space(), get_tree()->get_collision_debug_contact_count());
 				contact_3d_debug_multimesh = RenderingServer::get_singleton()->multimesh_create();
 				RenderingServer::get_singleton()->multimesh_allocate_data(contact_3d_debug_multimesh, get_tree()->get_collision_debug_contact_count(), RS::MULTIMESH_TRANSFORM_3D, false);
@@ -583,12 +577,6 @@ void Viewport::_notification(int p_what) {
 
 			RenderingServer::get_singleton()->viewport_set_scenario(viewport, RID());
 			RenderingServer::get_singleton()->viewport_remove_canvas(viewport, current_canvas);
-#ifdef TOOLS_ENABLED //2D
-			if (contact_2d_debug.is_valid()) {
-				RenderingServer::get_singleton()->free(contact_2d_debug);
-				contact_2d_debug = RID();
-			}
-#endif
 			if (contact_3d_debug_multimesh.is_valid()) {
 				RenderingServer::get_singleton()->free(contact_3d_debug_multimesh);
 				RenderingServer::get_singleton()->free(contact_3d_debug_instance);
@@ -611,20 +599,6 @@ void Viewport::_notification(int p_what) {
 			if (!get_tree()) {
 				return;
 			}
-#ifdef TOOLS_ENABLED //2D
-			if (get_tree()->is_debugging_collisions_hint() && contact_2d_debug.is_valid()) {
-				RenderingServer::get_singleton()->canvas_item_clear(contact_2d_debug);
-				RenderingServer::get_singleton()->canvas_item_set_draw_index(contact_2d_debug, 0xFFFFF); //very high index
-
-				Vector<Vector2> points = PhysicsServer2D::get_singleton()->space_get_contacts(find_world_2d()->get_space());
-				int point_count = PhysicsServer2D::get_singleton()->space_get_contact_count(find_world_2d()->get_space());
-				Color ccol = get_tree()->get_debug_collision_contact_color();
-
-				for (int i = 0; i < point_count; i++) {
-					RenderingServer::get_singleton()->canvas_item_add_rect(contact_2d_debug, Rect2(points[i] - Vector2(2, 2), Vector2(5, 5)), ccol);
-				}
-			}
-#endif
 			if (get_tree()->is_debugging_collisions_hint() && contact_3d_debug_multimesh.is_valid()) {
 				Vector<Vector3> points = PhysicsServer3D::get_singleton()->space_get_contacts(find_world_3d()->get_space());
 				int point_count = PhysicsServer3D::get_singleton()->space_get_contact_count(find_world_3d()->get_space());
@@ -705,10 +679,6 @@ void Viewport::_process_picking() {
 	ObjectID last_id;
 	PhysicsDirectSpaceState3D::RayResult result;
 
-#ifdef TOOLS_ENABLED //2D
-	PhysicsDirectSpaceState2D *ss2d = PhysicsServer2D::get_singleton()->space_get_direct_state(find_world_2d()->get_space());
-#endif
-
 	SubViewportContainer *parent_svc = Object::cast_to<SubViewportContainer>(get_parent());
 	bool parent_ignore_mouse = (parent_svc && parent_svc->get_mouse_filter() == Control::MOUSE_FILTER_IGNORE);
 	bool create_passive_hover_event = true;
@@ -786,101 +756,6 @@ void Viewport::_process_picking() {
 		if (st.is_valid()) {
 			pos = st->get_position();
 		}
-
-#ifdef TOOLS_ENABLED //2D
-		if (ss2d) {
-			// Send to 2D.
-
-			uint64_t frame = get_tree()->get_frame();
-
-			PhysicsDirectSpaceState2D::ShapeResult res[64];
-			for (const CanvasLayer *E : canvas_layers) {
-				Transform2D canvas_layer_transform;
-				ObjectID canvas_layer_id;
-				if (E) {
-					// A descendant CanvasLayer.
-					canvas_layer_transform = E->get_final_transform();
-					canvas_layer_id = E->get_instance_id();
-				} else {
-					// This Viewport's builtin canvas.
-					canvas_layer_transform = get_canvas_transform();
-					canvas_layer_id = ObjectID();
-				}
-
-				Vector2 point = canvas_layer_transform.affine_inverse().xform(pos);
-
-				PhysicsDirectSpaceState2D::PointParameters point_params;
-				point_params.position = point;
-				point_params.canvas_instance_id = canvas_layer_id;
-				point_params.collide_with_areas = true;
-				point_params.pick_point = true;
-
-				int rc = ss2d->intersect_point(point_params, res, 64);
-				if (physics_object_picking_sort) {
-					struct ComparatorCollisionObjects {
-						bool operator()(const PhysicsDirectSpaceState2D::ShapeResult &p_a, const PhysicsDirectSpaceState2D::ShapeResult &p_b) const {
-							CollisionObject2D *a = Object::cast_to<CollisionObject2D>(p_a.collider);
-							CollisionObject2D *b = Object::cast_to<CollisionObject2D>(p_b.collider);
-							if (!a || !b) {
-								return false;
-							}
-							int za = a->get_effective_z_index();
-							int zb = b->get_effective_z_index();
-							if (za != zb) {
-								return zb < za;
-							}
-							return a->is_greater_than(b);
-						}
-					};
-					SortArray<PhysicsDirectSpaceState2D::ShapeResult, ComparatorCollisionObjects> sorter;
-					sorter.sort(res, rc);
-				}
-				for (int i = 0; i < rc; i++) {
-					if (is_input_handled()) {
-						break;
-					}
-					if (res[i].collider_id.is_valid() && res[i].collider) {
-						CollisionObject2D *co = Object::cast_to<CollisionObject2D>(res[i].collider);
-						if (co && co->can_process()) {
-							bool send_event = true;
-							if (is_mouse) {
-								HashMap<ObjectID, uint64_t>::Iterator F = physics_2d_mouseover.find(res[i].collider_id);
-								if (!F) {
-									physics_2d_mouseover.insert(res[i].collider_id, frame);
-									co->_mouse_enter();
-								} else {
-									F->value = frame;
-									// It was already hovered, so don't send the event if it's faked.
-									if (mm.is_valid() && mm->get_device() == InputEvent::DEVICE_ID_INTERNAL) {
-										send_event = false;
-									}
-								}
-								HashMap<Pair<ObjectID, int>, uint64_t, PairHash<ObjectID, int>>::Iterator SF = physics_2d_shape_mouseover.find(Pair(res[i].collider_id, res[i].shape));
-								if (!SF) {
-									physics_2d_shape_mouseover.insert(Pair(res[i].collider_id, res[i].shape), frame);
-									co->_mouse_shape_enter(res[i].shape);
-								} else {
-									SF->value = frame;
-								}
-							}
-
-							if (send_event) {
-								co->_input_event_call(this, ev, res[i].shape);
-							}
-
-							if (physics_object_picking_first_only) {
-								break;
-							}
-						}
-					}
-				}
-			}
-
-			if (is_mouse) {
-				_cleanup_mouseover_colliders(false, false, frame);
-			}
-		}
-#endif
 
 		CollisionObject3D *capture_object = nullptr;
 		if (physics_object_capture.is_valid()) {
@@ -2580,10 +2455,6 @@ void Viewport::_drop_mouse_focus() {
 }
 
 void Viewport::_drop_physics_mouseover(bool p_paused_only) {
-#ifdef TOOLS_ENABLED //2D
-	_cleanup_mouseover_colliders(true, p_paused_only);
-#endif
-
 	if (physics_object_over.is_valid()) {
 		CollisionObject3D *co = Object::cast_to<CollisionObject3D>(ObjectDB::get_instance(physics_object_over));
 		if (co) {
@@ -3973,76 +3844,6 @@ void Viewport::_audio_listener_2d_remove(AudioListener2D *p_audio_listener) {
 
 void Viewport::_camera_2d_set(Camera2D *p_camera_2d) {
 	camera_2d = p_camera_2d;
-}
-
-void Viewport::_cleanup_mouseover_colliders(bool p_clean_all_frames, bool p_paused_only, uint64_t p_frame_reference) {
-	List<ObjectID> to_erase;
-	List<ObjectID> to_mouse_exit;
-
-	for (const KeyValue<ObjectID, uint64_t> &E : physics_2d_mouseover) {
-		if (!p_clean_all_frames && E.value == p_frame_reference) {
-			continue;
-		}
-
-		Object *o = ObjectDB::get_instance(E.key);
-		if (o) {
-			CollisionObject2D *co = Object::cast_to<CollisionObject2D>(o);
-			if (co && co->is_inside_tree()) {
-				if (p_clean_all_frames && p_paused_only && co->can_process()) {
-					continue;
-				}
-				to_mouse_exit.push_back(E.key);
-			}
-		}
-		to_erase.push_back(E.key);
-	}
-
-	while (to_erase.size()) {
-		physics_2d_mouseover.erase(to_erase.front()->get());
-		to_erase.pop_front();
-	}
-
-	// Per-shape.
-	List<Pair<ObjectID, int>> shapes_to_erase;
-	List<Pair<ObjectID, int>> shapes_to_mouse_exit;
-
-	for (KeyValue<Pair<ObjectID, int>, uint64_t> &E : physics_2d_shape_mouseover) {
-		if (!p_clean_all_frames && E.value == p_frame_reference) {
-			continue;
-		}
-
-		Object *o = ObjectDB::get_instance(E.key.first);
-		if (o) {
-			CollisionObject2D *co = Object::cast_to<CollisionObject2D>(o);
-			if (co && co->is_inside_tree()) {
-				if (p_clean_all_frames && p_paused_only && co->can_process()) {
-					continue;
-				}
-				shapes_to_mouse_exit.push_back(E.key);
-			}
-		}
-		shapes_to_erase.push_back(E.key);
-	}
-
-	while (shapes_to_erase.size()) {
-		physics_2d_shape_mouseover.erase(shapes_to_erase.front()->get());
-		shapes_to_erase.pop_front();
-	}
-
-	while (to_mouse_exit.size()) {
-		Object *o = ObjectDB::get_instance(to_mouse_exit.front()->get());
-		CollisionObject2D *co = Object::cast_to<CollisionObject2D>(o);
-		co->_mouse_exit();
-		to_mouse_exit.pop_front();
-	}
-
-	while (shapes_to_mouse_exit.size()) {
-		Pair<ObjectID, int> e = shapes_to_mouse_exit.front()->get();
-		Object *o = ObjectDB::get_instance(e.first);
-		CollisionObject2D *co = Object::cast_to<CollisionObject2D>(o);
-		co->_mouse_shape_exit(e.second);
-		shapes_to_mouse_exit.pop_front();
-	}
 }
 
 AudioListener2D *Viewport::get_audio_listener_2d() const {

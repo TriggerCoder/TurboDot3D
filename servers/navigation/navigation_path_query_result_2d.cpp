@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "navigation_path_query_result_2d.h"
 
 void NavigationPathQueryResult2D::set_path(const Vector<Vector2> &p_path) {
@@ -70,25 +71,6 @@ void NavigationPathQueryResult2D::reset() {
 }
 
 void NavigationPathQueryResult2D::_bind_methods() {
-	ClassDB::bind_method(D_METHOD("set_path", "path"), &NavigationPathQueryResult2D::set_path);
-	ClassDB::bind_method(D_METHOD("get_path"), &NavigationPathQueryResult2D::get_path);
 
-	ClassDB::bind_method(D_METHOD("set_path_types", "path_types"), &NavigationPathQueryResult2D::set_path_types);
-	ClassDB::bind_method(D_METHOD("get_path_types"), &NavigationPathQueryResult2D::get_path_types);
-
-	ClassDB::bind_method(D_METHOD("set_path_rids", "path_rids"), &NavigationPathQueryResult2D::set_path_rids);
-	ClassDB::bind_method(D_METHOD("get_path_rids"), &NavigationPathQueryResult2D::get_path_rids);
-
-	ClassDB::bind_method(D_METHOD("set_path_owner_ids", "path_owner_ids"), &NavigationPathQueryResult2D::set_path_owner_ids);
-	ClassDB::bind_method(D_METHOD("get_path_owner_ids"), &NavigationPathQueryResult2D::get_path_owner_ids);
-
-	ClassDB::bind_method(D_METHOD("reset"), &NavigationPathQueryResult2D::reset);
-
-	ADD_PROPERTY(PropertyInfo(Variant::PACKED_VECTOR2_ARRAY, "path"), "set_path", "get_path");
-	ADD_PROPERTY(PropertyInfo(Variant::PACKED_INT32_ARRAY, "path_types"), "set_path_types", "get_path_types");
-	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "path_rids", PROPERTY_HINT_ARRAY_TYPE, "RID"), "set_path_rids", "get_path_rids");
-	ADD_PROPERTY(PropertyInfo(Variant::PACKED_INT64_ARRAY, "path_owner_ids"), "set_path_owner_ids", "get_path_owner_ids");
-
-	BIND_ENUM_CONSTANT(PATH_SEGMENT_TYPE_REGION);
-	BIND_ENUM_CONSTANT(PATH_SEGMENT_TYPE_LINK);
 }
+#endif //2D

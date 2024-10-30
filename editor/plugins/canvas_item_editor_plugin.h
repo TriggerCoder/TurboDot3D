@@ -655,9 +655,6 @@ class CanvasItemEditorViewport : public Control {
 	bool _cyclical_dependency_exists(const String &p_target_scene_path, Node *p_desired_node) const;
 	bool _is_any_texture_selected() const;
 	void _create_texture_node(Node *p_parent, Node *p_child, const String &p_path, const Point2 &p_point);
-#ifdef TOOLS_ENABLED //2D
-	void _create_audio_node(Node *p_parent, const String &p_path, const Point2 &p_point);
-#endif
 	bool _create_instance(Node *p_parent, const String &p_path, const Point2 &p_point);
 	void _perform_drop_data();
 	void _show_texture_node_type_selector();

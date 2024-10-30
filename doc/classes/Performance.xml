@@ -174,7 +174,7 @@
 			The amount of render buffer memory used (in bytes). [i]Lower is better.[/i]
 		</constant>
 		<constant name="PHYSICS_2D_ACTIVE_OBJECTS" value="17" enum="Monitor">
-			Number of active [RigidBody2D] nodes in the game. [i]Lower is better.[/i]
+			Number of active RigidBody2D nodes in the game. [i]Lower is better.[/i]
 		</constant>
 		<constant name="PHYSICS_2D_COLLISION_PAIRS" value="18" enum="Monitor">
 			Number of collision pairs in the 2D physics engine. [i]Lower is better.[/i]

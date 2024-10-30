@@ -68,9 +68,6 @@
 #include "scene/theme/theme_db.h"
 #include "servers/display_server.h"
 #include "servers/navigation_server_3d.h"
-#ifdef TOOLS_ENABLED //2D
-#include "servers/physics_server_2d.h"
-#endif
 #include "servers/rendering_server.h"
 
 #include "editor/audio_stream_preview.h"
@@ -6607,9 +6604,7 @@ EditorNode::EditorNode() {
 
 		// No physics by default if in editor.
 		PhysicsServer3D::get_singleton()->set_active(false);
-#ifdef TOOLS_ENABLED //2D
-		PhysicsServer2D::get_singleton()->set_active(false);
-#endif
+
 		// No scripting by default if in editor (except for tool).
 		ScriptServer::set_scripting_enabled(false);
 

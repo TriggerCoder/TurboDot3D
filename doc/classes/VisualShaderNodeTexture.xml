@@ -27,7 +27,7 @@
 			Use the current viewport's texture as the source.
 		</constant>
 		<constant name="SOURCE_2D_TEXTURE" value="2" enum="Source">
-			Use the texture from this shader's texture built-in (e.g. a texture of a [Sprite2D]).
+			Use the texture from this shader's texture built-in.
 		</constant>
 		<constant name="SOURCE_2D_NORMAL" value="3" enum="Source">
 			Use the texture from this shader's normal map built-in.

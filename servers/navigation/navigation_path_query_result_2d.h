@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef NAVIGATION_PATH_QUERY_RESULT_2D_H
 #define NAVIGATION_PATH_QUERY_RESULT_2D_H
 
@@ -35,7 +36,6 @@
 #include "servers/navigation/navigation_utilities.h"
 
 class NavigationPathQueryResult2D : public RefCounted {
-	GDCLASS(NavigationPathQueryResult2D, RefCounted);
 
 	Vector<Vector2> path;
 	Vector<int32_t> path_types;
@@ -69,3 +69,4 @@ public:
 VARIANT_ENUM_CAST(NavigationPathQueryResult2D::PathSegmentType);
 
 #endif // NAVIGATION_PATH_QUERY_RESULT_2D_H
+#endif //2D

@@ -75,7 +75,6 @@ private:
 	bool use_gravity = false;
 	Vector2 gravity = Vector2(0, 6);
 
-	bool use_colliders = false;
 	uint32_t collision_mask = 1;
 
 	void jiggle_joint_update_bone2d_cache(int p_joint_idx);
@@ -105,11 +104,6 @@ public:
 	bool get_use_gravity() const;
 	void set_gravity(Vector2 p_gravity);
 	Vector2 get_gravity() const;
-
-	void set_use_colliders(bool p_use_colliders);
-	bool get_use_colliders() const;
-	void set_collision_mask(int p_mask);
-	int get_collision_mask() const;
 
 	int get_jiggle_data_chain_length();
 	void set_jiggle_data_chain_length(int p_new_length);

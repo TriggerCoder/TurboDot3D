@@ -80,7 +80,6 @@
 #ifdef TOOLS_ENABLED //2D
 #include "servers/navigation_server_2d.h"
 #include "servers/navigation_server_2d_dummy.h"
-#include "servers/physics_server_2d.h"
 #endif
 
 // 3D
@@ -154,8 +153,6 @@ static ThemeDB *theme_db = nullptr;
 
 #ifdef TOOLS_ENABLED //2D
 static NavigationServer2D *navigation_server_2d = nullptr;
-static PhysicsServer2DManager *physics_server_2d_manager = nullptr;
-static PhysicsServer2D *physics_server_2d = nullptr;
 #endif
 
 static NavigationServer3D *navigation_server_3d = nullptr;
@@ -286,28 +283,11 @@ void initialize_physics() {
 	}
 	ERR_FAIL_NULL(physics_server_3d);
 	physics_server_3d->init();
-
-	// 2D Physics server
-#ifdef TOOLS_ENABLED //2D
-	physics_server_2d = PhysicsServer2DManager::get_singleton()->new_server(
-			GLOBAL_GET(PhysicsServer2DManager::get_singleton()->setting_property_name));
-	if (!physics_server_2d) {
-		// Physics server not found, Use the default physics
-		physics_server_2d = PhysicsServer2DManager::get_singleton()->new_default_server();
-	}
-	ERR_FAIL_NULL(physics_server_2d);
-	physics_server_2d->init();
-#endif
 }
 
 void finalize_physics() {
 	physics_server_3d->finish();
 	memdelete(physics_server_3d);
-
-#ifdef TOOLS_ENABLED //2D
-	physics_server_2d->finish();
-	memdelete(physics_server_2d);
-#endif
 }
 
 void finalize_display() {
@@ -654,7 +634,6 @@ Error Main::test_setup() {
 	}
 
 	physics_server_3d_manager = memnew(PhysicsServer3DManager);
-	physics_server_2d_manager = memnew(PhysicsServer2DManager);
 
 	// From `Main::setup2()`.
 	initialize_modules(MODULE_INITIALIZATION_LEVEL_CORE);
@@ -785,9 +764,6 @@ void Main::test_cleanup() {
 	}
 	if (physics_server_3d_manager) {
 		memdelete(physics_server_3d_manager);
-	}
-	if (physics_server_2d_manager) {
-		memdelete(physics_server_2d_manager);
 	}
 	if (globals) {
 		memdelete(globals);
@@ -2554,10 +2530,6 @@ Error Main::setup2(bool p_show_boot_logo) {
 	}
 
 	physics_server_3d_manager = memnew(PhysicsServer3DManager);
-#ifdef TOOLS_ENABLED //2D
-	physics_server_2d_manager = memnew(PhysicsServer2DManager);
-#endif
-
 	register_server_types();
 	{
 		OS::get_singleton()->benchmark_begin_measure("Servers", "Modules and Extensions");
@@ -3874,16 +3846,8 @@ bool Main::iteration() {
 		// may be the same, and no interpolation takes place.
 		OS::get_singleton()->get_main_loop()->iteration_prepare();
 
-#ifdef TOOLS_ENABLED //2D
-		PhysicsServer2D::get_singleton()->sync();
-		PhysicsServer2D::get_singleton()->flush_queries();
-#endif
-
 		if (OS::get_singleton()->get_main_loop()->physics_process(physics_step * time_scale)) {
 			PhysicsServer3D::get_singleton()->end_sync();
-#ifdef TOOLS_ENABLED //2D
-			PhysicsServer2D::get_singleton()->end_sync();
-#endif
 			exit = true;
 			break;
 		}
@@ -3899,10 +3863,6 @@ bool Main::iteration() {
 
 		PhysicsServer3D::get_singleton()->end_sync();
 		PhysicsServer3D::get_singleton()->step(physics_step * time_scale);
-#ifdef TOOLS_ENABLED //2D
-		PhysicsServer2D::get_singleton()->end_sync();
-		PhysicsServer2D::get_singleton()->step(physics_step * time_scale);
-#endif
 		message_queue->flush();
 
 		physics_process_ticks = MAX(physics_process_ticks, OS::get_singleton()->get_ticks_usec() - physics_begin); // keep the largest one for reference
@@ -4165,11 +4125,6 @@ void Main::cleanup(bool p_force) {
 	if (physics_server_3d_manager) {
 		memdelete(physics_server_3d_manager);
 	}
-#ifdef TOOLS_ENABLED //2D
-	if (physics_server_2d_manager) {
-		memdelete(physics_server_2d_manager);
-	}
-#endif
 	if (globals) {
 		memdelete(globals);
 	}

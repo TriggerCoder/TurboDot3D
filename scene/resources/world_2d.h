@@ -33,7 +33,6 @@
 #define WORLD_2D_H
 
 #include "core/io/resource.h"
-#include "servers/physics_server_2d.h"
 
 class VisibleOnScreenNotifier2D;
 class Viewport;
@@ -52,10 +51,7 @@ protected:
 
 public:
 	RID get_canvas() const;
-	RID get_space() const;
 	RID get_navigation_map() const;
-
-	PhysicsDirectSpaceState2D *get_direct_space_state();
 
 	void register_viewport(Viewport *p_viewport);
 	void remove_viewport(Viewport *p_viewport);

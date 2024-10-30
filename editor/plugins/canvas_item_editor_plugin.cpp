@@ -47,7 +47,6 @@
 #include "editor/themes/editor_scale.h"
 #include "editor/themes/editor_theme_manager.h"
 #ifdef TOOLS_ENABLED //2D
-#include "scene/2d/audio_stream_player_2d.h"
 #include "scene/2d/polygon_2d.h"
 #include "scene/2d/skeleton_2d.h"
 #include "scene/2d/sprite_2d.h"
@@ -5936,55 +5935,6 @@ void CanvasItemEditorViewport::_create_texture_node(Node *p_parent, Node *p_chil
 	undo_redo->add_do_method(p_child, "set_position", local_target_pos);
 }
 
-#ifdef TOOLS_ENABLED //2D
-void CanvasItemEditorViewport::_create_audio_node(Node *p_parent, const String &p_path, const Point2 &p_point) {
-	AudioStreamPlayer2D *child = memnew(AudioStreamPlayer2D);
-	child->set_stream(ResourceCache::get_ref(p_path));
-
-	// Adjust casing according to project setting. The file name is expected to be in snake_case, but will work for others.
-	const String &node_name = Node::adjust_name_casing(p_path.get_file().get_basename());
-	if (!node_name.is_empty()) {
-		child->set_name(node_name);
-	}
-
-	EditorUndoRedoManager *undo_redo = EditorUndoRedoManager::get_singleton();
-
-	if (p_parent) {
-		undo_redo->add_do_method(p_parent, "add_child", child, true);
-		undo_redo->add_do_method(child, "set_owner", EditorNode::get_singleton()->get_edited_scene());
-		undo_redo->add_do_reference(child);
-		undo_redo->add_undo_method(p_parent, "remove_child", child);
-	} else { // If no parent is selected, set as root node of the scene.
-		undo_redo->add_do_method(EditorNode::get_singleton(), "set_edited_scene", child);
-		undo_redo->add_do_method(child, "set_owner", EditorNode::get_singleton()->get_edited_scene());
-		undo_redo->add_do_reference(child);
-		undo_redo->add_undo_method(EditorNode::get_singleton(), "set_edited_scene", (Object *)nullptr);
-	}
-
-	if (p_parent) {
-		String new_name = p_parent->validate_child_name(child);
-		EditorDebuggerNode *ed = EditorDebuggerNode::get_singleton();
-		undo_redo->add_do_method(ed, "live_debug_create_node", EditorNode::get_singleton()->get_edited_scene()->get_path_to(p_parent), child->get_class(), new_name);
-		undo_redo->add_undo_method(ed, "live_debug_remove_node", NodePath(String(EditorNode::get_singleton()->get_edited_scene()->get_path_to(p_parent)) + "/" + new_name));
-	}
-
-	// Compute the global position
-	Transform2D xform = canvas_item_editor->get_canvas_transform();
-	Point2 target_position = xform.affine_inverse().xform(p_point);
-
-	// There's nothing to be used as source position, so snapping will work as absolute if enabled.
-	target_position = canvas_item_editor->snap_point(target_position);
-
-	CanvasItem *parent_ci = Object::cast_to<CanvasItem>(p_parent);
-	Point2 local_target_pos = parent_ci ? parent_ci->get_global_transform().affine_inverse().xform(target_position) : target_position;
-
-	undo_redo->add_do_method(child, "set_position", local_target_pos);
-
-	EditorSelection *editor_selection = EditorNode::get_singleton()->get_editor_selection();
-	undo_redo->add_do_method(editor_selection, "add_node", child);
-}
-#endif
-
 bool CanvasItemEditorViewport::_create_instance(Node *p_parent, const String &p_path, const Point2 &p_point) {
 	Ref<PackedScene> sdata = ResourceLoader::load(p_path);
 	if (!sdata.is_valid()) { // invalid scene
@@ -6094,12 +6044,6 @@ void CanvasItemEditorViewport::_perform_drop_data() {
 			_create_texture_node(target_node, child, path, drop_pos);
 			undo_redo->add_do_method(editor_selection, "add_node", child);
 		}
-#ifdef TOOLS_ENABLED //2D
-		Ref<AudioStream> audio = res;
-		if (audio.is_valid()) {
-			_create_audio_node(target_node, path, drop_pos);
-		}
-#endif
 	}
 
 	undo_redo->commit_action();

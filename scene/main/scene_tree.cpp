@@ -57,7 +57,6 @@
 
 #ifdef TOOLS_ENABLED //2D
 #include "scene/resources/world_2d.h"
-#include "servers/physics_server_2d.h"
 #endif
 
 #include "servers/display_server.h"
@@ -894,9 +893,6 @@ void SceneTree::set_pause(bool p_enabled) {
 	}
 	paused = p_enabled;
 	PhysicsServer3D::get_singleton()->set_active(!p_enabled);
-#ifdef TOOLS_ENABLED //2D
-	PhysicsServer2D::get_singleton()->set_active(!p_enabled);
-#endif
 	if (get_root()) {
 		get_root()->_propagate_pause_notification(p_enabled);
 	}

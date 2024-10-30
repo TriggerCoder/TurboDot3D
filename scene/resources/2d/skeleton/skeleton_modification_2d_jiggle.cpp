@@ -61,10 +61,6 @@ bool SkeletonModification2DJiggle::_set(const StringName &p_path, const Variant 
 		} else {
 			return false;
 		}
-	} else if (path == "use_colliders") {
-		set_use_colliders(p_value);
-	} else if (path == "collision_mask") {
-		set_collision_mask(p_value);
 	} else {
 		return false;
 	}
@@ -98,10 +94,6 @@ bool SkeletonModification2DJiggle::_get(const StringName &p_path, Variant &r_ret
 		} else {
 			return false;
 		}
-	} else if (path == "use_colliders") {
-		r_ret = get_use_colliders();
-	} else if (path == "collision_mask") {
-		r_ret = get_collision_mask();
 	} else {
 		return false;
 	}
@@ -110,9 +102,6 @@ bool SkeletonModification2DJiggle::_get(const StringName &p_path, Variant &r_ret
 
 void SkeletonModification2DJiggle::_get_property_list(List<PropertyInfo> *p_list) const {
 	p_list->push_back(PropertyInfo(Variant::BOOL, "use_colliders", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT));
-	if (use_colliders) {
-		p_list->push_back(PropertyInfo(Variant::INT, "collision_mask", PROPERTY_HINT_LAYERS_2D_PHYSICS, "", PROPERTY_USAGE_DEFAULT));
-	}
 
 	for (int i = 0; i < jiggle_data_chain.size(); i++) {
 		String base_string = "joint_data/" + itos(i) + "/";
@@ -190,34 +179,6 @@ void SkeletonModification2DJiggle::_execute_jiggle_joint(int p_joint_idx, Node2D
 	jiggle_data_chain.write[p_joint_idx].dynamic_position += jiggle_data_chain[p_joint_idx].velocity + jiggle_data_chain[p_joint_idx].force;
 	jiggle_data_chain.write[p_joint_idx].dynamic_position += operation_bone_trans.get_origin() - jiggle_data_chain[p_joint_idx].last_position;
 	jiggle_data_chain.write[p_joint_idx].last_position = operation_bone_trans.get_origin();
-
-	// Collision detection/response
-	if (use_colliders) {
-		if (execution_mode == SkeletonModificationStack2D::EXECUTION_MODE::execution_mode_physics_process) {
-			Ref<World2D> world_2d = stack->skeleton->get_world_2d();
-			ERR_FAIL_COND(world_2d.is_null());
-			PhysicsDirectSpaceState2D *space_state = PhysicsServer2D::get_singleton()->space_get_direct_state(world_2d->get_space());
-			PhysicsDirectSpaceState2D::RayResult ray_result;
-
-			PhysicsDirectSpaceState2D::RayParameters ray_params;
-			ray_params.from = operation_bone_trans.get_origin();
-			ray_params.to = jiggle_data_chain[p_joint_idx].dynamic_position;
-			ray_params.collision_mask = collision_mask;
-
-			// Add exception support?
-			bool ray_hit = space_state->intersect_ray(ray_params, ray_result);
-
-			if (ray_hit) {
-				jiggle_data_chain.write[p_joint_idx].dynamic_position = jiggle_data_chain[p_joint_idx].last_noncollision_position;
-				jiggle_data_chain.write[p_joint_idx].acceleration = Vector2(0, 0);
-				jiggle_data_chain.write[p_joint_idx].velocity = Vector2(0, 0);
-			} else {
-				jiggle_data_chain.write[p_joint_idx].last_noncollision_position = jiggle_data_chain[p_joint_idx].dynamic_position;
-			}
-		} else {
-			WARN_PRINT_ONCE("Jiggle 2D modifier: You cannot detect colliders without the stack mode being set to _physics_process!");
-		}
-	}
 
 	// Rotate the bone using the dynamic position!
 	operation_bone_trans = operation_bone_trans.looking_at(jiggle_data_chain[p_joint_idx].dynamic_position);
@@ -374,23 +335,6 @@ void SkeletonModification2DJiggle::set_gravity(Vector2 p_gravity) {
 
 Vector2 SkeletonModification2DJiggle::get_gravity() const {
 	return gravity;
-}
-
-void SkeletonModification2DJiggle::set_use_colliders(bool p_use_colliders) {
-	use_colliders = p_use_colliders;
-	notify_property_list_changed();
-}
-
-bool SkeletonModification2DJiggle::get_use_colliders() const {
-	return use_colliders;
-}
-
-void SkeletonModification2DJiggle::set_collision_mask(int p_mask) {
-	collision_mask = p_mask;
-}
-
-int SkeletonModification2DJiggle::get_collision_mask() const {
-	return collision_mask;
 }
 
 // Jiggle joint data functions

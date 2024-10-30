@@ -4,7 +4,7 @@
 		Abstract base class for everything in 2D space.
 	</brief_description>
 	<description>
-		Abstract base class for everything in 2D space. Canvas items are laid out in a tree; children inherit and extend their parent's transform. [CanvasItem] is extended by [Control] for GUI-related nodes, and by [Node2D] for 2D game objects.
+		Abstract base class for everything in 2D space. Canvas items are laid out in a tree; children inherit and extend their parent's transform. [CanvasItem] is extended by [Control] for GUI-related nodes.
 		Any [CanvasItem] can draw. For this, [method queue_redraw] is called by the engine, then [constant NOTIFICATION_DRAW] will be received on idle time to request a redraw. Because of this, canvas items don't need to be redrawn on every frame, improving the performance significantly. Several functions for drawing on the [CanvasItem] are provided (see [code]draw_*[/code] functions). However, they can only be used inside [method _draw], its corresponding [method Object._notification] or methods connected to the [signal draw] signal.
 		Canvas items are drawn in tree order on their canvas layer. By default, children are on top of their parents, so a root [CanvasItem] will be drawn behind everything. This behavior can be changed on a per-item basis.
 		A [CanvasItem] can be hidden, which will also hide its children. By adjusting various other properties of a [CanvasItem], you can also modulate its color (via [member modulate] or [member self_modulate]), change its Z-index, blend mode, and more.
@@ -156,7 +156,7 @@
 			<param index="2" name="transform" type="Transform2D" default="Transform2D(1, 0, 0, 1, 0, 0)" />
 			<param index="3" name="modulate" type="Color" default="Color(1, 1, 1, 1)" />
 			<description>
-				Draws a [Mesh] in 2D, using the provided texture. See [MeshInstance2D] for related documentation.
+				Draws a [Mesh] in 2D, using the provided texture.
 			</description>
 		</method>
 		<method name="draw_msdf_texture_rect_region">
@@ -240,7 +240,7 @@
 			<param index="0" name="multimesh" type="MultiMesh" />
 			<param index="1" name="texture" type="Texture2D" />
 			<description>
-				Draws a [MultiMesh] in 2D with the provided texture. See [MultiMeshInstance2D] for related documentation.
+				Draws a [MultiMesh] in 2D with the provided texture.
 			</description>
 		</method>
 		<method name="draw_polygon">
@@ -419,7 +419,7 @@
 		<method name="get_canvas" qualifiers="const">
 			<return type="RID" />
 			<description>
-				Returns the [RID] of the [World2D] canvas where this item is in.
+				Returns the [RID].
 			</description>
 		</method>
 		<method name="get_canvas_item" qualifiers="const">
@@ -495,12 +495,6 @@
 			<param index="0" name="layer" type="int" />
 			<description>
 				Returns an individual bit on the rendering visibility layer.
-			</description>
-		</method>
-		<method name="get_world_2d" qualifiers="const">
-			<return type="World2D" />
-			<description>
-				Returns the [World2D] where this item is in.
 			</description>
 		</method>
 		<method name="hide">
@@ -589,7 +583,7 @@
 			Allows the current node to clip child nodes, essentially acting as a mask.
 		</member>
 		<member name="light_mask" type="int" setter="set_light_mask" getter="get_light_mask" default="1">
-			The rendering layers in which this [CanvasItem] responds to [Light2D] nodes.
+			The rendering layers in which this [CanvasItem] responds to light nodes.
 		</member>
 		<member name="material" type="Material" setter="set_material" getter="get_material">
 			The material applied to this [CanvasItem].
@@ -679,7 +673,7 @@
 			The [CanvasItem] has exited the canvas.
 		</constant>
 		<constant name="NOTIFICATION_WORLD_2D_CHANGED" value="36">
-			The [CanvasItem]'s active [World2D] changed.
+			The [CanvasItem]'s active World2D changed.
 		</constant>
 		<constant name="TEXTURE_FILTER_PARENT_NODE" value="0" enum="TextureFilter">
 			The [CanvasItem] will inherit the filter from its parent.
@@ -692,11 +686,11 @@
 		</constant>
 		<constant name="TEXTURE_FILTER_NEAREST_WITH_MIPMAPS" value="3" enum="TextureFilter">
 			The texture filter reads from the nearest pixel and blends between the nearest 2 mipmaps (or uses the nearest mipmap if [member ProjectSettings.rendering/textures/default_filters/use_nearest_mipmap_filter] is [code]true[/code]). This makes the texture look pixelated from up close, and smooth from a distance.
-			Use this for non-pixel art textures that may be viewed at a low scale (e.g. due to [Camera2D] zoom or sprite scaling), as mipmaps are important to smooth out pixels that are smaller than on-screen pixels.
+			Use this for non-pixel art textures that may be viewed at a low scale (e.g. due to sprite scaling), as mipmaps are important to smooth out pixels that are smaller than on-screen pixels.
 		</constant>
 		<constant name="TEXTURE_FILTER_LINEAR_WITH_MIPMAPS" value="4" enum="TextureFilter">
 			The texture filter blends between the nearest 4 pixels and between the nearest 2 mipmaps (or uses the nearest mipmap if [member ProjectSettings.rendering/textures/default_filters/use_nearest_mipmap_filter] is [code]true[/code]). This makes the texture look smooth from up close, and smooth from a distance.
-			Use this for non-pixel art textures that may be viewed at a low scale (e.g. due to [Camera2D] zoom or sprite scaling), as mipmaps are important to smooth out pixels that are smaller than on-screen pixels.
+			Use this for non-pixel art textures that may be viewed at a low scale (e.g. due to sprite scaling), as mipmaps are important to smooth out pixels that are smaller than on-screen pixels.
 		</constant>
 		<constant name="TEXTURE_FILTER_NEAREST_WITH_MIPMAPS_ANISOTROPIC" value="5" enum="TextureFilter">
 			The texture filter reads from the nearest pixel and blends between 2 mipmaps (or uses the nearest mipmap if [member ProjectSettings.rendering/textures/default_filters/use_nearest_mipmap_filter] is [code]true[/code]) based on the angle between the surface and the camera view. This makes the texture look pixelated from up close, and smooth from a distance. Anisotropic filtering improves texture quality on surfaces that are almost in line with the camera, but is slightly slower. The anisotropic filtering level can be changed by adjusting [member ProjectSettings.rendering/textures/default_filters/anisotropic_filtering_level].

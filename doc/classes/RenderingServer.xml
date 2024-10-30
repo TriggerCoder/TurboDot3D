@@ -443,7 +443,6 @@
 			<param index="5" name="blur_mipmaps" type="bool" default="false" />
 			<description>
 				Sets the canvas group mode used during 2D rendering for the canvas item specified by the [param item] RID. For faster but more limited clipping, use [method canvas_item_set_clip] instead.
-				[b]Note:[/b] The equivalent node functionality is found in [CanvasGroup] and [member CanvasItem.clip_children].
 			</description>
 		</method>
 		<method name="canvas_item_set_clip">
@@ -574,7 +573,7 @@
 			<param index="0" name="item" type="RID" />
 			<param index="1" name="transform" type="Transform2D" />
 			<description>
-				Sets the [param transform] of the canvas item specified by the [param item] RID. This affects where and how the item will be drawn. Child canvas items' transforms are multiplied by their parent's transform. Equivalent to [member Node2D.transform].
+				Sets the [param transform] of the canvas item specified by the [param item] RID. This affects where and how the item will be drawn. Child canvas items' transforms are multiplied by their parent's transform.
 			</description>
 		</method>
 		<method name="canvas_item_set_use_parent_material">
@@ -602,7 +601,6 @@
 			<param index="4" name="exit_callable" type="Callable" />
 			<description>
 				Sets the given [CanvasItem] as visibility notifier. [param area] defines the area of detecting visibility. [param enter_callable] is called when the [CanvasItem] enters the screen, [param exit_callable] is called when the [CanvasItem] exits the screen. If [param enable] is [code]false[/code], the item will no longer function as notifier.
-				This method can be used to manually mimic [VisibleOnScreenNotifier2D].
 			</description>
 		</method>
 		<method name="canvas_item_set_visible">
@@ -666,7 +664,6 @@
 			<description>
 				Creates a light occluder and adds it to the RenderingServer. It can be accessed with the RID that is returned. This RID will be used in all [code]canvas_light_occluder_*[/code] RenderingServer functions.
 				Once finished with your RID, you will want to free the RID using the RenderingServer's [method free_rid] method.
-				[b]Note:[/b] The equivalent node is [LightOccluder2D].
 			</description>
 		</method>
 		<method name="canvas_light_occluder_reset_physics_interpolation">
@@ -794,7 +791,7 @@
 			<param index="0" name="light" type="RID" />
 			<param index="1" name="mask" type="int" />
 			<description>
-				The light mask. See [LightOccluder2D] for more information on light masks.
+				The light mask.
 			</description>
 		</method>
 		<method name="canvas_light_set_item_shadow_cull_mask">
@@ -802,7 +799,7 @@
 			<param index="0" name="light" type="RID" />
 			<param index="1" name="mask" type="int" />
 			<description>
-				The binary mask used to determine which layers this canvas light's shadows affects. See [LightOccluder2D] for more information on light masks.
+				The binary mask used to determine which layers this canvas light's shadows affects.
 			</description>
 		</method>
 		<method name="canvas_light_set_layer_range">
@@ -909,7 +906,6 @@
 			<description>
 				Creates a new light occluder polygon and adds it to the RenderingServer. It can be accessed with the RID that is returned. This RID will be used in all [code]canvas_occluder_polygon_*[/code] RenderingServer functions.
 				Once finished with your RID, you will want to free the RID using the RenderingServer's [method free_rid] method.
-				[b]Note:[/b] The equivalent resource is [OccluderPolygon2D].
 			</description>
 		</method>
 		<method name="canvas_occluder_polygon_set_cull_mode">
@@ -1614,11 +1610,11 @@
 			<return type="RID" />
 			<description>
 				Returns the ID of a 4×4 white texture (in [constant Image.FORMAT_RGB8] format). This texture will be created and returned on the first call to [method get_white_texture], then it will be cached for subsequent calls. See also [method get_test_texture].
-				Example of getting the white texture and applying it to a [Sprite2D] node:
+				Example of getting the white texture and applying it to a [Sprite3D] node:
 				[codeblock]
 				var texture_rid = RenderingServer.get_white_texture()
-				var texture = ImageTexture.create_from_image(RenderingServer.texture_2d_get(texture_rid))
-				$Sprite2D.texture = texture
+				var texture = ImageTexture.create_from_image(RenderingServer.texture_3d_get(texture_rid))
+				$Sprite3D.texture = texture
 				[/codeblock]
 			</description>
 		</method>

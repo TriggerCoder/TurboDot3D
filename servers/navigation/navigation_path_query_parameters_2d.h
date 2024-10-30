@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #ifndef NAVIGATION_PATH_QUERY_PARAMETERS_2D_H
 #define NAVIGATION_PATH_QUERY_PARAMETERS_2D_H
 
@@ -35,7 +36,6 @@
 #include "servers/navigation/navigation_utilities.h"
 
 class NavigationPathQueryParameters2D : public RefCounted {
-	GDCLASS(NavigationPathQueryParameters2D, RefCounted);
 
 	NavigationUtilities::PathQueryParameters parameters;
 
@@ -95,3 +95,4 @@ VARIANT_ENUM_CAST(NavigationPathQueryParameters2D::PathPostProcessing);
 VARIANT_BITFIELD_CAST(NavigationPathQueryParameters2D::PathMetadataFlags);
 
 #endif // NAVIGATION_PATH_QUERY_PARAMETERS_2D_H
+#endif //2D

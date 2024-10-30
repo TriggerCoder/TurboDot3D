@@ -236,7 +236,6 @@ struct GodotTestCaseListener : public doctest::IReporter {
 
 	SignalWatcher *signal_watcher = nullptr;
 
-	PhysicsServer2D *physics_server_2d = nullptr;
 	PhysicsServer3D *physics_server_3d = nullptr;
 	NavigationServer3D *navigation_server_3d = nullptr;
 	NavigationServer2D *navigation_server_2d = nullptr;
@@ -273,9 +272,6 @@ struct GodotTestCaseListener : public doctest::IReporter {
 
 			physics_server_3d = PhysicsServer3DManager::get_singleton()->new_default_server();
 			physics_server_3d->init();
-
-			physics_server_2d = PhysicsServer2DManager::get_singleton()->new_default_server();
-			physics_server_2d->init();
 
 			ERR_PRINT_OFF;
 			navigation_server_3d = NavigationServer3DManager::new_default_server();

@@ -36,23 +36,10 @@
 #include "scene/2d/visible_on_screen_notifier_2d.h"
 #include "scene/main/window.h"
 #include "servers/navigation_server_2d.h"
-#include "servers/physics_server_2d.h"
 #include "servers/rendering_server.h"
 
 RID World2D::get_canvas() const {
 	return canvas;
-}
-
-RID World2D::get_space() const {
-	if (space.is_null()) {
-		space = PhysicsServer2D::get_singleton()->space_create();
-		PhysicsServer2D::get_singleton()->space_set_active(space, true);
-		PhysicsServer2D::get_singleton()->area_set_param(space, PhysicsServer2D::AREA_PARAM_GRAVITY, GLOBAL_GET("physics/2d/default_gravity"));
-		PhysicsServer2D::get_singleton()->area_set_param(space, PhysicsServer2D::AREA_PARAM_GRAVITY_VECTOR, GLOBAL_GET("physics/2d/default_gravity_vector"));
-		PhysicsServer2D::get_singleton()->area_set_param(space, PhysicsServer2D::AREA_PARAM_LINEAR_DAMP, GLOBAL_GET("physics/2d/default_linear_damp"));
-		PhysicsServer2D::get_singleton()->area_set_param(space, PhysicsServer2D::AREA_PARAM_ANGULAR_DAMP, GLOBAL_GET("physics/2d/default_angular_damp"));
-	}
-	return space;
 }
 
 RID World2D::get_navigation_map() const {
@@ -65,10 +52,6 @@ RID World2D::get_navigation_map() const {
 		NavigationServer2D::get_singleton()->map_set_link_connection_radius(navigation_map, GLOBAL_GET("navigation/2d/default_link_connection_radius"));
 	}
 	return navigation_map;
-}
-
-PhysicsDirectSpaceState2D *World2D::get_direct_space_state() {
-	return PhysicsServer2D::get_singleton()->space_get_direct_state(get_space());
 }
 
 void World2D::_bind_methods() {
@@ -88,12 +71,8 @@ World2D::World2D() {
 
 World2D::~World2D() {
 	ERR_FAIL_NULL(RenderingServer::get_singleton());
-	ERR_FAIL_NULL(PhysicsServer2D::get_singleton());
 	ERR_FAIL_NULL(NavigationServer2D::get_singleton());
 	RenderingServer::get_singleton()->free(canvas);
-	if (space.is_valid()) {
-		PhysicsServer2D::get_singleton()->free(space);
-	}
 	if (navigation_map.is_valid()) {
 		NavigationServer2D::get_singleton()->free(navigation_map);
 	}

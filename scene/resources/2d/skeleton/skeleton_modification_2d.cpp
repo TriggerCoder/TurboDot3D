@@ -32,10 +32,6 @@
 #include "skeleton_modification_2d.h"
 #include "scene/2d/skeleton_2d.h"
 
-#include "scene/2d/physics/collision_object_2d.h"
-#include "scene/2d/physics/collision_shape_2d.h"
-#include "scene/2d/physics/physical_bone_2d.h"
-
 #include "editor/editor_settings.h"
 
 ///////////////////////////////////////

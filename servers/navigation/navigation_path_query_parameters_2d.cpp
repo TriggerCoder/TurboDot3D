@@ -28,6 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
+#ifdef TOOLS_ENABLED //2D
 #include "navigation_path_query_parameters_2d.h"
 
 void NavigationPathQueryParameters2D::set_pathfinding_algorithm(const NavigationPathQueryParameters2D::PathfindingAlgorithm p_pathfinding_algorithm) {
@@ -136,51 +137,6 @@ real_t NavigationPathQueryParameters2D::get_simplify_epsilon() const {
 }
 
 void NavigationPathQueryParameters2D::_bind_methods() {
-	ClassDB::bind_method(D_METHOD("set_pathfinding_algorithm", "pathfinding_algorithm"), &NavigationPathQueryParameters2D::set_pathfinding_algorithm);
-	ClassDB::bind_method(D_METHOD("get_pathfinding_algorithm"), &NavigationPathQueryParameters2D::get_pathfinding_algorithm);
 
-	ClassDB::bind_method(D_METHOD("set_path_postprocessing", "path_postprocessing"), &NavigationPathQueryParameters2D::set_path_postprocessing);
-	ClassDB::bind_method(D_METHOD("get_path_postprocessing"), &NavigationPathQueryParameters2D::get_path_postprocessing);
-
-	ClassDB::bind_method(D_METHOD("set_map", "map"), &NavigationPathQueryParameters2D::set_map);
-	ClassDB::bind_method(D_METHOD("get_map"), &NavigationPathQueryParameters2D::get_map);
-
-	ClassDB::bind_method(D_METHOD("set_start_position", "start_position"), &NavigationPathQueryParameters2D::set_start_position);
-	ClassDB::bind_method(D_METHOD("get_start_position"), &NavigationPathQueryParameters2D::get_start_position);
-
-	ClassDB::bind_method(D_METHOD("set_target_position", "target_position"), &NavigationPathQueryParameters2D::set_target_position);
-	ClassDB::bind_method(D_METHOD("get_target_position"), &NavigationPathQueryParameters2D::get_target_position);
-
-	ClassDB::bind_method(D_METHOD("set_navigation_layers", "navigation_layers"), &NavigationPathQueryParameters2D::set_navigation_layers);
-	ClassDB::bind_method(D_METHOD("get_navigation_layers"), &NavigationPathQueryParameters2D::get_navigation_layers);
-
-	ClassDB::bind_method(D_METHOD("set_metadata_flags", "flags"), &NavigationPathQueryParameters2D::set_metadata_flags);
-	ClassDB::bind_method(D_METHOD("get_metadata_flags"), &NavigationPathQueryParameters2D::get_metadata_flags);
-
-	ClassDB::bind_method(D_METHOD("set_simplify_path", "enabled"), &NavigationPathQueryParameters2D::set_simplify_path);
-	ClassDB::bind_method(D_METHOD("get_simplify_path"), &NavigationPathQueryParameters2D::get_simplify_path);
-
-	ClassDB::bind_method(D_METHOD("set_simplify_epsilon", "epsilon"), &NavigationPathQueryParameters2D::set_simplify_epsilon);
-	ClassDB::bind_method(D_METHOD("get_simplify_epsilon"), &NavigationPathQueryParameters2D::get_simplify_epsilon);
-
-	ADD_PROPERTY(PropertyInfo(Variant::RID, "map"), "set_map", "get_map");
-	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "start_position"), "set_start_position", "get_start_position");
-	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "target_position"), "set_target_position", "get_target_position");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "navigation_layers", PROPERTY_HINT_LAYERS_2D_NAVIGATION), "set_navigation_layers", "get_navigation_layers");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "pathfinding_algorithm", PROPERTY_HINT_ENUM, "AStar"), "set_pathfinding_algorithm", "get_pathfinding_algorithm");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "path_postprocessing", PROPERTY_HINT_ENUM, "Corridorfunnel,Edgecentered"), "set_path_postprocessing", "get_path_postprocessing");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "metadata_flags", PROPERTY_HINT_FLAGS, "Include Types,Include RIDs,Include Owners"), "set_metadata_flags", "get_metadata_flags");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "simplify_path"), "set_simplify_path", "get_simplify_path");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "simplify_epsilon"), "set_simplify_epsilon", "get_simplify_epsilon");
-
-	BIND_ENUM_CONSTANT(PATHFINDING_ALGORITHM_ASTAR);
-
-	BIND_ENUM_CONSTANT(PATH_POSTPROCESSING_CORRIDORFUNNEL);
-	BIND_ENUM_CONSTANT(PATH_POSTPROCESSING_EDGECENTERED);
-
-	BIND_BITFIELD_FLAG(PATH_METADATA_INCLUDE_NONE);
-	BIND_BITFIELD_FLAG(PATH_METADATA_INCLUDE_TYPES);
-	BIND_BITFIELD_FLAG(PATH_METADATA_INCLUDE_RIDS);
-	BIND_BITFIELD_FLAG(PATH_METADATA_INCLUDE_OWNERS);
-	BIND_BITFIELD_FLAG(PATH_METADATA_INCLUDE_ALL);
 }
+#endif //2D

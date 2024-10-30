@@ -73,9 +73,6 @@
 #include "editor/plugins/camera_3d_editor_plugin.h"
 
 #ifdef TOOLS_ENABLED //2D
-#include "editor/plugins/cast_2d_editor_plugin.h"
-#include "editor/plugins/collision_polygon_2d_editor_plugin.h"
-#include "editor/plugins/collision_shape_2d_editor_plugin.h"
 #include "editor/plugins/cpu_particles_2d_editor_plugin.h"
 #include "editor/plugins/gpu_particles_2d_editor_plugin.h"
 #include "editor/plugins/light_occluder_2d_editor_plugin.h"
@@ -89,7 +86,6 @@
 #include "editor/plugins/skeleton_2d_editor_plugin.h"
 #include "editor/plugins/sprite_2d_editor_plugin.h"
 #include "editor/plugins/sprite_frames_editor_plugin.h"
-#include "editor/plugins/tiles/tiles_editor_plugin.h"
 #endif
 
 #include "editor/plugins/control_editor_plugin.h"
@@ -252,8 +248,6 @@ void register_editor_types() {
 
 	// 2D
 #ifdef TOOLS_ENABLED //2D
-	EditorPlugins::add_by_type<CollisionPolygon2DEditorPlugin>();
-	EditorPlugins::add_by_type<CollisionShape2DEditorPlugin>();
 	EditorPlugins::add_by_type<CPUParticles2DEditorPlugin>();
 	EditorPlugins::add_by_type<GPUParticles2DEditorPlugin>();
 	EditorPlugins::add_by_type<LightOccluder2DEditorPlugin>();
@@ -264,11 +258,8 @@ void register_editor_types() {
 	EditorPlugins::add_by_type<ParallaxBackgroundEditorPlugin>();
 	EditorPlugins::add_by_type<Path2DEditorPlugin>();
 	EditorPlugins::add_by_type<Polygon2DEditorPlugin>();
-	EditorPlugins::add_by_type<Cast2DEditorPlugin>();
 	EditorPlugins::add_by_type<Skeleton2DEditorPlugin>();
 	EditorPlugins::add_by_type<Sprite2DEditorPlugin>();
-	EditorPlugins::add_by_type<TileSetEditorPlugin>();
-	EditorPlugins::add_by_type<TileMapEditorPlugin>();
 #endif
 
 	// For correct doc generation.
