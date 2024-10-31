@@ -576,28 +576,6 @@ void ScriptTextEditor::_update_warnings() {
 	warnings_panel->clear();
 
 	bool has_connections_table = false;
-	// Add missing connections.
-	if (GLOBAL_GET("debug/gdscript/warnings/enable").booleanize()) {
-		Node *base = get_tree()->get_edited_scene_root();
-		if (base && missing_connections.size() > 0) {
-			has_connections_table = true;
-			warnings_panel->push_table(1);
-			for (const Connection &connection : missing_connections) {
-				String base_path = base->get_name();
-				String source_path = base == connection.signal.get_object() ? base_path : base_path + "/" + base->get_path_to(Object::cast_to<Node>(connection.signal.get_object()));
-				String target_path = base == connection.callable.get_object() ? base_path : base_path + "/" + base->get_path_to(Object::cast_to<Node>(connection.callable.get_object()));
-
-				warnings_panel->push_cell();
-				warnings_panel->push_color(warnings_panel->get_theme_color(SNAME("warning_color"), EditorStringName(Editor)));
-				warnings_panel->add_text(vformat(TTR("Missing connected method '%s' for signal '%s' from node '%s' to node '%s'."), connection.callable.get_method(), connection.signal.get_name(), source_path, target_path));
-				warnings_panel->pop(); // Color.
-				warnings_panel->pop(); // Cell.
-			}
-			warnings_panel->pop(); // Table.
-
-			warning_nb += missing_connections.size();
-		}
-	}
 
 	code_editor->set_warning_count(warning_nb);
 

@@ -76,12 +76,6 @@
 #include "servers/text/text_server_dummy.h"
 #include "servers/text_server.h"
 
-// 2D
-#ifdef TOOLS_ENABLED //2D
-#include "servers/navigation_server_2d.h"
-#include "servers/navigation_server_2d_dummy.h"
-#endif
-
 // 3D
 #include "servers/physics_server_3d.h"
 #include "servers/xr_server.h"
@@ -150,10 +144,6 @@ static DisplayServer *display_server = nullptr;
 static RenderingServer *rendering_server = nullptr;
 static TextServerManager *tsman = nullptr;
 static ThemeDB *theme_db = nullptr;
-
-#ifdef TOOLS_ENABLED //2D
-static NavigationServer2D *navigation_server_2d = nullptr;
-#endif
 
 static NavigationServer3D *navigation_server_3d = nullptr;
 static PhysicsServer3DManager *physics_server_3d_manager = nullptr;
@@ -299,9 +289,6 @@ void finalize_display() {
 
 void initialize_navigation_server() {
 	ERR_FAIL_COND(navigation_server_3d != nullptr);
-#ifdef TOOLS_ENABLED //2D
-	ERR_FAIL_COND(navigation_server_2d != nullptr);
-#endif
 	// Init 3D Navigation Server
 	navigation_server_3d = NavigationServer3DManager::new_default_server();
 
@@ -313,17 +300,6 @@ void initialize_navigation_server() {
 	// Should be impossible, but make sure it's not null.
 	ERR_FAIL_NULL_MSG(navigation_server_3d, "Failed to initialize NavigationServer3D.");
 	navigation_server_3d->init();
-
-	// Init 2D Navigation Server
-#ifdef TOOLS_ENABLED //2D
-	navigation_server_2d = NavigationServer2DManager::new_default_server();
-	if (!navigation_server_2d) {
-		navigation_server_2d = memnew(NavigationServer2DDummy);
-	}
-
-	ERR_FAIL_NULL_MSG(navigation_server_2d, "Failed to initialize NavigationServer2D.");
-	navigation_server_2d->init();
-#endif
 }
 
 void finalize_navigation_server() {
@@ -331,13 +307,6 @@ void finalize_navigation_server() {
 	navigation_server_3d->finish();
 	memdelete(navigation_server_3d);
 	navigation_server_3d = nullptr;
-
-#ifdef TOOLS_ENABLED //2D
-	ERR_FAIL_NULL(navigation_server_2d);
-	navigation_server_2d->finish();
-	memdelete(navigation_server_2d);
-	navigation_server_2d = nullptr;
-#endif
 }
 
 void initialize_theme_db() {
@@ -3823,9 +3792,6 @@ bool Main::iteration() {
 
 	// process all our active interfaces
 	XRServer::get_singleton()->_process();
-#ifdef TOOLS_ENABLED //2D
-	NavigationServer2D::get_singleton()->sync();
-#endif
 	NavigationServer3D::get_singleton()->sync();
 
 	for (int iters = 0; iters < advance.physics_steps; ++iters) {

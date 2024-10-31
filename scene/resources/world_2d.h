@@ -41,7 +41,6 @@ struct SpatialIndexer2D;
 class World2D : public Resource {
 	RID canvas;
 	mutable RID space;
-	mutable RID navigation_map;
 
 	HashSet<Viewport *> viewports;
 
@@ -51,7 +50,6 @@ protected:
 
 public:
 	RID get_canvas() const;
-	RID get_navigation_map() const;
 
 	void register_viewport(Viewport *p_viewport);
 	void remove_viewport(Viewport *p_viewport);

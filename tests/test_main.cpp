@@ -142,7 +142,6 @@
 #include "tests/scene/test_navigation_obstacle_3d.h"
 #include "tests/scene/test_navigation_region_2d.h"
 #include "tests/scene/test_navigation_region_3d.h"
-#include "tests/servers/test_navigation_server_2d.h"
 #include "tests/servers/test_navigation_server_3d.h"
 #endif // MODULE_NAVIGATION_ENABLED
 
@@ -158,9 +157,7 @@
 #include "tests/test_macros.h"
 
 #include "scene/theme/theme_db.h"
-#include "servers/navigation_server_2d.h"
 #include "servers/navigation_server_3d.h"
-#include "servers/physics_server_2d.h"
 #include "servers/physics_server_3d.h"
 #include "servers/rendering/rendering_server_default.h"
 
@@ -238,7 +235,6 @@ struct GodotTestCaseListener : public doctest::IReporter {
 
 	PhysicsServer3D *physics_server_3d = nullptr;
 	NavigationServer3D *navigation_server_3d = nullptr;
-	NavigationServer2D *navigation_server_2d = nullptr;
 
 	void test_case_start(const doctest::TestCaseData &p_in) override {
 		reinitialize();
@@ -275,7 +271,6 @@ struct GodotTestCaseListener : public doctest::IReporter {
 
 			ERR_PRINT_OFF;
 			navigation_server_3d = NavigationServer3DManager::new_default_server();
-			navigation_server_2d = NavigationServer2DManager::new_default_server();
 			ERR_PRINT_ON;
 
 			memnew(InputMap);
@@ -307,10 +302,9 @@ struct GodotTestCaseListener : public doctest::IReporter {
 			return;
 		}
 
-		if (suite_name.contains("[Navigation]") && navigation_server_2d == nullptr && navigation_server_3d == nullptr) {
+		if (suite_name.contains("[Navigation]") && navigation_server_3d == nullptr) {
 			ERR_PRINT_OFF;
 			navigation_server_3d = NavigationServer3DManager::new_default_server();
-			navigation_server_2d = NavigationServer2DManager::new_default_server();
 			ERR_PRINT_ON;
 			return;
 		}
@@ -342,21 +336,10 @@ struct GodotTestCaseListener : public doctest::IReporter {
 			navigation_server_3d = nullptr;
 		}
 
-		if (navigation_server_2d) {
-			memdelete(navigation_server_2d);
-			navigation_server_2d = nullptr;
-		}
-
 		if (physics_server_3d) {
 			physics_server_3d->finish();
 			memdelete(physics_server_3d);
 			physics_server_3d = nullptr;
-		}
-
-		if (physics_server_2d) {
-			physics_server_2d->finish();
-			memdelete(physics_server_2d);
-			physics_server_2d = nullptr;
 		}
 
 		if (Input::get_singleton()) {
