@@ -5,7 +5,7 @@
 /*                             GODOT ENGINE                               */
 /*                        https://godotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-2024 Godot Engine contributors (see ORGAUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -36,7 +36,6 @@
 
 class CheckBox;
 class EditorAbout;
-class EditorAssetLibrary;
 class EditorFileDialog;
 class EditorTitleBar;
 class HFlowContainer;
@@ -105,12 +104,9 @@ class ProjectManager : public Control {
 	void _select_main_view(int p_id);
 
 	VBoxContainer *local_projects_vb = nullptr;
-	EditorAssetLibrary *asset_library = nullptr;
-
 	EditorAbout *about_dialog = nullptr;
 
 	void _show_about();
-	void _open_asset_library_confirmed();
 
 	AcceptDialog *error_dialog = nullptr;
 
@@ -135,8 +131,6 @@ class ProjectManager : public Control {
 	VBoxContainer *empty_list_placeholder = nullptr;
 	Button *empty_list_create_project = nullptr;
 	Button *empty_list_import_project = nullptr;
-	Button *empty_list_open_assetlib = nullptr;
-	Label *empty_list_online_warning = nullptr;
 
 	void _update_list_placeholder();
 

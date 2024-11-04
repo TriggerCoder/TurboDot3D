@@ -5,7 +5,7 @@
 /*                             GODOT ENGINE                               */
 /*                        https://godotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-2024 Godot Engine contributors (see ORGAUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -631,13 +631,7 @@ void EditorAssetInstaller::_notification(int p_what) {
 
 				extension_icon_map["gdshader"] = get_editor_theme_icon(SNAME("Shader"));
 				extension_icon_map["gdshaderinc"] = get_editor_theme_icon(SNAME("TextFile"));
-				extension_icon_map["gd"] = get_editor_theme_icon(SNAME("GDScript"));
-				if (ClassDB::class_exists("CSharpScript")) {
-					extension_icon_map["cs"] = get_editor_theme_icon(SNAME("CSharpScript"));
-				} else {
-					// Mark C# support as unavailable.
-					extension_icon_map["cs"] = get_editor_theme_icon(SNAME("ImportFail"));
-				}
+				extension_icon_map["cs"] = get_editor_theme_icon(SNAME("CSharpScript"));
 
 				extension_icon_map["res"] = get_editor_theme_icon(SNAME("Resource"));
 				extension_icon_map["tres"] = get_editor_theme_icon(SNAME("Resource"));
