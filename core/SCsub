@@ -259,8 +259,8 @@ env.CommandNoCache(
 )
 
 # Authors
-env.Depends("#core/authors.gen.h", "../AUTHORS.md")
-env.CommandNoCache("#core/authors.gen.h", "../AUTHORS.md", env.Run(core_builders.make_authors_header))
+env.Depends("#core/authors.gen.h", "../ORGAUTHORS.md")
+env.CommandNoCache("#core/authors.gen.h", "../ORGAUTHORS.md", env.Run(core_builders.make_authors_header))
 
 # Donors
 env.Depends("#core/donors.gen.h", "../DONORS.md")

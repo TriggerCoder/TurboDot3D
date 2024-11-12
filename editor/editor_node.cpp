@@ -2743,12 +2743,6 @@ void EditorNode::_menu_option_confirm(int p_option, bool p_confirmed) {
 			Node *scene = editor_data.get_edited_scene_root(scene_idx);
 
 			if (!scene) {
-				if (p_option == FILE_SAVE_SCENE) {
-					// Pressing Ctrl + S saves the current script if a scene is currently open, but it won't if the scene has no root node.
-					// Work around this by explicitly saving the script in this case (similar to pressing Ctrl + Alt + S).
-					ScriptEditor::get_singleton()->save_current_script();
-				}
-
 				const int saved = _save_external_resources(true);
 				if (saved > 0) {
 					show_accept(
@@ -6459,9 +6453,7 @@ void EditorNode::_feature_profile_changed() {
 		editor_dock_manager->set_dock_enabled(history_dock, !profile->is_feature_disabled(EditorFeatureProfile::FEATURE_HISTORY_DOCK));
 
 		main_editor_buttons[EDITOR_3D]->set_visible(!profile->is_feature_disabled(EditorFeatureProfile::FEATURE_3D));
-		main_editor_buttons[EDITOR_SCRIPT]->set_visible(!profile->is_feature_disabled(EditorFeatureProfile::FEATURE_SCRIPT));
-		if ((profile->is_feature_disabled(EditorFeatureProfile::FEATURE_3D) && singleton->main_editor_buttons[EDITOR_3D]->is_pressed()) ||
-				(profile->is_feature_disabled(EditorFeatureProfile::FEATURE_SCRIPT) && singleton->main_editor_buttons[EDITOR_SCRIPT]->is_pressed())) {
+		if (profile->is_feature_disabled(EditorFeatureProfile::FEATURE_3D) && singleton->main_editor_buttons[EDITOR_3D]->is_pressed()) {
 			editor_select(EDITOR_2D);
 		}
 	} else {

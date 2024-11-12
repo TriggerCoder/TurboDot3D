@@ -636,7 +636,6 @@ void TextServer::_bind_methods() {
 	BIND_ENUM_CONSTANT(STRUCTURED_TEXT_FILE);
 	BIND_ENUM_CONSTANT(STRUCTURED_TEXT_EMAIL);
 	BIND_ENUM_CONSTANT(STRUCTURED_TEXT_LIST);
-	BIND_ENUM_CONSTANT(STRUCTURED_TEXT_GDSCRIPT);
 	BIND_ENUM_CONSTANT(STRUCTURED_TEXT_CUSTOM);
 
 	/* Fixed size scale mode */
@@ -1996,86 +1995,6 @@ TypedArray<Vector3i> TextServer::parse_structured_text(StructuredTextParser p_pa
 					ret.push_back(Vector3i(prev + tags[i].length(), prev + tags[i].length() + 1, TextServer::DIRECTION_INHERITED));
 					prev = prev + tags[i].length() + 1;
 				}
-			}
-		} break;
-		case STRUCTURED_TEXT_GDSCRIPT: {
-			bool in_string_literal = false;
-			bool in_string_literal_single = false;
-			bool in_id = false;
-
-			int prev = 0;
-			for (int i = 0; i < p_text.length(); i++) {
-				char32_t c = p_text[i];
-				if (in_string_literal) {
-					if (c == '\\') {
-						i++;
-						continue; // Skip escaped chars.
-					} else if (c == '\"') {
-						// String literal end, push string and ".
-						if (prev != i) {
-							ret.push_back(Vector3i(prev, i, TextServer::DIRECTION_AUTO));
-						}
-						prev = i + 1;
-						ret.push_back(Vector3i(i, i + 1, TextServer::DIRECTION_LTR));
-						in_string_literal = false;
-					}
-				} else if (in_string_literal_single) {
-					if (c == '\\') {
-						i++;
-						continue; // Skip escaped chars.
-					} else if (c == '\'') {
-						// String literal end, push string and '.
-						if (prev != i) {
-							ret.push_back(Vector3i(prev, i, TextServer::DIRECTION_AUTO));
-						}
-						prev = i + 1;
-						ret.push_back(Vector3i(i, i + 1, TextServer::DIRECTION_LTR));
-						in_string_literal_single = false;
-					}
-				} else if (in_id) {
-					if (!is_unicode_identifier_continue(c)) {
-						// End of id, push id.
-						if (prev != i) {
-							ret.push_back(Vector3i(prev, i, TextServer::DIRECTION_AUTO));
-						}
-						prev = i;
-						in_id = false;
-					}
-				} else if (is_unicode_identifier_start(c)) {
-					// Start of new id, push prev element.
-					if (prev != i) {
-						ret.push_back(Vector3i(prev, i, TextServer::DIRECTION_AUTO));
-					}
-					prev = i;
-					in_id = true;
-				} else if (c == '\"') {
-					// String literal start, push prev element and ".
-					if (prev != i) {
-						ret.push_back(Vector3i(prev, i, TextServer::DIRECTION_AUTO));
-					}
-					prev = i + 1;
-					ret.push_back(Vector3i(i, i + 1, TextServer::DIRECTION_LTR));
-					in_string_literal = true;
-				} else if (c == '\'') {
-					// String literal start, push prev element and '.
-					if (prev != i) {
-						ret.push_back(Vector3i(prev, i, TextServer::DIRECTION_AUTO));
-					}
-					prev = i + 1;
-					ret.push_back(Vector3i(i, i + 1, TextServer::DIRECTION_LTR));
-					in_string_literal_single = true;
-				} else if (c == '#') {
-					// Start of comment, push prev element and #, skip the rest of the text.
-					if (prev != i) {
-						ret.push_back(Vector3i(prev, i, TextServer::DIRECTION_AUTO));
-					}
-					prev = i + 1;
-					ret.push_back(Vector3i(i, i + 1, TextServer::DIRECTION_LTR));
-					break;
-				}
-			}
-			if (prev < p_text.length()) {
-				ret.push_back(Vector3i(prev, p_text.length(), TextServer::DIRECTION_AUTO));
 			}
 		} break;
 		case STRUCTURED_TEXT_CUSTOM:

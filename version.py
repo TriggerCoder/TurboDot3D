@@ -1,5 +1,5 @@
-short_name = "litedot"
-name = "Litedot Engine"
+short_name = "turbodot"
+name = "TurboDot Engine"
 major = 1
 minor = 3
 patch = 0

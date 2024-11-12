@@ -4571,8 +4571,6 @@ void RichTextLabel::append_text(const String &p_bbcode) {
 							st_parser_type = TextServer::STRUCTURED_TEXT_EMAIL;
 						} else if (subtag_a[1] == "l" || subtag_a[1] == "list") {
 							st_parser_type = TextServer::STRUCTURED_TEXT_LIST;
-						} else if (subtag_a[1] == "n" || subtag_a[1] == "gdscript") {
-							st_parser_type = TextServer::STRUCTURED_TEXT_GDSCRIPT;
 						} else if (subtag_a[1] == "c" || subtag_a[1] == "custom") {
 							st_parser_type = TextServer::STRUCTURED_TEXT_CUSTOM;
 						}

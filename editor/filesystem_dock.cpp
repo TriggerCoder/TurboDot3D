@@ -2530,14 +2530,6 @@ void FileSystemDock::_file_option(int p_option, const Vector<String> &p_selected
 		case FILE_NEW_RESOURCE: {
 			new_resource_dialog->popup_create(true);
 		} break;
-		case FILE_NEW_TEXTFILE: {
-			String fpath = current_path;
-			if (!fpath.ends_with("/")) {
-				fpath = fpath.get_base_dir();
-			}
-			String dir = ProjectSettings::get_singleton()->globalize_path(fpath);
-			ScriptEditor::get_singleton()->open_text_file_create_dialog(dir);
-		} break;
 	}
 }
 
@@ -3159,7 +3151,6 @@ void FileSystemDock::_file_and_folders_fill_popup(PopupMenu *p_popup, const Vect
 		new_menu->add_icon_item(get_editor_theme_icon(SNAME("PackedScene")), TTR("Scene..."), FILE_NEW_SCENE);
 		new_menu->add_icon_item(get_editor_theme_icon(SNAME("Script")), TTR("Script..."), FILE_NEW_SCRIPT);
 		new_menu->add_icon_item(get_editor_theme_icon(SNAME("Object")), TTR("Resource..."), FILE_NEW_RESOURCE);
-		new_menu->add_icon_item(get_editor_theme_icon(SNAME("TextFile")), TTR("TextFile..."), FILE_NEW_TEXTFILE);
 		p_popup->add_separator();
 	}
 
@@ -3334,7 +3325,6 @@ void FileSystemDock::_tree_empty_click(const Vector2 &p_pos, MouseButton p_butto
 	tree_popup->add_icon_item(get_editor_theme_icon(SNAME("PackedScene")), TTR("New Scene..."), FILE_NEW_SCENE);
 	tree_popup->add_icon_item(get_editor_theme_icon(SNAME("Script")), TTR("New Script..."), FILE_NEW_SCRIPT);
 	tree_popup->add_icon_item(get_editor_theme_icon(SNAME("Object")), TTR("New Resource..."), FILE_NEW_RESOURCE);
-	tree_popup->add_icon_item(get_editor_theme_icon(SNAME("TextFile")), TTR("New TextFile..."), FILE_NEW_TEXTFILE);
 #if !defined(ANDROID_ENABLED) && !defined(WEB_ENABLED)
 	// Opening the system file manager is not supported on the Android and web editors.
 	tree_popup->add_separator();
@@ -3399,7 +3389,6 @@ void FileSystemDock::_file_list_empty_clicked(const Vector2 &p_pos, MouseButton 
 	file_list_popup->add_icon_item(get_editor_theme_icon(SNAME("PackedScene")), TTR("New Scene..."), FILE_NEW_SCENE);
 	file_list_popup->add_icon_item(get_editor_theme_icon(SNAME("Script")), TTR("New Script..."), FILE_NEW_SCRIPT);
 	file_list_popup->add_icon_item(get_editor_theme_icon(SNAME("Object")), TTR("New Resource..."), FILE_NEW_RESOURCE);
-	file_list_popup->add_icon_item(get_editor_theme_icon(SNAME("TextFile")), TTR("New TextFile..."), FILE_NEW_TEXTFILE);
 	file_list_popup->add_separator();
 	file_list_popup->add_icon_shortcut(get_editor_theme_icon(SNAME("Terminal")), ED_GET_SHORTCUT("filesystem_dock/open_in_terminal"), FILE_OPEN_IN_TERMINAL);
 	file_list_popup->add_icon_shortcut(get_editor_theme_icon(SNAME("Filesystem")), ED_GET_SHORTCUT("filesystem_dock/show_in_explorer"), FILE_SHOW_IN_EXPLORER);

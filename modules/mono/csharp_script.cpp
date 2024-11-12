@@ -1018,7 +1018,7 @@ Error CSharpLanguage::open_in_external_editor(const Ref<Script> &p_script, int p
 }
 
 bool CSharpLanguage::overrides_external_editor() {
-	return get_godotsharp_editor()->call("OverridesExternalEditor");
+	return true;
 }
 #endif
 

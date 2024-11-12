@@ -225,7 +225,6 @@ void ProjectManager::_update_theme(bool p_skip_creation) {
 		title_bar_logo->set_icon(get_editor_theme_icon(SNAME("TitleBarLogo")));
 
 		_set_main_view_icon(MAIN_VIEW_PROJECTS, get_editor_theme_icon(SNAME("ProjectList")));
-		_set_main_view_icon(MAIN_VIEW_ASSETLIB, get_editor_theme_icon(SNAME("AssetLib")));
 
 		// Project list.
 		{

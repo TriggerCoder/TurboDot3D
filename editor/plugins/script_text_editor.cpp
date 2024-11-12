@@ -835,8 +835,6 @@ void ScriptEditor::_update_modified_scripts_for_external_editor(Ref<Script> p_fo
 			scr->set_source_code(rel_scr->get_source_code());
 			scr->set_last_modified_time(rel_scr->get_last_modified_time());
 			scr->update_exports();
-
-			trigger_live_script_reload(scr->get_path());
 		}
 	}
 }
@@ -1481,18 +1479,6 @@ void ScriptTextEditor::_edit_option(int p_op) {
 		} break;
 		case SEARCH_REPLACE: {
 			code_editor->get_find_replace_bar()->popup_replace();
-		} break;
-		case SEARCH_IN_FILES: {
-			String selected_text = tx->get_selected_text();
-
-			// Yep, because it doesn't make sense to instance this dialog for every single script open...
-			// So this will be delegated to the ScriptEditor.
-			emit_signal(SNAME("search_in_files_requested"), selected_text);
-		} break;
-		case REPLACE_IN_FILES: {
-			String selected_text = tx->get_selected_text();
-
-			emit_signal(SNAME("replace_in_files_requested"), selected_text);
 		} break;
 		case SEARCH_LOCATE_FUNCTION: {
 			quick_open->popup_dialog(get_functions());
@@ -2326,9 +2312,6 @@ void ScriptTextEditor::_enable_code_editor() {
 	search_menu->get_popup()->add_shortcut(ED_GET_SHORTCUT("script_text_editor/find_previous"), SEARCH_FIND_PREV);
 	search_menu->get_popup()->add_shortcut(ED_GET_SHORTCUT("script_text_editor/replace"), SEARCH_REPLACE);
 	search_menu->get_popup()->add_separator();
-	search_menu->get_popup()->add_shortcut(ED_GET_SHORTCUT("script_text_editor/find_in_files"), SEARCH_IN_FILES);
-	search_menu->get_popup()->add_shortcut(ED_GET_SHORTCUT("script_text_editor/replace_in_files"), REPLACE_IN_FILES);
-	search_menu->get_popup()->add_separator();
 	search_menu->get_popup()->add_shortcut(ED_GET_SHORTCUT("script_text_editor/contextual_help"), HELP_CONTEXTUAL);
 	search_menu->get_popup()->connect(SceneStringName(id_pressed), callable_mp(this, &ScriptTextEditor::_edit_option));
 
@@ -2499,9 +2482,6 @@ void ScriptTextEditor::register_editor() {
 
 	ED_SHORTCUT_AND_COMMAND("script_text_editor/replace", TTR("Replace..."), KeyModifierMask::CTRL | Key::R);
 	ED_SHORTCUT_OVERRIDE("script_text_editor/replace", "macos", KeyModifierMask::ALT | KeyModifierMask::META | Key::F);
-
-	ED_SHORTCUT("script_text_editor/find_in_files", TTR("Find in Files..."), KeyModifierMask::CMD_OR_CTRL | KeyModifierMask::SHIFT | Key::F);
-	ED_SHORTCUT("script_text_editor/replace_in_files", TTR("Replace in Files..."), KeyModifierMask::CMD_OR_CTRL | KeyModifierMask::SHIFT | Key::R);
 
 	ED_SHORTCUT("script_text_editor/contextual_help", TTR("Contextual Help"), KeyModifierMask::ALT | Key::F1);
 	ED_SHORTCUT_OVERRIDE("script_text_editor/contextual_help", "macos", KeyModifierMask::ALT | KeyModifierMask::SHIFT | Key::SPACE);

@@ -40,7 +40,6 @@
 #include "editor/editor_paths.h"
 #include "editor/editor_resource_picker.h"
 #include "editor/editor_resource_preview.h"
-#include "editor/editor_script.h"
 #include "editor/editor_settings.h"
 #include "editor/editor_string_names.h"
 #include "editor/editor_translation_parser.h"
@@ -139,7 +138,6 @@ void register_editor_types() {
 	GDREGISTER_CLASS(EditorPlugin);
 	GDREGISTER_CLASS(EditorTranslationParserPlugin);
 	GDREGISTER_CLASS(EditorImportPlugin);
-	GDREGISTER_CLASS(EditorScript);
 	GDREGISTER_CLASS(EditorSelection);
 	GDREGISTER_CLASS(EditorFileDialog);
 	GDREGISTER_CLASS(EditorSettings);

@@ -974,10 +974,6 @@ void CodeTextEditor::_complete_request() {
 			font_color = completion_string_color;
 		} else if (e.insert_text.begins_with("##") || e.insert_text.begins_with("///")) {
 			font_color = completion_doc_comment_color;
-		} else if (e.insert_text.begins_with("&")) {
-			font_color = completion_string_name_color;
-		} else if (e.insert_text.begins_with("^")) {
-			font_color = completion_node_path_color;
 		} else if (e.insert_text.begins_with("#") || e.insert_text.begins_with("//")) {
 			font_color = completion_comment_color;
 		}
@@ -1034,8 +1030,6 @@ void CodeTextEditor::update_editor_settings() {
 	// Theme: Highlighting
 	completion_font_color = EDITOR_GET("text_editor/theme/highlighting/completion_font_color");
 	completion_string_color = EDITOR_GET("text_editor/theme/highlighting/string_color");
-	completion_string_name_color = EDITOR_GET("text_editor/theme/highlighting/gdscript/string_name_color");
-	completion_node_path_color = EDITOR_GET("text_editor/theme/highlighting/gdscript/node_path_color");
 	completion_comment_color = EDITOR_GET("text_editor/theme/highlighting/comment_color");
 	completion_doc_comment_color = EDITOR_GET("text_editor/theme/highlighting/doc_comment_color");
 
@@ -1730,7 +1724,6 @@ void CodeTextEditor::update_toggle_scripts_button() {
 	} else {
 		toggle_scripts_button->set_icon(get_editor_theme_icon(ScriptEditor::get_singleton()->is_scripts_panel_toggled() ? SNAME("Back") : SNAME("Forward")));
 	}
-	toggle_scripts_button->set_tooltip_text(vformat("%s (%s)", TTR("Toggle Scripts Panel"), ED_GET_SHORTCUT("script_editor/toggle_scripts_panel")->get_as_text()));
 }
 
 CodeTextEditor::CodeTextEditor() {
@@ -1743,7 +1736,7 @@ CodeTextEditor::CodeTextEditor() {
 	text_editor = memnew(CodeEdit);
 	add_child(text_editor);
 	text_editor->set_v_size_flags(SIZE_EXPAND_FILL);
-	text_editor->set_structured_text_bidi_override(TextServer::STRUCTURED_TEXT_GDSCRIPT);
+	text_editor->set_structured_text_bidi_override(TextServer::STRUCTURED_TEXT_CUSTOM);
 	text_editor->set_draw_bookmarks_gutter(true);
 
 	text_editor->set_draw_line_numbers(true);

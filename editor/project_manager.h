@@ -88,7 +88,6 @@ class ProjectManager : public Control {
 
 	enum MainViewTab {
 		MAIN_VIEW_PROJECTS,
-		MAIN_VIEW_ASSETLIB,
 		MAIN_VIEW_MAX
 	};
 

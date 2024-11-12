@@ -5841,27 +5841,7 @@ void VisualShaderEditor::drop_data_fw(const Point2 &p_point, const Variant &p_da
 				PackedStringArray arr = d["files"];
 				for (int i = 0; i < arr.size(); i++) {
 					String type = ResourceLoader::get_resource_type(arr[i]);
-					if (type == "GDScript") {
-						Ref<Script> scr = ResourceLoader::load(arr[i]);
-						if (scr->get_instance_base_type() == "VisualShaderNodeCustom") {
-							saved_node_pos = p_point + Vector2(0, i * 250 * EDSCALE);
-							saved_node_pos_dirty = true;
-
-							int idx = -1;
-
-							for (int j = custom_node_option_idx; j < add_options.size(); j++) {
-								if (add_options[j].script.is_valid()) {
-									if (add_options[j].script->get_path() == arr[i]) {
-										idx = j;
-										break;
-									}
-								}
-							}
-							if (idx != -1) {
-								_add_node(idx, {}, arr[i], i);
-							}
-						}
-					} else if (type == "CurveTexture") {
+					if (type == "CurveTexture") {
 						saved_node_pos = p_point + Vector2(0, i * 250 * EDSCALE);
 						saved_node_pos_dirty = true;
 						_add_node(curve_node_option_idx, {}, arr[i], i);

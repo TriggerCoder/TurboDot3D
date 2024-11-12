@@ -4119,7 +4119,6 @@ void SceneTreeDock::_feature_profile_changed() {
 
 	if (profile.is_valid()) {
 		profile_allow_editing = !profile->is_feature_disabled(EditorFeatureProfile::FEATURE_SCENE_TREE);
-		profile_allow_script_editing = !profile->is_feature_disabled(EditorFeatureProfile::FEATURE_SCRIPT);
 		bool profile_allow_3d = !profile->is_feature_disabled(EditorFeatureProfile::FEATURE_3D);
 
 		button_3d->set_visible(profile_allow_3d);

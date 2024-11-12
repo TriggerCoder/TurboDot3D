@@ -1172,16 +1172,6 @@ void ConnectionsDock::_go_to_method(TreeItem &p_item) {
 	if (!cd.target) {
 		return;
 	}
-
-	Ref<Script> scr = cd.target->get_script();
-
-	if (scr.is_null()) {
-		return;
-	}
-
-	if (scr.is_valid() && ScriptEditor::get_singleton()->script_goto_method(scr, cd.method)) {
-		EditorNode::get_singleton()->editor_select(EditorNode::EDITOR_SCRIPT);
-	}
 }
 
 void ConnectionsDock::_handle_class_menu_option(int p_option) {
