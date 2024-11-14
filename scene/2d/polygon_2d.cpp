@@ -32,7 +32,6 @@
 #include "polygon_2d.h"
 
 #include "core/math/geometry_2d.h"
-#include "skeleton_2d.h"
 
 Dictionary Polygon2D::_edit_get_state() const {
 	Dictionary state = Node2D::_edit_get_state();
@@ -95,10 +94,6 @@ void Polygon2D::_validate_property(PropertyInfo &p_property) const {
 	}
 }
 
-void Polygon2D::_skeleton_bone_setup_changed() {
-	queue_redraw();
-}
-
 void Polygon2D::_notification(int p_what) {
 	if (p_what == NOTIFICATION_TRANSFORM_CHANGED && !Engine::get_singleton()->is_editor_hint()) {
 		return; // Mesh recreation for NOTIFICATION_TRANSFORM_CHANGED is only needed in editor.
@@ -109,33 +104,6 @@ void Polygon2D::_notification(int p_what) {
 		case NOTIFICATION_DRAW: {
 			if (polygon.size() < 3) {
 				return;
-			}
-
-			Skeleton2D *skeleton_node = nullptr;
-			if (has_node(skeleton)) {
-				skeleton_node = Object::cast_to<Skeleton2D>(get_node(skeleton));
-			}
-
-			ObjectID new_skeleton_id;
-
-			if (skeleton_node && !invert && bone_weights.size()) {
-				RS::get_singleton()->canvas_item_attach_skeleton(get_canvas_item(), skeleton_node->get_skeleton());
-				new_skeleton_id = skeleton_node->get_instance_id();
-			} else {
-				RS::get_singleton()->canvas_item_attach_skeleton(get_canvas_item(), RID());
-			}
-
-			if (new_skeleton_id != current_skeleton_id) {
-				Object *old_skeleton = ObjectDB::get_instance(current_skeleton_id);
-				if (old_skeleton) {
-					old_skeleton->disconnect("bone_setup_changed", callable_mp(this, &Polygon2D::_skeleton_bone_setup_changed));
-				}
-
-				if (skeleton_node) {
-					skeleton_node->connect("bone_setup_changed", callable_mp(this, &Polygon2D::_skeleton_bone_setup_changed));
-				}
-
-				current_skeleton_id = new_skeleton_id;
 			}
 
 			Vector<Vector2> points;
@@ -233,71 +201,6 @@ void Polygon2D::_notification(int p_what) {
 				}
 			}
 
-			if (skeleton_node && !invert && bone_weights.size()) {
-				//a skeleton is set! fill indices and weights
-				int vc = len;
-				bones.resize(vc * 4);
-				weights.resize(vc * 4);
-
-				int *bonesw = bones.ptrw();
-				float *weightsw = weights.ptrw();
-
-				for (int i = 0; i < vc * 4; i++) {
-					bonesw[i] = 0;
-					weightsw[i] = 0;
-				}
-
-				for (int i = 0; i < bone_weights.size(); i++) {
-					if (bone_weights[i].weights.size() != points.size()) {
-						continue; //different number of vertices, sorry not using.
-					}
-					if (!skeleton_node->has_node(bone_weights[i].path)) {
-						continue; //node does not exist
-					}
-					Bone2D *bone = Object::cast_to<Bone2D>(skeleton_node->get_node(bone_weights[i].path));
-					if (!bone) {
-						continue;
-					}
-
-					int bone_index = bone->get_index_in_skeleton();
-					const float *r = bone_weights[i].weights.ptr();
-					for (int j = 0; j < vc; j++) {
-						if (r[j] == 0.0) {
-							continue; //weight is unpainted, skip
-						}
-						//find an index with a weight
-						for (int k = 0; k < 4; k++) {
-							if (weightsw[j * 4 + k] < r[j]) {
-								//this is less than this weight, insert weight!
-								for (int l = 3; l > k; l--) {
-									weightsw[j * 4 + l] = weightsw[j * 4 + l - 1];
-									bonesw[j * 4 + l] = bonesw[j * 4 + l - 1];
-								}
-								weightsw[j * 4 + k] = r[j];
-								bonesw[j * 4 + k] = bone_index;
-								break;
-							}
-						}
-					}
-				}
-
-				//normalize the weights
-				for (int i = 0; i < vc; i++) {
-					real_t tw = 0.0;
-					for (int j = 0; j < 4; j++) {
-						tw += weightsw[i * 4 + j];
-					}
-					if (tw == 0) {
-						continue; //unpainted, do nothing
-					}
-
-					//normalize
-					for (int j = 0; j < 4; j++) {
-						weightsw[i * 4 + j] /= tw;
-					}
-				}
-			}
-
 			Vector<Color> colors;
 			colors.resize(len);
 
@@ -369,22 +272,6 @@ void Polygon2D::_notification(int p_what) {
 				arr[RS::ARRAY_INDEX] = index_array;
 
 				RS::SurfaceData sd;
-
-				if (skeleton_node) {
-					// Compute transform between mesh and skeleton for runtime AABB compute.
-					const Transform2D mesh_transform = get_global_transform();
-					const Transform2D skeleton_transform = skeleton_node->get_global_transform();
-					const Transform2D mesh_to_sk2d = skeleton_transform.affine_inverse() * mesh_transform;
-
-					// Convert 2d transform to 3d.
-					sd.mesh_to_skeleton_xform.basis.rows[0][0] = mesh_to_sk2d.columns[0][0];
-					sd.mesh_to_skeleton_xform.basis.rows[1][0] = mesh_to_sk2d.columns[0][1];
-					sd.mesh_to_skeleton_xform.origin.x = mesh_to_sk2d.get_origin().x;
-
-					sd.mesh_to_skeleton_xform.basis.rows[0][1] = mesh_to_sk2d.columns[1][0];
-					sd.mesh_to_skeleton_xform.basis.rows[1][1] = mesh_to_sk2d.columns[1][1];
-					sd.mesh_to_skeleton_xform.origin.y = mesh_to_sk2d.get_origin().y;
-				}
 
 				Error err = RS::get_singleton()->mesh_create_surface_data_from_arrays(&sd, RS::PRIMITIVE_TRIANGLES, arr, Array(), Dictionary(), RS::ARRAY_FLAG_USE_2D_VERTICES);
 				if (err != OK) {
@@ -525,80 +412,6 @@ void Polygon2D::set_offset(const Vector2 &p_offset) {
 
 Vector2 Polygon2D::get_offset() const {
 	return offset;
-}
-
-void Polygon2D::add_bone(const NodePath &p_path, const Vector<float> &p_weights) {
-	Bone bone;
-	bone.path = p_path;
-	bone.weights = p_weights;
-	bone_weights.push_back(bone);
-}
-
-int Polygon2D::get_bone_count() const {
-	return bone_weights.size();
-}
-
-NodePath Polygon2D::get_bone_path(int p_index) const {
-	ERR_FAIL_INDEX_V(p_index, bone_weights.size(), NodePath());
-	return bone_weights[p_index].path;
-}
-
-Vector<float> Polygon2D::get_bone_weights(int p_index) const {
-	ERR_FAIL_INDEX_V(p_index, bone_weights.size(), Vector<float>());
-	return bone_weights[p_index].weights;
-}
-
-void Polygon2D::erase_bone(int p_idx) {
-	ERR_FAIL_INDEX(p_idx, bone_weights.size());
-	bone_weights.remove_at(p_idx);
-}
-
-void Polygon2D::clear_bones() {
-	bone_weights.clear();
-}
-
-void Polygon2D::set_bone_weights(int p_index, const Vector<float> &p_weights) {
-	ERR_FAIL_INDEX(p_index, bone_weights.size());
-	bone_weights.write[p_index].weights = p_weights;
-	queue_redraw();
-}
-
-void Polygon2D::set_bone_path(int p_index, const NodePath &p_path) {
-	ERR_FAIL_INDEX(p_index, bone_weights.size());
-	bone_weights.write[p_index].path = p_path;
-	queue_redraw();
-}
-
-Array Polygon2D::_get_bones() const {
-	Array bones;
-	for (int i = 0; i < get_bone_count(); i++) {
-		// Convert path property to String to avoid errors due to invalid node path in editor,
-		// because it's relative to the Skeleton2D node and not Polygon2D.
-		bones.push_back(String(get_bone_path(i)));
-		bones.push_back(get_bone_weights(i));
-	}
-	return bones;
-}
-
-void Polygon2D::_set_bones(const Array &p_bones) {
-	ERR_FAIL_COND(p_bones.size() & 1);
-	clear_bones();
-	for (int i = 0; i < p_bones.size(); i += 2) {
-		// Convert back from String to NodePath.
-		add_bone(NodePath(p_bones[i]), p_bones[i + 1]);
-	}
-}
-
-void Polygon2D::set_skeleton(const NodePath &p_skeleton) {
-	if (skeleton == p_skeleton) {
-		return;
-	}
-	skeleton = p_skeleton;
-	queue_redraw();
-}
-
-NodePath Polygon2D::get_skeleton() const {
-	return skeleton;
 }
 
 void Polygon2D::_bind_methods() {

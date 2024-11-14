@@ -69,12 +69,10 @@ class Polygon2DEditor : public AbstractPolygon2DEditor {
 		UV_MODE_SCALE,
 		UV_MODE_ADD_POLYGON,
 		UV_MODE_REMOVE_POLYGON,
-		UV_MODE_PAINT_WEIGHT,
-		UV_MODE_CLEAR_WEIGHT,
 		UV_MODE_MAX
 	};
 
-	Button *uv_edit_mode[4];
+	Button *uv_edit_mode[3];
 	Ref<ButtonGroup> uv_edit_group;
 
 	Polygon2D *node = nullptr;
@@ -96,21 +94,7 @@ class Polygon2DEditor : public AbstractPolygon2DEditor {
 	void _uv_pan_callback(Vector2 p_scroll_vec, Ref<InputEvent> p_event);
 	void _uv_zoom_callback(float p_zoom_factor, Vector2 p_origin, Ref<InputEvent> p_event);
 
-	VBoxContainer *bone_scroll_main_vb = nullptr;
-	ScrollContainer *bone_scroll = nullptr;
-	VBoxContainer *bone_scroll_vb = nullptr;
-	Button *sync_bones = nullptr;
-	HSlider *bone_paint_strength = nullptr;
-	SpinBox *bone_paint_radius = nullptr;
-	Label *bone_paint_radius_label = nullptr;
-	bool bone_painting;
-	int bone_painting_bone = 0;
-	Vector<float> prev_weights;
-	Vector2 bone_paint_pos;
 	AcceptDialog *grid_settings = nullptr;
-
-	void _sync_bones();
-	void _update_bone_list();
 
 	Vector2 uv_draw_ofs;
 	real_t uv_draw_zoom;
@@ -119,7 +103,6 @@ class Polygon2DEditor : public AbstractPolygon2DEditor {
 	Vector<Vector2> uv_create_poly_prev;
 	Vector<Color> uv_create_colors_prev;
 	int uv_create_prev_internal_vertices = 0;
-	Array uv_create_bones_prev;
 	Array polygons_prev;
 
 	Vector2 uv_create_to;
@@ -159,7 +142,6 @@ class Polygon2DEditor : public AbstractPolygon2DEditor {
 
 	void _uv_edit_mode_select(int p_mode);
 	void _uv_edit_popup_hide();
-	void _bone_paint_selected(int p_index);
 
 	int _get_polygon_count() const override;
 

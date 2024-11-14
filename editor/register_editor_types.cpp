@@ -79,7 +79,6 @@
 #include "editor/plugins/parallax_background_editor_plugin.h"
 #include "editor/plugins/path_2d_editor_plugin.h"
 #include "editor/plugins/polygon_2d_editor_plugin.h"
-#include "editor/plugins/skeleton_2d_editor_plugin.h"
 #include "editor/plugins/sprite_2d_editor_plugin.h"
 #include "editor/plugins/sprite_frames_editor_plugin.h"
 #endif
@@ -250,7 +249,6 @@ void register_editor_types() {
 	EditorPlugins::add_by_type<ParallaxBackgroundEditorPlugin>();
 	EditorPlugins::add_by_type<Path2DEditorPlugin>();
 	EditorPlugins::add_by_type<Polygon2DEditorPlugin>();
-	EditorPlugins::add_by_type<Skeleton2DEditorPlugin>();
 	EditorPlugins::add_by_type<Sprite2DEditorPlugin>();
 #endif
 

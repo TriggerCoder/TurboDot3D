@@ -663,68 +663,37 @@ AABB MeshStorage::mesh_get_aabb(RID p_mesh, RID p_skeleton) {
 
 			bool found_bone_aabb = false;
 
-			if (skeleton->use_2d) {
 				for (int j = 0; j < bs; j++) {
-					if (skbones[j].size == Vector3(-1, -1, -1)) {
-						continue; //bone is unused
-					}
-
-					const float *dataptr = baseptr + j * 8;
-
-					Transform3D mtx;
-
-					mtx.basis.rows[0][0] = dataptr[0];
-					mtx.basis.rows[0][1] = dataptr[1];
-					mtx.origin.x = dataptr[3];
-
-					mtx.basis.rows[1][0] = dataptr[4];
-					mtx.basis.rows[1][1] = dataptr[5];
-					mtx.origin.y = dataptr[7];
-
-					// Transform bounds to skeleton's space before applying animation data.
-					AABB baabb = surface.mesh_to_skeleton_xform.xform(skbones[j]);
-					baabb = mtx.xform(baabb);
-
-					if (!found_bone_aabb) {
-						laabb = baabb;
-						found_bone_aabb = true;
-					} else {
-						laabb.merge_with(baabb);
-					}
+				if (skbones[j].size == Vector3(-1, -1, -1)) {
+					continue; //bone is unused
 				}
-			} else {
-				for (int j = 0; j < bs; j++) {
-					if (skbones[j].size == Vector3(-1, -1, -1)) {
-						continue; //bone is unused
-					}
 
-					const float *dataptr = baseptr + j * 12;
+				const float *dataptr = baseptr + j * 12;
 
-					Transform3D mtx;
+				Transform3D mtx;
 
-					mtx.basis.rows[0][0] = dataptr[0];
-					mtx.basis.rows[0][1] = dataptr[1];
-					mtx.basis.rows[0][2] = dataptr[2];
-					mtx.origin.x = dataptr[3];
-					mtx.basis.rows[1][0] = dataptr[4];
-					mtx.basis.rows[1][1] = dataptr[5];
-					mtx.basis.rows[1][2] = dataptr[6];
-					mtx.origin.y = dataptr[7];
-					mtx.basis.rows[2][0] = dataptr[8];
-					mtx.basis.rows[2][1] = dataptr[9];
-					mtx.basis.rows[2][2] = dataptr[10];
-					mtx.origin.z = dataptr[11];
+				mtx.basis.rows[0][0] = dataptr[0];
+				mtx.basis.rows[0][1] = dataptr[1];
+				mtx.basis.rows[0][2] = dataptr[2];
+				mtx.origin.x = dataptr[3];
+				mtx.basis.rows[1][0] = dataptr[4];
+				mtx.basis.rows[1][1] = dataptr[5];
+				mtx.basis.rows[1][2] = dataptr[6];
+				mtx.origin.y = dataptr[7];
+				mtx.basis.rows[2][0] = dataptr[8];
+				mtx.basis.rows[2][1] = dataptr[9];
+				mtx.basis.rows[2][2] = dataptr[10];
+				mtx.origin.z = dataptr[11];
 
-					// Transform bounds to skeleton's space before applying animation data.
-					AABB baabb = surface.mesh_to_skeleton_xform.xform(skbones[j]);
-					baabb = mtx.xform(baabb);
+				// Transform bounds to skeleton's space before applying animation data.
+				AABB baabb = surface.mesh_to_skeleton_xform.xform(skbones[j]);
+				baabb = mtx.xform(baabb);
 
-					if (!found_bone_aabb) {
-						laabb = baabb;
-						found_bone_aabb = true;
-					} else {
-						laabb.merge_with(baabb);
-					}
+				if (!found_bone_aabb) {
+					laabb = baabb;
+					found_bone_aabb = true;
+				} else {
+					laabb.merge_with(baabb);
 				}
 			}
 
@@ -1077,7 +1046,7 @@ void MeshStorage::update_mesh_instances() {
 
 			push_constant.has_normal = mi->mesh->surfaces[i]->format & RS::ARRAY_FORMAT_NORMAL;
 			push_constant.has_tangent = mi->mesh->surfaces[i]->format & RS::ARRAY_FORMAT_TANGENT;
-			push_constant.has_skeleton = sk != nullptr && sk->use_2d == array_is_2d && (mi->mesh->surfaces[i]->format & RS::ARRAY_FORMAT_BONES);
+			push_constant.has_skeleton = sk != nullptr && (mi->mesh->surfaces[i]->format & RS::ARRAY_FORMAT_BONES);
 			push_constant.has_blend_shape = mi->mesh->blend_shape_count > 0;
 
 			push_constant.normal_tangent_stride = (push_constant.has_normal ? 1 : 0) + (push_constant.has_tangent ? 1 : 0);
@@ -1088,9 +1057,6 @@ void MeshStorage::update_mesh_instances() {
 			push_constant.skin_weight_offset = (mi->mesh->surfaces[i]->format & RS::ARRAY_FLAG_USE_8_BONE_WEIGHTS) ? 4 : 2;
 
 			Transform2D transform = Transform2D();
-			if (sk && sk->use_2d) {
-				transform = mi->canvas_item_transform_2d.affine_inverse() * sk->base_transform_2d;
-			}
 			push_constant.skeleton_transform_x[0] = transform.columns[0][0];
 			push_constant.skeleton_transform_x[1] = transform.columns[0][1];
 			push_constant.skeleton_transform_y[0] = transform.columns[1][0];
@@ -2114,17 +2080,16 @@ void MeshStorage::_skeleton_make_dirty(Skeleton *skeleton) {
 	}
 }
 
-void MeshStorage::skeleton_allocate_data(RID p_skeleton, int p_bones, bool p_2d_skeleton) {
+void MeshStorage::skeleton_allocate_data(RID p_skeleton, int p_bones) {
 	Skeleton *skeleton = skeleton_owner.get_or_null(p_skeleton);
 	ERR_FAIL_NULL(skeleton);
 	ERR_FAIL_COND(p_bones < 0);
 
-	if (skeleton->size == p_bones && skeleton->use_2d == p_2d_skeleton) {
+	if (skeleton->size == p_bones) {
 		return;
 	}
 
 	skeleton->size = p_bones;
-	skeleton->use_2d = p_2d_skeleton;
 	skeleton->uniform_set_3d = RID();
 
 	if (skeleton->buffer.is_valid()) {
@@ -2135,7 +2100,7 @@ void MeshStorage::skeleton_allocate_data(RID p_skeleton, int p_bones, bool p_2d_
 	}
 
 	if (skeleton->size) {
-		skeleton->data.resize(skeleton->size * (skeleton->use_2d ? 8 : 12));
+		skeleton->data.resize(skeleton->size * 12);
 		skeleton->buffer = RD::get_singleton()->storage_buffer_create(skeleton->data.size() * sizeof(float));
 		memset(skeleton->data.ptrw(), 0, skeleton->data.size() * sizeof(float));
 
@@ -2169,7 +2134,6 @@ void MeshStorage::skeleton_bone_set_transform(RID p_skeleton, int p_bone, const 
 
 	ERR_FAIL_NULL(skeleton);
 	ERR_FAIL_INDEX(p_bone, skeleton->size);
-	ERR_FAIL_COND(skeleton->use_2d);
 
 	float *dataptr = skeleton->data.ptrw() + p_bone * 12;
 
@@ -2194,7 +2158,6 @@ Transform3D MeshStorage::skeleton_bone_get_transform(RID p_skeleton, int p_bone)
 
 	ERR_FAIL_NULL_V(skeleton, Transform3D());
 	ERR_FAIL_INDEX_V(p_bone, skeleton->size, Transform3D());
-	ERR_FAIL_COND_V(skeleton->use_2d, Transform3D());
 
 	const float *dataptr = skeleton->data.ptr() + p_bone * 12;
 
@@ -2214,56 +2177,6 @@ Transform3D MeshStorage::skeleton_bone_get_transform(RID p_skeleton, int p_bone)
 	t.origin.z = dataptr[11];
 
 	return t;
-}
-
-void MeshStorage::skeleton_bone_set_transform_2d(RID p_skeleton, int p_bone, const Transform2D &p_transform) {
-	Skeleton *skeleton = skeleton_owner.get_or_null(p_skeleton);
-
-	ERR_FAIL_NULL(skeleton);
-	ERR_FAIL_INDEX(p_bone, skeleton->size);
-	ERR_FAIL_COND(!skeleton->use_2d);
-
-	float *dataptr = skeleton->data.ptrw() + p_bone * 8;
-
-	dataptr[0] = p_transform.columns[0][0];
-	dataptr[1] = p_transform.columns[1][0];
-	dataptr[2] = 0;
-	dataptr[3] = p_transform.columns[2][0];
-	dataptr[4] = p_transform.columns[0][1];
-	dataptr[5] = p_transform.columns[1][1];
-	dataptr[6] = 0;
-	dataptr[7] = p_transform.columns[2][1];
-
-	_skeleton_make_dirty(skeleton);
-}
-
-Transform2D MeshStorage::skeleton_bone_get_transform_2d(RID p_skeleton, int p_bone) const {
-	Skeleton *skeleton = skeleton_owner.get_or_null(p_skeleton);
-
-	ERR_FAIL_NULL_V(skeleton, Transform2D());
-	ERR_FAIL_INDEX_V(p_bone, skeleton->size, Transform2D());
-	ERR_FAIL_COND_V(!skeleton->use_2d, Transform2D());
-
-	const float *dataptr = skeleton->data.ptr() + p_bone * 8;
-
-	Transform2D t;
-	t.columns[0][0] = dataptr[0];
-	t.columns[1][0] = dataptr[1];
-	t.columns[2][0] = dataptr[3];
-	t.columns[0][1] = dataptr[4];
-	t.columns[1][1] = dataptr[5];
-	t.columns[2][1] = dataptr[7];
-
-	return t;
-}
-
-void MeshStorage::skeleton_set_base_transform_2d(RID p_skeleton, const Transform2D &p_base_transform) {
-	Skeleton *skeleton = skeleton_owner.get_or_null(p_skeleton);
-
-	ERR_FAIL_NULL(skeleton);
-	ERR_FAIL_COND(!skeleton->use_2d);
-
-	skeleton->base_transform_2d = p_base_transform;
 }
 
 void MeshStorage::_update_dirty_skeletons() {

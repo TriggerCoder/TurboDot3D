@@ -145,11 +145,7 @@ private:
 		CLEAR_GUIDES,
 		VIEW_CENTER_TO_SELECTION,
 		VIEW_FRAME_TO_SELECTION,
-		PREVIEW_CANVAS_SCALE,
-#ifdef TOOLS_ENABLED //2D
-		SKELETON_MAKE_BONES,
-#endif
-		SKELETON_SHOW_BONES
+		PREVIEW_CANVAS_SCALE
 	};
 
 	enum DragType {
@@ -282,29 +278,6 @@ private:
 		String name;
 	};
 	Vector<_HoverResult> hovering_results;
-
-	struct BoneList {
-		Transform2D xform;
-		real_t length = 0;
-		uint64_t last_pass = 0;
-	};
-
-	uint64_t bone_last_frame = 0;
-
-	struct BoneKey {
-		ObjectID from;
-		ObjectID to;
-		_FORCE_INLINE_ bool operator<(const BoneKey &p_key) const {
-			if (from == p_key.from) {
-				return to < p_key.to;
-			} else {
-				return from < p_key.from;
-			}
-		}
-	};
-
-	HashMap<BoneKey, BoneList> bone_list;
-	MenuButton *skeleton_menu = nullptr;
 
 	struct PoseClipboard {
 		Vector2 pos;

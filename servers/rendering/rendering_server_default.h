@@ -350,13 +350,10 @@ public:
 	/* SKELETON API */
 
 	FUNCRIDSPLIT(skeleton)
-	FUNC3(skeleton_allocate_data, RID, int, bool)
+	FUNC2(skeleton_allocate_data, RID, int)
 	FUNC1RC(int, skeleton_get_bone_count, RID)
 	FUNC3(skeleton_bone_set_transform, RID, int, const Transform3D &)
 	FUNC2RC(Transform3D, skeleton_bone_get_transform, RID, int)
-	FUNC3(skeleton_bone_set_transform_2d, RID, int, const Transform2D &)
-	FUNC2RC(Transform2D, skeleton_bone_get_transform_2d, RID, int)
-	FUNC2(skeleton_set_base_transform_2d, RID, const Transform2D &)
 
 	/* Light API */
 #undef ServerName

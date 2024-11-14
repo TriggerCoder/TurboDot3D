@@ -179,7 +179,6 @@
 #include "scene/2d/path_2d.h"
 #include "scene/2d/polygon_2d.h"
 #include "scene/2d/remote_transform_2d.h"
-#include "scene/2d/skeleton_2d.h"
 #include "scene/2d/sprite_2d.h"
 #include "scene/2d/touch_screen_button.h"
 #include "scene/2d/visible_on_screen_notifier_2d.h"
@@ -193,14 +192,6 @@
 #include "scene/resources/2d/rectangle_shape_2d.h"
 #include "scene/resources/2d/segment_shape_2d.h"
 #include "scene/resources/2d/separation_ray_shape_2d.h"
-#include "scene/resources/2d/skeleton/skeleton_modification_2d.h"
-#include "scene/resources/2d/skeleton/skeleton_modification_2d_ccdik.h"
-#include "scene/resources/2d/skeleton/skeleton_modification_2d_fabrik.h"
-#include "scene/resources/2d/skeleton/skeleton_modification_2d_jiggle.h"
-#include "scene/resources/2d/skeleton/skeleton_modification_2d_lookat.h"
-#include "scene/resources/2d/skeleton/skeleton_modification_2d_stackholder.h"
-#include "scene/resources/2d/skeleton/skeleton_modification_2d_twoboneik.h"
-#include "scene/resources/2d/skeleton/skeleton_modification_stack_2d.h"
 #include "scene/resources/2d/tile_set.h"
 #endif
 

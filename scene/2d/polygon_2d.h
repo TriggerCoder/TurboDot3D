@@ -41,13 +41,6 @@ class Polygon2D : public Node2D {
 	Array polygons;
 	int internal_vertices = 0;
 
-	struct Bone {
-		NodePath path;
-		Vector<float> weights;
-	};
-
-	Vector<Bone> bone_weights;
-
 	Color color = Color(1, 1, 1);
 	Ref<Texture2D> texture;
 
@@ -62,14 +55,6 @@ class Polygon2D : public Node2D {
 	Vector2 offset;
 	mutable bool rect_cache_dirty = true;
 	mutable Rect2 item_rect;
-
-	NodePath skeleton;
-	ObjectID current_skeleton_id;
-
-	Array _get_bones() const;
-	void _set_bones(const Array &p_bones);
-
-	void _skeleton_bone_setup_changed();
 
 	RID mesh;
 
@@ -132,18 +117,6 @@ public:
 
 	void set_offset(const Vector2 &p_offset);
 	Vector2 get_offset() const;
-
-	void add_bone(const NodePath &p_path = NodePath(), const Vector<float> &p_weights = Vector<float>());
-	int get_bone_count() const;
-	NodePath get_bone_path(int p_index) const;
-	Vector<float> get_bone_weights(int p_index) const;
-	void erase_bone(int p_idx);
-	void clear_bones();
-	void set_bone_weights(int p_index, const Vector<float> &p_weights);
-	void set_bone_path(int p_index, const NodePath &p_path);
-
-	void set_skeleton(const NodePath &p_skeleton);
-	NodePath get_skeleton() const;
 
 	Polygon2D();
 	~Polygon2D();

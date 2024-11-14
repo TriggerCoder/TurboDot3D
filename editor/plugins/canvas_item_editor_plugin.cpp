@@ -48,7 +48,6 @@
 #include "editor/themes/editor_theme_manager.h"
 #ifdef TOOLS_ENABLED //2D
 #include "scene/2d/polygon_2d.h"
-#include "scene/2d/skeleton_2d.h"
 #include "scene/2d/sprite_2d.h"
 #include "scene/2d/touch_screen_button.h"
 #endif
@@ -3979,7 +3978,6 @@ void CanvasItemEditor::_update_editor_settings() {
 	smart_snap_button->set_icon(get_editor_theme_icon(SNAME("Snap")));
 	grid_snap_button->set_icon(get_editor_theme_icon(SNAME("SnapGrid")));
 	snap_config_menu->set_icon(get_editor_theme_icon(SNAME("GuiTabMenuHl")));
-	skeleton_menu->set_icon(get_editor_theme_icon(SNAME("Bone")));
 	override_camera_button->set_icon(get_editor_theme_icon(SNAME("Camera2D")));
 	pan_button->set_icon(get_editor_theme_icon(SNAME("ToolPan")));
 	ruler_button->set_icon(get_editor_theme_icon(SNAME("Ruler")));
@@ -4066,34 +4064,6 @@ void CanvasItemEditor::_notification(int p_what) {
 
 			// Activate / Deactivate the pivot tool.
 			pivot_button->set_disabled(selection.is_empty());
-
-			// Update the viewport if bones changes
-			for (KeyValue<BoneKey, BoneList> &E : bone_list) {
-				Object *b = ObjectDB::get_instance(E.key.from);
-				if (!b) {
-					viewport->queue_redraw();
-					break;
-				}
-#ifdef TOOLS_ENABLED //2D
-				Node2D *b2 = Object::cast_to<Node2D>(b);
-				if (!b2 || !b2->is_inside_tree()) {
-					continue;
-				}
-
-				Transform2D global_xform = b2->get_global_transform();
-
-				if (global_xform != E.value.xform) {
-					E.value.xform = global_xform;
-					viewport->queue_redraw();
-				}
-
-				Bone2D *bone = Object::cast_to<Bone2D>(b);
-				if (bone && bone->get_length() != E.value.length) {
-					E.value.length = bone->get_length();
-					viewport->queue_redraw();
-				}
-#endif
-			}
 		} break;
 
 		case NOTIFICATION_ENTER_TREE: {
@@ -4508,22 +4478,6 @@ void CanvasItemEditor::_popup_callback(int p_op) {
 			static_cast<SnapDialog *>(snap_dialog)->set_fields(grid_offset, grid_step, primary_grid_step, snap_rotation_offset, snap_rotation_step, snap_scale_step);
 			snap_dialog->popup_centered(Size2(320, 160) * EDSCALE);
 		} break;
-		case SKELETON_SHOW_BONES: {
-			List<Node *> selection = editor_selection->get_selected_node_list();
-			for (Node *E : selection) {
-				// Add children nodes so they are processed
-				for (int child = 0; child < E->get_child_count(); child++) {
-					selection.push_back(E->get_child(child));
-				}
-#ifdef TOOLS_ENABLED //2D
-				Bone2D *bone_2d = Object::cast_to<Bone2D>(E);
-				if (!bone_2d || !bone_2d->is_inside_tree()) {
-					continue;
-				}
-				bone_2d->_editor_set_show_bone_gizmo(!bone_2d->_editor_get_show_bone_gizmo());
-#endif
-			}
-		} break;
 		case SHOW_HELPERS: {
 			show_helpers = !show_helpers;
 			int idx = view_menu->get_popup()->get_item_index(SHOW_HELPERS);
@@ -4771,49 +4725,6 @@ void CanvasItemEditor::_popup_callback(int p_op) {
 			view_menu->get_popup()->set_item_checked(view_menu->get_popup()->get_item_index(PREVIEW_CANVAS_SCALE), preview);
 
 		} break;
-#ifdef TOOLS_ENABLED //2D
-		case SKELETON_MAKE_BONES: {
-			HashMap<Node *, Object *> &selection = editor_selection->get_selection();
-			Node *editor_root = get_tree()->get_edited_scene_root();
-
-			if (!editor_root || selection.is_empty()) {
-				return;
-			}
-
-			undo_redo->create_action(TTR("Create Custom Bone2D(s) from Node(s)"));
-			for (const KeyValue<Node *, Object *> &E : selection) {
-				Node2D *n2d = Object::cast_to<Node2D>(E.key);
-				if (!n2d) {
-					continue;
-				}
-
-				Bone2D *new_bone = memnew(Bone2D);
-				String new_bone_name = n2d->get_name();
-				new_bone_name += "Bone2D";
-				new_bone->set_name(new_bone_name);
-				new_bone->set_transform(n2d->get_transform());
-
-				Node *n2d_parent = n2d->get_parent();
-				if (!n2d_parent) {
-					continue;
-				}
-
-				undo_redo->add_do_method(n2d_parent, "add_child", new_bone);
-				undo_redo->add_do_method(n2d_parent, "remove_child", n2d);
-				undo_redo->add_do_method(new_bone, "add_child", n2d);
-				undo_redo->add_do_method(n2d, "set_transform", Transform2D());
-				undo_redo->add_do_method(this, "_set_owner_for_node_and_children", new_bone, editor_root);
-
-				undo_redo->add_undo_method(new_bone, "remove_child", n2d);
-				undo_redo->add_undo_method(n2d_parent, "add_child", n2d);
-				undo_redo->add_undo_method(n2d, "set_transform", new_bone->get_transform());
-				undo_redo->add_undo_method(new_bone, "queue_free");
-				undo_redo->add_undo_method(this, "_set_owner_for_node_and_children", n2d, editor_root);
-			}
-			undo_redo->commit_action();
-
-		} break;
-#endif
 	}
 }
 
@@ -5503,25 +5414,6 @@ CanvasItemEditor::CanvasItemEditor() {
 
 	main_menu_hbox->add_child(memnew(VSeparator));
 
-	skeleton_menu = memnew(MenuButton);
-	skeleton_menu->set_flat(false);
-	skeleton_menu->set_theme_type_variation("FlatMenuButton");
-	skeleton_menu->set_shortcut_context(this);
-	main_menu_hbox->add_child(skeleton_menu);
-	skeleton_menu->set_tooltip_text(TTR("Skeleton Options"));
-	skeleton_menu->set_switch_on_hover(true);
-
-	p = skeleton_menu->get_popup();
-	p->set_hide_on_checkable_item_selection(false);
-	p->add_shortcut(ED_SHORTCUT("canvas_item_editor/skeleton_show_bones", TTR("Show Bones")), SKELETON_SHOW_BONES);
-	p->add_separator();
-#ifdef TOOLS_ENABLED //2D
-	p->add_shortcut(ED_SHORTCUT("canvas_item_editor/skeleton_make_bones", TTR("Make Bone2D Node(s) from Node(s)"), KeyModifierMask::CMD_OR_CTRL | KeyModifierMask::SHIFT | Key::B), SKELETON_MAKE_BONES);
-#endif
-	p->connect(SceneStringName(id_pressed), callable_mp(this, &CanvasItemEditor::_popup_callback));
-
-	main_menu_hbox->add_child(memnew(VSeparator));
-
 	override_camera_button = memnew(Button);
 	override_camera_button->set_theme_type_variation("FlatButton");
 	main_menu_hbox->add_child(override_camera_button);
@@ -5686,8 +5578,6 @@ CanvasItemEditor::CanvasItemEditor() {
 
 	multiply_grid_step_shortcut = ED_SHORTCUT("canvas_item_editor/multiply_grid_step", TTR("Multiply grid step by 2"), Key::KP_MULTIPLY);
 	divide_grid_step_shortcut = ED_SHORTCUT("canvas_item_editor/divide_grid_step", TTR("Divide grid step by 2"), Key::KP_DIVIDE);
-
-	skeleton_menu->get_popup()->set_item_checked(skeleton_menu->get_popup()->get_item_index(SKELETON_SHOW_BONES), true);
 
 	// Store the singleton instance.
 	singleton = this;
