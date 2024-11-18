@@ -39,7 +39,6 @@
 #include "scene/2d/light_occluder_2d.h"
 #include "scene/main/canvas_item.h"
 #include "scene/resources/2d/convex_polygon_shape_2d.h"
-#include "scene/resources/2d/navigation_polygon.h"
 #include "scene/resources/image_texture.h"
 #include "scene/resources/packed_scene.h"
 #include "scene/resources/physics_material.h"
@@ -53,7 +52,6 @@ class TileData;
 class TileSetPlugin;
 class TileSetPluginAtlasRendering;
 class TileSetPluginAtlasPhysics;
-class TileSetPluginAtlasNavigation;
 
 union TileMapCell {
 	struct {
@@ -287,12 +285,6 @@ private:
 	bool terrains_cache_dirty = true;
 	void _update_terrains_cache();
 
-	// Navigation
-	struct NavigationLayer {
-		uint32_t layers = 1;
-	};
-	Vector<NavigationLayer> navigation_layers;
-
 	// CustomData
 	struct CustomDataLayer {
 		String name;
@@ -408,16 +400,6 @@ public:
 	bool is_valid_terrain_peering_bit_for_mode(TileSet::TerrainMode p_terrain_mode, TileSet::CellNeighbor p_peering_bit) const;
 	bool is_valid_terrain_peering_bit(int p_terrain_set, TileSet::CellNeighbor p_peering_bit) const;
 
-	// Navigation
-	int get_navigation_layers_count() const;
-	void add_navigation_layer(int p_index = -1);
-	void move_navigation_layer(int p_from_index, int p_to_pos);
-	void remove_navigation_layer(int p_index);
-	void set_navigation_layer_layers(int p_layer_index, uint32_t p_layers);
-	uint32_t get_navigation_layer_layers(int p_layer_index) const;
-	void set_navigation_layer_layer_value(int p_layer_index, int p_layer_number, bool p_value);
-	bool get_navigation_layer_layer_value(int p_layer_index, int p_layer_number) const;
-
 	// Custom data
 	int get_custom_data_layers_count() const;
 	void add_custom_data_layer(int p_index = -1);
@@ -520,9 +502,6 @@ public:
 	virtual void add_terrain(int p_terrain_set, int p_index){};
 	virtual void move_terrain(int p_terrain_set, int p_from_index, int p_to_pos){};
 	virtual void remove_terrain(int p_terrain_set, int p_index){};
-	virtual void add_navigation_layer(int p_index){};
-	virtual void move_navigation_layer(int p_from_index, int p_to_pos){};
-	virtual void remove_navigation_layer(int p_index){};
 	virtual void add_custom_data_layer(int p_index){};
 	virtual void move_custom_data_layer(int p_from_index, int p_to_pos){};
 	virtual void remove_custom_data_layer(int p_index){};
@@ -626,9 +605,6 @@ public:
 	virtual void add_terrain(int p_terrain_set, int p_index) override;
 	virtual void move_terrain(int p_terrain_set, int p_from_index, int p_to_pos) override;
 	virtual void remove_terrain(int p_terrain_set, int p_index) override;
-	virtual void add_navigation_layer(int p_index) override;
-	virtual void move_navigation_layer(int p_from_index, int p_to_pos) override;
-	virtual void remove_navigation_layer(int p_index) override;
 	virtual void add_custom_data_layer(int p_index) override;
 	virtual void move_custom_data_layer(int p_from_index, int p_to_pos) override;
 	virtual void remove_custom_data_layer(int p_index) override;
@@ -800,13 +776,6 @@ private:
 	int terrain = -1;
 	int terrain_peering_bits[16] = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
 
-	// Navigation
-	struct NavigationLayerTileData {
-		Ref<NavigationPolygon> navigation_polygon;
-		mutable HashMap<int, Ref<NavigationPolygon>> transformed_navigation_polygon;
-	};
-	Vector<NavigationLayerTileData> navigation;
-
 	// Misc
 	double probability = 1.0;
 
@@ -835,9 +804,6 @@ public:
 	void add_terrain(int p_terrain_set, int p_index);
 	void move_terrain(int p_terrain_set, int p_from_index, int p_to_pos);
 	void remove_terrain(int p_terrain_set, int p_index);
-	void add_navigation_layer(int p_index);
-	void move_navigation_layer(int p_from_index, int p_to_pos);
-	void remove_navigation_layer(int p_index);
 	void add_custom_data_layer(int p_index);
 	void move_custom_data_layer(int p_from_index, int p_to_pos);
 	void remove_custom_data_layer(int p_index);
@@ -897,10 +863,6 @@ public:
 	bool is_valid_terrain_peering_bit(TileSet::CellNeighbor p_peering_bit) const;
 
 	TileSet::TerrainsPattern get_terrains_pattern() const; // Not exposed.
-
-	// Navigation
-	void set_navigation_polygon(int p_layer_id, Ref<NavigationPolygon> p_navigation_polygon);
-	Ref<NavigationPolygon> get_navigation_polygon(int p_layer_id, bool p_flip_h = false, bool p_flip_v = false, bool p_transpose = false) const;
 
 	// Misc
 	void set_probability(float p_probability);

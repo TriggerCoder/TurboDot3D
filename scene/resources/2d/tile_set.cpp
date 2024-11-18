@@ -941,81 +941,6 @@ bool TileSet::is_valid_terrain_peering_bit(int p_terrain_set, TileSet::CellNeigh
 	return is_valid_terrain_peering_bit_for_mode(terrain_mode, p_peering_bit);
 }
 
-// Navigation
-int TileSet::get_navigation_layers_count() const {
-	return navigation_layers.size();
-}
-
-void TileSet::add_navigation_layer(int p_index) {
-	if (p_index < 0) {
-		p_index = navigation_layers.size();
-	}
-	ERR_FAIL_INDEX(p_index, navigation_layers.size() + 1);
-	navigation_layers.insert(p_index, NavigationLayer());
-
-	for (KeyValue<int, Ref<TileSetSource>> source : sources) {
-		source.value->add_navigation_layer(p_index);
-	}
-
-	notify_property_list_changed();
-	emit_changed();
-}
-
-void TileSet::move_navigation_layer(int p_from_index, int p_to_pos) {
-	ERR_FAIL_INDEX(p_from_index, navigation_layers.size());
-	ERR_FAIL_INDEX(p_to_pos, navigation_layers.size() + 1);
-	navigation_layers.insert(p_to_pos, navigation_layers[p_from_index]);
-	navigation_layers.remove_at(p_to_pos < p_from_index ? p_from_index + 1 : p_from_index);
-	for (KeyValue<int, Ref<TileSetSource>> source : sources) {
-		source.value->move_navigation_layer(p_from_index, p_to_pos);
-	}
-	notify_property_list_changed();
-	emit_changed();
-}
-
-void TileSet::remove_navigation_layer(int p_index) {
-	ERR_FAIL_INDEX(p_index, navigation_layers.size());
-	navigation_layers.remove_at(p_index);
-	for (KeyValue<int, Ref<TileSetSource>> source : sources) {
-		source.value->remove_navigation_layer(p_index);
-	}
-	notify_property_list_changed();
-	emit_changed();
-}
-
-void TileSet::set_navigation_layer_layers(int p_layer_index, uint32_t p_layers) {
-	ERR_FAIL_INDEX(p_layer_index, navigation_layers.size());
-	navigation_layers.write[p_layer_index].layers = p_layers;
-	emit_changed();
-}
-
-uint32_t TileSet::get_navigation_layer_layers(int p_layer_index) const {
-	ERR_FAIL_INDEX_V(p_layer_index, navigation_layers.size(), 0);
-	return navigation_layers[p_layer_index].layers;
-}
-
-void TileSet::set_navigation_layer_layer_value(int p_layer_index, int p_layer_number, bool p_value) {
-	ERR_FAIL_COND_MSG(p_layer_number < 1, "Navigation layer number must be between 1 and 32 inclusive.");
-	ERR_FAIL_COND_MSG(p_layer_number > 32, "Navigation layer number must be between 1 and 32 inclusive.");
-
-	uint32_t _navigation_layers = get_navigation_layer_layers(p_layer_index);
-
-	if (p_value) {
-		_navigation_layers |= 1 << (p_layer_number - 1);
-	} else {
-		_navigation_layers &= ~(1 << (p_layer_number - 1));
-	}
-
-	set_navigation_layer_layers(p_layer_index, _navigation_layers);
-}
-
-bool TileSet::get_navigation_layer_layer_value(int p_layer_index, int p_layer_number) const {
-	ERR_FAIL_COND_V_MSG(p_layer_number < 1, false, "Navigation layer number must be between 1 and 32 inclusive.");
-	ERR_FAIL_COND_V_MSG(p_layer_number > 32, false, "Navigation layer number must be between 1 and 32 inclusive.");
-
-	return get_navigation_layer_layers(p_layer_index) & (1 << (p_layer_number - 1));
-}
-
 // Custom data.
 int TileSet::get_custom_data_layers_count() const {
 	return custom_data_layers.size();
@@ -3221,9 +3146,6 @@ void TileSet::reset_state() {
 	per_terrain_pattern_tiles.clear();
 	terrains_cache_dirty = true;
 
-	// Navigation
-	navigation_layers.clear();
-
 	custom_data_layers.clear();
 	custom_data_layers_by_name.clear();
 
@@ -3438,18 +3360,6 @@ bool TileSet::_set(const StringName &p_name, const Variant &p_value) {
 					return true;
 				}
 			}
-		} else if (components.size() == 2 && components[0].begins_with("navigation_layer_") && components[0].trim_prefix("navigation_layer_").is_valid_int()) {
-			// Navigation layers.
-			int index = components[0].trim_prefix("navigation_layer_").to_int();
-			ERR_FAIL_COND_V(index < 0, false);
-			if (components[1] == "layers") {
-				ERR_FAIL_COND_V(p_value.get_type() != Variant::INT, false);
-				while (index >= navigation_layers.size()) {
-					add_navigation_layer();
-				}
-				set_navigation_layer_layers(index, p_value);
-				return true;
-			}
 		} else if (components.size() == 2 && components[0].begins_with("custom_data_layer_") && components[0].trim_prefix("custom_data_layer_").is_valid_int()) {
 			// Custom data layers.
 			int index = components[0].trim_prefix("custom_data_layer_").to_int();
@@ -3568,16 +3478,6 @@ bool TileSet::_get(const StringName &p_name, Variant &r_ret) const {
 				return true;
 			}
 		}
-	} else if (components.size() == 2 && components[0].begins_with("navigation_layer_") && components[0].trim_prefix("navigation_layer_").is_valid_int()) {
-		// navigation layers.
-		int index = components[0].trim_prefix("navigation_layer_").to_int();
-		if (index < 0 || index >= navigation_layers.size()) {
-			return false;
-		}
-		if (components[1] == "layers") {
-			r_ret = get_navigation_layer_layers(index);
-			return true;
-		}
 	} else if (components.size() == 2 && components[0].begins_with("custom_data_layer_") && components[0].trim_prefix("custom_data_layer_").is_valid_int()) {
 		// Custom data layers.
 		int index = components[0].trim_prefix("custom_data_layer_").to_int();
@@ -3684,12 +3584,6 @@ void TileSet::_get_property_list(List<PropertyInfo> *p_list) const {
 			p_list->push_back(PropertyInfo(Variant::STRING, vformat("terrain_set_%d/terrain_%d/name", terrain_set_index, terrain_index)));
 			p_list->push_back(PropertyInfo(Variant::COLOR, vformat("terrain_set_%d/terrain_%d/color", terrain_set_index, terrain_index)));
 		}
-	}
-
-	// Navigation.
-	p_list->push_back(PropertyInfo(Variant::NIL, GNAME("Navigation", ""), PROPERTY_HINT_NONE, "", PROPERTY_USAGE_GROUP));
-	for (int i = 0; i < navigation_layers.size(); i++) {
-		p_list->push_back(PropertyInfo(Variant::INT, vformat("navigation_layer_%d/layers", i), PROPERTY_HINT_LAYERS_2D_NAVIGATION));
 	}
 
 	// Custom data.
@@ -3880,30 +3774,6 @@ void TileSetAtlasSource::remove_terrain(int p_terrain_set, int p_index) {
 	for (KeyValue<Vector2i, TileAlternativesData> E_tile : tiles) {
 		for (KeyValue<int, TileData *> E_alternative : E_tile.value.alternatives) {
 			E_alternative.value->remove_terrain(p_terrain_set, p_index);
-		}
-	}
-}
-
-void TileSetAtlasSource::add_navigation_layer(int p_to_pos) {
-	for (KeyValue<Vector2i, TileAlternativesData> E_tile : tiles) {
-		for (KeyValue<int, TileData *> E_alternative : E_tile.value.alternatives) {
-			E_alternative.value->add_navigation_layer(p_to_pos);
-		}
-	}
-}
-
-void TileSetAtlasSource::move_navigation_layer(int p_from_index, int p_to_pos) {
-	for (KeyValue<Vector2i, TileAlternativesData> E_tile : tiles) {
-		for (KeyValue<int, TileData *> E_alternative : E_tile.value.alternatives) {
-			E_alternative.value->move_navigation_layer(p_from_index, p_to_pos);
-		}
-	}
-}
-
-void TileSetAtlasSource::remove_navigation_layer(int p_index) {
-	for (KeyValue<Vector2i, TileAlternativesData> E_tile : tiles) {
-		for (KeyValue<int, TileData *> E_alternative : E_tile.value.alternatives) {
-			E_alternative.value->remove_navigation_layer(p_index);
 		}
 	}
 }
@@ -5159,7 +5029,6 @@ void TileData::notify_tile_data_properties_should_change() {
 			terrain_peering_bits[bit_index] = -1;
 		}
 	}
-	navigation.resize(tile_set->get_navigation_layers_count());
 
 	// Convert custom data to the new type.
 	custom_data.resize(tile_set->get_custom_data_layers_count());
@@ -5296,26 +5165,6 @@ void TileData::remove_terrain(int p_terrain_set, int p_index) {
 	}
 }
 
-void TileData::add_navigation_layer(int p_to_pos) {
-	if (p_to_pos < 0) {
-		p_to_pos = navigation.size();
-	}
-	ERR_FAIL_INDEX(p_to_pos, navigation.size() + 1);
-	navigation.insert(p_to_pos, NavigationLayerTileData());
-}
-
-void TileData::move_navigation_layer(int p_from_index, int p_to_pos) {
-	ERR_FAIL_INDEX(p_from_index, navigation.size());
-	ERR_FAIL_INDEX(p_to_pos, navigation.size() + 1);
-	navigation.insert(p_to_pos, navigation[p_from_index]);
-	navigation.remove_at(p_to_pos < p_from_index ? p_from_index + 1 : p_from_index);
-}
-
-void TileData::remove_navigation_layer(int p_index) {
-	ERR_FAIL_INDEX(p_index, navigation.size());
-	navigation.remove_at(p_index);
-}
-
 void TileData::add_custom_data_layer(int p_to_pos) {
 	if (p_to_pos < 0) {
 		p_to_pos = custom_data.size();
@@ -5365,8 +5214,6 @@ TileData *TileData::duplicate() {
 	// Terrain
 	output->terrain_set = -1;
 	memcpy(output->terrain_peering_bits, terrain_peering_bits, 16 * sizeof(int));
-	// Navigation
-	output->navigation = navigation;
 	// Misc
 	output->probability = probability;
 	// Custom data
@@ -5699,53 +5546,6 @@ TileSet::TerrainsPattern TileData::get_terrains_pattern() const {
 	return output;
 }
 
-// Navigation
-void TileData::set_navigation_polygon(int p_layer_id, Ref<NavigationPolygon> p_navigation_polygon) {
-	ERR_FAIL_INDEX(p_layer_id, navigation.size());
-	navigation.write[p_layer_id].navigation_polygon = p_navigation_polygon;
-	navigation.write[p_layer_id].transformed_navigation_polygon.clear();
-	emit_signal(CoreStringName(changed));
-}
-
-Ref<NavigationPolygon> TileData::get_navigation_polygon(int p_layer_id, bool p_flip_h, bool p_flip_v, bool p_transpose) const {
-	ERR_FAIL_INDEX_V(p_layer_id, navigation.size(), Ref<NavigationPolygon>());
-
-	const NavigationLayerTileData &layer_tile_data = navigation[p_layer_id];
-
-	int key = int(p_flip_h) | int(p_flip_v) << 1 | int(p_transpose) << 2;
-	if (key == 0) {
-		return layer_tile_data.navigation_polygon;
-	}
-
-	if (layer_tile_data.navigation_polygon.is_null()) {
-		return Ref<NavigationPolygon>();
-	}
-
-	HashMap<int, Ref<NavigationPolygon>>::Iterator I = layer_tile_data.transformed_navigation_polygon.find(key);
-	if (!I) {
-		Ref<NavigationPolygon> transformed_polygon;
-		transformed_polygon.instantiate();
-
-		PackedVector2Array new_points = get_transformed_vertices(layer_tile_data.navigation_polygon->get_vertices(), p_flip_h, p_flip_v, p_transpose);
-		transformed_polygon->set_vertices(new_points);
-
-		int num_polygons = layer_tile_data.navigation_polygon->get_polygon_count();
-		for (int i = 0; i < num_polygons; ++i) {
-			transformed_polygon->add_polygon(layer_tile_data.navigation_polygon->get_polygon(i));
-		}
-
-		for (int i = 0; i < layer_tile_data.navigation_polygon->get_outline_count(); i++) {
-			PackedVector2Array new_outline = get_transformed_vertices(layer_tile_data.navigation_polygon->get_outline(i), p_flip_h, p_flip_v, p_transpose);
-			transformed_polygon->add_outline(new_outline);
-		}
-
-		layer_tile_data.transformed_navigation_polygon[key] = transformed_polygon;
-		return transformed_polygon;
-	} else {
-		return I->value;
-	}
-}
-
 // Misc
 void TileData::set_probability(float p_probability) {
 	ERR_FAIL_COND(p_probability < 0.0);
@@ -5883,23 +5683,6 @@ bool TileData::_set(const StringName &p_name, const Variant &p_value) {
 				return true;
 			}
 		}
-	} else if (components.size() == 2 && components[0].begins_with("navigation_layer_") && components[0].trim_prefix("navigation_layer_").is_valid_int()) {
-		// Navigation layers.
-		int layer_index = components[0].trim_prefix("navigation_layer_").to_int();
-		ERR_FAIL_COND_V(layer_index < 0, false);
-		if (components[1] == "polygon") {
-			Ref<NavigationPolygon> polygon = p_value;
-
-			if (layer_index >= navigation.size()) {
-				if (tile_set) {
-					return false;
-				} else {
-					navigation.resize(layer_index + 1);
-				}
-			}
-			set_navigation_polygon(layer_index, polygon);
-			return true;
-		}
 	} else if (components.size() == 2 && components[0] == "terrains_peering_bit") {
 		// Terrains.
 		for (int i = 0; i < TileSet::CELL_NEIGHBOR_MAX; i++) {
@@ -5990,17 +5773,6 @@ bool TileData::_get(const StringName &p_name, Variant &r_ret) const {
 				}
 			}
 			return false;
-		} else if (components.size() == 2 && components[0].begins_with("navigation_layer_") && components[0].trim_prefix("navigation_layer_").is_valid_int()) {
-			// Occlusion layers.
-			int layer_index = components[0].trim_prefix("navigation_layer_").to_int();
-			ERR_FAIL_COND_V(layer_index < 0, false);
-			if (layer_index >= navigation.size()) {
-				return false;
-			}
-			if (components[1] == "polygon") {
-				r_ret = get_navigation_polygon(layer_index);
-				return true;
-			}
 		} else if (components.size() == 1 && components[0].begins_with("custom_data_") && components[0].trim_prefix("custom_data_").is_valid_int()) {
 			// Custom data layers.
 			int layer_index = components[0].trim_prefix("custom_data_").to_int();
@@ -6087,16 +5859,6 @@ void TileData::_get_property_list(List<PropertyInfo> *p_list) const {
 					p_list->push_back(property_info);
 				}
 			}
-		}
-
-		// Navigation layers.
-		p_list->push_back(PropertyInfo(Variant::NIL, GNAME("Navigation", ""), PROPERTY_HINT_NONE, "", PROPERTY_USAGE_GROUP));
-		for (int i = 0; i < navigation.size(); i++) {
-			property_info = PropertyInfo(Variant::OBJECT, vformat("navigation_layer_%d/%s", i, PNAME("polygon")), PROPERTY_HINT_RESOURCE_TYPE, "NavigationPolygon", PROPERTY_USAGE_DEFAULT);
-			if (navigation[i].navigation_polygon.is_null()) {
-				property_info.usage ^= PROPERTY_USAGE_STORAGE;
-			}
-			p_list->push_back(property_info);
 		}
 
 		// Custom data layers.
