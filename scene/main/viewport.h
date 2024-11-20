@@ -39,10 +39,6 @@ class CollisionObject3D;
 class AudioListener3D;
 class World3D;
 
-#ifdef TOOLS_ENABLED //2D
-class Camera2D;
-#endif
-
 class CanvasItem;
 class CanvasLayer;
 class Control;
@@ -684,18 +680,10 @@ public:
 
 #ifdef TOOLS_ENABLED //2D
 private:
-	friend class Camera2D; // Needs _camera_2d_set
-	Camera2D *camera_2d = nullptr;
-	void _camera_2d_set(Camera2D *p_camera_2d);
-
 	// Collider to frame
 	HashMap<ObjectID, uint64_t> physics_2d_mouseover;
 	// Collider & shape to frame
 	HashMap<Pair<ObjectID, int>, uint64_t, PairHash<ObjectID, int>> physics_2d_shape_mouseover;
-
-public:
-	Camera2D *get_camera_2d() const;
-	void assign_next_enabled_camera_2d(const StringName &p_camera_group);
 #endif
 
 private:

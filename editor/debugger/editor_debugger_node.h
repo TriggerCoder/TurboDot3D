@@ -51,7 +51,6 @@ class EditorDebuggerNode : public MarginContainer {
 public:
 	enum CameraOverride {
 		OVERRIDE_NONE,
-		OVERRIDE_2D,
 		OVERRIDE_3D_1, // 3D Viewport 1
 		OVERRIDE_3D_2, // 3D Viewport 2
 		OVERRIDE_3D_3, // 3D Viewport 3

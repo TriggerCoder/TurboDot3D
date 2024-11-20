@@ -894,20 +894,7 @@ void ScriptEditorDebugger::_notification(int p_what) {
 			if (is_session_active()) {
 				peer->poll();
 
-				if (camera_override == CameraOverride::OVERRIDE_2D) {
-					Dictionary state = CanvasItemEditor::get_singleton()->get_state();
-					float zoom = state["zoom"];
-					Point2 offset = state["ofs"];
-					Transform2D transform;
-
-					transform.scale_basis(Size2(zoom, zoom));
-					transform.columns[2] = -offset * zoom;
-
-					Array msg;
-					msg.push_back(transform);
-					_put_msg("scene:override_camera_2D:transform", msg);
-
-				} else if (camera_override >= CameraOverride::OVERRIDE_3D_1) {
+				if (camera_override >= CameraOverride::OVERRIDE_3D_1) {
 					int viewport_idx = camera_override - CameraOverride::OVERRIDE_3D_1;
 					Node3DEditorViewport *viewport = Node3DEditor::get_singleton()->get_editor_viewport(viewport_idx);
 					Camera3D *const cam = viewport->get_camera_3d();
@@ -1450,15 +1437,7 @@ CameraOverride ScriptEditorDebugger::get_camera_override() const {
 }
 
 void ScriptEditorDebugger::set_camera_override(CameraOverride p_override) {
-	if (p_override == CameraOverride::OVERRIDE_2D && camera_override != CameraOverride::OVERRIDE_2D) {
-		Array msg;
-		msg.push_back(true);
-		_put_msg("scene:override_camera_2D:set", msg);
-	} else if (p_override != CameraOverride::OVERRIDE_2D && camera_override == CameraOverride::OVERRIDE_2D) {
-		Array msg;
-		msg.push_back(false);
-		_put_msg("scene:override_camera_2D:set", msg);
-	} else if (p_override >= CameraOverride::OVERRIDE_3D_1 && camera_override < CameraOverride::OVERRIDE_3D_1) {
+	if (p_override >= CameraOverride::OVERRIDE_3D_1 && camera_override < CameraOverride::OVERRIDE_3D_1) {
 		Array msg;
 		msg.push_back(true);
 		_put_msg("scene:override_camera_3D:set", msg);

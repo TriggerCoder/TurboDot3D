@@ -104,7 +104,6 @@
 #include "tests/scene/test_animation.h"
 #include "tests/scene/test_audio_stream_wav.h"
 #include "tests/scene/test_bit_map.h"
-#include "tests/scene/test_camera_2d.h"
 #include "tests/scene/test_control.h"
 #include "tests/scene/test_curve.h"
 #include "tests/scene/test_curve_2d.h"

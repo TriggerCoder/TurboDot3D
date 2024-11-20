@@ -3978,7 +3978,6 @@ void CanvasItemEditor::_update_editor_settings() {
 	smart_snap_button->set_icon(get_editor_theme_icon(SNAME("Snap")));
 	grid_snap_button->set_icon(get_editor_theme_icon(SNAME("SnapGrid")));
 	snap_config_menu->set_icon(get_editor_theme_icon(SNAME("GuiTabMenuHl")));
-	override_camera_button->set_icon(get_editor_theme_icon(SNAME("Camera2D")));
 	pan_button->set_icon(get_editor_theme_icon(SNAME("ToolPan")));
 	ruler_button->set_icon(get_editor_theme_icon(SNAME("Ruler")));
 	pivot_button->set_icon(get_editor_theme_icon(SNAME("EditPivot")));
@@ -4015,8 +4014,6 @@ void CanvasItemEditor::_project_settings_changed() {
 void CanvasItemEditor::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_READY: {
-			EditorRunBar::get_singleton()->connect("play_pressed", callable_mp(this, &CanvasItemEditor::_update_override_camera_button).bind(true));
-			EditorRunBar::get_singleton()->connect("stop_pressed", callable_mp(this, &CanvasItemEditor::_update_override_camera_button).bind(false));
 			ProjectSettings::get_singleton()->connect("settings_changed", callable_mp(this, &CanvasItemEditor::_project_settings_changed));
 		} break;
 
@@ -4089,12 +4086,6 @@ void CanvasItemEditor::_notification(int p_what) {
 		} break;
 
 		case NOTIFICATION_VISIBILITY_CHANGED: {
-			if (!is_visible() && override_camera_button->is_pressed()) {
-				EditorDebuggerNode *debugger = EditorDebuggerNode::get_singleton();
-
-				debugger->set_camera_override(EditorDebuggerNode::OVERRIDE_NONE);
-				override_camera_button->set_pressed(false);
-			}
 		} break;
 
 		case NOTIFICATION_APPLICATION_FOCUS_OUT: {
@@ -4253,16 +4244,6 @@ void CanvasItemEditor::_button_toggle_grid_snap(bool p_status) {
 	viewport->queue_redraw();
 }
 
-void CanvasItemEditor::_button_override_camera(bool p_pressed) {
-	EditorDebuggerNode *debugger = EditorDebuggerNode::get_singleton();
-
-	if (p_pressed) {
-		debugger->set_camera_override(EditorDebuggerNode::OVERRIDE_2D);
-	} else {
-		debugger->set_camera_override(EditorDebuggerNode::OVERRIDE_NONE);
-	}
-}
-
 void CanvasItemEditor::_button_tool_select(int p_index) {
 	Button *tb[TOOL_MAX] = { select_button, list_select_button, move_button, scale_button, rotate_button, pivot_button, pan_button, ruler_button };
 	for (int i = 0; i < TOOL_MAX; i++) {
@@ -4370,17 +4351,6 @@ void CanvasItemEditor::_insert_animation_keys(bool p_location, bool p_rotation, 
 		}
 	}
 	te->commit_insert_queue();
-}
-
-void CanvasItemEditor::_update_override_camera_button(bool p_game_running) {
-	if (p_game_running) {
-		override_camera_button->set_disabled(false);
-		override_camera_button->set_tooltip_text(TTR("Project Camera Override\nOverrides the running project's camera with the editor viewport camera."));
-	} else {
-		override_camera_button->set_disabled(true);
-		override_camera_button->set_pressed(false);
-		override_camera_button->set_tooltip_text(TTR("Project Camera Override\nNo project instance running. Run the project from the editor to use this feature."));
-	}
 }
 
 void CanvasItemEditor::_popup_callback(int p_op) {
@@ -5413,15 +5383,6 @@ CanvasItemEditor::CanvasItemEditor() {
 	ungroup_button->set_shortcut(ED_GET_SHORTCUT("editor/ungroup_selected_nodes"));
 
 	main_menu_hbox->add_child(memnew(VSeparator));
-
-	override_camera_button = memnew(Button);
-	override_camera_button->set_theme_type_variation("FlatButton");
-	main_menu_hbox->add_child(override_camera_button);
-	override_camera_button->connect("toggled", callable_mp(this, &CanvasItemEditor::_button_override_camera));
-	override_camera_button->set_toggle_mode(true);
-	override_camera_button->set_disabled(true);
-	_update_override_camera_button(false);
-
 	main_menu_hbox->add_child(memnew(VSeparator));
 
 	view_menu = memnew(MenuButton);
@@ -6154,8 +6115,6 @@ CanvasItemEditorViewport::CanvasItemEditorViewport(CanvasItemEditor *p_canvas_it
 	// Node2D
 	texture_node_types.push_back("Sprite2D");
 	texture_node_types.push_back("PointLight2D");
-	texture_node_types.push_back("CPUParticles2D");
-	texture_node_types.push_back("GPUParticles2D");
 	texture_node_types.push_back("Polygon2D");
 	texture_node_types.push_back("TouchScreenButton");
 	// Control

@@ -1348,7 +1348,6 @@ TEST_CASE("[String] Checking case conversion methods") {
 		{ U"Node2DPosition",         U"node2dPosition",       U"Node2dPosition",       U"node_2d_position"        },
 		{ U"Number2Digits",          U"number2Digits",        U"Number2Digits",        U"number_2_digits"         },
 		{ U"get_property_list",      U"getPropertyList",      U"GetPropertyList",      U"get_property_list"       },
-		{ U"get_camera_2d",          U"getCamera2d",          U"GetCamera2d",          U"get_camera_2d"           },
 		{ U"_physics_process",       U"physicsProcess",       U"PhysicsProcess",       U"_physics_process"        },
 		{ U"bytes2var",              U"bytes2Var",            U"Bytes2Var",            U"bytes_2_var"             },
 		{ U"linear2db",              U"linear2Db",            U"Linear2Db",            U"linear_2_db"             },
