@@ -651,9 +651,6 @@ void EditorNode::_notification(int p_what) {
 
 			OS::get_singleton()->set_low_processor_usage_mode_sleep_usec(int(EDITOR_GET("interface/editor/low_processor_mode_sleep_usec")));
 			get_tree()->get_root()->set_as_audio_listener_3d(false);
-#ifdef TOOLS_ENABLED //2D
-			get_tree()->get_root()->set_as_audio_listener_2d(false);
-#endif
 			get_tree()->get_root()->set_snap_2d_transforms_to_pixel(false);
 			get_tree()->get_root()->set_snap_2d_vertices_to_pixel(false);
 			get_tree()->set_auto_accept_quit(false);
@@ -7002,9 +6999,6 @@ EditorNode::EditorNode() {
 	scene_root->set_embedding_subwindows(true);
 	scene_root->set_disable_3d(true);
 	scene_root->set_disable_input(true);
-#ifdef TOOLS_ENABLED //2D
-	scene_root->set_as_audio_listener_2d(true);
-#endif
 	main_screen_vbox = memnew(VBoxContainer);
 	main_screen_vbox->set_name("MainScreen");
 	main_screen_vbox->set_v_size_flags(Control::SIZE_EXPAND_FILL);

@@ -160,7 +160,6 @@
 #ifdef TOOLS_ENABLED //2D
 #include "scene/resources/world_2d.h"
 #include "scene/2d/animated_sprite_2d.h"
-#include "scene/2d/audio_listener_2d.h"
 #include "scene/2d/back_buffer_copy.h"
 #include "scene/2d/camera_2d.h"
 #include "scene/2d/canvas_group.h"

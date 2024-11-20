@@ -37,7 +37,6 @@
 #include "core/templates/sort_array.h"
 
 #ifdef TOOLS_ENABLED //2D
-#include "scene/2d/audio_listener_2d.h"
 #include "scene/2d/camera_2d.h"
 #include "scene/resources/world_2d.h"
 #endif
@@ -523,7 +522,6 @@ void Viewport::_notification(int p_what) {
 			RenderingServer::get_singleton()->viewport_attach_canvas(viewport, current_canvas);
 			RenderingServer::get_singleton()->viewport_set_canvas_transform(viewport, current_canvas, canvas_transform);
 			RenderingServer::get_singleton()->viewport_set_canvas_cull_mask(viewport, canvas_cull_mask);
-			_update_audio_listener_2d();
 #endif
 			RenderingServer::get_singleton()->viewport_set_scenario(viewport, find_world_3d()->get_scenario());
 			_update_audio_listener_3d();
@@ -1085,7 +1083,6 @@ void Viewport::set_world_2d(const Ref<World2D> &p_world_2d) {
 	}
 
 	world_2d->register_viewport(this);
-	_update_audio_listener_2d();
 
 	if (is_inside_tree()) {
 		current_canvas = find_world_2d()->get_canvas();
@@ -3821,49 +3818,8 @@ bool Viewport::get_canvas_cull_mask_bit(uint32_t p_layer) const {
 }
 
 #ifdef TOOLS_ENABLED //2D
-void Viewport::_update_audio_listener_2d() {
-	if (AudioServer::get_singleton()) {
-		AudioServer::get_singleton()->notify_listener_changed();
-	}
-}
-
-void Viewport::_audio_listener_2d_set(AudioListener2D *p_audio_listener) {
-	if (audio_listener_2d == p_audio_listener) {
-		return;
-	} else if (audio_listener_2d) {
-		audio_listener_2d->clear_current();
-	}
-	audio_listener_2d = p_audio_listener;
-}
-
-void Viewport::_audio_listener_2d_remove(AudioListener2D *p_audio_listener) {
-	if (audio_listener_2d == p_audio_listener) {
-		audio_listener_2d = nullptr;
-	}
-}
-
 void Viewport::_camera_2d_set(Camera2D *p_camera_2d) {
 	camera_2d = p_camera_2d;
-}
-
-AudioListener2D *Viewport::get_audio_listener_2d() const {
-	ERR_READ_THREAD_GUARD_V(nullptr);
-	return audio_listener_2d;
-}
-
-void Viewport::set_as_audio_listener_2d(bool p_enable) {
-	ERR_MAIN_THREAD_GUARD;
-	if (p_enable == is_audio_listener_2d_enabled) {
-		return;
-	}
-
-	is_audio_listener_2d_enabled = p_enable;
-	_update_audio_listener_2d();
-}
-
-bool Viewport::is_audio_listener_2d() const {
-	ERR_READ_THREAD_GUARD_V(false);
-	return is_audio_listener_2d_enabled;
 }
 
 Camera2D *Viewport::get_camera_2d() const {
@@ -4539,12 +4495,6 @@ void Viewport::_bind_methods() {
 
 	ClassDB::bind_method(D_METHOD("_process_picking"), &Viewport::_process_picking);
 
-#ifdef TOOLS_ENABLED //2D
-//	ClassDB::bind_method(D_METHOD("set_as_audio_listener_2d", "enable"), &Viewport::set_as_audio_listener_2d);
-//	ClassDB::bind_method(D_METHOD("is_audio_listener_2d"), &Viewport::is_audio_listener_2d);
-//	ClassDB::bind_method(D_METHOD("get_camera_2d"), &Viewport::get_camera_2d);
-#endif
-
 	ClassDB::bind_method(D_METHOD("set_world_3d", "world_3d"), &Viewport::set_world_3d);
 	ClassDB::bind_method(D_METHOD("get_world_3d"), &Viewport::get_world_3d);
 	ClassDB::bind_method(D_METHOD("find_world_3d"), &Viewport::find_world_3d);
@@ -4618,9 +4568,6 @@ void Viewport::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "canvas_item_default_texture_filter", PROPERTY_HINT_ENUM, "Nearest,Linear,Linear Mipmap,Nearest Mipmap"), "set_default_canvas_item_texture_filter", "get_default_canvas_item_texture_filter");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "canvas_item_default_texture_repeat", PROPERTY_HINT_ENUM, "Disabled,Enabled,Mirror"), "set_default_canvas_item_texture_repeat", "get_default_canvas_item_texture_repeat");
 	ADD_GROUP("Audio Listener", "audio_listener_");
-#ifdef TOOLS_ENABLED //2D
-//	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "audio_listener_enable_2d"), "set_as_audio_listener_2d", "is_audio_listener_2d");
-#endif
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "audio_listener_enable_3d"), "set_as_audio_listener_3d", "is_audio_listener_3d");
 	ADD_GROUP("Physics", "physics_");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "physics_object_picking"), "set_physics_object_picking", "get_physics_object_picking");

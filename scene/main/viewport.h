@@ -40,7 +40,6 @@ class AudioListener3D;
 class World3D;
 
 #ifdef TOOLS_ENABLED //2D
-class AudioListener2D;
 class Camera2D;
 #endif
 
@@ -281,8 +280,6 @@ private:
 	StringName shortcut_input_group;
 	StringName unhandled_input_group;
 	StringName unhandled_key_input_group;
-
-	void _update_audio_listener_2d();
 
 	bool disable_3d = false;
 
@@ -687,14 +684,6 @@ public:
 
 #ifdef TOOLS_ENABLED //2D
 private:
-	// 2D audio, camera, and physics. (don't put World2D here because World2D is needed for Control nodes).
-	friend class AudioListener2D; // Needs _audio_listener_2d_set and _audio_listener_2d_remove
-	AudioListener2D *audio_listener_2d = nullptr;
-	void _audio_listener_2d_set(AudioListener2D *p_audio_listener);
-	void _audio_listener_2d_remove(AudioListener2D *p_audio_listener);
-	bool is_audio_listener_2d_enabled = false;
-	RID internal_audio_listener_2d;
-
 	friend class Camera2D; // Needs _camera_2d_set
 	Camera2D *camera_2d = nullptr;
 	void _camera_2d_set(Camera2D *p_camera_2d);
@@ -705,10 +694,6 @@ private:
 	HashMap<Pair<ObjectID, int>, uint64_t, PairHash<ObjectID, int>> physics_2d_shape_mouseover;
 
 public:
-	AudioListener2D *get_audio_listener_2d() const;
-	void set_as_audio_listener_2d(bool p_enable);
-	bool is_audio_listener_2d() const;
-
 	Camera2D *get_camera_2d() const;
 	void assign_next_enabled_camera_2d(const StringName &p_camera_group);
 #endif
