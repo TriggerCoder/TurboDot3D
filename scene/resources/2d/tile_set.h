@@ -36,7 +36,6 @@
 #include "core/object/object.h"
 #include "core/templates/local_vector.h"
 #include "core/templates/rb_set.h"
-#include "scene/2d/light_occluder_2d.h"
 #include "scene/main/canvas_item.h"
 #include "scene/resources/2d/convex_polygon_shape_2d.h"
 #include "scene/resources/image_texture.h"
@@ -248,11 +247,6 @@ private:
 
 	// Rendering.
 	bool uv_clipping = false;
-	struct OcclusionLayer {
-		uint32_t light_mask = 1;
-		bool sdf_collision = false;
-	};
-	Vector<OcclusionLayer> occlusion_layers;
 
 	Ref<ArrayMesh> tile_lines_mesh;
 	Ref<ArrayMesh> tile_filled_mesh;
@@ -358,15 +352,6 @@ public:
 	// Rendering
 	void set_uv_clipping(bool p_uv_clipping);
 	bool is_uv_clipping() const;
-
-	int get_occlusion_layers_count() const;
-	void add_occlusion_layer(int p_index = -1);
-	void move_occlusion_layer(int p_from_index, int p_to_pos);
-	void remove_occlusion_layer(int p_index);
-	void set_occlusion_layer_light_mask(int p_layer_index, int p_light_mask);
-	int get_occlusion_layer_light_mask(int p_layer_index) const;
-	void set_occlusion_layer_sdf_collision(int p_layer_index, bool p_sdf_collision);
-	bool get_occlusion_layer_sdf_collision(int p_layer_index) const;
 
 	// Physics
 	int get_physics_layers_count() const;
@@ -490,9 +475,6 @@ public:
 	virtual void set_tile_set(const TileSet *p_tile_set);
 	TileSet *get_tile_set() const;
 	virtual void notify_tile_data_properties_should_change(){};
-	virtual void add_occlusion_layer(int p_index){};
-	virtual void move_occlusion_layer(int p_from_index, int p_to_pos){};
-	virtual void remove_occlusion_layer(int p_index){};
 	virtual void add_physics_layer(int p_index){};
 	virtual void move_physics_layer(int p_from_index, int p_to_pos){};
 	virtual void remove_physics_layer(int p_index){};
@@ -593,9 +575,6 @@ public:
 	virtual void set_tile_set(const TileSet *p_tile_set) override;
 	const TileSet *get_tile_set() const;
 	virtual void notify_tile_data_properties_should_change() override;
-	virtual void add_occlusion_layer(int p_index) override;
-	virtual void move_occlusion_layer(int p_from_index, int p_to_pos) override;
-	virtual void remove_occlusion_layer(int p_index) override;
 	virtual void add_physics_layer(int p_index) override;
 	virtual void move_physics_layer(int p_from_index, int p_to_pos) override;
 	virtual void remove_physics_layer(int p_index) override;
@@ -748,11 +727,6 @@ private:
 	Color modulate = Color(1.0, 1.0, 1.0, 1.0);
 	int z_index = 0;
 	int y_sort_origin = 0;
-	struct OcclusionLayerTileData {
-		Ref<OccluderPolygon2D> occluder;
-		mutable HashMap<int, Ref<OccluderPolygon2D>> transformed_occluders;
-	};
-	Vector<OcclusionLayerTileData> occluders;
 
 	// Physics
 	struct PhysicsLayerTileData {
@@ -792,9 +766,6 @@ public:
 	// Not exposed.
 	void set_tile_set(const TileSet *p_tile_set);
 	void notify_tile_data_properties_should_change();
-	void add_occlusion_layer(int p_index);
-	void move_occlusion_layer(int p_from_index, int p_to_pos);
-	void remove_occlusion_layer(int p_index);
 	void add_physics_layer(int p_index);
 	void move_physics_layer(int p_from_index, int p_to_pos);
 	void remove_physics_layer(int p_index);
@@ -831,9 +802,6 @@ public:
 	int get_z_index() const;
 	void set_y_sort_origin(int p_y_sort_origin);
 	int get_y_sort_origin() const;
-
-	void set_occluder(int p_layer_id, Ref<OccluderPolygon2D> p_occluder_polygon);
-	Ref<OccluderPolygon2D> get_occluder(int p_layer_id, bool p_flip_h = false, bool p_flip_v = false, bool p_transpose = false) const;
 
 	// Physics
 	void set_constant_linear_velocity(int p_layer_id, const Vector2 &p_velocity);

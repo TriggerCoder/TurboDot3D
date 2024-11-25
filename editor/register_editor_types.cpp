@@ -72,7 +72,6 @@
 #include "editor/plugins/camera_3d_editor_plugin.h"
 
 #ifdef TOOLS_ENABLED //2D
-#include "editor/plugins/light_occluder_2d_editor_plugin.h"
 #include "editor/plugins/line_2d_editor_plugin.h"
 #include "editor/plugins/parallax_background_editor_plugin.h"
 #include "editor/plugins/path_2d_editor_plugin.h"
@@ -240,7 +239,6 @@ void register_editor_types() {
 
 	// 2D
 #ifdef TOOLS_ENABLED //2D
-	EditorPlugins::add_by_type<LightOccluder2DEditorPlugin>();
 	EditorPlugins::add_by_type<Line2DEditorPlugin>();
 	EditorPlugins::add_by_type<ParallaxBackgroundEditorPlugin>();
 	EditorPlugins::add_by_type<Path2DEditorPlugin>();

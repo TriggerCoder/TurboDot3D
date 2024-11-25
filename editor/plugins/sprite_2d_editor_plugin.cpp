@@ -39,7 +39,6 @@
 #include "editor/gui/editor_zoom_widget.h"
 #include "editor/scene_tree_dock.h"
 #include "editor/themes/editor_scale.h"
-#include "scene/2d/light_occluder_2d.h"
 #include "scene/2d/mesh_instance_2d.h"
 #include "scene/2d/polygon_2d.h"
 #include "scene/gui/box_container.h"
@@ -119,12 +118,6 @@ void Sprite2DEditor::_menu_option(int p_option) {
 		case MENU_OPTION_CONVERT_TO_POLYGON_2D: {
 			debug_uv_dialog->set_ok_button_text(TTR("Create Polygon2D"));
 			debug_uv_dialog->set_title(TTR("Polygon2D Preview"));
-
-			_popup_debug_uv_dialog();
-		} break;
-		case MENU_OPTION_CREATE_LIGHT_OCCLUDER_2D: {
-			debug_uv_dialog->set_ok_button_text(TTR("Create LightOccluder2D"));
-			debug_uv_dialog->set_title(TTR("LightOccluder2D Preview"));
 
 			_popup_debug_uv_dialog();
 		} break;
@@ -238,7 +231,7 @@ void Sprite2DEditor::_update_mesh_data() {
 	outline_lines.clear();
 	computed_outline_lines.clear();
 
-	if (selected_menu_item == MENU_OPTION_CONVERT_TO_POLYGON_2D || selected_menu_item == MENU_OPTION_CREATE_LIGHT_OCCLUDER_2D) {
+	if (selected_menu_item == MENU_OPTION_CONVERT_TO_POLYGON_2D) {
 		outline_lines.resize(lines.size());
 		computed_outline_lines.resize(lines.size());
 		for (int pi = 0; pi < lines.size(); pi++) {
@@ -284,9 +277,6 @@ void Sprite2DEditor::_create_node() {
 		} break;
 		case MENU_OPTION_CONVERT_TO_POLYGON_2D: {
 			_convert_to_polygon_2d_node();
-		} break;
-		case MENU_OPTION_CREATE_LIGHT_OCCLUDER_2D: {
-			_create_light_occluder_2d_node();
 		} break;
 	}
 }
@@ -373,39 +363,6 @@ void Sprite2DEditor::_convert_to_polygon_2d_node() {
 	ur->commit_action(false);
 }
 
-void Sprite2DEditor::_create_light_occluder_2d_node() {
-	if (computed_outline_lines.is_empty()) {
-		err_dialog->set_text(TTR("Invalid geometry, can't create light occluder."));
-		err_dialog->popup_centered();
-		return;
-	}
-
-	for (int i = 0; i < computed_outline_lines.size(); i++) {
-		Vector<Vector2> outline = computed_outline_lines[i];
-
-		Ref<OccluderPolygon2D> polygon;
-		polygon.instantiate();
-
-		PackedVector2Array a;
-		a.resize(outline.size());
-		Vector2 *aw = a.ptrw();
-		for (int io = 0; io < outline.size(); io++) {
-			aw[io] = outline[io];
-		}
-		polygon->set_polygon(a);
-
-		LightOccluder2D *light_occluder_2d_instance = memnew(LightOccluder2D);
-		light_occluder_2d_instance->set_occluder_polygon(polygon);
-
-		EditorUndoRedoManager *ur = EditorUndoRedoManager::get_singleton();
-		ur->create_action(TTR("Create LightOccluder2D Sibling"), UndoRedo::MERGE_DISABLE, node);
-		ur->add_do_method(this, "_add_as_sibling_or_child", node, light_occluder_2d_instance);
-		ur->add_do_reference(light_occluder_2d_instance);
-		ur->add_undo_method(node != get_tree()->get_edited_scene_root() ? node->get_parent() : get_tree()->get_edited_scene_root(), "remove_child", light_occluder_2d_instance);
-		ur->commit_action();
-	}
-}
-
 void Sprite2DEditor::_add_as_sibling_or_child(Node *p_own_node, Node *p_new_node) {
 	// Can't make sibling if own node is scene root
 	if (p_own_node != get_tree()->get_edited_scene_root()) {
@@ -437,7 +394,7 @@ void Sprite2DEditor::_debug_uv_draw() {
 	if (selected_menu_item == MENU_OPTION_CONVERT_TO_MESH_2D && uv_lines.size() > 0) {
 		debug_uv->draw_multiline(uv_lines, color);
 
-	} else if ((selected_menu_item == MENU_OPTION_CONVERT_TO_POLYGON_2D || selected_menu_item == MENU_OPTION_CREATE_LIGHT_OCCLUDER_2D) && outline_lines.size() > 0) {
+	} else if ((selected_menu_item == MENU_OPTION_CONVERT_TO_POLYGON_2D) && outline_lines.size() > 0) {
 		for (int i = 0; i < outline_lines.size(); i++) {
 			Vector<Vector2> outline = outline_lines[i];
 
@@ -533,7 +490,6 @@ void Sprite2DEditor::_notification(int p_what) {
 
 			options->get_popup()->set_item_icon(MENU_OPTION_CONVERT_TO_MESH_2D, get_editor_theme_icon(SNAME("MeshInstance2D")));
 			options->get_popup()->set_item_icon(MENU_OPTION_CONVERT_TO_POLYGON_2D, get_editor_theme_icon(SNAME("Polygon2D")));
-			options->get_popup()->set_item_icon(MENU_OPTION_CREATE_LIGHT_OCCLUDER_2D, get_editor_theme_icon(SNAME("LightOccluder2D")));
 		} break;
 	}
 }
@@ -551,7 +507,6 @@ Sprite2DEditor::Sprite2DEditor() {
 
 	options->get_popup()->add_item(TTR("Convert to MeshInstance2D"), MENU_OPTION_CONVERT_TO_MESH_2D);
 	options->get_popup()->add_item(TTR("Convert to Polygon2D"), MENU_OPTION_CONVERT_TO_POLYGON_2D);
-	options->get_popup()->add_item(TTR("Create LightOccluder2D Sibling"), MENU_OPTION_CREATE_LIGHT_OCCLUDER_2D);
 	options->set_switch_on_hover(true);
 
 	options->get_popup()->connect(SceneStringName(id_pressed), callable_mp(this, &Sprite2DEditor::_menu_option));
