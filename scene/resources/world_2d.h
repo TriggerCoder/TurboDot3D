@@ -28,7 +28,6 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifdef TOOLS_ENABLED //2D
 #ifndef WORLD_2D_H
 #define WORLD_2D_H
 
@@ -61,4 +60,3 @@ public:
 };
 
 #endif // WORLD_2D_H
-#endif //2D

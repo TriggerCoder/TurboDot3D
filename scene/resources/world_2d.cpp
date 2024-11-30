@@ -28,11 +28,12 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifdef TOOLS_ENABLED //2D
 #include "world_2d.h"
 
 #include "core/config/project_settings.h"
+#ifdef TOOLS_ENABLED //2D
 #include "scene/2d/visible_on_screen_notifier_2d.h"
+#endif
 #include "scene/main/window.h"
 #include "servers/rendering_server.h"
 
@@ -59,4 +60,3 @@ World2D::~World2D() {
 	ERR_FAIL_NULL(RenderingServer::get_singleton());
 	RenderingServer::get_singleton()->free(canvas);
 }
-#endif

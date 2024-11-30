@@ -35,10 +35,7 @@
 #include "core/string/translation.h"
 #include "core/templates/pair.h"
 #include "core/templates/sort_array.h"
-
-#ifdef TOOLS_ENABLED //2D
 #include "scene/resources/world_2d.h"
-#endif
 
 #include "scene/3d/audio_listener_3d.h"
 #include "scene/3d/camera_3d.h"
@@ -516,12 +513,10 @@ void Viewport::_notification(int p_what) {
 			} else {
 				parent = nullptr;
 			}
-#ifdef TOOLS_ENABLED //2D
 			current_canvas = find_world_2d()->get_canvas();
 			RenderingServer::get_singleton()->viewport_attach_canvas(viewport, current_canvas);
 			RenderingServer::get_singleton()->viewport_set_canvas_transform(viewport, current_canvas, canvas_transform);
 			RenderingServer::get_singleton()->viewport_set_canvas_cull_mask(viewport, canvas_cull_mask);
-#endif
 			RenderingServer::get_singleton()->viewport_set_scenario(viewport, find_world_3d()->get_scenario());
 			_update_audio_listener_3d();
 
@@ -951,7 +946,6 @@ void Viewport::canvas_parent_mark_dirty(Node *p_node) {
 	}
 }
 
-#ifdef TOOLS_ENABLED //2D
 void Viewport::enable_canvas_transform_override(bool p_enable) {
 	ERR_MAIN_THREAD_GUARD;
 	if (override_canvas_transform == p_enable) {
@@ -965,14 +959,12 @@ void Viewport::enable_canvas_transform_override(bool p_enable) {
 		RenderingServer::get_singleton()->viewport_set_canvas_transform(viewport, find_world_2d()->get_canvas(), canvas_transform);
 	}
 }
-#endif
 
 bool Viewport::is_canvas_transform_override_enabled() const {
 	ERR_READ_THREAD_GUARD_V(false);
 	return override_canvas_transform;
 }
 
-#ifdef TOOLS_ENABLED //2D
 void Viewport::set_canvas_transform_override(const Transform2D &p_transform) {
 	ERR_MAIN_THREAD_GUARD;
 	if (canvas_transform_override == p_transform) {
@@ -984,7 +976,6 @@ void Viewport::set_canvas_transform_override(const Transform2D &p_transform) {
 		RenderingServer::get_singleton()->viewport_set_canvas_transform(viewport, find_world_2d()->get_canvas(), canvas_transform_override);
 	}
 }
-#endif
 
 Transform2D Viewport::get_canvas_transform_override() const {
 	ERR_READ_THREAD_GUARD_V(Transform2D());
@@ -995,11 +986,9 @@ void Viewport::set_canvas_transform(const Transform2D &p_transform) {
 	ERR_MAIN_THREAD_GUARD;
 	canvas_transform = p_transform;
 
-#ifdef TOOLS_ENABLED //2D
 	if (!override_canvas_transform) {
 		RenderingServer::get_singleton()->viewport_set_canvas_transform(viewport, find_world_2d()->get_canvas(), canvas_transform);
 	}
-#endif
 }
 
 Transform2D Viewport::get_canvas_transform() const {
@@ -1055,7 +1044,6 @@ bool Viewport::is_using_hdr_2d() const {
 	return use_hdr_2d;
 }
 
-#ifdef TOOLS_ENABLED //2D
 void Viewport::set_world_2d(const Ref<World2D> &p_world_2d) {
 	ERR_MAIN_THREAD_GUARD;
 	if (world_2d == p_world_2d) {
@@ -1099,7 +1087,6 @@ Ref<World2D> Viewport::find_world_2d() const {
 		return Ref<World2D>();
 	}
 }
-#endif
 
 void Viewport::_propagate_viewport_notification(Node *p_node, int p_what) {
 	p_node->notification(p_what);
@@ -1112,12 +1099,10 @@ void Viewport::_propagate_viewport_notification(Node *p_node, int p_what) {
 	}
 }
 
-#ifdef TOOLS_ENABLED //2D
 Ref<World2D> Viewport::get_world_2d() const {
 	ERR_READ_THREAD_GUARD_V(Ref<World2D>());
 	return world_2d;
 }
-#endif
 
 Transform2D Viewport::get_final_transform() const {
 	ERR_READ_THREAD_GUARD_V(Transform2D());
@@ -4314,7 +4299,6 @@ float Viewport::get_texture_mipmap_bias() const {
 	return texture_mipmap_bias;
 }
 
-#ifdef TOOLS_ENABLED //2D
 void Viewport::_propagate_world_2d_changed(Node *p_node) {
 	if (p_node != this) {
 		if (Object::cast_to<CanvasItem>(p_node)) {
@@ -4333,14 +4317,8 @@ void Viewport::_propagate_world_2d_changed(Node *p_node) {
 		_propagate_world_2d_changed(p_node->get_child(i));
 	}
 }
-#endif
 
 void Viewport::_bind_methods() {
-#ifdef TOOLS_ENABLED //2D
-//	ClassDB::bind_method(D_METHOD("set_world_2d", "world_2d"), &Viewport::set_world_2d);
-//	ClassDB::bind_method(D_METHOD("get_world_2d"), &Viewport::get_world_2d);
-//	ClassDB::bind_method(D_METHOD("find_world_2d"), &Viewport::find_world_2d);
-#endif
 	ClassDB::bind_method(D_METHOD("set_canvas_transform", "xform"), &Viewport::set_canvas_transform);
 	ClassDB::bind_method(D_METHOD("get_canvas_transform"), &Viewport::get_canvas_transform);
 
@@ -4501,9 +4479,6 @@ void Viewport::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "use_xr"), "set_use_xr", "is_using_xr");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "own_world_3d"), "set_use_own_world_3d", "is_using_own_world_3d");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "world_3d", PROPERTY_HINT_RESOURCE_TYPE, "World3D"), "set_world_3d", "get_world_3d");
-#ifdef TOOLS_ENABLED //2D
-//	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "world_2d", PROPERTY_HINT_RESOURCE_TYPE, "World2D", PROPERTY_USAGE_NONE), "set_world_2d", "get_world_2d");
-#endif
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "transparent_bg"), "set_transparent_background", "has_transparent_background");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "handle_input_locally"), "set_handle_input_locally", "is_handling_input_locally");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "snap_2d_transforms_to_pixel"), "set_snap_2d_transforms_to_pixel", "is_snap_2d_transforms_to_pixel_enabled");
@@ -4664,11 +4639,8 @@ void Viewport::_validate_property(PropertyInfo &p_property) const {
 }
 
 Viewport::Viewport() {
-#ifdef TOOLS_ENABLED //2D
 	world_2d = Ref<World2D>(memnew(World2D));
 	world_2d->register_viewport(this);
-#endif
-
 
 	viewport = RenderingServer::get_singleton()->viewport_create();
 	texture_rid = RenderingServer::get_singleton()->viewport_get_texture(viewport);

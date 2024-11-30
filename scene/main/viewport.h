@@ -46,10 +46,7 @@ class Label;
 class SceneTreeTimer;
 class Viewport;
 class Window;
-
-#ifdef TOOLS_ENABLED //2D
 class World2D;
-#endif
 
 class ViewportTexture : public Texture2D {
 	GDCLASS(ViewportTexture, Texture2D);
@@ -268,9 +265,7 @@ private:
 	bool handle_input_locally = true;
 	bool local_input_handled = false;
 
-#ifdef TOOLS_ENABLED //2D
 	Ref<World2D> world_2d;
-#endif
 
 	StringName input_group;
 	StringName shortcut_input_group;
@@ -471,9 +466,7 @@ private:
 	uint64_t event_count = 0;
 
 	void _process_dirty_canvas_parent_orders();
-#ifdef TOOLS_ENABLED //2D
 	void _propagate_world_2d_changed(Node *p_node);
-#endif
 
 protected:
 	bool _set_size(const Size2i &p_size, const Size2i &p_size_2d_override, bool p_allocated);
@@ -498,14 +491,12 @@ public:
 	Rect2 get_visible_rect() const;
 	RID get_viewport_rid() const;
 
-#ifdef TOOLS_ENABLED //2D
 	void set_world_2d(const Ref<World2D> &p_world_2d);
 	Ref<World2D> get_world_2d() const;
 	Ref<World2D> find_world_2d() const;
 
 	void enable_canvas_transform_override(bool p_enable);
 	void set_canvas_transform_override(const Transform2D &p_transform);
-#endif
 
 	bool is_canvas_transform_override_enabled() const;
 
@@ -677,14 +668,6 @@ public:
 	virtual bool is_directly_attached_to_screen() const { return false; };
 	virtual bool is_attached_in_viewport() const { return false; };
 	virtual bool is_sub_viewport() const { return false; };
-
-#ifdef TOOLS_ENABLED //2D
-private:
-	// Collider to frame
-	HashMap<ObjectID, uint64_t> physics_2d_mouseover;
-	// Collider & shape to frame
-	HashMap<Pair<ObjectID, int>, uint64_t, PairHash<ObjectID, int>> physics_2d_shape_mouseover;
-#endif
 
 private:
 	// 3D audio, camera, physics, and world.
