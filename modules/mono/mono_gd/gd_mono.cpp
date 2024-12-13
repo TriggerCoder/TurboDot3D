@@ -146,6 +146,7 @@ bool load_hostfxr(void *&r_hostfxr_dll_handle) {
 	String hostfxr_path = find_hostfxr();
 
 	if (hostfxr_path.is_empty()) {
+		print_verbose("hostfxr is empty: " + hostfxr_path);
 		return false;
 	}
 
@@ -222,6 +223,8 @@ load_assembly_and_get_function_pointer_fn initialize_hostfxr_self_contained(
 		argv.write[i] = get_data(stored);
 		i++;
 	}
+
+	print_verbose(".NET: %s", argv);
 
 	int rc = hostfxr_initialize_for_dotnet_command_line(argv.size(), argv.ptrw(), nullptr, &cxt);
 	if (rc != 0 || cxt == nullptr) {
@@ -326,15 +329,17 @@ godot_plugins_initialize_fn try_load_native_aot_library(void *&r_aot_dll_handle)
 	Error err = OS::get_singleton()->open_dynamic_library(native_aot_so_path, r_aot_dll_handle);
 
 	if (err != OK) {
+		print_verbose(".NET: try_load_native_aot_library not found: " + native_aot_so_path);
 		return nullptr;
 	}
-
+	print_verbose(".NET: try_load_native_aot_library found: " + native_aot_so_path);
 	void *lib = r_aot_dll_handle;
 
 	void *symbol = nullptr;
 
 	err = OS::get_singleton()->get_dynamic_library_symbol_handle(lib, "godotsharp_game_main_init", symbol);
 	ERR_FAIL_COND_V(err != OK, nullptr);
+	print_verbose(".NET: godotsharp_game_main_init loaded");
 	return (godot_plugins_initialize_fn)symbol;
 }
 #endif

@@ -81,7 +81,9 @@
 
 // 3D physics and navigation (3D navigation is needed for 2D).
 #include "navigation_server_3d.h"
-#include "physics_3d/godot_physics_server_3d.h"
+#include "physics_3d/jolt_globals.h"
+#include "physics_3d/jolt_physics_server_3d.h"
+#include "physics_3d/jolt_project_settings.h"
 #include "physics_server_3d.h"
 #include "physics_server_3d_wrap_mt.h"
 #include "servers/extensions/physics_server_3d_extension.h"
@@ -96,16 +98,16 @@
 
 ShaderTypes *shader_types = nullptr;
 
-static PhysicsServer3D *_createGodotPhysics3DCallback() {
+PhysicsServer3D *create_jolt_physics_server() {
 #ifdef THREADS_ENABLED
-	bool using_threads = GLOBAL_GET("physics/3d/run_on_separate_thread");
+	bool run_on_separate_thread = GLOBAL_GET("physics/3d/run_on_separate_thread");
 #else
-	bool using_threads = false;
+	bool run_on_separate_thread = false;
 #endif
 
-	PhysicsServer3D *physics_server_3d = memnew(GodotPhysicsServer3D(using_threads));
+	JoltPhysicsServer3D *physics_server = memnew(JoltPhysicsServer3D(run_on_separate_thread));
 
-	return memnew(PhysicsServer3DWrapMT(physics_server_3d, using_threads));
+	return memnew(PhysicsServer3DWrapMT(physics_server, run_on_separate_thread));
 }
 
 static bool has_server_feature_callback(const String &p_feature) {
@@ -268,8 +270,10 @@ void register_server_types() {
 
 	GLOBAL_DEF(PropertyInfo(Variant::STRING, PhysicsServer3DManager::setting_property_name, PROPERTY_HINT_ENUM, "DEFAULT"), "DEFAULT");
 
-	PhysicsServer3DManager::get_singleton()->register_server("GodotPhysics3D", callable_mp_static(_createGodotPhysics3DCallback));
-	PhysicsServer3DManager::get_singleton()->set_default_server("GodotPhysics3D");
+	jolt_initialize();
+	PhysicsServer3DManager::get_singleton()->register_server("Jolt Physics", callable_mp_static(&create_jolt_physics_server));
+	PhysicsServer3DManager::get_singleton()->set_default_server("Jolt Physics");
+	JoltProjectSettings::register_settings();
 
 	GDREGISTER_ABSTRACT_CLASS(XRInterface);
 	GDREGISTER_CLASS(XRVRS);
