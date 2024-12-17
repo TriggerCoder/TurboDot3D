@@ -60,11 +60,9 @@
 template <typename T, int NUM_TREES = 1, bool USE_PAIRS = false, int MAX_ITEMS = 32, typename USER_PAIR_TEST_FUNCTION = BVH_DummyPairTestFunction<T>, typename USER_CULL_TEST_FUNCTION = BVH_DummyCullTestFunction<T>, typename BOUNDS = AABB, typename POINT = Vector3, bool BVH_THREAD_SAFE = true>
 class BVH_Manager {
 public:
-	// note we are using uint32_t instead of BVHHandle, losing type safety, but this
-	// is for compatibility with octree
-	typedef void *(*PairCallback)(void *, uint32_t, T *, int, uint32_t, T *, int);
-	typedef void (*UnpairCallback)(void *, uint32_t, T *, int, uint32_t, T *, int, void *);
-	typedef void *(*CheckPairCallback)(void *, uint32_t, T *, int, uint32_t, T *, int, void *);
+	typedef void *(*PairCallback)(void *, BVHHandle, T *, int, BVHHandle, T *, int);
+	typedef void (*UnpairCallback)(void *, BVHHandle, T *, int, BVHHandle, T *, int, void *);
+	typedef void *(*CheckPairCallback)(void *, BVHHandle, T *, int, BVHHandle, T *, int, void *);
 
 	// allow locally toggling thread safety if the template has been compiled with BVH_THREAD_SAFE
 	void params_set_thread_safe(bool p_enable) {

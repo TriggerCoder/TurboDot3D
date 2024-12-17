@@ -128,9 +128,17 @@ String DisplayServerWindows::get_name() const {
 }
 
 void DisplayServerWindows::_set_mouse_mode_impl(MouseMode p_mode) {
+	if (p_mode == MOUSE_MODE_HIDDEN || p_mode == MOUSE_MODE_CAPTURED || p_mode == MOUSE_MODE_CONFINED_HIDDEN) {
+		// Hide cursor before moving.
+		if (hCursor == nullptr) {
+			hCursor = SetCursor(nullptr);
+		} else {
+			SetCursor(nullptr);
+		}
+	}
+
 	if (windows.has(MAIN_WINDOW_ID) && (p_mode == MOUSE_MODE_CAPTURED || p_mode == MOUSE_MODE_CONFINED || p_mode == MOUSE_MODE_CONFINED_HIDDEN)) {
 		// Mouse is grabbed (captured or confined).
-
 		WindowID window_id = _get_focused_window_or_popup();
 		if (!windows.has(window_id)) {
 			window_id = MAIN_WINDOW_ID;
@@ -160,13 +168,8 @@ void DisplayServerWindows::_set_mouse_mode_impl(MouseMode p_mode) {
 		_register_raw_input_devices(INVALID_WINDOW_ID);
 	}
 
-	if (p_mode == MOUSE_MODE_HIDDEN || p_mode == MOUSE_MODE_CAPTURED || p_mode == MOUSE_MODE_CONFINED_HIDDEN) {
-		if (hCursor == nullptr) {
-			hCursor = SetCursor(nullptr);
-		} else {
-			SetCursor(nullptr);
-		}
-	} else {
+	if (p_mode == MOUSE_MODE_VISIBLE || p_mode == MOUSE_MODE_CONFINED) {
+		// Show cursor.
 		CursorShape c = cursor_shape;
 		cursor_shape = CURSOR_MAX;
 		cursor_set_shape(c);
@@ -4800,6 +4803,16 @@ LRESULT DisplayServerWindows::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARA
 				Input::get_singleton()->parse_input_event(mbd);
 			}
 
+			// Propagate the button up event to the window on which the button down
+			// event was triggered. This is needed for drag & drop to work between windows,
+			// because the engine expects events to keep being processed
+			// on the same window dragging started.
+			if (mb->is_pressed()) {
+				last_mouse_button_down_window = window_id;
+			} else if (last_mouse_button_down_window != INVALID_WINDOW_ID) {
+				mb->set_window_id(last_mouse_button_down_window);
+				last_mouse_button_down_window = INVALID_WINDOW_ID;
+			}
 		} break;
 
 		case WM_WINDOWPOSCHANGED: {

@@ -384,6 +384,7 @@ class ScriptEditor : public PanelContainer {
 	void _filesystem_changed();
 	void _files_moved(const String &p_old_file, const String &p_new_file);
 	void _file_removed(const String &p_file);
+	void _reload_scripts(bool p_refresh_only = false);
 
 	void _update_members_overview_visibility();
 	void _update_members_overview();

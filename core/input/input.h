@@ -98,7 +98,6 @@ private:
 	Vector3 gyroscope;
 	Vector2 mouse_pos;
 	int64_t mouse_window = 0;
-	bool legacy_just_pressed_behavior = false;
 
 	struct ActionState {
 		uint64_t pressed_physics_frame = UINT64_MAX;

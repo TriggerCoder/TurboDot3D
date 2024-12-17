@@ -1011,8 +1011,9 @@ void MeshStorage::update_mesh_instances() {
 
 			mi->surfaces[i].previous_buffer = mi->surfaces[i].current_buffer;
 
-			if (uses_motion_vectors && (frame - mi->surfaces[i].last_change) == 1) {
-				// Previous buffer's data can only be one frame old to be able to use motion vectors.
+			if (uses_motion_vectors && mi->surfaces[i].last_change && (frame - mi->surfaces[i].last_change) <= 2) {
+				// Use a 2-frame tolerance so that stepped skeletal animations have correct motion vectors
+				// (stepped animation is common for distant NPCs).
 				uint32_t new_buffer_index = mi->surfaces[i].current_buffer ^ 1;
 
 				if (mi->surfaces[i].uniform_set[new_buffer_index].is_null()) {
@@ -1391,12 +1392,10 @@ void MeshStorage::multimesh_allocate_data(RID p_multimesh, int p_instances, RS::
 	multimesh->motion_vectors_current_offset = 0;
 	multimesh->motion_vectors_previous_offset = 0;
 	multimesh->motion_vectors_last_change = -1;
+	multimesh->motion_vectors_enabled = false;
 
 	if (multimesh->instances) {
 		uint32_t buffer_size = multimesh->instances * multimesh->stride_cache * sizeof(float);
-		if (multimesh->motion_vectors_enabled) {
-			buffer_size *= 2;
-		}
 		multimesh->buffer = RD::get_singleton()->storage_buffer_create(buffer_size);
 	}
 
@@ -1886,6 +1885,7 @@ void MeshStorage::multimesh_set_buffer(RID p_multimesh, const Vector<float> &p_b
 	ERR_FAIL_NULL(multimesh);
 	ERR_FAIL_COND(p_buffer.size() != (multimesh->instances * (int)multimesh->stride_cache));
 
+	bool used_motion_vectors = multimesh->motion_vectors_enabled;
 	bool uses_motion_vectors = (RSG::viewport->get_num_viewports_with_motion_vectors() > 0) || (RendererCompositorStorage::get_singleton()->get_num_compositor_effects_with_motion_vectors() > 0);
 	if (uses_motion_vectors) {
 		_multimesh_enable_motion_vectors(multimesh);
@@ -1904,6 +1904,11 @@ void MeshStorage::multimesh_set_buffer(RID p_multimesh, const Vector<float> &p_b
 	{
 		const float *r = p_buffer.ptr();
 		RD::get_singleton()->buffer_update(multimesh->buffer, multimesh->motion_vectors_current_offset * multimesh->stride_cache * sizeof(float), p_buffer.size() * sizeof(float), r);
+		if (multimesh->motion_vectors_enabled && !used_motion_vectors) {
+			// Motion vectors were just enabled, and the other half of the buffer will be empty.
+			// Need to ensure that both halves are filled for correct operation.
+			RD::get_singleton()->buffer_update(multimesh->buffer, multimesh->motion_vectors_previous_offset * multimesh->stride_cache * sizeof(float), p_buffer.size() * sizeof(float), r);
+		}
 		multimesh->buffer_set = true;
 	}
 

@@ -804,7 +804,7 @@ Error VariantParser::parse_value(Token &token, Variant &value, Stream *p_stream,
 			}
 
 			value = Vector4i(args[0], args[1], args[2], args[3]);
-		} else if (id == "Transform2D" || id == "Matrix32") { //compatibility
+		} else if (id == "Transform2D") {
 			Vector<real_t> args;
 			Error err = _parse_construct<real_t>(p_stream, args, line, r_err_str);
 			if (err) {
@@ -834,7 +834,7 @@ Error VariantParser::parse_value(Token &token, Variant &value, Stream *p_stream,
 			}
 
 			value = Plane(args[0], args[1], args[2], args[3]);
-		} else if (id == "Quaternion" || id == "Quat") { // "Quat" kept for compatibility
+		} else if (id == "Quaternion") {
 			Vector<real_t> args;
 			Error err = _parse_construct<real_t>(p_stream, args, line, r_err_str);
 			if (err) {
@@ -847,7 +847,7 @@ Error VariantParser::parse_value(Token &token, Variant &value, Stream *p_stream,
 			}
 
 			value = Quaternion(args[0], args[1], args[2], args[3]);
-		} else if (id == "AABB" || id == "Rect3") {
+		} else if (id == "AABB") {
 			Vector<real_t> args;
 			Error err = _parse_construct<real_t>(p_stream, args, line, r_err_str);
 			if (err) {
@@ -860,7 +860,7 @@ Error VariantParser::parse_value(Token &token, Variant &value, Stream *p_stream,
 			}
 
 			value = AABB(Vector3(args[0], args[1], args[2]), Vector3(args[3], args[4], args[5]));
-		} else if (id == "Basis" || id == "Matrix3") { //compatibility
+		} else if (id == "Basis") {
 			Vector<real_t> args;
 			Error err = _parse_construct<real_t>(p_stream, args, line, r_err_str);
 			if (err) {
@@ -873,7 +873,7 @@ Error VariantParser::parse_value(Token &token, Variant &value, Stream *p_stream,
 			}
 
 			value = Basis(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8]);
-		} else if (id == "Transform3D" || id == "Transform") { // "Transform" kept for compatibility with Godot <4.
+		} else if (id == "Transform3D") {
 			Vector<real_t> args;
 			Error err = _parse_construct<real_t>(p_stream, args, line, r_err_str);
 			if (err) {
@@ -886,7 +886,7 @@ Error VariantParser::parse_value(Token &token, Variant &value, Stream *p_stream,
 			}
 
 			value = Transform3D(Basis(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8]), Vector3(args[9], args[10], args[11]));
-		} else if (id == "Projection") { // "Transform" kept for compatibility with Godot <4.
+		} else if (id == "Projection") {
 			Vector<real_t> args;
 			Error err = _parse_construct<real_t>(p_stream, args, line, r_err_str);
 			if (err) {

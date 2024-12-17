@@ -87,7 +87,6 @@ enum {
 	VARIANT_PROJECTION = 52,
 	VARIANT_PACKED_VECTOR4_ARRAY = 53,
 	OBJECT_EMPTY = 0,
-	OBJECT_EXTERNAL_RESOURCE = 1,
 	OBJECT_INTERNAL_RESOURCE = 2,
 	OBJECT_EXTERNAL_RESOURCE_INDEX = 3,
 	// Version 2: Added 64-bit support for float and int.
@@ -416,29 +415,6 @@ Error ResourceLoaderBinary::parse_variant(Variant &r_v) {
 					} else {
 						r_v = internal_index_cache[path];
 					}
-				} break;
-				case OBJECT_EXTERNAL_RESOURCE: {
-					//old file format, still around for compatibility
-
-					String exttype = get_unicode_string();
-					String path = get_unicode_string();
-
-					if (!path.contains("://") && path.is_relative_path()) {
-						// path is relative to file being loaded, so convert to a resource path
-						path = ProjectSettings::get_singleton()->localize_path(res_path.get_base_dir().path_join(path));
-					}
-
-					if (remaps.find(path)) {
-						path = remaps[path];
-					}
-
-					Ref<Resource> res = ResourceLoader::load(path, exttype, cache_mode_for_external);
-
-					if (res.is_null()) {
-						WARN_PRINT(String("Couldn't load resource: " + path).utf8().get_data());
-					}
-					r_v = res;
-
 				} break;
 				case OBJECT_EXTERNAL_RESOURCE_INDEX: {
 					//new file format, just refers to an index in the external list

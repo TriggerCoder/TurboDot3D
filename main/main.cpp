@@ -2297,7 +2297,10 @@ Error Main::setup(const char *execpath, int argc, char *argv[], bool p_second_ph
 	OS::get_singleton()->benchmark_end_measure("Startup", "Main::Setup");
 
 	if (p_second_phase) {
-		return setup2();
+		exit_err = setup2();
+		if (exit_err != OK) {
+			goto error;
+		}
 	}
 
 	return OK;
@@ -2591,6 +2594,23 @@ Error Main::setup2(bool p_show_boot_logo) {
 
 		if (err != OK || display_server == nullptr) {
 			ERR_PRINT("Unable to create DisplayServer, all display drivers failed.\nUse \"--headless\" command line argument to run the engine in headless mode if this is desired (e.g. for continuous integration).");
+
+			if (display_server) {
+				memdelete(display_server);
+			}
+
+			GDExtensionManager::get_singleton()->deinitialize_extensions(GDExtension::INITIALIZATION_LEVEL_SERVERS);
+			uninitialize_modules(MODULE_INITIALIZATION_LEVEL_SERVERS);
+			unregister_server_types();
+			if (input) {
+				memdelete(input);
+			}
+			if (tsman) {
+				memdelete(tsman);
+			}
+			if (physics_server_3d_manager) {
+				memdelete(physics_server_3d_manager);
+			}
 			return err;
 		}
 
@@ -2887,6 +2907,12 @@ Error Main::setup2(bool p_show_boot_logo) {
 
 		OS::get_singleton()->benchmark_end_measure("Scene", "Modules and Extensions");
 	}
+
+	PackedStringArray extensions;
+	extensions.push_back("cs");
+	extensions.push_back("gdshader");
+	// Note : should be defined after Scene level modules init to see.NET.
+	GLOBAL_DEF_NOVAL(PropertyInfo(Variant::PACKED_STRING_ARRAY, "editor/script/search_in_file_extensions"), extensions); 
 
 	OS::get_singleton()->benchmark_end_measure("Startup", "Scene");
 

@@ -318,13 +318,10 @@ bool Input::is_action_just_pressed(const StringName &p_action, bool p_exact) con
 		return false;
 	}
 
-	// Backward compatibility for legacy behavior, only return true if currently pressed.
-	bool pressed_requirement = legacy_just_pressed_behavior ? E->value.cache.pressed : true;
-
 	if (Engine::get_singleton()->is_in_physics_frame()) {
-		return pressed_requirement && E->value.pressed_physics_frame == Engine::get_singleton()->get_physics_frames();
+		return E->value.pressed_physics_frame == Engine::get_singleton()->get_physics_frames();
 	} else {
-		return pressed_requirement && E->value.pressed_process_frame == Engine::get_singleton()->get_process_frames();
+		return E->value.pressed_process_frame == Engine::get_singleton()->get_process_frames();
 	}
 }
 
@@ -339,13 +336,10 @@ bool Input::is_action_just_released(const StringName &p_action, bool p_exact) co
 		return false;
 	}
 
-	// Backward compatibility for legacy behavior, only return true if currently released.
-	bool released_requirement = legacy_just_pressed_behavior ? !E->value.cache.pressed : true;
-
 	if (Engine::get_singleton()->is_in_physics_frame()) {
-		return released_requirement && E->value.released_physics_frame == Engine::get_singleton()->get_physics_frames();
+		return E->value.released_physics_frame == Engine::get_singleton()->get_physics_frames();
 	} else {
-		return released_requirement && E->value.released_process_frame == Engine::get_singleton()->get_process_frames();
+		return E->value.released_process_frame == Engine::get_singleton()->get_process_frames();
 	}
 }
 
@@ -1675,12 +1669,6 @@ Input::Input() {
 			uint32_t full_id = (((uint32_t)vid) << 16) | ((uint16_t)pid);
 			ignored_device_ids.insert(full_id);
 		}
-	}
-
-	legacy_just_pressed_behavior = GLOBAL_DEF("input_devices/compatibility/legacy_just_pressed_behavior", false);
-	if (Engine::get_singleton()->is_editor_hint()) {
-		// Always use standard behavior in the editor.
-		legacy_just_pressed_behavior = false;
 	}
 }
 
