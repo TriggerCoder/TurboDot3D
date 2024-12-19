@@ -90,6 +90,7 @@ class EditorResourcePicker : public HBoxContainer {
 	void _resource_selected();
 	void _file_quick_selected();
 	void _file_selected(const String &p_path);
+	void _resource_saved(Object *p_resource);
 
 	void _update_menu();
 	void _update_menu_items();
