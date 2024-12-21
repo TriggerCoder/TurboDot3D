@@ -42,7 +42,7 @@ class OpenXRCompositionLayerCylinder : public OpenXRCompositionLayer {
 
 	float radius = 1.0;
 	float aspect_ratio = 1.0;
-	float central_angle = Math_PI / 2.0;
+	float central_angle = Math_tau_over_4;
 	uint32_t fallback_segments = 10;
 
 protected:

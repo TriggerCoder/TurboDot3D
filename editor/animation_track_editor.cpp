@@ -6520,8 +6520,8 @@ void AnimationTrackEditor::_edit_menu_pressed(int p_option) {
 						if (is_using_angle) {
 							real_t a = from_v;
 							real_t b = to_v;
-							real_t to_diff = fmod(b - a, Math_TAU);
-							to_v = a + fmod(2.0 * to_diff, Math_TAU) - to_diff;
+							real_t to_diff = fmod(b - a, Math_tau);
+							to_v = a + fmod(2.0 * to_diff, Math_tau) - to_diff;
 						}
 						Variant delta_v = Animation::subtract_variant(to_v, from_v);
 						double duration = to_t - from_t;

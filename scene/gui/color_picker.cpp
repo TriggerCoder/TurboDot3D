@@ -1146,8 +1146,8 @@ void ColorPicker::_hsv_draw(int p_which, Control *c) {
 				points.resize(4);
 				colors.resize(4);
 				colors2.resize(4);
-				real_t ring_radius_x = Math_SQRT12 * c->get_size().width * 0.42;
-				real_t ring_radius_y = Math_SQRT12 * c->get_size().height * 0.42;
+				real_t ring_radius_x = Math_sqrt_2_over_2 * c->get_size().width * 0.42;
+				real_t ring_radius_y = Math_sqrt_2_over_2 * c->get_size().height * 0.42;
 
 				points.set(0, center - Vector2(ring_radius_x, ring_radius_y));
 				points.set(1, center + Vector2(ring_radius_x, -ring_radius_y));
@@ -1204,11 +1204,11 @@ void ColorPicker::_hsv_draw(int p_which, Control *c) {
 		int x;
 		int y;
 		if (actual_shape == SHAPE_VHS_CIRCLE || actual_shape == SHAPE_OKHSL_CIRCLE) {
-			x = center.x + (center.x * Math::cos(h * Math_TAU) * s) - (theme_cache.picker_cursor->get_width() / 2);
-			y = center.y + (center.y * Math::sin(h * Math_TAU) * s) - (theme_cache.picker_cursor->get_height() / 2);
+			x = center.x + (center.x * Math::cos(h * Math_tau) * s) - (theme_cache.picker_cursor->get_width() / 2);
+			y = center.y + (center.y * Math::sin(h * Math_tau) * s) - (theme_cache.picker_cursor->get_height() / 2);
 		} else {
-			real_t corner_x = (c == wheel_uv) ? center.x - Math_SQRT12 * c->get_size().width * 0.42 : 0;
-			real_t corner_y = (c == wheel_uv) ? center.y - Math_SQRT12 * c->get_size().height * 0.42 : 0;
+			real_t corner_x = (c == wheel_uv) ? center.x - Math_sqrt_2_over_2 * c->get_size().width * 0.42 : 0;
+			real_t corner_y = (c == wheel_uv) ? center.y - Math_sqrt_2_over_2 * c->get_size().height * 0.42 : 0;
 
 			Size2 real_size(c->get_size().x - corner_x * 2, c->get_size().y - corner_y * 2);
 			x = CLAMP(real_size.x * s, 0, real_size.x) + corner_x - (theme_cache.picker_cursor->get_width() / 2);
@@ -1221,16 +1221,16 @@ void ColorPicker::_hsv_draw(int p_which, Control *c) {
 			points.resize(4);
 			double h1 = h - (0.5 / 360);
 			double h2 = h + (0.5 / 360);
-			points.set(0, Point2(center.x + (center.x * Math::cos(h1 * Math_TAU)), center.y + (center.y * Math::sin(h1 * Math_TAU))));
-			points.set(1, Point2(center.x + (center.x * Math::cos(h1 * Math_TAU) * 0.84), center.y + (center.y * Math::sin(h1 * Math_TAU) * 0.84)));
-			points.set(2, Point2(center.x + (center.x * Math::cos(h2 * Math_TAU)), center.y + (center.y * Math::sin(h2 * Math_TAU))));
-			points.set(3, Point2(center.x + (center.x * Math::cos(h2 * Math_TAU) * 0.84), center.y + (center.y * Math::sin(h2 * Math_TAU) * 0.84)));
+			points.set(0, Point2(center.x + (center.x * Math::cos(h1 * Math_tau)), center.y + (center.y * Math::sin(h1 * Math_tau))));
+			points.set(1, Point2(center.x + (center.x * Math::cos(h1 * Math_tau) * 0.84), center.y + (center.y * Math::sin(h1 * Math_tau) * 0.84)));
+			points.set(2, Point2(center.x + (center.x * Math::cos(h2 * Math_tau)), center.y + (center.y * Math::sin(h2 * Math_tau))));
+			points.set(3, Point2(center.x + (center.x * Math::cos(h2 * Math_tau) * 0.84), center.y + (center.y * Math::sin(h2 * Math_tau) * 0.84)));
 			c->draw_multiline(points, col.inverted());
 		}
 
 	} else if (p_which == 1) {
 		if (actual_shape == SHAPE_HSV_RECTANGLE) {
-			c->draw_set_transform(Point2(), -Math_PI / 2, Size2(c->get_size().x, -c->get_size().y));
+			c->draw_set_transform(Point2(), -Math_tau_over_4, Size2(c->get_size().x, -c->get_size().y));
 			c->draw_texture_rect(theme_cache.color_hue, Rect2(Point2(), Size2(1, 1)));
 			c->draw_set_transform(Point2(), 0, Size2(1, 1));
 			int y = c->get_size().y - c->get_size().y * (1.0 - h);
@@ -1309,14 +1309,14 @@ void ColorPicker::_uv_input(const Ref<InputEvent> &p_event, Control *c) {
 				real_t dist = center.distance_to(bev->get_position());
 				if (dist <= center.x) {
 					real_t rad = center.angle_to_point(bev->get_position());
-					h = ((rad >= 0) ? rad : (Math_TAU + rad)) / Math_TAU;
+					h = ((rad >= 0) ? rad : (Math_tau + rad)) / Math_tau;
 					s = CLAMP(dist / center.x, 0, 1);
 				} else {
 					return;
 				}
 			} else {
-				real_t corner_x = (c == wheel_uv) ? center.x - Math_SQRT12 * c->get_size().width * 0.42 : 0;
-				real_t corner_y = (c == wheel_uv) ? center.y - Math_SQRT12 * c->get_size().height * 0.42 : 0;
+				real_t corner_x = (c == wheel_uv) ? center.x - Math_sqrt_2_over_2 * c->get_size().width * 0.42 : 0;
+				real_t corner_y = (c == wheel_uv) ? center.y - Math_sqrt_2_over_2 * c->get_size().height * 0.42 : 0;
 				Size2 real_size(c->get_size().x - corner_x * 2, c->get_size().y - corner_y * 2);
 
 				if (bev->get_position().x < corner_x || bev->get_position().x > c->get_size().x - corner_x ||
@@ -1326,7 +1326,7 @@ void ColorPicker::_uv_input(const Ref<InputEvent> &p_event, Control *c) {
 
 						if (dist >= center.x * 0.84 && dist <= center.x) {
 							real_t rad = center.angle_to_point(bev->get_position());
-							h = ((rad >= 0) ? rad : (Math_TAU + rad)) / Math_TAU;
+							h = ((rad >= 0) ? rad : (Math_tau + rad)) / Math_tau;
 							spinning = true;
 						} else {
 							return;
@@ -1376,15 +1376,15 @@ void ColorPicker::_uv_input(const Ref<InputEvent> &p_event, Control *c) {
 		if (actual_shape == SHAPE_VHS_CIRCLE || actual_shape == SHAPE_OKHSL_CIRCLE) {
 			real_t dist = center.distance_to(mev->get_position());
 			real_t rad = center.angle_to_point(mev->get_position());
-			h = ((rad >= 0) ? rad : (Math_TAU + rad)) / Math_TAU;
+			h = ((rad >= 0) ? rad : (Math_tau + rad)) / Math_tau;
 			s = CLAMP(dist / center.x, 0, 1);
 		} else {
 			if (spinning) {
 				real_t rad = center.angle_to_point(mev->get_position());
-				h = ((rad >= 0) ? rad : (Math_TAU + rad)) / Math_TAU;
+				h = ((rad >= 0) ? rad : (Math_tau + rad)) / Math_tau;
 			} else {
-				real_t corner_x = (c == wheel_uv) ? center.x - Math_SQRT12 * c->get_size().width * 0.42 : 0;
-				real_t corner_y = (c == wheel_uv) ? center.y - Math_SQRT12 * c->get_size().height * 0.42 : 0;
+				real_t corner_x = (c == wheel_uv) ? center.x - Math_sqrt_2_over_2 * c->get_size().width * 0.42 : 0;
+				real_t corner_y = (c == wheel_uv) ? center.y - Math_sqrt_2_over_2 * c->get_size().height * 0.42 : 0;
 				Size2 real_size(c->get_size().x - corner_x * 2, c->get_size().y - corner_y * 2);
 
 				real_t x = CLAMP(mev->get_position().x - corner_x, 0, real_size.x);

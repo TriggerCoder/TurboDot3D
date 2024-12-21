@@ -353,7 +353,7 @@ void CapsuleMesh::_update_lightmap_size() {
 		float texel_size = get_lightmap_texel_size();
 		float padding = get_uv2_padding();
 
-		float radial_length = radius * Math_PI * 0.5; // circumference of 90 degree bend
+		float radial_length = radius * Math_tau_over_4; // circumference of 90 degree bend
 		float vertical_length = radial_length * 2 + (height - 2.0 * radius); // total vertical length
 
 		_lightmap_size_hint.x = MAX(1.0, 4.0 * radial_length / texel_size) + padding;
@@ -378,9 +378,9 @@ void CapsuleMesh::create_mesh_array(Array &p_arr, const float radius, const floa
 	float twothirds = 2.0 / 3.0;
 
 	// Only used if we calculate UV2
-	float radial_width = 2.0 * radius * Math_PI;
+	float radial_width = radius * Math_tau;
 	float radial_h = radial_width / (radial_width + p_uv2_padding);
-	float radial_length = radius * Math_PI * 0.5; // circumference of 90 degree bend
+	float radial_length = radius * Math_tau_over_4; // circumference of 90 degree bend
 	float vertical_length = radial_length * 2 + (height - 2.0 * radius) + p_uv2_padding; // total vertical length
 	float radial_v = radial_length / vertical_length; // v size of top and bottom section
 	float height_v = (height - 2.0 * radius) / vertical_length; // v size of height section
@@ -408,15 +408,15 @@ void CapsuleMesh::create_mesh_array(Array &p_arr, const float radius, const floa
 		v = j;
 
 		v /= (rings + 1);
-		w = sin(0.5 * Math_PI * v);
-		y = radius * cos(0.5 * Math_PI * v);
+		w = sin(Math_tau_over_4 * v);
+		y = radius * cos(Math_tau_over_4 * v);
 
 		for (i = 0; i <= radial_segments; i++) {
 			u = i;
 			u /= radial_segments;
 
-			x = -sin(u * Math_TAU);
-			z = cos(u * Math_TAU);
+			x = -sin(u * Math_tau);
+			z = cos(u * Math_tau);
 
 			Vector3 p = Vector3(x * radius * w, y, -z * radius * w);
 			points.push_back(p + Vector3(0.0, 0.5 * height - radius, 0.0));
@@ -457,8 +457,8 @@ void CapsuleMesh::create_mesh_array(Array &p_arr, const float radius, const floa
 			u = i;
 			u /= radial_segments;
 
-			x = -sin(u * Math_TAU);
-			z = cos(u * Math_TAU);
+			x = -sin(u * Math_tau);
+			z = cos(u * Math_tau);
 
 			Vector3 p = Vector3(x * radius, y, -z * radius);
 			points.push_back(p);
@@ -493,15 +493,15 @@ void CapsuleMesh::create_mesh_array(Array &p_arr, const float radius, const floa
 
 		v /= (rings + 1);
 		v += 1.0;
-		w = sin(0.5 * Math_PI * v);
-		y = radius * cos(0.5 * Math_PI * v);
+		w = sin(Math_tau_over_4 * v);
+		y = radius * cos(Math_tau_over_4 * v);
 
 		for (i = 0; i <= radial_segments; i++) {
 			u = i;
 			u /= radial_segments;
 
-			x = -sin(u * Math_TAU);
-			z = cos(u * Math_TAU);
+			x = -sin(u * Math_tau);
+			z = cos(u * Math_tau);
 
 			Vector3 p = Vector3(x * radius * w, y, -z * radius * w);
 			points.push_back(p + Vector3(0.0, -0.5 * height + radius, 0.0));
@@ -940,8 +940,8 @@ void CylinderMesh::_update_lightmap_size() {
 		float texel_size = get_lightmap_texel_size();
 		float padding = get_uv2_padding();
 
-		float top_circumference = top_radius * Math_PI * 2.0;
-		float bottom_circumference = bottom_radius * Math_PI * 2.0;
+		float top_circumference = top_radius * Math_tau;
+		float bottom_circumference = bottom_radius * Math_tau;
 
 		float _width = MAX(top_circumference, bottom_circumference) / texel_size + padding;
 		_width = MAX(_width, (((top_radius + bottom_radius) / texel_size) + padding) * 2.0); // this is extremely unlikely to be larger, will only happen if padding is larger then our diameter.
@@ -968,8 +968,8 @@ void CylinderMesh::create_mesh_array(Array &p_arr, float top_radius, float botto
 	float x, y, z, u, v, radius, radius_h;
 
 	// Only used if we calculate UV2
-	float top_circumference = top_radius * Math_PI * 2.0;
-	float bottom_circumference = bottom_radius * Math_PI * 2.0;
+	float top_circumference = top_radius * Math_tau;
+	float bottom_circumference = bottom_radius * Math_tau;
 	float vertical_length = height + MAX(2.0 * top_radius, 2.0 * bottom_radius) + (2.0 * p_uv2_padding);
 	float height_v = height / vertical_length;
 	float padding_v = p_uv2_padding / vertical_length;
@@ -1011,8 +1011,8 @@ void CylinderMesh::create_mesh_array(Array &p_arr, float top_radius, float botto
 			u = i;
 			u /= radial_segments;
 
-			x = sin(u * Math_TAU);
-			z = cos(u * Math_TAU);
+			x = sin(u * Math_tau);
+			z = cos(u * Math_tau);
 
 			Vector3 p = Vector3(x * radius, y, z * radius);
 			points.push_back(p);
@@ -1063,8 +1063,8 @@ void CylinderMesh::create_mesh_array(Array &p_arr, float top_radius, float botto
 			float r = i;
 			r /= radial_segments;
 
-			x = sin(r * Math_TAU);
-			z = cos(r * Math_TAU);
+			x = sin(r * Math_tau);
+			z = cos(r * Math_tau);
 
 			u = ((x + 1.0) * 0.25);
 			v = 0.5 + ((z + 1.0) * 0.25);
@@ -1105,8 +1105,8 @@ void CylinderMesh::create_mesh_array(Array &p_arr, float top_radius, float botto
 			float r = i;
 			r /= radial_segments;
 
-			x = sin(r * Math_TAU);
-			z = cos(r * Math_TAU);
+			x = sin(r * Math_tau);
+			z = cos(r * Math_tau);
 
 			u = 0.5 + ((x + 1.0) * 0.25);
 			v = 1.0 - ((z + 1.0) * 0.25);
@@ -1765,9 +1765,9 @@ void SphereMesh::_update_lightmap_size() {
 		float texel_size = get_lightmap_texel_size();
 		float padding = get_uv2_padding();
 
-		float _width = radius * Math_TAU;
+		float _width = radius * Math_tau;
 		_lightmap_size_hint.x = MAX(1.0, (_width / texel_size) + padding);
-		float _height = (is_hemisphere ? 1.0 : 0.5) * height * Math_PI; // note, with hemisphere height is our radius, while with a full sphere it is the diameter..
+		float _height = (is_hemisphere ? 1.0 : 0.5) * height * Math_tau_over_2; // note, with hemisphere height is our radius, while with a full sphere it is the diameter..
 		_lightmap_size_hint.y = MAX(1.0, (_height / texel_size) + padding);
 
 		set_lightmap_size_hint(_lightmap_size_hint);
@@ -1789,11 +1789,11 @@ void SphereMesh::create_mesh_array(Array &p_arr, float radius, float height, int
 	float scale = height * (is_hemisphere ? 1.0 : 0.5);
 
 	// Only used if we calculate UV2
-	float circumference = radius * Math_TAU;
+	float circumference = radius * Math_tau;
 	float horizontal_length = circumference + p_uv2_padding;
 	float center_h = 0.5 * circumference / horizontal_length;
 
-	float height_v = scale * Math_PI / ((scale * Math_PI) + p_uv2_padding);
+	float height_v = scale * Math_tau_over_2 / ((scale * Math_tau_over_2) + p_uv2_padding);
 
 	// set our bounding box
 
@@ -1818,15 +1818,15 @@ void SphereMesh::create_mesh_array(Array &p_arr, float radius, float height, int
 		float w;
 
 		v /= (rings + 1);
-		w = sin(Math_PI * v);
-		y = scale * cos(Math_PI * v);
+		w = sin(Math_tau_over_2 * v);
+		y = scale * cos(Math_tau_over_2 * v);
 
 		for (i = 0; i <= radial_segments; i++) {
 			float u = i;
 			u /= radial_segments;
 
-			x = sin(u * Math_TAU);
-			z = cos(u * Math_TAU);
+			x = sin(u * Math_tau);
+			z = cos(u * Math_tau);
 
 			if (is_hemisphere && y < 0.0) {
 				points.push_back(Vector3(x * radius * w, 0.0, z * radius * w));
@@ -1962,9 +1962,9 @@ void TorusMesh::_update_lightmap_size() {
 
 		float radius = (max_radius - min_radius) * 0.5;
 
-		float _width = max_radius * Math_TAU;
+		float _width = max_radius * Math_tau;
 		_lightmap_size_hint.x = MAX(1.0, (_width / texel_size) + padding);
-		float _height = radius * Math_TAU;
+		float _height = radius * Math_tau;
 		_lightmap_size_hint.y = MAX(1.0, (_height / texel_size) + padding);
 
 		set_lightmap_size_hint(_lightmap_size_hint);
@@ -2003,23 +2003,23 @@ void TorusMesh::_create_mesh_array(Array &p_arr) const {
 	float texel_size = get_lightmap_texel_size();
 	float _uv2_padding = get_uv2_padding() * texel_size;
 
-	float horizontal_total = max_radius * Math_TAU + _uv2_padding;
-	float max_h = max_radius * Math_TAU / horizontal_total;
-	float delta_h = (max_radius - min_radius) * Math_TAU / horizontal_total;
+	float horizontal_total = max_radius * Math_tau + _uv2_padding;
+	float max_h = max_radius * Math_tau / horizontal_total;
+	float delta_h = (max_radius - min_radius) * Math_tau / horizontal_total;
 
-	float height_v = radius * Math_TAU / (radius * Math_TAU + _uv2_padding);
+	float height_v = radius * Math_tau / (radius * Math_tau + _uv2_padding);
 
 	for (int i = 0; i <= rings; i++) {
 		int prevrow = (i - 1) * (ring_segments + 1);
 		int thisrow = i * (ring_segments + 1);
 		float inci = float(i) / rings;
-		float angi = inci * Math_TAU;
+		float angi = inci * Math_tau;
 
 		Vector2 normali = Vector2(-Math::sin(angi), -Math::cos(angi));
 
 		for (int j = 0; j <= ring_segments; j++) {
 			float incj = float(j) / ring_segments;
-			float angj = incj * Math_TAU;
+			float angj = incj * Math_tau;
 
 			Vector2 normalj = Vector2(-Math::cos(angj), Math::sin(angj));
 			Vector2 normalk = normalj * radius + Vector2(min_radius + radius, 0);
@@ -2272,8 +2272,8 @@ void TubeTrailMesh::_create_mesh_array(Array &p_arr) const {
 			if (curve.is_valid() && curve->get_point_count() > 0) {
 				r *= curve->sample_baked(v);
 			}
-			float x = sin(u * Math_TAU);
-			float z = cos(u * Math_TAU);
+			float x = sin(u * Math_tau);
+			float z = cos(u * Math_tau);
 
 			Vector3 p = Vector3(x * r, y, z * r);
 			points.push_back(p);
@@ -2341,8 +2341,8 @@ void TubeTrailMesh::_create_mesh_array(Array &p_arr) const {
 				float r = i;
 				r /= radial_steps;
 
-				float x = sin(r * Math_TAU);
-				float z = cos(r * Math_TAU);
+				float x = sin(r * Math_tau);
+				float z = cos(r * Math_tau);
 
 				float u = ((x + 1.0) * 0.25);
 				float v = 0.5 + ((z + 1.0) * 0.25);
@@ -2406,8 +2406,8 @@ void TubeTrailMesh::_create_mesh_array(Array &p_arr) const {
 				float r = i;
 				r /= radial_steps;
 
-				float x = sin(r * Math_TAU);
-				float z = cos(r * Math_TAU);
+				float x = sin(r * Math_tau);
+				float z = cos(r * Math_tau);
 
 				float u = 0.5 + ((x + 1.0) * 0.25);
 				float v = 1.0 - ((z + 1.0) * 0.25);

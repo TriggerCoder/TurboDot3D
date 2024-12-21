@@ -2329,28 +2329,28 @@ void Node3DEditorViewport::_sinput(const Ref<InputEvent> &p_event) {
 		}
 		if (ED_IS_SHORTCUT("spatial_editor/orbit_view_down", p_event)) {
 			// Clamp rotation to roughly -90..90 degrees so the user can't look upside-down and end up disoriented.
-			cursor.x_rot = CLAMP(cursor.x_rot - Math_PI / 12.0, -1.57, 1.57);
+			cursor.x_rot = CLAMP(cursor.x_rot - Math_tau_over_24, -1.57, 1.57);
 			view_type = VIEW_TYPE_USER;
 			_update_name();
 		}
 		if (ED_IS_SHORTCUT("spatial_editor/orbit_view_up", p_event)) {
 			// Clamp rotation to roughly -90..90 degrees so the user can't look upside-down and end up disoriented.
-			cursor.x_rot = CLAMP(cursor.x_rot + Math_PI / 12.0, -1.57, 1.57);
+			cursor.x_rot = CLAMP(cursor.x_rot + Math_tau_over_24, -1.57, 1.57);
 			view_type = VIEW_TYPE_USER;
 			_update_name();
 		}
 		if (ED_IS_SHORTCUT("spatial_editor/orbit_view_right", p_event)) {
-			cursor.y_rot -= Math_PI / 12.0;
+			cursor.y_rot -= Math_tau_over_24;
 			view_type = VIEW_TYPE_USER;
 			_update_name();
 		}
 		if (ED_IS_SHORTCUT("spatial_editor/orbit_view_left", p_event)) {
-			cursor.y_rot += Math_PI / 12.0;
+			cursor.y_rot += Math_tau_over_24;
 			view_type = VIEW_TYPE_USER;
 			_update_name();
 		}
 		if (ED_IS_SHORTCUT("spatial_editor/orbit_view_180", p_event)) {
-			cursor.y_rot += Math_PI;
+			cursor.y_rot += Math_tau_over_2;
 			view_type = VIEW_TYPE_USER;
 			_update_name();
 		}
@@ -3311,7 +3311,7 @@ void Node3DEditorViewport::_menu_option(int p_option) {
 	switch (p_option) {
 		case VIEW_TOP: {
 			cursor.y_rot = 0;
-			cursor.x_rot = Math_PI / 2.0;
+			cursor.x_rot = Math_tau_over_4;
 			set_message(TTR("Top View."), 2);
 			view_type = VIEW_TYPE_TOP;
 			_set_auto_orthogonal();
@@ -3320,7 +3320,7 @@ void Node3DEditorViewport::_menu_option(int p_option) {
 		} break;
 		case VIEW_BOTTOM: {
 			cursor.y_rot = 0;
-			cursor.x_rot = -Math_PI / 2.0;
+			cursor.x_rot = -Math_tau_over_4;
 			set_message(TTR("Bottom View."), 2);
 			view_type = VIEW_TYPE_BOTTOM;
 			_set_auto_orthogonal();
@@ -3329,7 +3329,7 @@ void Node3DEditorViewport::_menu_option(int p_option) {
 		} break;
 		case VIEW_LEFT: {
 			cursor.x_rot = 0;
-			cursor.y_rot = Math_PI / 2.0;
+			cursor.y_rot = Math_tau_over_4;
 			set_message(TTR("Left View."), 2);
 			view_type = VIEW_TYPE_LEFT;
 			_set_auto_orthogonal();
@@ -3338,7 +3338,7 @@ void Node3DEditorViewport::_menu_option(int p_option) {
 		} break;
 		case VIEW_RIGHT: {
 			cursor.x_rot = 0;
-			cursor.y_rot = -Math_PI / 2.0;
+			cursor.y_rot = -Math_tau_over_4;
 			set_message(TTR("Right View."), 2);
 			view_type = VIEW_TYPE_RIGHT;
 			_set_auto_orthogonal();
@@ -3356,7 +3356,7 @@ void Node3DEditorViewport::_menu_option(int p_option) {
 		} break;
 		case VIEW_REAR: {
 			cursor.x_rot = 0;
-			cursor.y_rot = Math_PI;
+			cursor.y_rot = Math_tau_over_2;
 			set_message(TTR("Rear View."), 2);
 			view_type = VIEW_TYPE_REAR;
 			_set_auto_orthogonal();
@@ -3406,7 +3406,7 @@ void Node3DEditorViewport::_menu_option(int p_option) {
 					// Adjust rotation to match Decal's default orientation.
 					// This makes the decal "look" in the same direction as the camera,
 					// rather than pointing down relative to the camera orientation.
-					xform.basis.rotate_local(Vector3(1, 0, 0), Math_TAU * 0.25);
+					xform.basis.rotate_local(Vector3(1, 0, 0), Math_tau_over_4);
 				}
 
 				Node3D *parent = sp->get_parent_node_3d();
@@ -3444,7 +3444,7 @@ void Node3DEditorViewport::_menu_option(int p_option) {
 					// Adjust rotation to match Decal's default orientation.
 					// This makes the decal "look" in the same direction as the camera,
 					// rather than pointing down relative to the camera orientation.
-					basis.rotate_local(Vector3(1, 0, 0), Math_TAU * 0.25);
+					basis.rotate_local(Vector3(1, 0, 0), Math_tau_over_4);
 				}
 
 				undo_redo->add_do_method(sp, "set_rotation", basis.get_euler_normalized());
@@ -5088,7 +5088,7 @@ void Node3DEditorViewport::update_transform(bool p_shift) {
 				Vector3 projection_axis = plane.normal.cross(global_axis);
 				Vector3 delta = intersection - click;
 				float projection = delta.dot(projection_axis);
-				angle = (projection * (Math_PI / 2.0f)) / (gizmo_scale * GIZMO_CIRCLE_SIZE);
+				angle = (projection * (Math_tau_over_4)) / (gizmo_scale * GIZMO_CIRCLE_SIZE);
 			} else {
 				_edit.show_rotation_line = true;
 				Vector3 click_axis = (click - _edit.center).normalized();
@@ -6953,7 +6953,7 @@ void fragment() {
 
 				int arrow_sides = 16;
 
-				const real_t arrow_sides_step = Math_TAU / arrow_sides;
+				const real_t arrow_sides_step = Math_tau / arrow_sides;
 				for (int k = 0; k < arrow_sides; k++) {
 					Basis ma(ivec, k * arrow_sides_step);
 					Basis mb(ivec, (k + 1) * arrow_sides_step);
@@ -6992,7 +6992,7 @@ void fragment() {
 					vec * GIZMO_PLANE_DST - ivec3 * GIZMO_PLANE_SIZE
 				};
 
-				Basis ma(ivec, Math_PI / 2);
+				Basis ma(ivec, Math_tau_over_4);
 
 				Vector3 points[4] = {
 					ma.xform(plane[0]),
@@ -7032,14 +7032,14 @@ void fragment() {
 				int n = 128; // number of circle segments
 				int m = 3; // number of thickness segments
 
-				real_t step = Math_TAU / n;
+				real_t step = Math_tau / n;
 				for (int j = 0; j < n; ++j) {
 					Basis basis = Basis(ivec, j * step);
 
 					Vector3 vertex = basis.xform(ivec2 * GIZMO_CIRCLE_SIZE);
 
 					for (int k = 0; k < m; ++k) {
-						Vector2 ofs = Vector2(Math::cos((Math_TAU * k) / m), Math::sin((Math_TAU * k) / m));
+						Vector2 ofs = Vector2(Math::cos((Math_tau * k) / m), Math::sin((Math_tau * k) / m));
 						Vector3 normal = ivec * ofs.x + ivec2 * ofs.y;
 
 						surftool->set_normal(basis.xform(normal));
@@ -7176,7 +7176,7 @@ void fragment() {
 
 				int arrow_sides = 4;
 
-				const real_t arrow_sides_step = Math_TAU / arrow_sides;
+				const real_t arrow_sides_step = Math_tau / arrow_sides;
 				for (int k = 0; k < 4; k++) {
 					Basis ma(ivec, k * arrow_sides_step);
 					Basis mb(ivec, (k + 1) * arrow_sides_step);
@@ -7215,7 +7215,7 @@ void fragment() {
 					vec * GIZMO_PLANE_DST - ivec3 * GIZMO_PLANE_SIZE
 				};
 
-				Basis ma(ivec, Math_PI / 2);
+				Basis ma(ivec, Math_tau_over_4);
 
 				Vector3 points[4] = {
 					ma.xform(plane[0]),
@@ -8488,7 +8488,7 @@ void Node3DEditor::_sun_direction_input(const Ref<InputEvent> &p_event) {
 	if (mm.is_valid() && (mm->get_button_mask().has_flag(MouseButtonMask::LEFT))) {
 		sun_rotation.x += mm->get_relative().y * (0.02 * EDSCALE);
 		sun_rotation.y -= mm->get_relative().x * (0.02 * EDSCALE);
-		sun_rotation.x = CLAMP(sun_rotation.x, -Math_TAU / 4, Math_TAU / 4);
+		sun_rotation.x = CLAMP(sun_rotation.x, -Math_tau_over_4, Math_tau_over_4);
 		sun_angle_altitude->set_value(-Math::rad_to_deg(sun_rotation.x));
 		sun_angle_azimuth->set_value(180.0 - Math::rad_to_deg(sun_rotation.y));
 		_preview_settings_changed();

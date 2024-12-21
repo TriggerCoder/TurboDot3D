@@ -74,14 +74,14 @@ struct FloatConstantDef {
 };
 
 static FloatConstantDef float_constant_defs[] = {
-	{ "E", Math_E, TTR("E constant (2.718282). Represents the base of the natural logarithm.") },
+	{ "E", Math_euler, TTR("E constant (2.718282). Represents the base of the natural logarithm.") },
 	{ "Epsilon", CMP_EPSILON, TTR("Epsilon constant (0.00001). Smallest possible scalar number.") },
 	{ "Phi", 1.618034f, TTR("Phi constant (1.618034). Golden ratio.") },
-	{ "Pi/4", Math_PI / 4, TTR("Pi/4 constant (0.785398) or 45 degrees.") },
-	{ "Pi/2", Math_PI / 2, TTR("Pi/2 constant (1.570796) or 90 degrees.") },
-	{ "Pi", Math_PI, TTR("Pi constant (3.141593) or 180 degrees.") },
-	{ "Tau", Math_TAU, TTR("Tau constant (6.283185) or 360 degrees.") },
-	{ "Sqrt2", Math_SQRT2, TTR("Sqrt2 constant (1.414214). Square root of 2.") }
+	{ "Pi/4", Math_tau_over_8, TTR("Pi/4 constant (0.785398) or 45 degrees.") },
+	{ "Pi/2", Math_tau_over_4, TTR("Pi/2 constant (1.570796) or 90 degrees.") },
+	{ "Pi", Math_tau_over_2, TTR("Pi constant (3.141593) or 180 degrees.") },
+	{ "Tau", Math_tau, TTR("Tau constant (6.283185) or 360 degrees.") },
+	{ "Sqrt2", Math_sqrt_2, TTR("Sqrt2 constant (1.414214). Square root of 2.") }
 };
 
 const int MAX_FLOAT_CONST_DEFS = sizeof(float_constant_defs) / sizeof(FloatConstantDef);

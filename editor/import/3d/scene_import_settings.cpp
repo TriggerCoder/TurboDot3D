@@ -708,8 +708,8 @@ void SceneImportSettingsDialog::open_settings(const String &p_path, bool p_for_a
 	selected_id = "";
 	selected_type = "";
 
-	cam_rot_x = -Math_PI / 4;
-	cam_rot_y = -Math_PI / 4;
+	cam_rot_x = -Math_tau_over_8;
+	cam_rot_y = -Math_tau_over_8;
 	cam_zoom = 1;
 
 	{
@@ -1151,7 +1151,7 @@ void SceneImportSettingsDialog::_viewport_input(const Ref<InputEvent> &p_input) 
 	if (mm.is_valid() && (mm->get_button_mask().has_flag(MouseButtonMask::LEFT))) {
 		(*rot_x) -= mm->get_relative().y * 0.01 * EDSCALE;
 		(*rot_y) -= mm->get_relative().x * 0.01 * EDSCALE;
-		(*rot_x) = CLAMP((*rot_x), -Math_PI / 2, Math_PI / 2);
+		(*rot_x) = CLAMP((*rot_x), -Math_tau_over_4, Math_tau_over_4);
 		_update_camera();
 	}
 	if (mm.is_valid() && DisplayServer::get_singleton()->has_feature(DisplayServer::FEATURE_CURSOR_SHAPE)) {

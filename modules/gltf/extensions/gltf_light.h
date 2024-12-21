@@ -50,7 +50,7 @@ private:
 	String light_type;
 	float range = INFINITY;
 	float inner_cone_angle = 0.0f;
-	float outer_cone_angle = Math_TAU / 8.0f;
+	float outer_cone_angle = Math_tau_over_8;
 	Dictionary additional_data;
 
 public:

@@ -824,14 +824,14 @@ void CPUParticles3D::_particles_process(double p_delta) {
 				} break;
 				case EMISSION_SHAPE_SPHERE: {
 					real_t s = 2.0 * Math::randf() - 1.0;
-					real_t t = Math_TAU * Math::randf();
+					real_t t = Math_tau * Math::randf();
 					real_t x = Math::randf();
 					real_t radius = emission_sphere_radius * Math::sqrt(1.0 - s * s);
 					p.transform.origin = Vector3(0, 0, 0).lerp(Vector3(radius * Math::cos(t), radius * Math::sin(t), emission_sphere_radius * s), x);
 				} break;
 				case EMISSION_SHAPE_SPHERE_SURFACE: {
 					real_t s = 2.0 * Math::randf() - 1.0;
-					real_t t = Math_TAU * Math::randf();
+					real_t t = Math_tau * Math::randf();
 					real_t radius = emission_sphere_radius * Math::sqrt(1.0 - s * s);
 					p.transform.origin = Vector3(radius * Math::cos(t), radius * Math::sin(t), emission_sphere_radius * s);
 				} break;
@@ -878,7 +878,7 @@ void CPUParticles3D::_particles_process(double p_delta) {
 					}
 				} break;
 				case EMISSION_SHAPE_RING: {
-					real_t ring_random_angle = Math::randf() * Math_TAU;
+					real_t ring_random_angle = Math::randf() * Math_tau;
 					real_t ring_random_radius = Math::sqrt(Math::randf() * (emission_ring_radius * emission_ring_radius - emission_ring_inner_radius * emission_ring_inner_radius) + emission_ring_inner_radius * emission_ring_inner_radius);
 					Vector3 axis = emission_ring_axis == Vector3(0.0, 0.0, 0.0) ? Vector3(0.0, 0.0, 1.0) : emission_ring_axis.normalized();
 					Vector3 ortho_axis;
@@ -996,7 +996,7 @@ void CPUParticles3D::_particles_process(double p_delta) {
 			if (particle_flags[PARTICLE_FLAG_DISABLE_Z]) {
 				real_t orbit_amount = tex_orbit_velocity * Math::lerp(parameters_min[PARAM_ORBIT_VELOCITY], parameters_max[PARAM_ORBIT_VELOCITY], rand_from_seed(alt_seed));
 				if (orbit_amount != 0.0) {
-					real_t ang = orbit_amount * local_delta * Math_TAU;
+					real_t ang = orbit_amount * local_delta * Math_tau;
 					// Not sure why the ParticleProcessMaterial code uses a clockwise rotation matrix,
 					// but we use -ang here to reproduce its behavior.
 					Transform2D rot = Transform2D(-ang, Vector2());
@@ -1058,7 +1058,7 @@ void CPUParticles3D::_particles_process(double p_delta) {
 			tex_hue_variation = curve_parameters[PARAM_HUE_VARIATION]->sample(tv);
 		}
 
-		real_t hue_rot_angle = (tex_hue_variation)*Math_TAU * Math::lerp(parameters_min[PARAM_HUE_VARIATION], parameters_max[PARAM_HUE_VARIATION], p.hue_rot_rand);
+		real_t hue_rot_angle = (tex_hue_variation)*Math_tau * Math::lerp(parameters_min[PARAM_HUE_VARIATION], parameters_max[PARAM_HUE_VARIATION], p.hue_rot_rand);
 		real_t hue_rot_c = Math::cos(hue_rot_angle);
 		real_t hue_rot_s = Math::sin(hue_rot_angle);
 

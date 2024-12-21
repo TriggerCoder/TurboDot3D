@@ -75,11 +75,11 @@ real_t Quaternion::length() const {
 }
 
 void Quaternion::normalize() {
-	*this /= length();
+	*this *= Math::InverseSqrt(length_squared());
 }
 
 Quaternion Quaternion::normalized() const {
-	return *this / length();
+	return *this * Math::InverseSqrt(length_squared());
 }
 
 bool Quaternion::is_normalized() const {

@@ -1431,17 +1431,17 @@ void AnimationMixer::_blend_process(double p_delta, bool p_update_only) {
 							float rot_a = t->value;
 							float rot_b = value;
 							float rot_init = t->init_value;
-							rot_a = Math::fposmod(rot_a, (float)Math_TAU);
-							rot_b = Math::fposmod(rot_b, (float)Math_TAU);
-							rot_init = Math::fposmod(rot_init, (float)Math_TAU);
-							if (rot_init < Math_PI) {
-								rot_a = rot_a > rot_init + Math_PI ? rot_a - Math_TAU : rot_a;
-								rot_b = rot_b > rot_init + Math_PI ? rot_b - Math_TAU : rot_b;
+							rot_a = Math::fposmod(rot_a, Math_tau);
+							rot_b = Math::fposmod(rot_b, Math_tau);
+							rot_init = Math::fposmod(rot_init, Math_tau);
+							if (rot_init < Math_tau_over_2) {
+								rot_a = rot_a > rot_init + Math_tau_over_2 ? rot_a - Math_tau : rot_a;
+								rot_b = rot_b > rot_init + Math_tau_over_2 ? rot_b - Math_tau : rot_b;
 							} else {
-								rot_a = rot_a < rot_init - Math_PI ? rot_a + Math_TAU : rot_a;
-								rot_b = rot_b < rot_init - Math_PI ? rot_b + Math_TAU : rot_b;
+								rot_a = rot_a < rot_init - Math_tau_over_2 ? rot_a + Math_tau : rot_a;
+								rot_b = rot_b < rot_init - Math_tau_over_2 ? rot_b + Math_tau : rot_b;
 							}
-							t->value = Math::fposmod(rot_a + (rot_b - rot_init) * (float)blend, (float)Math_TAU);
+							t->value = Math::fposmod(rot_a + (rot_b - rot_init) * (float)blend, Math_tau);
 						} else {
 							value = Animation::cast_to_blendwise(value);
 							if (t->init_value.is_array()) {

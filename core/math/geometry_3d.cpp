@@ -744,7 +744,7 @@ Vector<Plane> Geometry3D::build_cylinder_planes(real_t p_radius, real_t p_height
 
 	Vector<Plane> planes;
 
-	const double sides_step = Math_TAU / p_sides;
+	const double sides_step = Math_tau / p_sides;
 	for (int i = 0; i < p_sides; i++) {
 		Vector3 normal;
 		normal[(p_axis + 1) % 3] = Math::cos(i * sides_step);
@@ -775,7 +775,7 @@ Vector<Plane> Geometry3D::build_sphere_planes(real_t p_radius, int p_lats, int p
 	axis_neg[(p_axis + 2) % 3] = 1.0;
 	axis_neg[p_axis] = -1.0;
 
-	const double lon_step = Math_TAU / p_lons;
+	const double lon_step = Math_tau / p_lons;
 	for (int i = 0; i < p_lons; i++) {
 		Vector3 normal;
 		normal[(p_axis + 1) % 3] = Math::cos(i * lon_step);
@@ -806,7 +806,7 @@ Vector<Plane> Geometry3D::build_capsule_planes(real_t p_radius, real_t p_height,
 	axis_neg[(p_axis + 2) % 3] = 1.0;
 	axis_neg[p_axis] = -1.0;
 
-	const double sides_step = Math_TAU / p_sides;
+	const double sides_step = Math_tau / p_sides;
 	for (int i = 0; i < p_sides; i++) {
 		Vector3 normal;
 		normal[(p_axis + 1) % 3] = Math::cos(i * sides_step);

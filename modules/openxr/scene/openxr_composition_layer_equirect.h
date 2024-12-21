@@ -41,9 +41,9 @@ class OpenXRCompositionLayerEquirect : public OpenXRCompositionLayer {
 	XrCompositionLayerEquirect2KHR composition_layer;
 
 	float radius = 1.0;
-	float central_horizontal_angle = Math_PI / 2.0;
-	float upper_vertical_angle = Math_PI / 4.0;
-	float lower_vertical_angle = Math_PI / 4.0;
+	float central_horizontal_angle = Math_tau_over_4;
+	float upper_vertical_angle = Math_tau_over_8;
+	float lower_vertical_angle = Math_tau_over_8;
 	uint32_t fallback_segments = 10;
 
 protected:

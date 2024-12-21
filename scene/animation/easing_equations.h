@@ -63,15 +63,15 @@ static real_t in(real_t t, real_t b, real_t c, real_t d) {
 
 namespace sine {
 static real_t in(real_t t, real_t b, real_t c, real_t d) {
-	return -c * cos(t / d * (Math_PI / 2)) + c + b;
+	return -c * cos(t / d * (Math_tau_over_4)) + c + b;
 }
 
 static real_t out(real_t t, real_t b, real_t c, real_t d) {
-	return c * sin(t / d * (Math_PI / 2)) + b;
+	return c * sin(t / d * (Math_tau_over_4)) + b;
 }
 
 static real_t in_out(real_t t, real_t b, real_t c, real_t d) {
-	return -c / 2 * (cos(Math_PI * t / d) - 1) + b;
+	return -c / 2 * (cos(Math_tau_over_2 * t / d) - 1) + b;
 }
 
 static real_t out_in(real_t t, real_t b, real_t c, real_t d) {
@@ -222,7 +222,7 @@ static real_t in(real_t t, real_t b, real_t c, real_t d) {
 	float a = c * pow(2, 10 * t);
 	float s = p / 4;
 
-	return -(a * sin((t * d - s) * (2 * Math_PI) / p)) + b;
+	return -(a * sin((t * d - s) * Math_tau / p)) + b;
 }
 
 static real_t out(real_t t, real_t b, real_t c, real_t d) {
@@ -238,7 +238,7 @@ static real_t out(real_t t, real_t b, real_t c, real_t d) {
 	float p = d * 0.3f;
 	float s = p / 4;
 
-	return (c * pow(2, -10 * t) * sin((t * d - s) * (2 * Math_PI) / p) + c + b);
+	return (c * pow(2, -10 * t) * sin((t * d - s) * Math_tau / p) + c + b);
 }
 
 static real_t in_out(real_t t, real_t b, real_t c, real_t d) {
@@ -257,12 +257,12 @@ static real_t in_out(real_t t, real_t b, real_t c, real_t d) {
 	if (t < 1) {
 		t -= 1;
 		a *= pow(2, 10 * t);
-		return -0.5f * (a * sin((t * d - s) * (2 * Math_PI) / p)) + b;
+		return -0.5f * (a * sin((t * d - s) * Math_tau / p)) + b;
 	}
 
 	t -= 1;
 	a *= pow(2, -10 * t);
-	return a * sin((t * d - s) * (2 * Math_PI) / p) * 0.5f + c + b;
+	return a * sin((t * d - s) * Math_tau / p) * 0.5f + c + b;
 }
 
 static real_t out_in(real_t t, real_t b, real_t c, real_t d) {
@@ -417,7 +417,7 @@ namespace spring {
 static real_t out(real_t t, real_t b, real_t c, real_t d) {
 	t /= d;
 	real_t s = 1.0 - t;
-	t = (sin(t * Math_PI * (0.2 + 2.5 * t * t * t)) * pow(s, 2.2) + t) * (1.0 + (1.2 * s));
+	t = (sin(t * Math_tau_over_2 * (0.2 + 2.5 * t * t * t)) * pow(s, 2.2) + t) * (1.0 + (1.2 * s));
 	return c * t + b;
 }
 

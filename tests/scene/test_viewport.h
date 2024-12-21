@@ -1653,7 +1653,7 @@ TEST_CASE("[SceneTree][Viewport] Physics Picking 2D") {
 
 	SUBCASE("[Viewport][Picking2D] CollisionObject in CanvasLayer") {
 		CanvasLayer *node_c = memnew(CanvasLayer);
-		node_c->set_rotation(Math_PI);
+		node_c->set_rotation(Math_tau_over_2);
 		node_c->set_offset(Point2i(100, 100));
 		root->add_child(node_c);
 

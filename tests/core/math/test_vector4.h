@@ -128,7 +128,7 @@ TEST_CASE("[Vector4] Normalization methods") {
 			Vector4(1, 0, 0, 0).normalized() == Vector4(1, 0, 0, 0),
 			"Vector4 normalized should return the same vector for a normalized vector.");
 	CHECK_MESSAGE(
-			Vector4(1, 1, 0, 0).normalized().is_equal_approx(Vector4(Math_SQRT12, Math_SQRT12, 0, 0)),
+			Vector4(1, 1, 0, 0).normalized().is_equal_approx(Vector4(Math_sqrt_2_over_2, Math_sqrt_2_over_2, 0, 0)),
 			"Vector4 normalized should work as expected.");
 	CHECK_MESSAGE(
 			Vector4(1, 1, 1, 1).normalized().is_equal_approx(Vector4(0.5, 0.5, 0.5, 0.5)),
@@ -217,11 +217,11 @@ TEST_CASE("[Vector4] Operators") {
 			"Vector4 cast to String should work as expected.");
 #ifdef REAL_T_IS_DOUBLE
 	CHECK_MESSAGE(
-			((String)Vector4(Math_E, Math_SQRT2, Math_SQRT3, Math_SQRT3)) == "(2.71828182845905, 1.4142135623731, 1.73205080756888, 1.73205080756888)",
+			((String)Vector4(Math_euler, Math_sqrt_2, Math_SQRT3, Math_SQRT3)) == "(2.71828182845905, 1.4142135623731, 1.73205080756888, 1.73205080756888)",
 			"Vector4 cast to String should print the correct amount of digits for real_t = double.");
 #else
 	CHECK_MESSAGE(
-			((String)Vector4(Math_E, Math_SQRT2, Math_SQRT3, Math_SQRT3)) == "(2.718282, 1.414214, 1.732051, 1.732051)",
+			((String)Vector4(Math_euler, Math_sqrt_2, Math_SQRT3, Math_SQRT3)) == "(2.718282, 1.414214, 1.732051, 1.732051)",
 			"Vector4 cast to String should print the correct amount of digits for real_t = float.");
 #endif // REAL_T_IS_DOUBLE
 }

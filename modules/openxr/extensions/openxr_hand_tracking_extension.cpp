@@ -239,7 +239,7 @@ void OpenXRHandTrackingExtension::on_process() {
 				// SKELETON_RIG_HUMANOID bone adjustment. This rotation performs:
 				// OpenXR Z+ -> Godot Humanoid Y-  (Back along the bone)
 				// OpenXR Y+ -> Godot Humanoid Z- (Out the back of the hand)
-				const Quaternion bone_adjustment(0.0, -Math_SQRT12, Math_SQRT12, 0.0);
+				const Quaternion bone_adjustment(0.0, -Math_sqrt_2_over_2, Math_sqrt_2_over_2, 0.0);
 
 				for (int joint = 0; joint < XR_HAND_JOINT_COUNT_EXT; joint++) {
 					const XrHandJointLocationEXT &location = hand_trackers[i].joint_locations[joint];

@@ -494,10 +494,10 @@ void Vector3::normalize() {
 	if (lengthsq == 0) {
 		x = y = z = 0;
 	} else {
-		real_t length = Math::sqrt(lengthsq);
-		x /= length;
-		y /= length;
-		z /= length;
+		real_t invlength = Math::InverseSqrt(lengthsq);
+		x *= invlength;
+		y *= invlength;
+		z *= invlength;
 	}
 }
 

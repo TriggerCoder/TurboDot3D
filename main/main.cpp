@@ -2302,7 +2302,7 @@ Error Main::setup(const char *execpath, int argc, char *argv[], bool p_second_ph
 			goto error;
 		}
 	}
-
+	SimdInit();
 	return OK;
 
 error:

@@ -298,8 +298,8 @@ inline void draw_rounded_rectangle(Vector<Vector2> &verts, Vector<int> &indices,
 					corner_point = outer_points[corner_index];
 				}
 
-				const real_t x = radius * (real_t)cos((corner_index + detail / (double)adapted_corner_detail) * (Math_TAU / 4.0) + Math_PI) + corner_point.x;
-				const real_t y = radius * (real_t)sin((corner_index + detail / (double)adapted_corner_detail) * (Math_TAU / 4.0) + Math_PI) + corner_point.y;
+				const real_t x = radius * (real_t)cos((corner_index + detail / (double)adapted_corner_detail) * Math_tau_over_4 + Math_tau_over_2) + corner_point.x;
+				const real_t y = radius * (real_t)sin((corner_index + detail / (double)adapted_corner_detail) * Math_tau_over_4 + Math_tau_over_2) + corner_point.y;
 				const float x_skew = -skew.x * (y - style_rect.get_center().y);
 				const float y_skew = -skew.y * (x - style_rect.get_center().x);
 				verts.push_back(Vector2(x + x_skew, y + y_skew));

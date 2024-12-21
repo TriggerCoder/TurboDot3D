@@ -1140,9 +1140,9 @@ MaterialStorage::MaterialStorage() {
 		actions.renames["CANVAS_MATRIX"] = "canvas_transform";
 		actions.renames["SCREEN_MATRIX"] = "screen_transform";
 		actions.renames["TIME"] = "time";
-		actions.renames["PI"] = _MKSTR(Math_PI);
-		actions.renames["TAU"] = _MKSTR(Math_TAU);
-		actions.renames["E"] = _MKSTR(Math_E);
+		actions.renames["PI"] = Math_PI;
+		actions.renames["TAU"] = Math_TAU;
+		actions.renames["E"] = Math_E;
 		actions.renames["AT_LIGHT_PASS"] = "false";
 		actions.renames["INSTANCE_CUSTOM"] = "instance_custom";
 
@@ -1234,9 +1234,9 @@ MaterialStorage::MaterialStorage() {
 
 		actions.renames["TIME"] = "scene_data.time";
 		actions.renames["EXPOSURE"] = "(1.0 / scene_data.emissive_exposure_normalization)";
-		actions.renames["PI"] = _MKSTR(Math_PI);
-		actions.renames["TAU"] = _MKSTR(Math_TAU);
-		actions.renames["E"] = _MKSTR(Math_E);
+		actions.renames["PI"] = Math_PI;
+		actions.renames["TAU"] = Math_TAU;
+		actions.renames["E"] = Math_E;
 		actions.renames["VIEWPORT_SIZE"] = "scene_data.viewport_size";
 
 		actions.renames["FRAGCOORD"] = "gl_FragCoord";
@@ -1396,9 +1396,9 @@ MaterialStorage::MaterialStorage() {
 		}
 		actions.renames["TRANSFORM"] = "xform";
 		actions.renames["TIME"] = "time";
-		actions.renames["PI"] = _MKSTR(Math_PI);
-		actions.renames["TAU"] = _MKSTR(Math_TAU);
-		actions.renames["E"] = _MKSTR(Math_E);
+		actions.renames["PI"] = Math_PI;
+		actions.renames["TAU"] = Math_TAU;
+		actions.renames["E"] = Math_E;
 		actions.renames["LIFETIME"] = "lifetime";
 		actions.renames["DELTA"] = "local_delta";
 		actions.renames["NUMBER"] = "particle_number";
@@ -1453,9 +1453,9 @@ MaterialStorage::MaterialStorage() {
 		actions.renames["SCREEN_UV"] = "uv";
 		actions.renames["TIME"] = "time";
 		actions.renames["FRAGCOORD"] = "gl_FragCoord";
-		actions.renames["PI"] = _MKSTR(Math_PI);
-		actions.renames["TAU"] = _MKSTR(Math_TAU);
-		actions.renames["E"] = _MKSTR(Math_E);
+		actions.renames["PI"] = Math_PI;
+		actions.renames["TAU"] = Math_TAU;
+		actions.renames["E"] = Math_E;
 		actions.renames["HALF_RES_COLOR"] = "half_res_color";
 		actions.renames["QUARTER_RES_COLOR"] = "quarter_res_color";
 		actions.renames["RADIANCE"] = "radiance";

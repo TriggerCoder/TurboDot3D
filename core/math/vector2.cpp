@@ -52,9 +52,9 @@ real_t Vector2::length_squared() const {
 void Vector2::normalize() {
 	real_t l = x * x + y * y;
 	if (l != 0) {
-		l = Math::sqrt(l);
-		x /= l;
-		y /= l;
+		l = Math::InverseSqrt(l);
+		x *= l;
+		y *= l;
 	}
 }
 

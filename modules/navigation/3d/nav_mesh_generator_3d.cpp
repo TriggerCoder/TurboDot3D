@@ -612,7 +612,7 @@ void NavMeshGenerator3D::generator_parse_navigationobstacle_node(const Ref<Navig
 
 		obstruction_circle_vertices.resize(circle_points);
 		Vector3 *circle_vertices_ptrw = obstruction_circle_vertices.ptrw();
-		const real_t circle_point_step = Math_TAU / circle_points;
+		const real_t circle_point_step = Math_tau / circle_points;
 
 		for (int i = 0; i < circle_points; i++) {
 			const float angle = i * circle_point_step;

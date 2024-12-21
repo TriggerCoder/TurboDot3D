@@ -88,7 +88,7 @@ CubemapFilter::~CubemapFilter() {
 
 Vector3 importance_sample_GGX(Vector2 xi, float roughness4) {
 	// Compute distribution direction
-	float phi = 2.0 * Math_PI * xi.x;
+	float phi = Math_tau * xi.x;
 	float cos_theta = sqrt((1.0 - xi.y) / (1.0 + (roughness4 - 1.0) * xi.y));
 	float sin_theta = sqrt(1.0 - cos_theta * cos_theta);
 
@@ -104,7 +104,7 @@ Vector3 importance_sample_GGX(Vector2 xi, float roughness4) {
 float distribution_GGX(float NdotH, float roughness4) {
 	float NdotH2 = NdotH * NdotH;
 	float denom = (NdotH2 * (roughness4 - 1.0) + 1.0);
-	denom = Math_PI * denom * denom;
+	denom = Math_tau_over_2 * denom * denom;
 
 	return roughness4 / denom;
 }
@@ -153,7 +153,7 @@ void CubemapFilter::filter_radiance(GLuint p_source_cubemap, GLuint p_dest_cubem
 		float roughness4 = roughness * roughness;
 		roughness4 *= roughness4;
 
-		float solid_angle_texel = 4.0 * Math_PI / float(6 * size * size);
+		float solid_angle_texel = 4.0 * Math_tau_over_2 / float(6 * size * size);
 
 		LocalVector<float> sample_directions;
 		sample_directions.resize(4 * sample_count);

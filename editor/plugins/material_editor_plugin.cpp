@@ -55,7 +55,7 @@ void MaterialEditor::gui_input(const Ref<InputEvent> &p_event) {
 		rot.x -= mm->get_relative().y * 0.01;
 		rot.y -= mm->get_relative().x * 0.01;
 
-		rot.x = CLAMP(rot.x, -Math_PI / 2, Math_PI / 2);
+		rot.x = CLAMP(rot.x, -Math_tau_over_4, Math_tau_over_4);
 		_update_rotation();
 	}
 }

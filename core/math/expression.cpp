@@ -458,10 +458,10 @@ Error Expression::_get_token(Token &r_token) {
 						r_token.value = false;
 					} else if (id == "PI") {
 						r_token.type = TK_CONSTANT;
-						r_token.value = Math_PI;
+						r_token.value = Math_tau_over_2;
 					} else if (id == "TAU") {
 						r_token.type = TK_CONSTANT;
-						r_token.value = Math_TAU;
+						r_token.value = Math_tau;
 					} else if (id == "INF") {
 						r_token.type = TK_CONSTANT;
 						r_token.value = INFINITY;
