@@ -154,6 +154,7 @@ constexpr float Math_tau_over_3 = 2.0943951023931954923084289221863F;
 constexpr float Math_tau_over_4 = 1.5707963267948966192313216916398F;
 constexpr float Math_tau_over_8 = 0.78539816339744830961566084581988F;
 constexpr float Math_tau_over_12 = 0.52359877559829887307710723054658F;
+constexpr float Math_tau_over_16 = 0.39269908169872415480783042290994F;
 constexpr float Math_tau_over_24 = 0.26179938779914943653855361527329F;
 
 constexpr float Math_ln_2 = 0.69314718055994530941723212145818F;
@@ -260,11 +261,20 @@ typedef float real_t;
  * SIMD
  *
  */
-#if ((defined(_M_X64) || defined(_M_IX86) || defined(__x86_64__) || defined(__SSE__)) && !(defined(SSE_ENABLED)))
-#define SSE_ENABLED
+#if (defined(__AVX2__) || defined(AVX512_ENABLED)) && !defined(AVX2_ENABLED)
+#define AVX2_ENABLED
 #endif
-#if (defined(__AVX__) && !(defined(AVX_ENABLED)))
+#if (defined(__AVX__) || defined(AVX2_ENABLED)) && !defined(AVX_ENABLED)
 #define AVX_ENABLED
+#endif
+#if (defined(__SSE4_2__) || defined(AVX_ENABLED)) && !defined(SSE4_2_ENABLED)
+#define SSE4_2_ENABLED
+#endif
+#if (defined(__SSE4_1__) || defined(SSE4_2_ENABLED)) && !defined(SSE4_1_ENABLED)
+#define SSE4_1_ENABLED
+#endif
+#if defined(SSE4_1_ENABLED) && !defined(SSE_ENABLED)
+#define SSE_ENABLED
 #endif
 #if (defined(__ARM_NEON) && !(defined(NEON_ENABLED)))
 #define NEON_ENABLED
@@ -274,8 +284,8 @@ typedef float real_t;
 #define SIMD_ENABLED
 #endif
 
-#ifdef SIMD_ENABLED
 
+#ifdef SIMD_ENABLED
 #ifdef SSE_ENABLED
 #ifdef REAL_T_IS_DOUBLE
 #define SSE_WITH_DOUBLE_PRECISION
@@ -396,14 +406,22 @@ typedef __m256i exv_uint32;
 
 #endif
 
-inline void SimdInit(void) {
+inline const char* SimdInit(void) {
 #if defined(SSE_ENABLED)
-
 	_mm_setcsr(_mm_getcsr() | 0x8040);
-
+	#if defined(AVX_ENABLED)
+		return "CPU Using AVX.\n";
+	#else
+		return "CPU Using SSE.\n";
+	#endif
+#elif defined(NEON_ENABLED)
+	return "CPU Using NEON.\n";
+#else
+	return "CPU not using SIMD.\n";
 #endif
 }
 
+#ifdef SIMD_ENABLED
 inline vec_float VecFloatGetZero(void) {
 #if defined(SSE_ENABLED)
 
@@ -2471,6 +2489,27 @@ inline exv_float ExvMadd(const exv_float &v1, const exv_float &v2, const exv_flo
 
 #endif
 
+inline float Floor(const float &x) {
+	float result;
+
+	VecStoreX(VecFloorScalar(VecLoadScalar(&x)), &result);
+	return (result);
+}
+
+inline float Ceil(const float &x) {
+	float result;
+
+	VecStoreX(VecCeilScalar(VecLoadScalar(&x)), &result);
+	return (result);
+}
+
+#else
+
+float Floor(const float &x);
+float Ceil(const float &x);
+
+#endif // SIMD_ENABLED
+
 inline float Fabs(const float &x) {
 #ifdef SIMD_ENABLED
 
@@ -2712,29 +2751,6 @@ inline float Clamp(const float &x, const float &y, const float &z) {
 
 #endif
 }
-
-#ifdef SIMD_ENABLED
-
-inline float Floor(const float &x) {
-	float result;
-
-	VecStoreX(VecFloorScalar(VecLoadScalar(&x)), &result);
-	return (result);
-}
-
-inline float Ceil(const float &x) {
-	float result;
-
-	VecStoreX(VecCeilScalar(VecLoadScalar(&x)), &result);
-	return (result);
-}
-
-#else
-
-float Floor(const float &x);
-float Ceil(const float &x);
-
-#endif
 
 inline float PositiveFloor(const float &x) {
 #ifdef SIMD_ENABLED

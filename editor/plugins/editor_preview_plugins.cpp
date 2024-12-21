@@ -713,8 +713,8 @@ Ref<Texture2D> EditorMeshPreviewPlugin::generate(const Ref<Resource> &p_from, co
 	Vector3 ofs = aabb.get_center();
 	aabb.position -= ofs;
 	Transform3D xform;
-	xform.basis = Basis().rotated(Vector3(0, 1, 0), -Math_tau_over_2 * 0.125);
-	xform.basis = Basis().rotated(Vector3(1, 0, 0), Math_tau_over_2 * 0.125) * xform.basis;
+	xform.basis = Basis().rotated(Vector3(0, 1, 0), -Math_tau_over_16);
+	xform.basis = Basis().rotated(Vector3(1, 0, 0), Math_tau_over_16) * xform.basis;
 	AABB rot_aabb = xform.xform(aabb);
 	real_t m = MAX(rot_aabb.size.x, rot_aabb.size.y) * 0.5;
 	if (m == 0) {

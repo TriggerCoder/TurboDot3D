@@ -1045,42 +1045,6 @@ if env["threads"]:
 # Build subdirs, the build order is dependent on link order.
 Export("env")
 
-SConscript("core/SCsub")
-SConscript("servers/SCsub")
-SConscript("scene/SCsub")
-if env.editor_build:
-    SConscript("editor/SCsub")
-SConscript("drivers/SCsub")
-
-SConscript("platform/SCsub")
-SConscript("modules/SCsub")
-if env["tests"]:
-    SConscript("tests/SCsub")
-SConscript("main/SCsub")
-
-SConscript("platform/" + env["platform"] + "/SCsub")  # Build selected platform.
-
-# Microsoft Visual Studio Project Generation
-if env["vsproj"]:
-    methods.generate_cpp_hint_file("cpp.hint")
-    env["CPPPATH"] = [Dir(path) for path in env["CPPPATH"]]
-    methods.generate_vs_project(env, ARGUMENTS, env["vsproj_name"])
-
-# Check for the existence of headers
-conf = Configure(env)
-if "check_c_headers" in env:
-    headers = env["check_c_headers"]
-    for header in headers:
-        if conf.CheckCHeader(header):
-            env.AppendUnique(CPPDEFINES=[headers[header]])
-
-
-# FIXME: This method mixes both cosmetic progress stuff and cache handling...
-methods.show_progress(env)
-# TODO: replace this with `env.Dump(format="json")`
-# once we start requiring SCons 4.0 as min version.
-methods.dump(env)
-
 # Hands SIMD option.
 simd_type = env["simd_type"]
 x86_x64_simd_types = ["sse", "sse4_1", "sse4_2", "avx", "avx2", "avx512"]
@@ -1115,6 +1079,41 @@ elif simd_type != "none":
                     else:
                         env.Append(CCFLAGS=["-m" + x86_x64_simd_types[j].lower().replace("_", ".")])
                 break
+
+SConscript("core/SCsub")
+SConscript("servers/SCsub")
+SConscript("scene/SCsub")
+if env.editor_build:
+    SConscript("editor/SCsub")
+SConscript("drivers/SCsub")
+
+SConscript("platform/SCsub")
+SConscript("modules/SCsub")
+if env["tests"]:
+    SConscript("tests/SCsub")
+SConscript("main/SCsub")
+
+SConscript("platform/" + env["platform"] + "/SCsub")  # Build selected platform.
+
+# Microsoft Visual Studio Project Generation
+if env["vsproj"]:
+    methods.generate_cpp_hint_file("cpp.hint")
+    env["CPPPATH"] = [Dir(path) for path in env["CPPPATH"]]
+    methods.generate_vs_project(env, ARGUMENTS, env["vsproj_name"])
+
+# Check for the existence of headers
+conf = Configure(env)
+if "check_c_headers" in env:
+    headers = env["check_c_headers"]
+    for header in headers:
+        if conf.CheckCHeader(header):
+            env.AppendUnique(CPPDEFINES=[headers[header]])
+
+# FIXME: This method mixes both cosmetic progress stuff and cache handling...
+methods.show_progress(env)
+# TODO: replace this with `env.Dump(format="json")`
+# once we start requiring SCons 4.0 as min version.
+methods.dump(env)
 
 def print_elapsed_time():
     elapsed_time_sec = round(time.time() - time_at_start, 2)
