@@ -106,9 +106,9 @@ _FORCE_INLINE_ JPH::Mat44 to_jolt(const Transform3D &p_transform) {
 	const Vector3 &o = p_transform.origin;
 
 	return JPH::Mat44(
-			JPH::Vec4(b[0][0], b[1][0], b[2][0], 0.0f),
-			JPH::Vec4(b[0][1], b[1][1], b[2][1], 0.0f),
-			JPH::Vec4(b[0][2], b[1][2], b[2][2], 0.0f),
+			JPH::Vec4(b.rows[0][0], b.rows[1][0], b.rows[2][0], 0.0f),
+			JPH::Vec4(b.rows[0][1], b.rows[1][1], b.rows[2][1], 0.0f),
+			JPH::Vec4(b.rows[0][2], b.rows[1][2], b.rows[2][2], 0.0f),
 			JPH::Vec3(o.x, o.y, o.z));
 }
 
@@ -138,9 +138,9 @@ _FORCE_INLINE_ JPH::RMat44 to_jolt_r(const Transform3D &p_transform) {
 	const Vector3 &o = p_transform.origin;
 
 	return JPH::RMat44(
-			JPH::Vec4(b[0][0], b[1][0], b[2][0], 0.0f),
-			JPH::Vec4(b[0][1], b[1][1], b[2][1], 0.0f),
-			JPH::Vec4(b[0][2], b[1][2], b[2][2], 0.0f),
+			JPH::Vec4(b.rows[0][0], b.rows[1][0], b.rows[2][0], 0.0f),
+			JPH::Vec4(b.rows[0][1], b.rows[1][1], b.rows[2][1], 0.0f),
+			JPH::Vec4(b.rows[0][2], b.rows[1][2], b.rows[2][2], 0.0f),
 			JPH::RVec3(o.x, o.y, o.z));
 }
 

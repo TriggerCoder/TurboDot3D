@@ -1069,7 +1069,7 @@ void CPUParticles3D::_particles_process(double p_delta) {
 			Basis mat3(0.168, 0.330, -0.497, -0.328, 0.035, 0.292, 1.250, -1.050, -0.203);
 
 			for (int j = 0; j < 3; j++) {
-				hue_rot_mat[j] = mat1[j] + mat2[j] * hue_rot_c + mat3[j] * hue_rot_s;
+				hue_rot_mat.rows[j] = mat1.rows[j] + mat2.rows[j] * hue_rot_c + mat3.rows[j] * hue_rot_s;
 			}
 		}
 

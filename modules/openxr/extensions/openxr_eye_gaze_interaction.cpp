@@ -138,7 +138,7 @@ bool OpenXREyeGazeInteractionExtension::get_eye_gaze_pose(double p_dist, Vector3
 		return false;
 	}
 
-	r_eye_pose = eye_transform.origin + eye_transform.basis[2] * p_dist;
+	r_eye_pose = eye_transform.origin + eye_transform.basis.rows[2] * p_dist;
 
 	return true;
 }

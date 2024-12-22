@@ -132,9 +132,9 @@ struct [[nodiscard]] Transform3D {
 
 _FORCE_INLINE_ Vector3 Transform3D::xform(const Vector3 &p_vector) const {
 	return Vector3(
-			basis[0].dot(p_vector) + origin.x,
-			basis[1].dot(p_vector) + origin.y,
-			basis[2].dot(p_vector) + origin.z);
+			basis.rows[0].dot(p_vector) + origin.x,
+			basis.rows[1].dot(p_vector) + origin.y,
+			basis.rows[2].dot(p_vector) + origin.z);
 }
 
 _FORCE_INLINE_ Vector3 Transform3D::xform_inv(const Vector3 &p_vector) const {
@@ -170,8 +170,8 @@ _FORCE_INLINE_ AABB Transform3D::xform(const AABB &p_aabb) const {
 	for (int i = 0; i < 3; i++) {
 		tmin[i] = tmax[i] = origin[i];
 		for (int j = 0; j < 3; j++) {
-			real_t e = basis[i][j] * min[j];
-			real_t f = basis[i][j] * max[j];
+			real_t e = basis.rows[i][j] * min[j];
+			real_t f = basis.rows[i][j] * max[j];
 			if (e < f) {
 				tmin[i] += e;
 				tmax[i] += f;

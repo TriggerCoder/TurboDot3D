@@ -632,9 +632,9 @@ String VisualShaderNodeTransformConstant::generate_code(Shader::Mode p_mode, Vis
 	t.basis.transpose();
 
 	String code = "	" + p_output_vars[0] + " = mat4(";
-	code += vformat("vec4(%.6f, %.6f, %.6f, 0.0), ", t.basis[0].x, t.basis[0].y, t.basis[0].z);
-	code += vformat("vec4(%.6f, %.6f, %.6f, 0.0), ", t.basis[1].x, t.basis[1].y, t.basis[1].z);
-	code += vformat("vec4(%.6f, %.6f, %.6f, 0.0), ", t.basis[2].x, t.basis[2].y, t.basis[2].z);
+	code += vformat("vec4(%.6f, %.6f, %.6f, 0.0), ", t.basis.rows[0].x, t.basis.rows[0].y, t.basis.rows[0].z);
+	code += vformat("vec4(%.6f, %.6f, %.6f, 0.0), ", t.basis.rows[1].x, t.basis.rows[1].y, t.basis.rows[1].z);
+	code += vformat("vec4(%.6f, %.6f, %.6f, 0.0), ", t.basis.rows[2].x, t.basis.rows[2].y, t.basis.rows[2].z);
 	code += vformat("vec4(%.6f, %.6f, %.6f, 1.0));\n", t.origin.x, t.origin.y, t.origin.z);
 	return code;
 }

@@ -2359,30 +2359,30 @@ void EditorPropertyBasis::_set_read_only(bool p_read_only) {
 
 void EditorPropertyBasis::_value_changed(double val, const String &p_name) {
 	Basis p;
-	p[0][0] = spin[0]->get_value();
-	p[0][1] = spin[1]->get_value();
-	p[0][2] = spin[2]->get_value();
-	p[1][0] = spin[3]->get_value();
-	p[1][1] = spin[4]->get_value();
-	p[1][2] = spin[5]->get_value();
-	p[2][0] = spin[6]->get_value();
-	p[2][1] = spin[7]->get_value();
-	p[2][2] = spin[8]->get_value();
+	p.rows[0][0] = spin[0]->get_value();
+	p.rows[0][1] = spin[1]->get_value();
+	p.rows[0][2] = spin[2]->get_value();
+	p.rows[1][0] = spin[3]->get_value();
+	p.rows[1][1] = spin[4]->get_value();
+	p.rows[1][2] = spin[5]->get_value();
+	p.rows[2][0] = spin[6]->get_value();
+	p.rows[2][1] = spin[7]->get_value();
+	p.rows[2][2] = spin[8]->get_value();
 
 	emit_changed(get_edited_property(), p, p_name);
 }
 
 void EditorPropertyBasis::update_property() {
 	Basis val = get_edited_property_value();
-	spin[0]->set_value_no_signal(val[0][0]);
-	spin[1]->set_value_no_signal(val[0][1]);
-	spin[2]->set_value_no_signal(val[0][2]);
-	spin[3]->set_value_no_signal(val[1][0]);
-	spin[4]->set_value_no_signal(val[1][1]);
-	spin[5]->set_value_no_signal(val[1][2]);
-	spin[6]->set_value_no_signal(val[2][0]);
-	spin[7]->set_value_no_signal(val[2][1]);
-	spin[8]->set_value_no_signal(val[2][2]);
+	spin[0]->set_value_no_signal(val.rows[0][0]);
+	spin[1]->set_value_no_signal(val.rows[0][1]);
+	spin[2]->set_value_no_signal(val.rows[0][2]);
+	spin[3]->set_value_no_signal(val.rows[1][0]);
+	spin[4]->set_value_no_signal(val.rows[1][1]);
+	spin[5]->set_value_no_signal(val.rows[1][2]);
+	spin[6]->set_value_no_signal(val.rows[2][0]);
+	spin[7]->set_value_no_signal(val.rows[2][1]);
+	spin[8]->set_value_no_signal(val.rows[2][2]);
 }
 
 void EditorPropertyBasis::_notification(int p_what) {
@@ -2442,17 +2442,17 @@ void EditorPropertyTransform3D::_set_read_only(bool p_read_only) {
 
 void EditorPropertyTransform3D::_value_changed(double val, const String &p_name) {
 	Transform3D p;
-	p.basis[0][0] = spin[0]->get_value();
-	p.basis[0][1] = spin[1]->get_value();
-	p.basis[0][2] = spin[2]->get_value();
+	p.basis.rows[0][0] = spin[0]->get_value();
+	p.basis.rows[0][1] = spin[1]->get_value();
+	p.basis.rows[0][2] = spin[2]->get_value();
 	p.origin[0] = spin[3]->get_value();
-	p.basis[1][0] = spin[4]->get_value();
-	p.basis[1][1] = spin[5]->get_value();
-	p.basis[1][2] = spin[6]->get_value();
+	p.basis.rows[1][0] = spin[4]->get_value();
+	p.basis.rows[1][1] = spin[5]->get_value();
+	p.basis.rows[1][2] = spin[6]->get_value();
 	p.origin[1] = spin[7]->get_value();
-	p.basis[2][0] = spin[8]->get_value();
-	p.basis[2][1] = spin[9]->get_value();
-	p.basis[2][2] = spin[10]->get_value();
+	p.basis.rows[2][0] = spin[8]->get_value();
+	p.basis.rows[2][1] = spin[9]->get_value();
+	p.basis.rows[2][2] = spin[10]->get_value();
 	p.origin[2] = spin[11]->get_value();
 
 	emit_changed(get_edited_property(), p, p_name);
@@ -2463,17 +2463,17 @@ void EditorPropertyTransform3D::update_property() {
 }
 
 void EditorPropertyTransform3D::update_using_transform(Transform3D p_transform) {
-	spin[0]->set_value_no_signal(p_transform.basis[0][0]);
-	spin[1]->set_value_no_signal(p_transform.basis[0][1]);
-	spin[2]->set_value_no_signal(p_transform.basis[0][2]);
+	spin[0]->set_value_no_signal(p_transform.basis.rows[0][0]);
+	spin[1]->set_value_no_signal(p_transform.basis.rows[0][1]);
+	spin[2]->set_value_no_signal(p_transform.basis.rows[0][2]);
 	spin[3]->set_value_no_signal(p_transform.origin[0]);
-	spin[4]->set_value_no_signal(p_transform.basis[1][0]);
-	spin[5]->set_value_no_signal(p_transform.basis[1][1]);
-	spin[6]->set_value_no_signal(p_transform.basis[1][2]);
+	spin[4]->set_value_no_signal(p_transform.basis.rows[1][0]);
+	spin[5]->set_value_no_signal(p_transform.basis.rows[1][1]);
+	spin[6]->set_value_no_signal(p_transform.basis.rows[1][2]);
 	spin[7]->set_value_no_signal(p_transform.origin[1]);
-	spin[8]->set_value_no_signal(p_transform.basis[2][0]);
-	spin[9]->set_value_no_signal(p_transform.basis[2][1]);
-	spin[10]->set_value_no_signal(p_transform.basis[2][2]);
+	spin[8]->set_value_no_signal(p_transform.basis.rows[2][0]);
+	spin[9]->set_value_no_signal(p_transform.basis.rows[2][1]);
+	spin[10]->set_value_no_signal(p_transform.basis.rows[2][2]);
 	spin[11]->set_value_no_signal(p_transform.origin[2]);
 }
 

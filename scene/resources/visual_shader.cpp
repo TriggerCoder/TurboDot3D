@@ -2219,9 +2219,9 @@ Error VisualShader::_write_node(Type type, StringBuilder *p_global_code, StringB
 				inputs[i] = "n_in" + itos(p_node) + "p" + itos(i);
 				Array values;
 				for (int j = 0; j < 3; j++) {
-					values.push_back(val.basis[j].x);
-					values.push_back(val.basis[j].y);
-					values.push_back(val.basis[j].z);
+					values.push_back(val.basis.rows[j].x);
+					values.push_back(val.basis.rows[j].y);
+					values.push_back(val.basis.rows[j].z);
 				}
 				values.push_back(val.origin.x);
 				values.push_back(val.origin.y);

@@ -136,7 +136,7 @@ void Transform3D::translate_local(real_t p_tx, real_t p_ty, real_t p_tz) {
 
 void Transform3D::translate_local(const Vector3 &p_translation) {
 	for (int i = 0; i < 3; i++) {
-		origin[i] += basis[i].dot(p_translation);
+		origin[i] += basis.rows[i].dot(p_translation);
 	}
 }
 

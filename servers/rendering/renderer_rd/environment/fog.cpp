@@ -1042,17 +1042,17 @@ void Fog::volumetric_fog_update(const VolumetricFogSettings &p_settings, const P
 	params.detail_spread = RendererSceneRenderRD::get_singleton()->environment_get_volumetric_fog_detail_spread(p_settings.env);
 	params.gi_inject = RendererSceneRenderRD::get_singleton()->environment_get_volumetric_fog_gi_inject(p_settings.env);
 
-	params.cam_rotation[0] = p_cam_transform.basis[0][0];
-	params.cam_rotation[1] = p_cam_transform.basis[1][0];
-	params.cam_rotation[2] = p_cam_transform.basis[2][0];
+	params.cam_rotation[0] = p_cam_transform.basis.rows[0][0];
+	params.cam_rotation[1] = p_cam_transform.basis.rows[1][0];
+	params.cam_rotation[2] = p_cam_transform.basis.rows[2][0];
 	params.cam_rotation[3] = 0;
-	params.cam_rotation[4] = p_cam_transform.basis[0][1];
-	params.cam_rotation[5] = p_cam_transform.basis[1][1];
-	params.cam_rotation[6] = p_cam_transform.basis[2][1];
+	params.cam_rotation[4] = p_cam_transform.basis.rows[0][1];
+	params.cam_rotation[5] = p_cam_transform.basis.rows[1][1];
+	params.cam_rotation[6] = p_cam_transform.basis.rows[2][1];
 	params.cam_rotation[7] = 0;
-	params.cam_rotation[8] = p_cam_transform.basis[0][2];
-	params.cam_rotation[9] = p_cam_transform.basis[1][2];
-	params.cam_rotation[10] = p_cam_transform.basis[2][2];
+	params.cam_rotation[8] = p_cam_transform.basis.rows[0][2];
+	params.cam_rotation[9] = p_cam_transform.basis.rows[1][2];
+	params.cam_rotation[10] = p_cam_transform.basis.rows[2][2];
 	params.cam_rotation[11] = 0;
 	params.filter_axis = 0;
 	params.max_voxel_gi_instances = RendererSceneRenderRD::get_singleton()->environment_get_volumetric_fog_gi_inject(p_settings.env) > 0.001 ? p_voxel_gi_count : 0;

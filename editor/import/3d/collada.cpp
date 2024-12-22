@@ -81,18 +81,18 @@ Transform3D Collada::fix_transform(const Transform3D &p_transform) {
 
 	if (state.up_axis != Vector3::AXIS_Y) {
 		for (int i = 0; i < 3; i++) {
-			SWAP(tr.basis[1][i], tr.basis[state.up_axis][i]);
+			SWAP(tr.basis.rows[1][i], tr.basis.rows[state.up_axis][i]);
 		}
 		for (int i = 0; i < 3; i++) {
-			SWAP(tr.basis[i][1], tr.basis[i][state.up_axis]);
+			SWAP(tr.basis.rows[i][1], tr.basis.rows[i][state.up_axis]);
 		}
 
 		SWAP(tr.origin[1], tr.origin[state.up_axis]);
 
-		tr.basis[state.up_axis][0] = -tr.basis[state.up_axis][0];
-		tr.basis[state.up_axis][1] = -tr.basis[state.up_axis][1];
-		tr.basis[0][state.up_axis] = -tr.basis[0][state.up_axis];
-		tr.basis[1][state.up_axis] = -tr.basis[1][state.up_axis];
+		tr.basis.rows[state.up_axis][0] = -tr.basis.rows[state.up_axis][0];
+		tr.basis.rows[state.up_axis][1] = -tr.basis.rows[state.up_axis][1];
+		tr.basis.rows[0][state.up_axis] = -tr.basis.rows[0][state.up_axis];
+		tr.basis.rows[1][state.up_axis] = -tr.basis.rows[1][state.up_axis];
 		tr.origin[state.up_axis] = -tr.origin[state.up_axis];
 	}
 #endif

@@ -35,19 +35,24 @@
 #include "core/math/vector3.h"
 
 struct [[nodiscard]] Basis {
-	Vector3 rows[3] = {
-		Vector3(1, 0, 0),
-		Vector3(0, 1, 0),
-		Vector3(0, 0, 1)
+	struct PaddedRow {
+		union {
+			Vector3 rows[3];
+			real_t data[9] = {	1.0f, 0.0f, 0.0f,
+								0.0f, 1.0f, 0.0f,
+								0.0f, 0.0f, 1.0f };
+		};
+
+		_FORCE_INLINE_ const Vector3 &operator[](int p_axis) const {
+			return *reinterpret_cast<const Vector3 *>(data + p_axis * 3);
+		}
+
+		_FORCE_INLINE_ Vector3 &operator[](int p_axis) {
+			return *reinterpret_cast<Vector3 *>(data + p_axis * 3);
+		}
 	};
-
-	_FORCE_INLINE_ const Vector3 &operator[](int p_axis) const {
-		return rows[p_axis];
-	}
-	_FORCE_INLINE_ Vector3 &operator[](int p_axis) {
-		return rows[p_axis];
-	}
-
+	PaddedRow rows;
+	
 	void invert();
 	void transpose();
 
@@ -194,15 +199,15 @@ struct [[nodiscard]] Basis {
 
 	_FORCE_INLINE_ Basis transpose_xform(const Basis &p_m) const {
 		return Basis(
-				rows[0].x * p_m[0].x + rows[1].x * p_m[1].x + rows[2].x * p_m[2].x,
-				rows[0].x * p_m[0].y + rows[1].x * p_m[1].y + rows[2].x * p_m[2].y,
-				rows[0].x * p_m[0].z + rows[1].x * p_m[1].z + rows[2].x * p_m[2].z,
-				rows[0].y * p_m[0].x + rows[1].y * p_m[1].x + rows[2].y * p_m[2].x,
-				rows[0].y * p_m[0].y + rows[1].y * p_m[1].y + rows[2].y * p_m[2].y,
-				rows[0].y * p_m[0].z + rows[1].y * p_m[1].z + rows[2].y * p_m[2].z,
-				rows[0].z * p_m[0].x + rows[1].z * p_m[1].x + rows[2].z * p_m[2].x,
-				rows[0].z * p_m[0].y + rows[1].z * p_m[1].y + rows[2].z * p_m[2].y,
-				rows[0].z * p_m[0].z + rows[1].z * p_m[1].z + rows[2].z * p_m[2].z);
+				rows[0].x * p_m.rows[0].x + rows[1].x * p_m.rows[1].x + rows[2].x * p_m.rows[2].x,
+				rows[0].x * p_m.rows[0].y + rows[1].x * p_m.rows[1].y + rows[2].x * p_m.rows[2].y,
+				rows[0].x * p_m.rows[0].z + rows[1].x * p_m.rows[1].z + rows[2].x * p_m.rows[2].z,
+				rows[0].y * p_m.rows[0].x + rows[1].y * p_m.rows[1].x + rows[2].y * p_m.rows[2].x,
+				rows[0].y * p_m.rows[0].y + rows[1].y * p_m.rows[1].y + rows[2].y * p_m.rows[2].y,
+				rows[0].y * p_m.rows[0].z + rows[1].y * p_m.rows[1].z + rows[2].y * p_m.rows[2].z,
+				rows[0].z * p_m.rows[0].x + rows[1].z * p_m.rows[1].x + rows[2].z * p_m.rows[2].x,
+				rows[0].z * p_m.rows[0].y + rows[1].z * p_m.rows[1].y + rows[2].z * p_m.rows[2].y,
+				rows[0].z * p_m.rows[0].z + rows[1].z * p_m.rows[1].z + rows[2].z * p_m.rows[2].z);
 	}
 	Basis(real_t p_xx, real_t p_xy, real_t p_xz, real_t p_yx, real_t p_yy, real_t p_yz, real_t p_zx, real_t p_zy, real_t p_zz) {
 		set(p_xx, p_xy, p_xz, p_yx, p_yy, p_yz, p_zx, p_zy, p_zz);

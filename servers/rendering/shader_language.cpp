@@ -4034,15 +4034,15 @@ Variant ShaderLanguage::constant_value_to_variant(const Vector<ShaderLanguage::C
 					value = Variant(array);
 				} else {
 					Basis p;
-					p[0][0] = p_value[0].real;
-					p[0][1] = p_value[1].real;
-					p[0][2] = p_value[2].real;
-					p[1][0] = p_value[3].real;
-					p[1][1] = p_value[4].real;
-					p[1][2] = p_value[5].real;
-					p[2][0] = p_value[6].real;
-					p[2][1] = p_value[7].real;
-					p[2][2] = p_value[8].real;
+					p.rows[0][0] = p_value[0].real;
+					p.rows[0][1] = p_value[1].real;
+					p.rows[0][2] = p_value[2].real;
+					p.rows[1][0] = p_value[3].real;
+					p.rows[1][1] = p_value[4].real;
+					p.rows[1][2] = p_value[5].real;
+					p.rows[2][0] = p_value[6].real;
+					p.rows[2][1] = p_value[7].real;
+					p.rows[2][2] = p_value[8].real;
 					value = Variant(p);
 				}
 				break;

@@ -478,7 +478,7 @@ int GridMap::get_orthogonal_index_from_basis(const Basis &p_basis) const {
 	Basis orth = p_basis;
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
-			real_t v = orth[i][j];
+			real_t v = orth.rows[i][j];
 			if (v > 0.5) {
 				v = 1.0;
 			} else if (v < -0.5) {
@@ -487,7 +487,7 @@ int GridMap::get_orthogonal_index_from_basis(const Basis &p_basis) const {
 				v = 0;
 			}
 
-			orth[i][j] = v;
+			orth.rows[i][j] = v;
 		}
 	}
 
